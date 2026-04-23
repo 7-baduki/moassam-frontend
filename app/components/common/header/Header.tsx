@@ -1,13 +1,15 @@
 import Link from 'next/link';
 import HeaderLogo from '@/app/assets/icons/headerLogo.svg';
+import BellOffIcon from '@/app/assets/icons/bellIOffIcon.svg';
+import ProfileIcon from '@/app/assets/icons/profileIcon.svg';
 
 interface HeaderProps {
   isLoggedIn?: boolean;
 }
 
-export default function Header({ isLoggedIn = false }: HeaderProps) {
+export default function Header({ isLoggedIn = true }: HeaderProps) {
   return (
-    <header className="flex h-16 items-center justify-between px-20">
+    <header className="flex h-16 items-center justify-between border-b border-black-400 px-20">
       <div className="flex items-center gap-8.5">
         <Link href="/">
           <HeaderLogo />
@@ -22,7 +24,10 @@ export default function Header({ isLoggedIn = false }: HeaderProps) {
       </div>
       <div className="flex items-center gap-6">
         {isLoggedIn ? (
-          <>{/* 로그인 아이콘 추가 예정 */}</>
+          <>
+            <BellOffIcon className="text-black-560" />
+            <ProfileIcon />
+          </>
         ) : (
           <button className="rounded border border-pink-500 px-3.5 py-1.5 text-sm text-pink-500">
             간편로그인

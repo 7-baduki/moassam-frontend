@@ -15,7 +15,7 @@ const BOTTOM_TABS = [
 ]; //임시
 
 export default function Sidebar() {
-  const pathname = usePathname();
+  const pathname = usePathname() ?? '';
 
   return (
     <aside className="h-full w-89.25 border-r border-black-400" aria-label="사이드 내비게이션">
@@ -24,7 +24,13 @@ export default function Sidebar() {
           <ul className="mt-15 ml-20 flex flex-col">
             {TOP_TABS.map((tab) => (
               <li key={tab.href}>
-                <SidebarTab label={tab.label} href={tab.href} isActive={pathname === tab.href} />
+                <SidebarTab
+                  label={tab.label}
+                  href={tab.href}
+                  isActive={
+                    pathname === tab.href || (tab.href !== '/' && pathname.startsWith(tab.href))
+                  }
+                />
               </li>
             ))}
           </ul>
@@ -33,7 +39,13 @@ export default function Sidebar() {
           <ul className="mb-39.25 ml-20 flex flex-col">
             {BOTTOM_TABS.map((tab) => (
               <li key={tab.href}>
-                <SidebarTab label={tab.label} href={tab.href} isActive={pathname === tab.href} />
+                <SidebarTab
+                  label={tab.label}
+                  href={tab.href}
+                  isActive={
+                    pathname === tab.href || (tab.href !== '/' && pathname.startsWith(tab.href))
+                  }
+                />
               </li>
             ))}
           </ul>

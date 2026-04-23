@@ -1,13 +1,21 @@
 'use client';
 
-import { useState } from 'react';
+import { usePathname } from 'next/navigation';
 import SidebarTab from './SidebarTab';
 
-const TOP_TABS = ['모아방', '자유게시판'];
-const BOTTOM_TABS = ['내 활동 글', '작성한 댓글', '보관함']; //임시
+const TOP_TABS = [
+  { label: '모아방', href: '/' },
+  { label: '자유게시판', href: '/community' },
+];
+
+const BOTTOM_TABS = [
+  { label: '내 활동 글', href: '/my/posts' },
+  { label: '작성한 댓글', href: '/my/comments' },
+  { label: '보관함', href: '/my/saved' },
+]; //임시
 
 export default function Sidebar() {
-  const [activeTab, setActiveTab] = useState('모아방');
+  const pathname = usePathname();
 
   return (
     <aside
@@ -18,12 +26,8 @@ export default function Sidebar() {
         <nav aria-label="메인 메뉴">
           <ul className="mt-15 ml-20 flex flex-col">
             {TOP_TABS.map((tab) => (
-              <li key={tab}>
-                <SidebarTab
-                  label={tab}
-                  isActive={activeTab === tab}
-                  onClick={() => setActiveTab(tab)}
-                />
+              <li key={tab.href}>
+                <SidebarTab label={tab.label} href={tab.href} isActive={pathname === tab.href} />
               </li>
             ))}
           </ul>
@@ -31,12 +35,8 @@ export default function Sidebar() {
         <nav aria-label="내 활동 메뉴">
           <ul className="mb-39.25 ml-20 flex flex-col">
             {BOTTOM_TABS.map((tab) => (
-              <li key={tab}>
-                <SidebarTab
-                  label={tab}
-                  isActive={activeTab === tab}
-                  onClick={() => setActiveTab(tab)}
-                />
+              <li key={tab.href}>
+                <SidebarTab label={tab.label} href={tab.href} isActive={pathname === tab.href} />
               </li>
             ))}
           </ul>

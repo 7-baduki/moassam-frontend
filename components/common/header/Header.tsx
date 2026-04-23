@@ -1,4 +1,5 @@
 import Link from 'next/link';
+import { Button } from '@/components/common/button/Button';
 import HeaderLogo from '@/app/assets/icons/headerLogo.svg';
 import BellOffIcon from '@/app/assets/icons/bellIOffIcon.svg';
 import ProfileIcon from '@/app/assets/icons/profileIcon.svg';
@@ -11,10 +12,13 @@ export default function Header({ isLoggedIn = true }: HeaderProps) {
   return (
     <header className="flex h-16 items-center justify-between border-b border-black-400 px-20">
       <div className="flex items-center gap-8.5">
-        <Link href="/">
-          <HeaderLogo />
+        <Link href="/" aria-label="모아쌤 홈으로 이동">
+          <HeaderLogo aria-hidden="true" />
         </Link>
-        <nav className="flex items-center gap-8.5 text-base leading-[140%] font-medium tracking-[-0.02em]">
+        <nav
+          aria-label="주요 메뉴"
+          className="flex items-center gap-8.5 text-base leading-[140%] font-medium tracking-[-0.02em]"
+        >
           <Link href="/ai" className="font-semibold text-pink-500">
             AI 일지 생성
           </Link>
@@ -29,9 +33,9 @@ export default function Header({ isLoggedIn = true }: HeaderProps) {
             <ProfileIcon />
           </>
         ) : (
-          <button className="rounded border border-pink-500 px-3.5 py-1.5 text-sm text-pink-500">
-            간편로그인
-          </button> // 공통 컴포넌트가 생성되면 수정 할 예정
+          <Button variant="outline" size="sm">
+            로그인
+          </Button>
         )}
       </div>
     </header>

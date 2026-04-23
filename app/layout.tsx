@@ -24,14 +24,12 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="ko" className={`${pretendard.variable} h-full antialiased`}>
-      <body className={`${pretendard.className} h-screen overflow-hidden`}>
+      <body className={`${pretendard.className} flex h-screen flex-col overflow-hidden`}>
         <Header />
         <Providers>
-          <div className="flex h-full flex-col">
-            <div className="flex flex-1 overflow-hidden">
-              <Sidebar />
-              <main className="flex-1 overflow-y-auto">{children}</main>
-            </div>
+          <div className="flex flex-1 overflow-hidden">
+            <Sidebar />
+            <main className="flex-1 overflow-y-auto">{children}</main>
           </div>
         </Providers>
       </body>

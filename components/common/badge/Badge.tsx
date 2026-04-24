@@ -21,9 +21,9 @@ const VARIANT_STYLES: Record<BadgeVariant, string> = {
   age6: 'bg-pink-700 text-white',
   age7: 'bg-green-700 text-white',
   activity: 'border border-yellow-800 text-yellow-800',
-  diary: 'border border-pink-700 <text-pink-7></text-pink-7>00',
+  diary: 'border border-pink-700 text-pink-700',
   plan: 'border border-green-700 text-green-800',
-  notice: 'border border-black-600 text-black-600',
+  notice: 'border border-black-560 text-black-560',
 };
 
 export default function Badge({ label, variant }: BadgeProps) {

@@ -3,6 +3,7 @@ import localFont from 'next/font/local';
 import './globals.css';
 import Providers from './providers';
 import Header from '@/components/common/header/Header';
+import Sidebar from '@/components/common/sidebar/Sidebar';
 
 const pretendard = localFont({
   src: './fonts/PretendardVariable.woff2',
@@ -23,9 +24,14 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="ko" className={`${pretendard.variable} h-full antialiased`}>
-      <body className={`${pretendard.className} flex min-h-full flex-col`}>
+      <body className={`${pretendard.className} flex h-screen flex-col overflow-hidden`}>
         <Header />
-        <Providers>{children}</Providers>
+        <Providers>
+          <div className="flex flex-1 overflow-hidden">
+            <Sidebar />
+            <main className="flex-1 overflow-y-auto">{children}</main>
+          </div>
+        </Providers>
       </body>
     </html>
   );

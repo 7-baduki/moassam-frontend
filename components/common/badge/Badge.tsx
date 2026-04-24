@@ -29,6 +29,8 @@ const VARIANT_STYLES: Record<BadgeVariant, string> = {
 export default function Badge({ label, variant }: BadgeProps) {
   return (
     <span
+      role="img"
+      aria-label={`${label} 카테고리`}
       className={`inline-flex items-center rounded-2xl px-3.5 py-0.5 text-xs leading-[140%] font-semibold tracking-[-0.02em] ${VARIANT_STYLES[variant]}`}
     >
       {label}

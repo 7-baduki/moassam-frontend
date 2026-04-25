@@ -1,4 +1,4 @@
-type HotBadgeVariant = 'type1' | 'type2';
+type HotBadgeVariant = 'yellow' | 'pink';
 
 interface HotBadgeProps {
   label: string;
@@ -6,11 +6,11 @@ interface HotBadgeProps {
 }
 
 const VARIANT_STYLES: Record<HotBadgeVariant, string> = {
-  type1: 'bg-yellow-100 text-yellow-800',
-  type2: 'bg-pink-50 text-[#FF4646]',
+  yellow: 'bg-yellow-100 text-yellow-800',
+  pink: 'bg-pink-50 text-[#FF4646]',
 };
 
-export default function HotBadge({ label, variant = 'type1' }: HotBadgeProps) {
+export default function HotBadge({ label, variant = 'yellow' }: HotBadgeProps) {
   return (
     <span
       role="status"

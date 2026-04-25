@@ -8,7 +8,7 @@ const meta: Meta<typeof HotBadge> = {
     label: { control: 'text' },
     variant: {
       control: 'select',
-      options: ['type1', 'type2'],
+      options: ['yellow', 'pink'],
     },
   },
 };
@@ -16,10 +16,10 @@ const meta: Meta<typeof HotBadge> = {
 export default meta;
 type Story = StoryObj<typeof HotBadge>;
 
-export const Type1: Story = {
+export const Yellow: Story = {
   args: { label: '조회수 5,218명 돌파 🔥' },
 };
 
-export const Type2: Story = {
-  args: { label: '급상승 🔥', variant: 'type2' },
+export const Pink: Story = {
+  args: { label: '급상승 🔥', variant: 'pink' },
 };

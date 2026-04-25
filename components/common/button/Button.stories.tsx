@@ -11,7 +11,7 @@ const meta: Meta<typeof Button> = {
     },
     size: {
       control: 'select',
-      options: ['sm', 'md', 'lg'],
+      options: ['full', 'sm', 'md', 'lg'],
     },
     disabled: { control: 'boolean' },
   },
@@ -34,4 +34,12 @@ export const Ghost: Story = {
 
 export const Disabled: Story = {
   args: { children: '생성하기', variant: 'primary', size: 'md', disabled: true },
+};
+
+export const FullPrimary: Story = {
+  args: { children: '시작하기', variant: 'primary', size: 'full' },
+};
+
+export const FullOutline: Story = {
+  args: { children: '시작하기', variant: 'outline', size: 'full' },
 };

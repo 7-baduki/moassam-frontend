@@ -49,13 +49,9 @@ export function MoreButton({ onEdit, onDelete, className }: MoreButtonProps) {
       </button>
 
       {isOpen && (
-        <div
-          role="menu"
-          className="absolute right-0 mt-1.75 w-25 overflow-hidden rounded-2xl border border-black-200 bg-white py-2 shadow-[0px_1px_8px_0px_rgba(0,0,0,0.04)]"
-        >
+        <div className="absolute right-0 mt-1.75 w-25 overflow-hidden rounded-2xl border border-black-200 bg-white py-2 shadow-[0px_1px_8px_0px_rgba(0,0,0,0.04)]">
           <button
             type="button"
-            role="menuitem"
             onClick={handleEditClick}
             className="w-full cursor-pointer hover:bg-black-100"
           >
@@ -63,7 +59,6 @@ export function MoreButton({ onEdit, onDelete, className }: MoreButtonProps) {
           </button>
           <button
             type="button"
-            role="menuitem"
             onClick={handleDeleteClick}
             className="w-full cursor-pointer hover:bg-black-100"
           >

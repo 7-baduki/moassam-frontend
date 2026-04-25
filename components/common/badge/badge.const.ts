@@ -1,6 +1,6 @@
 import type { BadgeVariant } from './badge.type';
 
-export const MOABANG_BADGE: Record<string, BadgeVariant> = {
+export const BADGE_MAP: Record<string, BadgeVariant> = {
   common: 'yellow',
   baby: 'pink-light',
   age3: 'green-light',
@@ -10,9 +10,6 @@ export const MOABANG_BADGE: Record<string, BadgeVariant> = {
   diary: 'outline-pink',
   plan: 'outline-green',
   notice: 'outline-gray',
-};
-
-export const FREE_BOARD_BADGE: Record<string, BadgeVariant> = {
   question: 'yellow',
   concern: 'pink-light',
   chat: 'green-light',

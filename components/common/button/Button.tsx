@@ -1,6 +1,6 @@
 import { cn } from '@/utils/cn';
 
-type ButtonSize = 'sm' | 'md' | 'lg';
+type ButtonSize = 'full' | 'sm' | 'md' | 'lg';
 type ButtonVariant = 'primary' | 'outline' | 'ghost';
 
 export interface ButtonProps extends React.ButtonHTMLAttributes<HTMLButtonElement> {
@@ -13,6 +13,7 @@ const BASE_STYLES =
   'cursor-pointer rounded-lg font-medium transition-colors disabled:cursor-not-allowed disabled:opacity-50';
 
 const SIZE_STYLES: Record<ButtonSize, string> = {
+  full: 'w-full py-2 text-base',
   sm: 'w-20 py-1.5 text-sm',
   md: 'w-35 py-2 text-base',
   lg: 'w-90 py-4.5 text-lg font-semibold',

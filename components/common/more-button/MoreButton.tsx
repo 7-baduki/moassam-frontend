@@ -36,7 +36,7 @@ export function MoreButton({ onEdit, onDelete, className }: MoreButtonProps) {
   }
 
   return (
-    <div ref={ref} className={cn('relative', className)}>
+    <div ref={ref} className={cn('relative w-fit', className)}>
       <button
         type="button"
         onClick={() => setIsOpen((prev) => !prev)}

@@ -1,7 +1,7 @@
 'use client';
 
 import { useEffect, useRef, useState } from 'react';
-import EditDropdownIcon from '@/app/assets/icons/EditDropdown.svg';
+import MoreDotIcon from '@/app/assets/icons/MoreDot.svg';
 import { cn } from '@/utils/cn';
 import { DropdownItem } from './DropdownItem';
 
@@ -45,7 +45,7 @@ export function MoreButton({ onEdit, onDelete, className }: MoreButtonProps) {
         aria-haspopup="menu"
         className="flex cursor-pointer items-center justify-center"
       >
-        <EditDropdownIcon aria-hidden="true" />
+        <MoreDotIcon aria-hidden="true" />
       </button>
 
       {isOpen && (

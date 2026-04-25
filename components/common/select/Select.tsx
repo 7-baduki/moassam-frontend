@@ -67,7 +67,7 @@ export function Select(props: SelectProps) {
         type="button"
         onClick={() => setIsOpen((prev) => !prev)}
         className={cn(
-          'flex w-full cursor-pointer items-center gap-1 p-2.5 text-sm font-medium text-black-800 outline-none',
+          'flex w-full cursor-pointer items-center gap-1 p-2.5 text-sm font-medium text-black-800 outline-none focus-visible:ring-2 focus-visible:ring-black-400',
           TRIGGER_STYLES[size],
           isOpen && size === 'md' && 'rounded-b-none',
         )}

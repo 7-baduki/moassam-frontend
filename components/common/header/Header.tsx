@@ -10,7 +10,7 @@ interface HeaderProps {
 
 export default function Header({ isLoggedIn = true }: HeaderProps) {
   return (
-    <header className="flex h-16 items-center justify-between border-b border-black-400 px-20">
+    <header className="flex h-16 items-center justify-between border-b border-black-200 px-20">
       <div className="flex items-center gap-8.5">
         <Link href="/" aria-label="모아쌤 홈으로 이동">
           <HeaderLogo aria-hidden="true" />
@@ -26,7 +26,7 @@ export default function Header({ isLoggedIn = true }: HeaderProps) {
           <Link href="/my-class">내 수업</Link>
         </nav>
       </div>
-      <div className="flex items-center gap-6">
+      <div className="flex items-center gap-5">
         {isLoggedIn ? (
           <>
             <BellOffIcon className="cursor-pointer" />

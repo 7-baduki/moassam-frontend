@@ -8,9 +8,10 @@ import LoginGoogleIcon from '@/app/assets/icons/LoginGoogleIcon.svg';
 import LoginBottomLogo from '@/app/assets/icons/LoginBottomLogo.svg';
 import { useLoginModalStore } from '@/stores/loginModalStore';
 import { LoginButton } from './LoginButton';
+import { LoginTooltip } from './LoginTooltip';
 
 export function LoginModal() {
-  const { isOpen, title, description, close } = useLoginModalStore();
+  const { isOpen, title, description, close, lastProvider } = useLoginModalStore();
 
   useEffect(() => {
     if (!isOpen) return;
@@ -50,21 +51,30 @@ export function LoginModal() {
 
         <div className="mt-4 w-full px-5 py-6.5">
           <div className="flex flex-col gap-10">
-            <LoginButton
-              icon={<LoginKakaoIcon />}
-              label="카카오로 시작하기"
-              className="bg-[#FEE300] text-[#461E25]"
-            />
-            <LoginButton
-              icon={<LoginNaverIcon />}
-              label="네이버로 시작하기"
-              className="bg-[#00CE45] text-white"
-            />
-            <LoginButton
-              icon={<LoginGoogleIcon />}
-              label="구글로 시작하기"
-              className="border-[0.5px] border-black-500 bg-white text-black-800"
-            />
+            <div className="relative">
+              {lastProvider === 'kakao' && <LoginTooltip label="최근에 로그인 했어요!" />}
+              <LoginButton
+                icon={<LoginKakaoIcon />}
+                label="카카오로 시작하기"
+                className="bg-[#FEE300] text-[#461E25]"
+              />
+            </div>
+            <div className="relative">
+              {lastProvider === 'naver' && <LoginTooltip label="최근에 로그인 했어요!" />}
+              <LoginButton
+                icon={<LoginNaverIcon />}
+                label="네이버로 시작하기"
+                className="bg-[#00CE45] text-white"
+              />
+            </div>
+            <div className="relative">
+              {lastProvider === 'google' && <LoginTooltip label="최근에 로그인 했어요!" />}
+              <LoginButton
+                icon={<LoginGoogleIcon />}
+                label="구글로 시작하기"
+                className="border-[0.5px] border-black-500 bg-white text-black-800"
+              />
+            </div>
           </div>
         </div>
 

@@ -29,8 +29,8 @@ export default function Header({ isLoggedIn = true }: HeaderProps) {
       <div className="flex items-center gap-6">
         {isLoggedIn ? (
           <>
-            <BellOffIcon className="text-black-560" />
-            <ProfileIcon />
+            <BellOffIcon className="cursor-pointer" />
+            <ProfileIcon className="cursor-pointer" />
           </>
         ) : (
           <Button variant="outline" size="sm">

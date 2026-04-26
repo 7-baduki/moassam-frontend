@@ -13,7 +13,7 @@ interface DialogProps {
   open: boolean;
   onOpenChange?: (open: boolean) => void;
   iconType: IconType;
-  title?: string;
+  title: string;
   description?: string;
   subDescription?: string;
   buttons?: ButtonProps[];
@@ -62,20 +62,16 @@ export function Dialog({
           <div className="flex flex-col items-center gap-4 text-center">
             <DialogIcon iconType={iconType} />
 
-            {(title || description) && (
-              <div className="flex flex-col gap-0.5">
-                {title && (
-                  <RadixDialog.Title className="text-base font-semibold text-black">
-                    {title}
-                  </RadixDialog.Title>
-                )}
-                {description && (
-                  <RadixDialog.Description className="text-xs font-medium text-black-500">
-                    {description}
-                  </RadixDialog.Description>
-                )}
-              </div>
-            )}
+            <div className="flex flex-col gap-0.5">
+              <RadixDialog.Title className="text-base font-semibold text-black">
+                {title}
+              </RadixDialog.Title>
+              {description && (
+                <RadixDialog.Description className="text-xs font-medium text-black-500">
+                  {description}
+                </RadixDialog.Description>
+              )}
+            </div>
 
             {subDescription && (
               <p className="pt-5 text-xs font-medium text-black-500">{subDescription}</p>

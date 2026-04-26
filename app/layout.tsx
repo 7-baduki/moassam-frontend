@@ -33,7 +33,7 @@ export default function RootLayout({
             <main className="flex-1 overflow-y-auto">{children}</main>
           </div>
         </Providers>
-        <Toaster position="top-right" />
+        <Toaster position="top-right" offset={{ top: 69 }} />
       </body>
     </html>
   );

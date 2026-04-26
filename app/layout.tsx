@@ -1,5 +1,6 @@
 import type { Metadata } from 'next';
 import localFont from 'next/font/local';
+import { Toaster } from 'sonner';
 import './globals.css';
 import Providers from './providers';
 import Header from '@/components/common/header/Header';
@@ -32,6 +33,7 @@ export default function RootLayout({
             <main className="flex-1 overflow-y-auto">{children}</main>
           </div>
         </Providers>
+        <Toaster position="top-right" />
       </body>
     </html>
   );

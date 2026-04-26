@@ -33,9 +33,12 @@ export function LoginModal() {
         className="relative z-10 flex w-[520px] flex-col items-center rounded-2xl bg-white px-12 py-10"
         role="dialog"
         aria-modal="true"
+        aria-labelledby="login-modal-title"
       >
         <HeaderLogo className="h-14 w-14" />
-        <p className="mt-4 text-xl font-bold text-pink-500">{title}</p>
+        <p id="login-modal-title" className="mt-4 text-xl font-bold text-pink-500">
+          {title}
+        </p>
         <p className="mt-2 text-sm text-black-700">{description}</p>
 
         <div className="mt-8 flex w-full items-center gap-3">

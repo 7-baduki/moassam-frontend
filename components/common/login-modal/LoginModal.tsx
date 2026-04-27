@@ -28,11 +28,7 @@ export function LoginModal() {
   return (
     <FocusTrap focusTrapOptions={{ escapeDeactivates: false, returnFocusOnDeactivate: true }}>
       <div className="fixed inset-0 z-1000 flex items-center justify-center">
-        <div
-          className="absolute inset-0 bg-[#00000073] backdrop-blur-[10px]"
-          onClick={close}
-          aria-hidden="true"
-        />
+        <div className="overlay absolute inset-0" onClick={close} aria-hidden="true" />
         <div
           className="relative z-10 flex w-130 flex-col items-center rounded-[20px] bg-white px-[62.5px] pt-12.5 pb-10.75 leading-[140%] tracking-[-0.02em]"
           role="dialog"

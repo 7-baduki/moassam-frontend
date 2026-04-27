@@ -65,6 +65,12 @@ html {
     linear-gradient(90deg, rgba(237, 0, 0, 0.12) -10.14%, rgba(237, 0, 0, 0) 29.44%);
 }
 
+.toast-warning {
+  background:
+    linear-gradient(0deg, rgba(52, 52, 52, 0.9), rgba(52, 52, 52, 0.9)),
+    linear-gradient(90deg, rgba(237, 138, 0, 0.12) -10.14%, rgba(237, 138, 0, 0) 29.44%);
+}
+
 .overlay {
   background-color: rgba(0, 0, 0, 0.45);
   backdrop-filter: blur(10px);

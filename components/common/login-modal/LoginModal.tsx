@@ -2,7 +2,7 @@
 
 import { useEffect } from 'react';
 import { FocusTrap } from 'focus-trap-react';
-import LoginTopLogo from '@/app/assets/icons/LoginTopLogo.svg';
+import MainLogoIcon from '@/app/assets/icons/MainLogoIcon.svg';
 import LoginKakaoIcon from '@/app/assets/icons/LoginKakaoIcon.svg';
 import LoginNaverIcon from '@/app/assets/icons/LoginNaverIcon.svg';
 import LoginGoogleIcon from '@/app/assets/icons/LoginGoogleIcon.svg';
@@ -39,7 +39,7 @@ export function LoginModal() {
           aria-modal="true"
           aria-labelledby="login-modal-title"
         >
-          <LoginTopLogo />
+          <MainLogoIcon />
           <p id="login-modal-title" className="mt-1.5 text-xl font-semibold text-pink-500">
             {title}
           </p>

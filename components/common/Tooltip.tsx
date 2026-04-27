@@ -2,7 +2,7 @@ interface LoginTooltipProps {
   label: string;
 }
 
-export function LoginTooltip({ label }: LoginTooltipProps) {
+export function Tooltip({ label }: LoginTooltipProps) {
   return (
     <div className="absolute -top-[36px] left-1/2 -translate-x-1/2 opacity-90">
       <div className="flex h-[30px] w-[130px] items-center justify-center rounded-[20px] bg-[#3D3D3D] py-[6px] pr-[15px] pl-[15px] text-xs font-medium text-white">

@@ -9,7 +9,7 @@ import LoginGoogleIcon from '@/app/assets/icons/LoginGoogleIcon.svg';
 import LoginBottomLogo from '@/app/assets/icons/LoginBottomLogo.svg';
 import { useLoginModalStore } from '@/stores/loginModalStore';
 import { LoginButton } from './LoginButton';
-import { LoginTooltip } from './LoginTooltip';
+import { Tooltip } from '@/components/common/Tooltip';
 
 export function LoginModal() {
   const { isOpen, title, description, close, lastProvider } = useLoginModalStore();
@@ -54,7 +54,7 @@ export function LoginModal() {
           <div className="mt-4 w-full px-5 py-6.5">
             <div className="flex flex-col gap-10">
               <div className="relative">
-                {lastProvider === 'kakao' && <LoginTooltip label="최근에 로그인 했어요!" />}
+                {lastProvider === 'kakao' && <Tooltip label="최근에 로그인 했어요!" />}
                 <LoginButton
                   icon={<LoginKakaoIcon />}
                   label="카카오로 시작하기"
@@ -62,7 +62,7 @@ export function LoginModal() {
                 />
               </div>
               <div className="relative">
-                {lastProvider === 'naver' && <LoginTooltip label="최근에 로그인 했어요!" />}
+                {lastProvider === 'naver' && <Tooltip label="최근에 로그인 했어요!" />}
                 <LoginButton
                   icon={<LoginNaverIcon />}
                   label="네이버로 시작하기"
@@ -70,7 +70,7 @@ export function LoginModal() {
                 />
               </div>
               <div className="relative">
-                {lastProvider === 'google' && <LoginTooltip label="최근에 로그인 했어요!" />}
+                {lastProvider === 'google' && <Tooltip label="최근에 로그인 했어요!" />}
                 <LoginButton
                   icon={<LoginGoogleIcon />}
                   label="구글로 시작하기"

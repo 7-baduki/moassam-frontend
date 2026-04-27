@@ -1,7 +1,6 @@
 import Link from 'next/link';
 import { Button } from '@/components/common/button/Button';
 import MainLogoIcon from '@/app/assets/icons/MainLogoIcon.svg';
-import HeaderLogo from '@/app/assets/icons/HeaderLogo.svg';
 import BellOffIcon from '@/app/assets/icons/BellOffIcon.svg';
 import ProfileIcon from '@/app/assets/icons/ProfileIcon.svg';
 

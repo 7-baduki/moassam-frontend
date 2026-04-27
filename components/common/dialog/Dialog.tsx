@@ -82,7 +82,12 @@ export function Dialog({
                 className={cn('flex w-full gap-2.5 pt-5', buttons.length === 1 && 'justify-center')}
               >
                 {buttons.map((btnProps, index) => (
-                  <Button key={index} size="full" className="py-1.5" {...btnProps} />
+                  <Button
+                    key={index}
+                    {...btnProps}
+                    size="full"
+                    className={cn('py-1.5', btnProps.className)}
+                  />
                 ))}
               </div>
             )}

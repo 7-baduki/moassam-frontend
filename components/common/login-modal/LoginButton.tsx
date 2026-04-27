@@ -1,4 +1,5 @@
 import { cn } from '@/utils/cn';
+import { Button } from '@/components/common/button/Button';
 
 interface LoginButtonProps {
   icon: React.ReactNode;
@@ -9,7 +10,7 @@ interface LoginButtonProps {
 
 export function LoginButton({ icon, label, className, onClick }: LoginButtonProps) {
   return (
-    <button
+    <Button
       type="button"
       className={cn(
         'flex h-15 w-full cursor-pointer items-center justify-center gap-3 rounded-lg px-25 py-[17.5px] text-base leading-[140%] font-medium tracking-[-0.02em] transition-opacity hover:opacity-90',
@@ -19,6 +20,6 @@ export function LoginButton({ icon, label, className, onClick }: LoginButtonProp
     >
       {icon}
       <span>{label}</span>
-    </button>
+    </Button>
   );
 }

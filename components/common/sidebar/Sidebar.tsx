@@ -18,7 +18,7 @@ export default function Sidebar() {
   const pathname = usePathname() ?? '';
 
   return (
-    <aside className="h-full w-89.25 border-r border-black-400" aria-label="사이드 내비게이션">
+    <aside className="h-full w-89.25 border-r border-black-200" aria-label="사이드 내비게이션">
       <div className="flex h-full flex-col justify-between">
         <nav aria-label="메인 메뉴">
           <ul className="mt-15 ml-20 flex flex-col">

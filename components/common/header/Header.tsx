@@ -1,14 +1,18 @@
+'use client';
+
 import Link from 'next/link';
 import { Button } from '@/components/common/button/Button';
 import MainLogoIcon from '@/app/assets/icons/MainLogoIcon.svg';
 import BellOffIcon from '@/app/assets/icons/BellOffIcon.svg';
 import ProfileIcon from '@/app/assets/icons/ProfileIcon.svg';
+import { useLoginModalStore } from '@/stores/loginModalStore';
 
 interface HeaderProps {
   isLoggedIn?: boolean;
 }
 
-export default function Header({ isLoggedIn = true }: HeaderProps) {
+export default function Header({ isLoggedIn = false }: HeaderProps) {
+  const openLoginModal = useLoginModalStore((state) => state.open);
   return (
     <header className="flex h-16 items-center justify-between border-b border-black-200 px-20">
       <div className="flex items-center gap-8.5">
@@ -33,7 +37,7 @@ export default function Header({ isLoggedIn = true }: HeaderProps) {
             <ProfileIcon className="cursor-pointer" />
           </>
         ) : (
-          <Button variant="outline" size="sm">
+          <Button variant="outline" size="sm" onClick={() => openLoginModal()}>
             로그인
           </Button>
         )}

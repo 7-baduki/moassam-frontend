@@ -5,6 +5,7 @@ import './globals.css';
 import Providers from './providers';
 import Header from '@/components/common/header/Header';
 import Sidebar from '@/components/common/sidebar/Sidebar';
+import { LoginModal } from '@/components/common/login-modal/LoginModal';
 
 const pretendard = localFont({
   src: './fonts/PretendardVariable.woff2',
@@ -34,6 +35,7 @@ export default function RootLayout({
           </div>
         </Providers>
         <Toaster position="top-right" offset={{ top: 69 }} />
+        <LoginModal />
       </body>
     </html>
   );

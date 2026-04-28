@@ -31,7 +31,7 @@ export default function RootLayout({
         <Providers>
           <div className="flex flex-1 overflow-hidden">
             <Sidebar />
-            <main className="flex-1 overflow-y-auto">{children}</main>
+            <main className="flex-1 overflow-y-auto bg-black-100">{children}</main>
           </div>
         </Providers>
         <Toaster position="top-right" offset={{ top: 69 }} />

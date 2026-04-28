@@ -4,8 +4,8 @@ import { usePathname } from 'next/navigation';
 import SidebarTab from './SidebarTab';
 
 const TOP_TABS = [
-  { label: '모아방', href: '/' },
-  { label: '자유게시판', href: '/community' },
+  { label: '모아방', href: '/comunity/moabang' },
+  { label: '자유게시판', href: '/comunity/board' },
 ];
 
 const BOTTOM_TABS = [

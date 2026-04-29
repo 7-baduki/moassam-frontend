@@ -11,7 +11,7 @@ export default function CommunityTitleBar({ title, description, onWrite }: Commu
   return (
     <div className="flex items-center justify-between">
       <div className="flex items-center gap-3">
-        <h2 className="text-[18px] font-semibold text-black-800">{title}</h2>
+        <h2 className="text-lg font-semibold text-black-800">{title}</h2>
         <p className="typo-line-m4 text-sm font-medium text-black-600">{description}</p>
       </div>
       <div className="flex items-center gap-3">

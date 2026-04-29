@@ -1,7 +1,7 @@
 'use client';
 
 import { useEffect, useRef, useState } from 'react';
-import MoreDotIcon from '@/app/assets/icons/MoreDot.svg';
+import MoreDotIcon from '@/app/assets/icons/MoreDotIcon.svg';
 import { cn } from '@/utils/cn';
 import { DropdownItem } from './DropdownItem';
 

@@ -16,7 +16,7 @@ export default function HotPostCard({ post }: HotPostCardProps) {
         </div>
         <div className="flex flex-1 flex-col gap-2 px-5 pt-3">
           <div className="flex flex-col gap-1">
-            <h3 className="line-clamp-2 text-base leading-[140%] font-semibold tracking-[-0.02em] text-black-800">
+            <h3 className="line-clamp-2 min-h-[2.8rem] text-base leading-[140%] font-semibold tracking-[-0.02em] text-black-800">
               {post.title}
             </h3>
             <p className="line-clamp-1 text-sm leading-[140%] font-medium tracking-[-0.02em] text-black-600">

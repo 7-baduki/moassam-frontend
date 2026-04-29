@@ -1,5 +1,22 @@
 import ListCard from './ListCard';
+import CommunityHeader from '@/components/comunity/CommunityHeader';
 import type { ListPost } from './moabang.type';
+
+const AGE_TABS = [
+  { label: '전체', value: 'all' },
+  { label: '영아', value: 'infant' },
+  { label: '만 3세', value: 'age3' },
+  { label: '만 4세', value: 'age4' },
+  { label: '만 5세', value: 'age5' },
+];
+
+const CATEGORY_TABS = [
+  { label: '전체', value: 'all' },
+  { label: '활동자료', value: 'activity' },
+  { label: '계획안', value: 'plan' },
+  { label: '일지', value: 'journal' },
+  { label: '안내문', value: 'notice' },
+];
 
 const MOCK_POST: ListPost = {
   postId: 1,
@@ -18,6 +35,12 @@ const MOCK_POST: ListPost = {
 export default function ListPostSection() {
   return (
     <section aria-label="게시글 목록">
+      <CommunityHeader
+        title="모아방"
+        description="수업자료를 공유하는 공간입니다"
+        ageTabs={AGE_TABS}
+        categoryTabs={CATEGORY_TABS}
+      />
       <ListCard post={MOCK_POST} />
     </section>
   );

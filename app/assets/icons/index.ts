@@ -13,6 +13,7 @@ export { default as LoginNaverIcon } from './LoginNaverIcon.svg';
 export { default as MainLogoIcon } from './MainLogoIcon.svg';
 export { default as MoreDotIcon } from './MoreDotIcon.svg';
 export { default as ProfileIcon } from './ProfileIcon.svg';
+export { default as SearchIcon } from './SearchIcon.svg';
 export { default as SuccessIcon } from './SuccessIcon.svg';
 export { default as ToastErrorIcon } from './ToastErrorIcon.svg';
 export { default as ToastSuccessIcon } from './ToastSuccessIcon.svg';

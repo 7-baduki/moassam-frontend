@@ -3,9 +3,10 @@
 import { toast as sonnerToast } from 'sonner';
 import ToastSuccessIcon from '@/app/assets/icons/ToastSuccessIcon.svg';
 import ToastErrorIcon from '@/app/assets/icons/ToastErrorIcon.svg';
+import ToastWarningIcon from '@/app/assets/icons/ToastWarningIcon.svg';
 import XIcon from '@/app/assets/icons/XIcon.svg';
 
-type ToastType = 'success' | 'error';
+type ToastType = 'success' | 'error' | 'warning';
 
 interface ToastOptions {
   title: string;
@@ -15,7 +16,14 @@ interface ToastOptions {
 const TOAST_ICON = {
   success: ToastSuccessIcon,
   error: ToastErrorIcon,
+  warning: ToastWarningIcon,
 } as const;
+
+const TOAST_CLASS_NAMES: Record<ToastType, string> = {
+  success: 'toast-success',
+  error: 'toast-error',
+  warning: 'toast-warning',
+};
 
 function ToastContent({
   type,
@@ -26,7 +34,9 @@ function ToastContent({
   const ToastIcon = TOAST_ICON[type];
 
   return (
-    <div className={`toast-${type} flex w-90 items-center justify-between rounded-lg px-5 py-3.5`}>
+    <div
+      className={`${TOAST_CLASS_NAMES[type]} flex w-90 items-center justify-between rounded-lg px-5 py-3.5`}
+    >
       <div className="flex items-center gap-3">
         <ToastIcon />
         <div className="flex flex-1 flex-col gap-0.5">
@@ -56,6 +66,16 @@ export const toast = {
     sonnerToast.custom((id) => (
       <ToastContent
         type="error"
+        title={title}
+        description={description}
+        onDismiss={() => sonnerToast.dismiss(id)}
+      />
+    ));
+  },
+  warning({ title, description }: ToastOptions) {
+    sonnerToast.custom((id) => (
+      <ToastContent
+        type="warning"
         title={title}
         description={description}
         onDismiss={() => sonnerToast.dismiss(id)}

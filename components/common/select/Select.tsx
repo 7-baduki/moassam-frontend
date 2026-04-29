@@ -1,8 +1,7 @@
 'use client';
 
 import { useEffect, useRef, useState } from 'react';
-import CheckIcon from '@/app/assets/icons/CheckIcon.svg';
-import ChevronDownIcon from '@/app/assets/icons/ChevronDownIcon.svg';
+import { CheckIcon, ChevronDownIcon } from '@/app/assets/icons';
 import { cn } from '@/utils/cn';
 import type { SelectProps, SelectSize } from './select.type';
 

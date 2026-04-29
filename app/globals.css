@@ -53,9 +53,19 @@ html {
   font-family: var(--font-pretendard), system-ui, sans-serif;
 }
 
-.typo-line {
+.typo-line-m2 {
   line-height: 140%;
   letter-spacing: -0.02em;
+}
+
+.typo-line-m4 {
+  line-height: 140%;
+  letter-spacing: -0.04em;
+}
+
+.typo-line-p2 {
+  line-height: 140%;
+  letter-spacing: 0.02em;
 }
 
 .toast-success {

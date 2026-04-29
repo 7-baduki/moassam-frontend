@@ -7,7 +7,7 @@ import {
   LoginKakaoIcon,
   LoginNaverIcon,
   LoginGoogleIcon,
-  LoginBottomLogo,
+  LoginBottomLogoIcon,
 } from '@/app/assets/icons';
 import { useLoginModalStore } from '@/stores/loginModalStore';
 import { LoginButton } from './LoginButton';
@@ -78,7 +78,7 @@ export function LoginModal() {
             </div>
           </div>
 
-          <LoginBottomLogo className="mt-4" />
+          <LoginBottomLogoIcon className="mt-4" />
         </div>
       </div>
     </FocusTrap>

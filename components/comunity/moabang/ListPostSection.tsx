@@ -1,5 +1,6 @@
 import ListCard from './ListCard';
-import CommunityHeader from '@/components/comunity/CommunityHeader';
+import CommunityTitleBar from '@/components/comunity/CommunityTitleBar';
+import CommunityFilter from '@/components/comunity/CommunityFilter';
 import type { ListPost } from './moabang.type';
 
 const AGE_TABS = [
@@ -34,13 +35,9 @@ const MOCK_POST: ListPost = {
 
 export default function ListPostSection() {
   return (
-    <section aria-label="게시글 목록">
-      <CommunityHeader
-        title="모아방"
-        description="수업자료를 공유하는 공간입니다"
-        ageTabs={AGE_TABS}
-        categoryTabs={CATEGORY_TABS}
-      />
+    <section className="flex flex-col gap-4" aria-label="게시글 목록">
+      <CommunityTitleBar title="모아방" description="수업자료를 공유하는 공간입니다" />
+      <CommunityFilter ageTabs={AGE_TABS} categoryTabs={CATEGORY_TABS} />
       <ListCard post={MOCK_POST} />
     </section>
   );

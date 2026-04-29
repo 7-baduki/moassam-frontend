@@ -17,5 +17,5 @@ export { default as ProfileIcon } from './ProfileIcon.svg';
 export { default as SuccessIcon } from './SuccessIcon.svg';
 export { default as ToastErrorIcon } from './ToastErrorIcon.svg';
 export { default as ToastSuccessIcon } from './ToastSuccessIcon.svg';
-export { default as ViewCountIcon } from './viewCountIcon.svg';
+export { default as ViewCountIcon } from './ViewCountIcon.svg';
 export { default as XIcon } from './XIcon.svg';

@@ -53,6 +53,11 @@ html {
   font-family: var(--font-pretendard), system-ui, sans-serif;
 }
 
+.typo-line {
+  line-height: 140%;
+  letter-spacing: -0.02em;
+}
+
 .toast-success {
   background:
     linear-gradient(0deg, rgba(52, 52, 52, 0.9), rgba(52, 52, 52, 0.9)),

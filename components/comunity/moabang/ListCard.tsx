@@ -1,7 +1,5 @@
 import Image from 'next/image';
-import ViewCountIcon from '@/app/assets/icons/viewCountIcon.svg';
-import LikeCountIcon from '@/app/assets/icons/LikeCountIcon.svg';
-import CommentCountIcon from '@/app/assets/icons/CommentCountIcon.svg';
+import { ViewCountIcon, LikeCountIcon, CommentCountIcon } from '@/app/assets/icons';
 import { Badge } from '@/components/common/badge';
 import type { ListPost } from './moabang.type';
 

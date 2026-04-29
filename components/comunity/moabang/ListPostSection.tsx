@@ -1,6 +1,6 @@
 'use client';
 
-import { useRef } from 'react';
+import { useEffect, useRef } from 'react';
 import { useRouter, useSearchParams, usePathname } from 'next/navigation';
 import ListCard from './ListCard';
 import CommunityTitleBar from '@/components/comunity/CommunityTitleBar';
@@ -44,20 +44,33 @@ export default function ListPostSection() {
   const router = useRouter();
   const pathname = usePathname();
   const searchParams = useSearchParams();
+  const sectionRef = useRef<HTMLElement>(null);
   const currentPage = Number(searchParams.get('page') ?? 1);
 
   const totalPages = Math.ceil(MOCK_POSTS.length / PAGE_SIZE);
   const startIndex = (currentPage - 1) * PAGE_SIZE;
   const visiblePosts = MOCK_POSTS.slice(startIndex, startIndex + PAGE_SIZE);
 
+  useEffect(() => {
+    if (currentPage >= totalPages) return;
+    const nextStart = currentPage * PAGE_SIZE;
+    const nextPosts = MOCK_POSTS.slice(nextStart, nextStart + PAGE_SIZE);
+    nextPosts.forEach((post) => {
+      if (!post.thumnail) return;
+      const img = new window.Image();
+      img.src = post.thumnail;
+    });
+  }, [currentPage, totalPages]);
+
   function handlePageChange(page: number) {
     const params = new URLSearchParams(searchParams.toString());
     params.set('page', String(page));
-    router.push(`${pathname}?${params.toString()}`);
+    router.push(`${pathname}?${params.toString()}`, { scroll: false });
+    sectionRef.current?.scrollIntoView({ behavior: 'smooth', block: 'start' });
   }
 
   return (
-    <section className="flex flex-col gap-4" aria-label="게시글 목록">
+    <section ref={sectionRef} className="flex flex-col gap-4" aria-label="게시글 목록">
       <CommunityTitleBar title="모아방" description="수업자료를 공유하는 공간입니다" />
       <CommunityFilter ageTabs={AGE_TABS} categoryTabs={CATEGORY_TABS} />
       <div className="grid grid-cols-3 gap-5">

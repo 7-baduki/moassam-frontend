@@ -53,6 +53,12 @@ html {
   font-family: var(--font-pretendard), system-ui, sans-serif;
 }
 
+@layer base {
+  button {
+    cursor: pointer;
+  }
+}
+
 .typo-line-m2 {
   line-height: 140%;
   letter-spacing: -0.02em;

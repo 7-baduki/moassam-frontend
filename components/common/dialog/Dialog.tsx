@@ -3,9 +3,7 @@
 import * as RadixDialog from '@radix-ui/react-dialog';
 import { Button, ButtonProps } from '@/components/common/button/Button';
 import { cn } from '@/utils/cn';
-import SuccessIcon from '@/app/assets/icons/SuccessIcon.svg';
-import ErrorIcon from '@/app/assets/icons/ErrorIcon.svg';
-import LockIcon from '@/app/assets/icons/LockIcon.svg';
+import { SuccessIcon, ErrorIcon, LockIcon } from '@/app/assets/icons';
 
 type IconType = 'loading' | 'success' | 'error' | 'lock';
 

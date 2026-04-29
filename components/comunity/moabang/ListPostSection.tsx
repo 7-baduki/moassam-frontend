@@ -45,7 +45,11 @@ export default function ListPostSection() {
   const pathname = usePathname();
   const searchParams = useSearchParams();
   const sectionRef = useRef<HTMLElement>(null);
+
   const currentPage = Number(searchParams.get('page') ?? 1);
+  const age = searchParams.get('age') ?? 'all';
+  const category = searchParams.get('category') ?? 'all';
+  const sort = searchParams.get('sort') ?? 'recommended';
 
   const totalPages = Math.ceil(MOCK_POSTS.length / PAGE_SIZE);
   const startIndex = (currentPage - 1) * PAGE_SIZE;
@@ -62,17 +66,31 @@ export default function ListPostSection() {
     });
   }, [currentPage, totalPages]);
 
-  function handlePageChange(page: number) {
+  function updateParam(key: string, value: string, resetPage = false) {
     const params = new URLSearchParams(searchParams.toString());
-    params.set('page', String(page));
+    params.set(key, value);
+    if (resetPage) params.set('page', '1');
     router.push(`${pathname}?${params.toString()}`, { scroll: false });
+  }
+
+  function handlePageChange(page: number) {
+    updateParam('page', String(page));
     sectionRef.current?.scrollIntoView({ behavior: 'smooth', block: 'start' });
   }
 
   return (
     <section ref={sectionRef} className="flex flex-col gap-4" aria-label="게시글 목록">
       <CommunityTitleBar title="모아방" description="수업자료를 공유하는 공간입니다" />
-      <CommunityFilter ageTabs={AGE_TABS} categoryTabs={CATEGORY_TABS} />
+      <CommunityFilter
+        ageTabs={AGE_TABS}
+        age={age}
+        onAgeChange={(value) => updateParam('age', value, true)}
+        categoryTabs={CATEGORY_TABS}
+        category={category}
+        onCategoryChange={(value) => updateParam('category', value, true)}
+        sort={sort}
+        onSortChange={(value) => updateParam('sort', value, true)}
+      />
       <div className="grid grid-cols-3 gap-5">
         {visiblePosts.map((post) => (
           <ListCard key={post.postId} post={post} />

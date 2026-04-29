@@ -1,21 +1,23 @@
 'use client';
 
-import { useState } from 'react';
 import { Select } from '@/components/common/select/Select';
-import { cn } from '@/utils/cn';
-
-interface Tab {
-  label: string;
-  value: string;
-}
+import Tabs, { type TabOption } from '@/components/common/tabs/Tabs';
 
 interface CommunityFilterProps {
-  ageTabs?: Tab[];
-  categoryTabs?: Tab[];
-  sortOptions?: Tab[];
+  ageTabs?: TabOption[];
+  age?: string;
+  onAgeChange?: (value: string) => void;
+
+  categoryTabs?: TabOption[];
+  category?: string;
+  onCategoryChange?: (value: string) => void;
+
+  sortOptions?: TabOption[];
+  sort?: string;
+  onSortChange?: (value: string) => void;
 }
 
-const DEFAULT_SORT_OPTIONS: Tab[] = [
+const DEFAULT_SORT_OPTIONS: TabOption[] = [
   { label: '추천순', value: 'recommended' },
   { label: '최신순', value: 'latest' },
   { label: '인기순', value: 'popular' },
@@ -23,62 +25,32 @@ const DEFAULT_SORT_OPTIONS: Tab[] = [
 
 export default function CommunityFilter({
   ageTabs,
+  age = '',
+  onAgeChange,
   categoryTabs,
+  category = '',
+  onCategoryChange,
   sortOptions = DEFAULT_SORT_OPTIONS,
+  sort,
+  onSortChange,
 }: CommunityFilterProps) {
-  const [activeAge, setActiveAge] = useState(ageTabs?.[0]?.value ?? '');
-  const [activeCategory, setActiveCategory] = useState(categoryTabs?.[0]?.value ?? '');
-  const [sort, setSort] = useState(sortOptions[0].value);
+  const sortValue = sort ?? sortOptions[0].value;
 
   return (
     <div className="flex items-stretch justify-between rounded-lg bg-black-200 pr-1.5 pl-5">
       <div className="flex items-stretch">
-        {ageTabs && (
-          <div className="flex items-center gap-5">
-            {ageTabs.map((tab) => (
-              <button
-                key={tab.value}
-                type="button"
-                onClick={() => setActiveAge(tab.value)}
-                className={cn(
-                  'typo-line-m2 flex h-full items-center border-b-2 text-sm transition-colors',
-                  activeAge === tab.value
-                    ? 'border-pink-500 font-semibold text-pink-500'
-                    : 'border-transparent font-medium text-black-700',
-                )}
-              >
-                {tab.label}
-              </button>
-            ))}
-          </div>
-        )}
+        {ageTabs && onAgeChange && <Tabs options={ageTabs} value={age} onChange={onAgeChange} />}
         {ageTabs && categoryTabs && <div className="mx-7.5 h-4 w-px self-center bg-black-700" />}
-        {categoryTabs && (
-          <div className="flex items-center gap-5">
-            {categoryTabs.map((tab) => (
-              <button
-                key={tab.value}
-                type="button"
-                onClick={() => setActiveCategory(tab.value)}
-                className={cn(
-                  'typo-line-m2 flex h-full items-center border-b-2 text-sm transition-colors',
-                  activeCategory === tab.value
-                    ? 'border-pink-500 font-semibold text-pink-500'
-                    : 'border-transparent font-medium text-black-700',
-                )}
-              >
-                {tab.label}
-              </button>
-            ))}
-          </div>
+        {categoryTabs && onCategoryChange && (
+          <Tabs options={categoryTabs} value={category} onChange={onCategoryChange} />
         )}
       </div>
       <Select
         size="sm"
         options={sortOptions}
-        value={sort}
-        triggerLabel={sortOptions.find((o) => o.value === sort)?.label}
-        onChange={(value) => setSort(value as string)}
+        value={sortValue}
+        triggerLabel={sortOptions.find((o) => o.value === sortValue)?.label}
+        onChange={(value) => onSortChange?.(value as string)}
       />
     </div>
   );

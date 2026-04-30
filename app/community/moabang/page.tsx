@@ -1,4 +1,4 @@
-import { HotPostSection, ListPostBoundary } from '@/components/comunity/moabang';
+import { HotPostSection, ListPostBoundary } from '@/components/community/moabang';
 
 export default function MoabangPage() {
   return (

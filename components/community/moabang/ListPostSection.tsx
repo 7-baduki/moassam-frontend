@@ -3,8 +3,8 @@
 import { useEffect, useRef } from 'react';
 import { useRouter, useSearchParams, usePathname } from 'next/navigation';
 import ListCard from './ListCard';
-import CommunityTitleBar from '@/components/comunity/CommunityTitleBar';
-import CommunityFilter from '@/components/comunity/CommunityFilter';
+import CommunityTitleBar from '@/components/community/CommunityTitleBar';
+import CommunityFilter from '@/components/community/CommunityFilter';
 import Pagination from '@/components/common/pagination/Pagination';
 import type { ListPost } from './moabang.type';
 

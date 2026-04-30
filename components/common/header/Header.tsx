@@ -24,7 +24,7 @@ export default function Header({ isLoggedIn = false }: HeaderProps) {
           <Link href="/ai" className="font-semibold text-pink-500">
             AI 일지 생성
           </Link>
-          <Link href="/community">커뮤니티</Link>
+          <Link href="/community/moabang">커뮤니티</Link>
           <Link href="/my-class">내 수업</Link>
         </nav>
       </div>

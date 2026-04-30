@@ -18,15 +18,29 @@ const INACTIVE = 'bg-white text-black-700 shadow-sm hover:bg-black-100';
 const DISABLED = 'bg-white text-black-400 shadow-sm cursor-not-allowed';
 
 export default function Pagination({ currentPage, totalPages, onChange }: PaginationProps) {
+  if (totalPages <= 0) return null;
+
   const pages = getPageNumbers(totalPages);
+  const isFirst = currentPage <= 1;
+  const isLast = currentPage >= totalPages;
+
+  function handlePrev() {
+    if (isFirst) return;
+    onChange(currentPage - 1);
+  }
+
+  function handleNext() {
+    if (isLast) return;
+    onChange(currentPage + 1);
+  }
 
   return (
     <div className="flex items-center gap-2">
       <button
         type="button"
-        onClick={() => onChange(currentPage - 1)}
-        disabled={currentPage === 1}
-        className={cn(BUTTON_BASE, currentPage === 1 ? DISABLED : INACTIVE)}
+        onClick={handlePrev}
+        disabled={isFirst}
+        className={cn(BUTTON_BASE, isFirst ? DISABLED : INACTIVE)}
         aria-label="이전 페이지"
       >
         <ChevronDownIcon className="h-4 w-4 rotate-90" />
@@ -46,9 +60,9 @@ export default function Pagination({ currentPage, totalPages, onChange }: Pagina
 
       <button
         type="button"
-        onClick={() => onChange(currentPage + 1)}
-        disabled={currentPage === totalPages}
-        className={cn(BUTTON_BASE, currentPage === totalPages ? DISABLED : INACTIVE)}
+        onClick={handleNext}
+        disabled={isLast}
+        className={cn(BUTTON_BASE, isLast ? DISABLED : INACTIVE)}
         aria-label="다음 페이지"
       >
         <ChevronDownIcon className="h-4 w-4 -rotate-90" />

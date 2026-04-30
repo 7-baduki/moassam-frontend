@@ -39,13 +39,18 @@ export default function CommunityFilter({
   const isValidSort = sort !== undefined && sortOptions.some((o) => o.value === sort);
   const sortValue = isValidSort ? sort : fallbackSortValue;
 
+  const showAgeTabs = Boolean(ageTabs && onAgeChange);
+  const showCategoryTabs = Boolean(categoryTabs && onCategoryChange);
+
   return (
     <div className="flex items-stretch justify-between rounded-lg bg-black-200 pr-1.5 pl-5">
       <div className="flex items-stretch">
-        {ageTabs && onAgeChange && <Tabs options={ageTabs} value={age} onChange={onAgeChange} />}
-        {ageTabs && categoryTabs && <div className="mx-7.5 h-4 w-px self-center bg-black-700" />}
-        {categoryTabs && onCategoryChange && (
-          <Tabs options={categoryTabs} value={category} onChange={onCategoryChange} />
+        {showAgeTabs && <Tabs options={ageTabs!} value={age} onChange={onAgeChange!} />}
+        {showAgeTabs && showCategoryTabs && (
+          <div className="mx-7.5 h-4 w-px self-center bg-black-700" />
+        )}
+        {showCategoryTabs && (
+          <Tabs options={categoryTabs!} value={category} onChange={onCategoryChange!} />
         )}
       </div>
       {hasSortOptions && (

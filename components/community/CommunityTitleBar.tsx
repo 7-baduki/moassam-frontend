@@ -18,7 +18,8 @@ export default function CommunityTitleBar({ title, description, onWrite }: Commu
         <div className="flex items-center gap-2 rounded-lg border border-black-300 px-3 py-2">
           <SearchIcon className="h-4 w-4 shrink-0 text-black-400" />
           <input
-            type="text"
+            type="search"
+            aria-label="게시글 검색"
             placeholder="주제를 입력하세요"
             className="w-40 text-sm text-black-800 outline-none placeholder:text-black-400"
           />

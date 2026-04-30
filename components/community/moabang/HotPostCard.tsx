@@ -31,7 +31,7 @@ export default function HotPostCard({ post }: HotPostCardProps) {
       </div>
       {post.thumnail && (
         <div className="relative w-39 shrink-0">
-          <Image src={post.thumnail} alt="" fill className="object-cover" />
+          <Image src={post.thumnail} alt={post.title} fill className="object-cover" />
         </div>
       )}
     </article>

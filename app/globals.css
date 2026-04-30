@@ -53,6 +53,31 @@ html {
   font-family: var(--font-pretendard), system-ui, sans-serif;
 }
 
+@layer base {
+  button {
+    cursor: pointer;
+  }
+
+  button:disabled {
+    cursor: not-allowed;
+  }
+}
+
+.typo-line-m2 {
+  line-height: 140%;
+  letter-spacing: -0.02em;
+}
+
+.typo-line-m4 {
+  line-height: 140%;
+  letter-spacing: -0.04em;
+}
+
+.typo-line-p2 {
+  line-height: 140%;
+  letter-spacing: 0.02em;
+}
+
 .toast-success {
   background:
     linear-gradient(0deg, rgba(52, 52, 52, 0.9), rgba(52, 52, 52, 0.9)),

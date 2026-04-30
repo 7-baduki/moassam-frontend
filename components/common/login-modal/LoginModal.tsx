@@ -2,11 +2,13 @@
 
 import { useEffect } from 'react';
 import { FocusTrap } from 'focus-trap-react';
-import MainLogoIcon from '@/app/assets/icons/MainLogoIcon.svg';
-import LoginKakaoIcon from '@/app/assets/icons/LoginKakaoIcon.svg';
-import LoginNaverIcon from '@/app/assets/icons/LoginNaverIcon.svg';
-import LoginGoogleIcon from '@/app/assets/icons/LoginGoogleIcon.svg';
-import LoginBottomLogo from '@/app/assets/icons/LoginBottomLogo.svg';
+import {
+  MainLogoIcon,
+  LoginKakaoIcon,
+  LoginNaverIcon,
+  LoginGoogleIcon,
+  LoginBottomLogoIcon,
+} from '@/app/assets/icons';
 import { useLoginModalStore } from '@/stores/loginModalStore';
 import { LoginButton } from './LoginButton';
 import { Tooltip } from '@/components/common/Tooltip';
@@ -76,7 +78,7 @@ export function LoginModal() {
             </div>
           </div>
 
-          <LoginBottomLogo className="mt-4" />
+          <LoginBottomLogoIcon className="mt-4" />
         </div>
       </div>
     </FocusTrap>

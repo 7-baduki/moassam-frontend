@@ -2,9 +2,7 @@
 
 import Link from 'next/link';
 import { Button } from '@/components/common/button/Button';
-import MainLogoIcon from '@/app/assets/icons/MainLogoIcon.svg';
-import BellOffIcon from '@/app/assets/icons/BellOffIcon.svg';
-import ProfileIcon from '@/app/assets/icons/ProfileIcon.svg';
+import { MainLogoIcon, BellOffIcon, ProfileIcon } from '@/app/assets/icons';
 import { useLoginModalStore } from '@/stores/loginModalStore';
 
 interface HeaderProps {
@@ -26,7 +24,7 @@ export default function Header({ isLoggedIn = false }: HeaderProps) {
           <Link href="/ai" className="font-semibold text-pink-500">
             AI 일지 생성
           </Link>
-          <Link href="/community">커뮤니티</Link>
+          <Link href="/community/moabang">커뮤니티</Link>
           <Link href="/my-class">내 수업</Link>
         </nav>
       </div>

@@ -1,10 +1,7 @@
 'use client';
 
 import { toast as sonnerToast } from 'sonner';
-import ToastSuccessIcon from '@/app/assets/icons/ToastSuccessIcon.svg';
-import ToastErrorIcon from '@/app/assets/icons/ToastErrorIcon.svg';
-import ToastWarningIcon from '@/app/assets/icons/ToastWarningIcon.svg';
-import XIcon from '@/app/assets/icons/XIcon.svg';
+import { ToastSuccessIcon, ToastErrorIcon, ToastWarningIcon, XIcon } from '@/app/assets/icons';
 
 type ToastType = 'success' | 'error' | 'warning';
 

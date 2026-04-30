@@ -32,7 +32,7 @@ const MOCK_POSTS: ListPost[] = Array.from({ length: 90 }, (_, i) => ({
   categoryName: '모아방',
   tags: ['영아', '계획안'],
   title: '5월 가정의달 주제 수업 활동지 공유합니다 (수정가능)',
-  thumnail: `https://picsum.photos/400/200?random=${i + 1}`,
+  thumbnail: `https://picsum.photos/400/200?random=${i + 1}`,
   authorName: '햇살선생님',
   likeCount: 46,
   commentCount: 119,
@@ -62,9 +62,9 @@ export default function ListPostSection() {
     const nextStart = currentPage * PAGE_SIZE;
     const nextPosts = MOCK_POSTS.slice(nextStart, nextStart + PAGE_SIZE);
     nextPosts.forEach((post) => {
-      if (!post.thumnail) return;
+      if (!post.thumbnail) return;
       const img = new window.Image();
-      img.src = post.thumnail;
+      img.src = post.thumbnail;
     });
   }, [currentPage, totalPages]);
 

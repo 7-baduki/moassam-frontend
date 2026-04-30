@@ -13,7 +13,7 @@ const MOCK_HOT_POSTS: HotPost[] = [
     contentPreview: '유치원에서 학부모 면담에서 칭찬받은 활동지 어쩌구',
     authorName: '👑 자료 맞짐 작성자',
     createdAt: '2026.03.16',
-    thumnail: 'https://picsum.photos/156/200?random=1',
+    thumbnail: 'https://picsum.photos/156/200?random=1',
   },
   {
     postId: 2,
@@ -32,7 +32,7 @@ const MOCK_HOT_POSTS: HotPost[] = [
     contentPreview: '유치원에서 학부모 면담에서 칭찬받은 활동지 어쩌구',
     authorName: '👑 자료 맞짐 작성자',
     createdAt: '2026.03.16',
-    thumnail: 'https://picsum.photos/156/200?random=2',
+    thumbnail: 'https://picsum.photos/156/200?random=2',
   },
   {
     postId: 4,
@@ -42,7 +42,7 @@ const MOCK_HOT_POSTS: HotPost[] = [
     contentPreview: '수업 때 아이들 반응이 너무 좋았어요 참고하세요',
     authorName: '햇살선생님',
     createdAt: '2026.03.14',
-    thumnail: 'https://picsum.photos/156/200?random=3',
+    thumbnail: 'https://picsum.photos/156/200?random=3',
   },
   {
     postId: 5,
@@ -61,7 +61,7 @@ const MOCK_HOT_POSTS: HotPost[] = [
     contentPreview: '꽃 만들기 활동인데 아이들이 정말 좋아했어요',
     authorName: '꽃샘선생님',
     createdAt: '2026.03.10',
-    thumnail: 'https://picsum.photos/156/200?random=4',
+    thumbnail: 'https://picsum.photos/156/200?random=4',
   },
 ];
 

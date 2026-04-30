@@ -5,7 +5,7 @@ export type HotPostCategory = PostCategory;
 export interface ListPost {
   postId: number;
   title: string;
-  thumnail?: string;
+  thumbnail?: string;
   category: PostCategory;
   categoryName: string;
   tags?: string[];
@@ -20,7 +20,7 @@ export interface HotPost {
   postId: number;
   title: string;
   contentPreview: string;
-  thumnail?: string;
+  thumbnail?: string;
   category: HotPostCategory;
   categoryName: string;
   authorName?: string;

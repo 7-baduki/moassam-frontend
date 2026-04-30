@@ -29,9 +29,9 @@ export default function HotPostCard({ post }: HotPostCardProps) {
           </div>
         </div>
       </div>
-      {post.thumnail && (
+      {post.thumbnail && (
         <div className="relative w-39 shrink-0">
-          <Image src={post.thumnail} alt={post.title} fill className="object-cover" />
+          <Image src={post.thumbnail} alt={post.title} fill className="object-cover" />
         </div>
       )}
     </article>

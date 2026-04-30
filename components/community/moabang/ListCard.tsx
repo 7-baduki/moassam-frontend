@@ -10,9 +10,9 @@ interface ListCardProps {
 export default function ListCard({ post }: ListCardProps) {
   return (
     <article className="flex h-99.5 w-full flex-col overflow-hidden rounded-2xl bg-white shadow-sm">
-      {post.thumnail && (
+      {post.thumbnail && (
         <div className="relative h-61.25 w-full shrink-0">
-          <Image src={post.thumnail} alt={post.title} fill className="object-cover" />
+          <Image src={post.thumbnail} alt={post.title} fill className="object-cover" />
         </div>
       )}
       {/* contents Area */}

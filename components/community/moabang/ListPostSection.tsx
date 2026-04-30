@@ -46,12 +46,14 @@ export default function ListPostSection() {
   const searchParams = useSearchParams();
   const sectionRef = useRef<HTMLElement>(null);
 
-  const currentPage = Number(searchParams.get('page') ?? 1);
   const age = searchParams.get('age') ?? 'all';
   const category = searchParams.get('category') ?? 'all';
   const sort = searchParams.get('sort') ?? 'recommended';
 
-  const totalPages = Math.ceil(MOCK_POSTS.length / PAGE_SIZE);
+  const totalPages = Math.max(1, Math.ceil(MOCK_POSTS.length / PAGE_SIZE));
+  const rawPage = Number(searchParams.get('page'));
+  const currentPage = Number.isInteger(rawPage) && rawPage >= 1 ? Math.min(rawPage, totalPages) : 1;
+
   const startIndex = (currentPage - 1) * PAGE_SIZE;
   const visiblePosts = MOCK_POSTS.slice(startIndex, startIndex + PAGE_SIZE);
 

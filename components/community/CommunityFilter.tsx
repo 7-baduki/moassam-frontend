@@ -35,7 +35,9 @@ export default function CommunityFilter({
   onSortChange,
 }: CommunityFilterProps) {
   const hasSortOptions = sortOptions.length > 0;
-  const sortValue = sort ?? sortOptions[0]?.value ?? '';
+  const fallbackSortValue = sortOptions[0]?.value ?? '';
+  const isValidSort = sort !== undefined && sortOptions.some((o) => o.value === sort);
+  const sortValue = isValidSort ? sort : fallbackSortValue;
 
   return (
     <div className="flex items-stretch justify-between rounded-lg bg-black-200 pr-1.5 pl-5">

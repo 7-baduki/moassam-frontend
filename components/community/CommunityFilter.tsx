@@ -34,7 +34,8 @@ export default function CommunityFilter({
   sort,
   onSortChange,
 }: CommunityFilterProps) {
-  const sortValue = sort ?? sortOptions[0].value;
+  const hasSortOptions = sortOptions.length > 0;
+  const sortValue = sort ?? sortOptions[0]?.value ?? '';
 
   return (
     <div className="flex items-stretch justify-between rounded-lg bg-black-200 pr-1.5 pl-5">
@@ -45,13 +46,15 @@ export default function CommunityFilter({
           <Tabs options={categoryTabs} value={category} onChange={onCategoryChange} />
         )}
       </div>
-      <Select
-        size="sm"
-        options={sortOptions}
-        value={sortValue}
-        triggerLabel={sortOptions.find((o) => o.value === sortValue)?.label}
-        onChange={(value) => onSortChange?.(value as string)}
-      />
+      {hasSortOptions && (
+        <Select
+          size="sm"
+          options={sortOptions}
+          value={sortValue}
+          triggerLabel={sortOptions.find((o) => o.value === sortValue)?.label}
+          onChange={(value) => onSortChange?.(value as string)}
+        />
+      )}
     </div>
   );
 }

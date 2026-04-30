@@ -24,7 +24,22 @@ const CATEGORY_TABS = [
   { label: '안내문', value: 'notice' },
 ];
 
+const SORT_OPTIONS = [
+  { label: '추천순', value: 'recommended' },
+  { label: '최신순', value: 'latest' },
+  { label: '인기순', value: 'popular' },
+];
+
 const PAGE_SIZE = 9;
+
+function getValidParam<T extends { value: string }>(
+  raw: string | null,
+  options: T[],
+  fallback: string,
+): string {
+  if (raw && options.some((o) => o.value === raw)) return raw;
+  return fallback;
+}
 
 const MOCK_POSTS: ListPost[] = Array.from({ length: 90 }, (_, i) => ({
   postId: i + 1,
@@ -46,9 +61,9 @@ export default function ListPostSection() {
   const searchParams = useSearchParams();
   const sectionRef = useRef<HTMLElement>(null);
 
-  const age = searchParams.get('age') ?? 'all';
-  const category = searchParams.get('category') ?? 'all';
-  const sort = searchParams.get('sort') ?? 'recommended';
+  const age = getValidParam(searchParams.get('age'), AGE_TABS, 'all');
+  const category = getValidParam(searchParams.get('category'), CATEGORY_TABS, 'all');
+  const sort = getValidParam(searchParams.get('sort'), SORT_OPTIONS, 'recommended');
 
   const totalPages = Math.max(1, Math.ceil(MOCK_POSTS.length / PAGE_SIZE));
   const rawPage = Number(searchParams.get('page'));
@@ -90,6 +105,7 @@ export default function ListPostSection() {
         categoryTabs={CATEGORY_TABS}
         category={category}
         onCategoryChange={(value) => updateParam('category', value, true)}
+        sortOptions={SORT_OPTIONS}
         sort={sort}
         onSortChange={(value) => updateParam('sort', value, true)}
       />

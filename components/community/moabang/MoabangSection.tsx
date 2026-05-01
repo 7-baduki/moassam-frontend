@@ -10,7 +10,7 @@ import type { MoabangPost } from './moabang.type';
 import {
   MOABANG_AGE_FILTER_TABS,
   MOABANG_CATEGORY_FILTER_TABS,
-} from '@/components/community/COMMUNITY_TABS';
+} from '@/constants/community/community-tabs';
 
 const PAGE_SIZE = 9;
 

@@ -6,7 +6,7 @@ import CommunityTitleBar from '@/components/community/CommunityTitleBar';
 import CommunityFilter from '@/components/community/CommunityFilter';
 import Pagination from '@/components/common/pagination/Pagination';
 import type { BoardPost } from './board.type';
-import { BOARD_CATEGORY_FILTER_TABS } from '@/components/community/COMMUNITY_TABS';
+import { BOARD_CATEGORY_FILTER_TABS } from '@/constants/community/community-tabs';
 
 const PAGE_SIZE = 8;
 

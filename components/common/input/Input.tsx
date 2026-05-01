@@ -1,6 +1,6 @@
 'use client';
 
-import { useState } from 'react';
+import { useRef, useState } from 'react';
 import { SearchIcon, XCircleIcon } from '@/app/assets/icons';
 import { cn } from '@/utils/cn';
 import type { InputProps } from './input.type';
@@ -16,19 +16,36 @@ export function Input({
   value,
   onChange,
   onClear,
+  onFocus,
+  onBlur,
   className,
   ...props
 }: InputProps) {
+  const inputRef = useRef<HTMLInputElement>(null);
   const [isFocused, setIsFocused] = useState(false);
   const showClearButton = isFocused && !!value;
+
+  const handleBlur = (e: React.FocusEvent<HTMLDivElement>) => {
+    if (!e.currentTarget.contains(e.relatedTarget)) {
+      setIsFocused(false);
+      onBlur?.(e as unknown as React.FocusEvent<HTMLInputElement>);
+    }
+  };
+
+  const handleFocus = (e: React.FocusEvent<HTMLInputElement>) => {
+    setIsFocused(true);
+    onFocus?.(e);
+  };
 
   const handleClear = (e: React.MouseEvent<HTMLButtonElement>) => {
     e.preventDefault();
     onClear?.();
+    inputRef.current?.focus();
   };
 
   return (
     <div
+      onBlur={handleBlur}
       className={cn(
         'flex items-center gap-2 rounded-lg border py-2 pr-3 pl-4 transition-colors',
         isFocused ? 'border-pink-500 bg-white' : 'border-black-300',
@@ -47,10 +64,10 @@ export function Input({
           'min-w-0 flex-1 bg-transparent text-xs outline-none placeholder:text-black-600',
           isFocused ? 'text-black-800' : 'text-black-600',
         )}
+        ref={inputRef}
         value={value ?? ''}
         onChange={onChange}
-        onFocus={() => setIsFocused(true)}
-        onBlur={() => setIsFocused(false)}
+        onFocus={handleFocus}
         {...props}
       />
       {showClearButton && (
@@ -58,6 +75,7 @@ export function Input({
           type="button"
           aria-label="입력 초기화"
           onMouseDown={handleClear}
+          onClick={handleClear}
           className="shrink-0"
         >
           <XCircleIcon className="h-3 w-3" aria-hidden />

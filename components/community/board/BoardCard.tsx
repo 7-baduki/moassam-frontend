@@ -8,17 +8,19 @@ interface BoardCardProps {
 
 export default function BoardCard({ post }: BoardCardProps) {
   return (
-    <article className="flex flex-col rounded-2xl bg-white px-5 py-6 shadow-sm">
+    <article className="flex flex-col rounded-2xl border border-black-200 bg-white px-7.5 pt-7.5 pb-6">
       <div className="flex gap-2">
         <Badge label={post.categoryName} variant="pink-light" />
       </div>
-      <h3 className="typo-line-m4 mt-2.5 line-clamp-1 text-base font-semibold text-black-800">
+      <h3 className="typo-line-m4 mt-2 line-clamp-1 text-base font-semibold text-black-800">
         {post.title}
       </h3>
-      <p className="typo-line-m2 mt-2 line-clamp-2 text-sm font-medium text-black-600">
-        {post.contentPreview}
-      </p>
-      <p className="typo-line-m2 mt-4 truncate text-sm font-semibold text-black-600">
+      <div className="mt-7 h-14">
+        <p className="typo-line-m2 line-clamp-2 overflow-hidden text-sm font-medium text-black-700">
+          {post.contentPreview}
+        </p>
+      </div>
+      <p className="typo-line-m2 mt-4 truncate text-xs font-semibold text-black-600">
         {post.authorName}
       </p>
       <div className="mt-1.5 flex items-center justify-between text-xs text-black-500">

@@ -7,22 +7,10 @@ import CommunityTitleBar from '@/components/community/CommunityTitleBar';
 import CommunityFilter from '@/components/community/CommunityFilter';
 import Pagination from '@/components/common/pagination/Pagination';
 import type { MoabangPost } from './moabang.type';
-
-const AGE_TABS = [
-  { label: '전체', value: 'all' },
-  { label: '영아', value: 'infant' },
-  { label: '만 3세', value: 'age3' },
-  { label: '만 4세', value: 'age4' },
-  { label: '만 5세', value: 'age5' },
-];
-
-const CATEGORY_TABS = [
-  { label: '전체', value: 'all' },
-  { label: '활동자료', value: 'activity' },
-  { label: '계획안', value: 'plan' },
-  { label: '일지', value: 'journal' },
-  { label: '안내문', value: 'notice' },
-];
+import {
+  MOABANG_AGE_FILTER_TABS,
+  MOABANG_CATEGORY_FILTER_TABS,
+} from '@/components/community/COMMUNITY_TABS';
 
 const PAGE_SIZE = 9;
 
@@ -54,8 +42,8 @@ export default function MoabangSection() {
   const pathname = usePathname();
   const searchParams = useSearchParams();
 
-  const age = getValidParam(searchParams.get('age'), AGE_TABS, 'all');
-  const category = getValidParam(searchParams.get('category'), CATEGORY_TABS, 'all');
+  const age = getValidParam(searchParams.get('age'), MOABANG_AGE_FILTER_TABS, 'all');
+  const category = getValidParam(searchParams.get('category'), MOABANG_CATEGORY_FILTER_TABS, 'all');
 
   const totalPages = Math.max(1, Math.ceil(MOCK_POSTS.length / PAGE_SIZE));
   const rawPage = Number(searchParams.get('page'));
@@ -90,10 +78,10 @@ export default function MoabangSection() {
     <section className="flex flex-col" aria-label="게시글 목록">
       <CommunityTitleBar title="모아방" description="수업자료를 공유하는 공간입니다" />
       <CommunityFilter
-        ageTabs={AGE_TABS}
+        ageTabs={MOABANG_AGE_FILTER_TABS}
         age={age}
         onAgeChange={(value) => updateParam('age', value, true)}
-        categoryTabs={CATEGORY_TABS}
+        categoryTabs={MOABANG_CATEGORY_FILTER_TABS}
         category={category}
         onCategoryChange={(value) => updateParam('category', value, true)}
       />

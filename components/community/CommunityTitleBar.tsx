@@ -9,13 +9,13 @@ interface CommunityTitleBarProps {
 
 export default function CommunityTitleBar({ title, description, onWrite }: CommunityTitleBarProps) {
   return (
-    <div className="flex items-center justify-between">
-      <div className="flex items-center gap-3">
-        <h2 className="text-lg font-semibold text-black-800">{title}</h2>
+    <div className="mb-2 flex items-center justify-between">
+      <div className="flex items-center gap-3 py-[10.5px]">
+        <h2 className="typo-line-m2 text-lg font-semibold text-black-800">{title}</h2>
         <p className="typo-line-m4 text-sm font-medium text-black-600">{description}</p>
       </div>
-      <div className="flex items-center gap-3">
-        <div className="flex items-center gap-2 rounded-lg border border-black-300 px-3 py-2">
+      <div className="flex items-center gap-3 py-[7.5px]">
+        <div className="flex items-center gap-2 rounded-lg border border-black-300 py-[3.5px] pr-3 pl-4">
           <SearchIcon className="h-4 w-4 shrink-0 text-black-400" />
           <input
             type="search"

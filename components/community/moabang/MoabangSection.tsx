@@ -1,6 +1,6 @@
 'use client';
 
-import { useEffect, useRef } from 'react';
+import { useEffect } from 'react';
 import { useRouter, useSearchParams, usePathname } from 'next/navigation';
 import MoabangCard from './MoabangCard';
 import CommunityTitleBar from '@/components/community/CommunityTitleBar';
@@ -53,7 +53,6 @@ export default function MoabangSection() {
   const router = useRouter();
   const pathname = usePathname();
   const searchParams = useSearchParams();
-  const sectionRef = useRef<HTMLElement>(null);
 
   const age = getValidParam(searchParams.get('age'), AGE_TABS, 'all');
   const category = getValidParam(searchParams.get('category'), CATEGORY_TABS, 'all');
@@ -80,16 +79,15 @@ export default function MoabangSection() {
     const params = new URLSearchParams(searchParams.toString());
     params.set(key, value);
     if (resetPage) params.set('page', '1');
-    router.push(`${pathname}?${params.toString()}`, { scroll: false });
+    router.push(`${pathname}?${params.toString()}`, { scroll: true });
   }
 
   function handlePageChange(page: number) {
     updateParam('page', String(page));
-    sectionRef.current?.scrollIntoView({ behavior: 'smooth', block: 'start' });
   }
 
   return (
-    <section ref={sectionRef} className="flex flex-col gap-4" aria-label="게시글 목록">
+    <section className="flex flex-col" aria-label="게시글 목록">
       <CommunityTitleBar title="모아방" description="수업자료를 공유하는 공간입니다" />
       <CommunityFilter
         ageTabs={AGE_TABS}

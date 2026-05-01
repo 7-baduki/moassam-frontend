@@ -1,6 +1,5 @@
 'use client';
 
-import { useRef } from 'react';
 import { useRouter, useSearchParams, usePathname } from 'next/navigation';
 import BoardCard from './BoardCard';
 import CommunityTitleBar from '@/components/community/CommunityTitleBar';
@@ -52,7 +51,6 @@ export default function BoardSection() {
   const router = useRouter();
   const pathname = usePathname();
   const searchParams = useSearchParams();
-  const sectionRef = useRef<HTMLElement>(null);
 
   const age = getValidParam(searchParams.get('age'), AGE_TABS, 'all');
   const category = getValidParam(searchParams.get('category'), CATEGORY_TABS, 'all');
@@ -73,11 +71,10 @@ export default function BoardSection() {
 
   function handlePageChange(page: number) {
     updateParam('page', String(page));
-    sectionRef.current?.scrollIntoView({ behavior: 'smooth', block: 'start' });
   }
 
   return (
-    <section ref={sectionRef} className="flex flex-col gap-4" aria-label="게시글 목록">
+    <section className="flex flex-col gap-4" aria-label="게시글 목록">
       <CommunityTitleBar title="자유게시판" description="자유롭게 이야기를 나누는 공간입니다" />
       <CommunityFilter
         ageTabs={AGE_TABS}

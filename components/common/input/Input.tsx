@@ -6,8 +6,8 @@ import { cn } from '@/utils/cn';
 import type { InputProps } from './input.type';
 
 const SIZE_STYLES = {
-  sm: 'w-50',
-  full: 'w-full',
+  sm: 'w-50 h-8 text-xs',
+  full: 'w-full h-11 text-base',
 };
 
 export function Input({
@@ -47,7 +47,7 @@ export function Input({
     <div
       onBlur={handleBlur}
       className={cn(
-        'flex items-center gap-2 rounded-lg border py-2 pr-3 pl-4 transition-colors',
+        'flex items-center gap-2 rounded-lg border pr-3 pl-4 transition-colors',
         isFocused ? 'border-pink-500 bg-white' : 'border-black-300',
         SIZE_STYLES[size],
         className,
@@ -61,7 +61,7 @@ export function Input({
       )}
       <input
         className={cn(
-          'min-w-0 flex-1 bg-transparent text-xs outline-none placeholder:text-black-600',
+          'min-w-0 flex-1 bg-transparent font-medium outline-none placeholder:text-black-600',
           isFocused ? 'text-black-800' : 'text-black-600',
         )}
         ref={inputRef}
@@ -78,7 +78,7 @@ export function Input({
           onClick={handleClear}
           className="shrink-0"
         >
-          <XCircleIcon className="h-3 w-3" aria-hidden />
+          <XCircleIcon className={cn(size === 'full' ? 'h-4.5 w-4.5' : 'h-3 w-3')} aria-hidden />
         </button>
       )}
     </div>

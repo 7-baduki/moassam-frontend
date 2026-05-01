@@ -1,13 +1,13 @@
 import Image from 'next/image';
 import { ViewCountIcon, LikeCountIcon, CommentCountIcon } from '@/app/assets/icons';
 import { Badge } from '@/components/common/badge';
-import type { ListPost } from './moabang.type';
+import type { MoabangPost } from './moabang.type';
 
-interface ListCardProps {
-  post: ListPost;
+interface MoabangCardProps {
+  post: MoabangPost;
 }
 
-export default function ListCard({ post }: ListCardProps) {
+export default function MoabangCard({ post }: MoabangCardProps) {
   return (
     <article className="flex h-99.5 w-full flex-col overflow-hidden rounded-2xl bg-white shadow-sm">
       {post.thumbnail && (

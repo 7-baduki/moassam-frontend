@@ -1,12 +1,12 @@
 'use client';
 
-import { useEffect, useRef } from 'react';
+import { useRef } from 'react';
 import { useRouter, useSearchParams, usePathname } from 'next/navigation';
-import ListCard from './ListCard';
+import BoardCard from './BoardCard';
 import CommunityTitleBar from '@/components/community/CommunityTitleBar';
 import CommunityFilter from '@/components/community/CommunityFilter';
 import Pagination from '@/components/common/pagination/Pagination';
-import type { ListPost } from './moabang.type';
+import type { BoardPost } from './board.type';
 
 const AGE_TABS = [
   { label: '전체', value: 'all' },
@@ -30,7 +30,7 @@ const SORT_OPTIONS = [
   { label: '인기순', value: 'popular' },
 ];
 
-const PAGE_SIZE = 9;
+const PAGE_SIZE = 8;
 
 function getValidParam<T extends { value: string }>(
   raw: string | null,
@@ -41,13 +41,12 @@ function getValidParam<T extends { value: string }>(
   return fallback;
 }
 
-const MOCK_POSTS: ListPost[] = Array.from({ length: 90 }, (_, i) => ({
+const MOCK_POSTS: BoardPost[] = Array.from({ length: 80 }, (_, i) => ({
   postId: i + 1,
-  category: 'RESOURCE',
-  categoryName: '모아방',
-  tags: ['영아', '계획안'],
-  title: '5월 가정의달 주제 수업 활동지 공유합니다 (수정가능)',
-  thumbnail: `https://picsum.photos/400/200?random=${i + 1}`,
+  categoryName: '고민',
+  title: '자유놀이 시간마다 자꾸 같은 놀잇감만 찾는 아이들, 어떻게 도와주시나요?',
+  contentPreview:
+    '한 가지 놀잇감에만 입몰하는 건 좋은데 다른 활동으로는 잘 확장이 안 돼서요. 억지로 바꾸게 하기보다 자연스럽게 관심을 넓혀주고 싶은데 비슷한 경우 어떻게 하시는지 궁금합니다.',
   authorName: '햇살선생님',
   likeCount: 46,
   commentCount: 119,
@@ -55,7 +54,7 @@ const MOCK_POSTS: ListPost[] = Array.from({ length: 90 }, (_, i) => ({
   createdAt: '3시간 전',
 }));
 
-export default function ListPostSection() {
+export default function BoardSection() {
   const router = useRouter();
   const pathname = usePathname();
   const searchParams = useSearchParams();
@@ -72,17 +71,6 @@ export default function ListPostSection() {
   const startIndex = (currentPage - 1) * PAGE_SIZE;
   const visiblePosts = MOCK_POSTS.slice(startIndex, startIndex + PAGE_SIZE);
 
-  useEffect(() => {
-    if (currentPage >= totalPages) return;
-    const nextStart = currentPage * PAGE_SIZE;
-    const nextPosts = MOCK_POSTS.slice(nextStart, nextStart + PAGE_SIZE);
-    nextPosts.forEach((post) => {
-      if (!post.thumbnail) return;
-      const img = new window.Image();
-      img.src = post.thumbnail;
-    });
-  }, [currentPage, totalPages]);
-
   function updateParam(key: string, value: string, resetPage = false) {
     const params = new URLSearchParams(searchParams.toString());
     params.set(key, value);
@@ -97,7 +85,7 @@ export default function ListPostSection() {
 
   return (
     <section ref={sectionRef} className="flex flex-col gap-4" aria-label="게시글 목록">
-      <CommunityTitleBar title="모아방" description="수업자료를 공유하는 공간입니다" />
+      <CommunityTitleBar title="자유게시판" description="자유롭게 이야기를 나누는 공간입니다" />
       <CommunityFilter
         ageTabs={AGE_TABS}
         age={age}
@@ -109,9 +97,9 @@ export default function ListPostSection() {
         sort={sort}
         onSortChange={(value) => updateParam('sort', value, true)}
       />
-      <div className="grid grid-cols-3 gap-5">
+      <div className="grid grid-cols-2 gap-5">
         {visiblePosts.map((post) => (
-          <ListCard key={post.postId} post={post} />
+          <BoardCard key={post.postId} post={post} />
         ))}
       </div>
       <div className="flex justify-center">

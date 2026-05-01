@@ -13,7 +13,7 @@ export interface SidebarConfig {
   sections: SidebarSection[];
 }
 
-interface SidebarRouteConfig extends SidebarConfig {
+export interface SidebarRouteConfig extends SidebarConfig {
   prefix: string;
 }
 
@@ -29,7 +29,7 @@ const MY_PAGE_TABS: SidebarTabItem[] = [
   { label: '북마크', href: '/my/bookmarks' },
 ];
 
-const SIDEBAR_ROUTE_CONFIGS: SidebarRouteConfig[] = [
+export const SIDEBAR_ROUTE_CONFIGS: SidebarRouteConfig[] = [
   {
     prefix: '/community',
     visible: true,
@@ -52,15 +52,7 @@ const SIDEBAR_ROUTE_CONFIGS: SidebarRouteConfig[] = [
   },
 ];
 
-const HIDDEN_SIDEBAR_CONFIG: SidebarConfig = {
+export const HIDDEN_SIDEBAR_CONFIG: SidebarConfig = {
   visible: false,
   sections: [],
 };
-
-export function getSidebarConfig(pathname: string): SidebarConfig {
-  const matchedConfig = SIDEBAR_ROUTE_CONFIGS.find(
-    (config) => pathname === config.prefix || pathname.startsWith(`${config.prefix}/`),
-  );
-
-  return matchedConfig ?? HIDDEN_SIDEBAR_CONFIG;
-}

@@ -1,7 +1,7 @@
 'use client';
 
 import { usePathname } from 'next/navigation';
-import { getSidebarConfig } from '@/constants/common/sidebar-config';
+import { getSidebarConfig } from '@/utils/sidebar';
 import SidebarTab from './SidebarTab';
 
 function isSidebarTabActive(pathname: string, href: string) {

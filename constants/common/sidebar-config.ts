@@ -6,7 +6,6 @@ export interface SidebarTabItem {
 export interface SidebarSection {
   ariaLabel: string;
   tabs: SidebarTabItem[];
-  className: string;
 }
 
 export interface SidebarConfig {
@@ -23,22 +22,33 @@ const COMMUNITY_TABS: SidebarTabItem[] = [
   { label: '자유게시판', href: '/community/board' },
 ];
 
+const MY_PAGE_TABS: SidebarTabItem[] = [
+  { label: '대시보드', href: '/my/dashboard' },
+  { label: '관찰일지 내역', href: '/my/observations' },
+  { label: '내 활동', href: '/my/activity' },
+  { label: '북마크', href: '/my/bookmarks' },
+];
+
 const SIDEBAR_ROUTE_CONFIGS: SidebarRouteConfig[] = [
   {
     prefix: '/community',
     visible: true,
     sections: [
       {
-        ariaLabel: '메인 메뉴',
+        ariaLabel: '커뮤니티 목록',
         tabs: COMMUNITY_TABS,
-        className: 'mt-15 ml-20',
       },
     ],
   },
   {
     prefix: '/my',
-    visible: false,
-    sections: [],
+    visible: true,
+    sections: [
+      {
+        ariaLabel: '마이페이지 목록',
+        tabs: MY_PAGE_TABS,
+      },
+    ],
   },
 ];
 

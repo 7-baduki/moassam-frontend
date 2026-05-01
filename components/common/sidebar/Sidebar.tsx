@@ -1,8 +1,12 @@
 'use client';
 
 import { usePathname } from 'next/navigation';
-import { getSidebarConfig } from '@/constants/community/sidebar-config';
+import { getSidebarConfig } from '@/constants/common/sidebar-config';
 import SidebarTab from './SidebarTab';
+
+function isSidebarTabActive(pathname: string, href: string) {
+  return pathname === href || pathname.startsWith(`${href}/`);
+}
 
 export default function Sidebar() {
   const pathname = usePathname() ?? '';
@@ -17,15 +21,13 @@ export default function Sidebar() {
       <div className="flex h-full flex-col justify-between">
         {sidebarConfig.sections.map((section) => (
           <nav key={section.ariaLabel} aria-label={section.ariaLabel}>
-            <ul className={`${section.className} flex flex-col`}>
+            <ul className="mt-15 ml-20 flex flex-col">
               {section.tabs.map((tab) => (
                 <li key={tab.href}>
                   <SidebarTab
                     label={tab.label}
                     href={tab.href}
-                    isActive={
-                      pathname === tab.href || (tab.href !== '/' && pathname.startsWith(tab.href))
-                    }
+                    isActive={isSidebarTabActive(pathname, tab.href)}
                   />
                 </li>
               ))}

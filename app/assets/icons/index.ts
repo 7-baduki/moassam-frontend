@@ -1,3 +1,4 @@
+export { default as ChevronDoubleLeftIcon } from './ChevronDoubleLeftIcon.svg';
 export { default as CheckIcon } from './CheckIcon.svg';
 export { default as ChevronDownIcon } from './ChevronDownIcon.svg';
 export { default as CommentCountIcon } from './CommentCountIcon.svg';

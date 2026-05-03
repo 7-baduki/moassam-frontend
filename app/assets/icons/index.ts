@@ -18,5 +18,6 @@ export { default as SuccessIcon } from './SuccessIcon.svg';
 export { default as ToastErrorIcon } from './ToastErrorIcon.svg';
 export { default as ToastSuccessIcon } from './ToastSuccessIcon.svg';
 export { default as ViewCountIcon } from './ViewCountIcon.svg';
+export { default as XCircleIcon } from './XCircleIcon.svg';
 export { default as XIcon } from './XIcon.svg';
 export { default as ToastWarningIcon } from './ToastWarningIcon.svg';

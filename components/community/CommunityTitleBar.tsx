@@ -30,7 +30,7 @@ export default function CommunityTitleBar({ title, description, onWrite }: Commu
           onClear={() => setSearchValue('')}
         />
         <Button size="sm" onClick={onWrite}>
-          새글쓰기
+          새글작성
         </Button>
       </div>
     </div>

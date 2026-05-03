@@ -13,7 +13,7 @@ interface HeaderProps {
 
 export default function Header({ isLoggedIn = false }: HeaderProps) {
   const openLoginModal = useLoginModalStore((state) => state.open);
-  const pathname = usePathname();
+  const pathname = usePathname() ?? '';
   return (
     <header className="flex h-16 items-center justify-between border-b border-black-200 px-20">
       <div className="flex items-center gap-8.5">

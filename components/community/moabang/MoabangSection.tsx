@@ -90,7 +90,7 @@ export default function MoabangSection() {
           <MoabangCard key={post.postId} post={post} />
         ))}
       </div>
-      <div className="flex justify-center">
+      <div className="mt-15 flex justify-center">
         <Pagination currentPage={currentPage} totalPages={totalPages} onChange={handlePageChange} />
       </div>
     </section>

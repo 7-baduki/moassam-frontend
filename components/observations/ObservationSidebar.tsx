@@ -1,7 +1,6 @@
 import { cookies } from 'next/headers';
-import Link from 'next/link';
-import { PlusIcon } from '@/app/assets/icons';
 import ObservationSidebarToggle from './ObservationSidebarToggle';
+import ObservationSidebarContent from './ObservationSidebarContent';
 
 // 임시
 interface ObservationLog {
@@ -31,35 +30,7 @@ export default async function ObservationSidebar({ logs = TEMP_LOGS }: Observati
       aria-label="AI 관찰일지 사이드바"
     >
       <ObservationSidebarToggle isOpen={isOpen} />
-
-      {isOpen && (
-        <div className="flex flex-col pt-20 pl-20">
-          <Link
-            href="/observations"
-            className="flex items-center gap-1 py-3 pl-5 text-sm font-semibold text-black hover:rounded-lg hover:bg-black-200"
-          >
-            <PlusIcon />
-            <span>새 관찰일지</span>
-          </Link>
-
-          <p className="py-3 pl-5 text-sm font-semibold text-black">최근 생성 일지</p>
-
-          <nav aria-label="관찰일지 목록">
-            <ul className="flex flex-col">
-              {logs.map((log) => (
-                <li key={log.id}>
-                  <Link
-                    href={`/observations/${log.id}`}
-                    className="block truncate px-5 py-3 text-sm font-medium text-black-700 hover:rounded-lg hover:bg-black-200"
-                  >
-                    {log.title}
-                  </Link>
-                </li>
-              ))}
-            </ul>
-          </nav>
-        </div>
-      )}
+      {isOpen && <ObservationSidebarContent logs={logs} />}
     </aside>
   );
 }

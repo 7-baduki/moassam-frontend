@@ -28,6 +28,8 @@ export default function ObservationCreateForm() {
   const [areas, setAreas] = useState<string[]>([]);
   const [content, setContent] = useState('');
 
+  const isFormValid = !!age && areas.length > 0 && content.trim().length > 0;
+
   const handleSubmit = () => {
     // TODO: API 연동
   };
@@ -72,7 +74,7 @@ export default function ObservationCreateForm() {
             value={content}
             onChange={(e) => setContent(e.target.value)}
             action={
-              <Button size="md" onClick={handleSubmit}>
+              <Button size="md" onClick={handleSubmit} disabled={!isFormValid}>
                 생성하기
               </Button>
             }

@@ -1,5 +1,6 @@
 import Image from 'next/image';
 import observationMascot from '@/app/assets/images/observation-mascot.png';
+import Spinner from '@/components/common/spinner/Spinner';
 
 export default function ObservationLoading() {
   return (
@@ -11,7 +12,7 @@ export default function ObservationLoading() {
           영유아의 성향과 키워드를 바탕으로 내용을 정리하는 중이에요
         </p>
       </div>
-      <div className="h-13 w-13 animate-spin rounded-full border-5 border-black-300 border-t-pink-500" />
+      <Spinner />
     </div>
   );
 }

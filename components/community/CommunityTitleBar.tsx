@@ -8,9 +8,15 @@ interface CommunityTitleBarProps {
   title: string;
   description: string;
   onWrite?: () => void;
+  hideSearch?: boolean;
 }
 
-export default function CommunityTitleBar({ title, description, onWrite }: CommunityTitleBarProps) {
+export default function CommunityTitleBar({
+  title,
+  description,
+  onWrite,
+  hideSearch = false,
+}: CommunityTitleBarProps) {
   const [searchValue, setSearchValue] = useState('');
 
   return (
@@ -20,15 +26,17 @@ export default function CommunityTitleBar({ title, description, onWrite }: Commu
         <p className="typo-line-m4 text-sm font-medium text-black-600">{description}</p>
       </div>
       <div className="flex items-center gap-3 py-[7.5px]">
-        <Input
-          variant="search"
-          size="sm"
-          aria-label="게시글 검색"
-          placeholder="검색"
-          value={searchValue}
-          onChange={(e) => setSearchValue(e.target.value)}
-          onClear={() => setSearchValue('')}
-        />
+        {!hideSearch && (
+          <Input
+            variant="search"
+            size="sm"
+            aria-label="게시글 검색"
+            placeholder="검색"
+            value={searchValue}
+            onChange={(e) => setSearchValue(e.target.value)}
+            onClear={() => setSearchValue('')}
+          />
+        )}
         <Button size="sm" onClick={onWrite}>
           새글작성
         </Button>

@@ -25,7 +25,6 @@ export default function Header({ isLoggedIn = false }: HeaderProps) {
             AI 일지 생성
           </Link>
           <Link href="/community/moabang">커뮤니티</Link>
-          <Link href="/my-class">내 수업</Link>
         </nav>
       </div>
       <div className="flex items-center gap-5">

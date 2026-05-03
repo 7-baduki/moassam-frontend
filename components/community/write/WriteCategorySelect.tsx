@@ -23,7 +23,8 @@ export default function WriteCategorySelect({ values, onChange }: WriteCategoryS
     <div className="flex gap-3">
       <Select
         size="md"
-        triggerLabel="게시판"
+        className="bg-white"
+        triggerLabel={BOARD_OPTIONS.find((o) => o.value === boardType)?.label ?? '게시판'}
         options={BOARD_OPTIONS}
         value={boardType}
         onChange={handleBoardTypeChange}
@@ -32,14 +33,18 @@ export default function WriteCategorySelect({ values, onChange }: WriteCategoryS
         <>
           <Select
             size="md"
-            triggerLabel="연령"
+            className="bg-white"
+            triggerLabel={AGE_OPTIONS.find((o) => o.value === age)?.label ?? '연령'}
             options={AGE_OPTIONS}
             value={age}
             onChange={(value) => onChange('age', value)}
           />
           <Select
             size="md"
-            triggerLabel="자료 유형"
+            className="bg-white"
+            triggerLabel={
+              MATERIAL_TYPE_OPTIONS.find((o) => o.value === materialType)?.label ?? '자료 유형'
+            }
             options={MATERIAL_TYPE_OPTIONS}
             value={materialType}
             onChange={(value) => onChange('materialType', value)}
@@ -49,7 +54,8 @@ export default function WriteCategorySelect({ values, onChange }: WriteCategoryS
       {boardType === 'free' && (
         <Select
           size="md"
-          triggerLabel="말머리"
+          className="bg-white"
+          triggerLabel={TOPIC_OPTIONS.find((o) => o.value === topic)?.label ?? '말머리'}
           options={TOPIC_OPTIONS}
           value={topic}
           onChange={(value) => onChange('topic', value)}

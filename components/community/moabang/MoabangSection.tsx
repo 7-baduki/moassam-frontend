@@ -1,34 +1,16 @@
 'use client';
 
-import { useEffect, useRef } from 'react';
+import { useEffect } from 'react';
 import { useRouter, useSearchParams, usePathname } from 'next/navigation';
-import ListCard from './ListCard';
+import MoabangCard from './MoabangCard';
 import CommunityTitleBar from '@/components/community/CommunityTitleBar';
 import CommunityFilter from '@/components/community/CommunityFilter';
 import Pagination from '@/components/common/pagination/Pagination';
-import type { ListPost } from './moabang.type';
-
-const AGE_TABS = [
-  { label: '전체', value: 'all' },
-  { label: '영아', value: 'infant' },
-  { label: '만 3세', value: 'age3' },
-  { label: '만 4세', value: 'age4' },
-  { label: '만 5세', value: 'age5' },
-];
-
-const CATEGORY_TABS = [
-  { label: '전체', value: 'all' },
-  { label: '활동자료', value: 'activity' },
-  { label: '계획안', value: 'plan' },
-  { label: '일지', value: 'journal' },
-  { label: '안내문', value: 'notice' },
-];
-
-const SORT_OPTIONS = [
-  { label: '추천순', value: 'recommended' },
-  { label: '최신순', value: 'latest' },
-  { label: '인기순', value: 'popular' },
-];
+import type { MoabangPost } from './moabang.type';
+import {
+  MOABANG_AGE_FILTER_TABS,
+  MOABANG_CATEGORY_FILTER_TABS,
+} from '@/constants/community/community-tabs';
 
 const PAGE_SIZE = 9;
 
@@ -41,7 +23,7 @@ function getValidParam<T extends { value: string }>(
   return fallback;
 }
 
-const MOCK_POSTS: ListPost[] = Array.from({ length: 90 }, (_, i) => ({
+const MOCK_POSTS: MoabangPost[] = Array.from({ length: 90 }, (_, i) => ({
   postId: i + 1,
   category: 'RESOURCE',
   categoryName: '모아방',
@@ -55,15 +37,13 @@ const MOCK_POSTS: ListPost[] = Array.from({ length: 90 }, (_, i) => ({
   createdAt: '3시간 전',
 }));
 
-export default function ListPostSection() {
+export default function MoabangSection() {
   const router = useRouter();
   const pathname = usePathname();
   const searchParams = useSearchParams();
-  const sectionRef = useRef<HTMLElement>(null);
 
-  const age = getValidParam(searchParams.get('age'), AGE_TABS, 'all');
-  const category = getValidParam(searchParams.get('category'), CATEGORY_TABS, 'all');
-  const sort = getValidParam(searchParams.get('sort'), SORT_OPTIONS, 'recommended');
+  const age = getValidParam(searchParams.get('age'), MOABANG_AGE_FILTER_TABS, 'all');
+  const category = getValidParam(searchParams.get('category'), MOABANG_CATEGORY_FILTER_TABS, 'all');
 
   const totalPages = Math.max(1, Math.ceil(MOCK_POSTS.length / PAGE_SIZE));
   const rawPage = Number(searchParams.get('page'));
@@ -87,34 +67,30 @@ export default function ListPostSection() {
     const params = new URLSearchParams(searchParams.toString());
     params.set(key, value);
     if (resetPage) params.set('page', '1');
-    router.push(`${pathname}?${params.toString()}`, { scroll: false });
+    router.push(`${pathname}?${params.toString()}`, { scroll: true });
   }
 
   function handlePageChange(page: number) {
     updateParam('page', String(page));
-    sectionRef.current?.scrollIntoView({ behavior: 'smooth', block: 'start' });
   }
 
   return (
-    <section ref={sectionRef} className="flex flex-col gap-4" aria-label="게시글 목록">
+    <section className="flex flex-col" aria-label="게시글 목록">
       <CommunityTitleBar title="모아방" description="수업자료를 공유하는 공간입니다" />
       <CommunityFilter
-        ageTabs={AGE_TABS}
+        ageTabs={MOABANG_AGE_FILTER_TABS}
         age={age}
         onAgeChange={(value) => updateParam('age', value, true)}
-        categoryTabs={CATEGORY_TABS}
+        categoryTabs={MOABANG_CATEGORY_FILTER_TABS}
         category={category}
         onCategoryChange={(value) => updateParam('category', value, true)}
-        sortOptions={SORT_OPTIONS}
-        sort={sort}
-        onSortChange={(value) => updateParam('sort', value, true)}
       />
       <div className="grid grid-cols-3 gap-5">
         {visiblePosts.map((post) => (
-          <ListCard key={post.postId} post={post} />
+          <MoabangCard key={post.postId} post={post} />
         ))}
       </div>
-      <div className="flex justify-center">
+      <div className="mt-15 flex justify-center">
         <Pagination currentPage={currentPage} totalPages={totalPages} onChange={handlePageChange} />
       </div>
     </section>

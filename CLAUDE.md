@@ -10,6 +10,7 @@
 - Util: camelCase
 - Type: kebab-case (\*.type.ts)
 - Const: UPPER_SNAKE_CASE
+- Constant file: kebab-case (e.g. community-tabs.ts)
 - Folder: kebab-case
 
 ### 2. Variables & Functions

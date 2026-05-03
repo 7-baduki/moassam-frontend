@@ -1,15 +1,15 @@
 'use client';
 
 import { AsyncBoundary, LoadingSpinner, ErrorFallback } from '@/lib/async-boundary';
-import ListPostSection from './ListPostSection';
+import BoardSection from './BoardSection';
 
-export default function ListPostBoundary() {
+export default function BoardBoundary() {
   return (
     <AsyncBoundary
       pendingFallback={<LoadingSpinner />}
       rejectedFallback={({ error, reset }) => <ErrorFallback error={error} reset={reset} />}
     >
-      <ListPostSection />
+      <BoardSection />
     </AsyncBoundary>
   );
 }

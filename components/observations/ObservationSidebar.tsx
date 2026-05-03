@@ -1,8 +1,7 @@
-'use client';
-
-import { useState } from 'react';
+import { cookies } from 'next/headers';
 import Link from 'next/link';
-import { ChevronDoubleLeftIcon, PlusIcon } from '@/app/assets/icons';
+import { PlusIcon } from '@/app/assets/icons';
+import ObservationSidebarToggle from './ObservationSidebarToggle';
 
 // 임시
 interface ObservationLog {
@@ -22,23 +21,16 @@ const TEMP_LOGS: ObservationLog[] = [
   { id: '4', title: '또래에게 먼저 다가가며 관계 형성' },
 ];
 
-export default function ObservationSidebar({ logs = TEMP_LOGS }: ObservationSidebarProps) {
-  const [isOpen, setIsOpen] = useState(true);
+export default async function ObservationSidebar({ logs = TEMP_LOGS }: ObservationSidebarProps) {
+  const cookieStore = await cookies();
+  const isOpen = cookieStore.get('observation-sidebar-open')?.value !== 'false';
 
   return (
     <aside
       className={`relative flex h-full flex-col border-r border-black-200 bg-white transition-all duration-300 ${isOpen ? 'w-89.25' : 'w-20'}`}
       aria-label="AI 관찰일지 사이드바"
     >
-      <button
-        onClick={() => setIsOpen((prev) => !prev)}
-        className="absolute top-7.5 right-5"
-        aria-label={isOpen ? '사이드바 닫기' : '사이드바 열기'}
-      >
-        <ChevronDoubleLeftIcon
-          className={`transition-transform duration-300 ${isOpen ? '' : 'rotate-180'}`}
-        />
-      </button>
+      <ObservationSidebarToggle isOpen={isOpen} />
 
       {isOpen && (
         <div className="flex flex-col pt-20 pl-20">

@@ -2,7 +2,7 @@
 
 import Link from 'next/link';
 import { Button } from '@/components/common/button/Button';
-import { MainLogoIcon, BellOffIcon, ProfileIcon } from '@/app/assets/icons';
+import { MainLogoIcon, ProfileIcon } from '@/app/assets/icons';
 import { useLoginModalStore } from '@/stores/loginModalStore';
 
 interface HeaderProps {
@@ -31,7 +31,6 @@ export default function Header({ isLoggedIn = false }: HeaderProps) {
       <div className="flex items-center gap-5">
         {isLoggedIn ? (
           <>
-            <BellOffIcon className="cursor-pointer" />
             <ProfileIcon className="cursor-pointer" />
           </>
         ) : (

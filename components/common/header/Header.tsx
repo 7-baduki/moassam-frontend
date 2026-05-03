@@ -1,9 +1,11 @@
 'use client';
 
 import Link from 'next/link';
+import { usePathname } from 'next/navigation';
 import { Button } from '@/components/common/button/Button';
 import { MainLogoIcon, ProfileIcon } from '@/app/assets/icons';
 import { useLoginModalStore } from '@/stores/loginModalStore';
+import NAV_ITEMS from '@/constants/common/nav-items';
 
 interface HeaderProps {
   isLoggedIn?: boolean;
@@ -11,6 +13,7 @@ interface HeaderProps {
 
 export default function Header({ isLoggedIn = false }: HeaderProps) {
   const openLoginModal = useLoginModalStore((state) => state.open);
+  const pathname = usePathname();
   return (
     <header className="flex h-16 items-center justify-between border-b border-black-200 px-20">
       <div className="flex items-center gap-8.5">
@@ -21,10 +24,15 @@ export default function Header({ isLoggedIn = false }: HeaderProps) {
           aria-label="주요 메뉴"
           className="flex items-center gap-8.5 text-base leading-[140%] font-medium tracking-[-0.02em]"
         >
-          <Link href="/ai" className="font-semibold text-pink-500">
-            AI 일지 생성
-          </Link>
-          <Link href="/community/moabang">커뮤니티</Link>
+          {NAV_ITEMS.map(({ href, label }) => (
+            <Link
+              key={href}
+              href={href}
+              className={pathname.startsWith(href) ? 'font-semibold text-pink-500' : ''}
+            >
+              {label}
+            </Link>
+          ))}
         </nav>
       </div>
       <div className="flex items-center gap-5">

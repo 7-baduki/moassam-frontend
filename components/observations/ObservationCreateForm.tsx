@@ -40,7 +40,7 @@ export default function ObservationCreateForm() {
   if (isLoading) return <ObservationLoading />;
 
   return (
-    <div className="flex flex-col items-center px-20 pt-25">
+    <div className="flex flex-col items-center">
       <div className="mb-12.5 text-center">
         <h1 className="text-xl font-semibold text-black">관찰일지를 완성해보세요!</h1>
         <p className="mt-0.5 text-sm font-medium text-black">

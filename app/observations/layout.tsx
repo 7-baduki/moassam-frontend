@@ -4,7 +4,7 @@ export default function ObservationsLayout({ children }: { children: React.React
   return (
     <div className="flex h-full">
       <ObservationSidebar />
-      <div className="flex-1 overflow-y-auto">{children}</div>
+      <div className="flex-1 overflow-y-auto px-20 pt-25">{children}</div>
     </div>
   );
 }

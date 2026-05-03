@@ -1,5 +1,3 @@
-export { default as BellOffIcon } from './BellOffIcon.svg';
-export { default as BellOnIcon } from './BellOnIcon.svg';
 export { default as CheckIcon } from './CheckIcon.svg';
 export { default as ChevronDownIcon } from './ChevronDownIcon.svg';
 export { default as CommentCountIcon } from './CommentCountIcon.svg';

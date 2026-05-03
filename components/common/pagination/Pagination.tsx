@@ -12,10 +12,10 @@ function getPageNumbers(totalPages: number): number[] {
 }
 
 const BUTTON_BASE =
-  'flex h-10 min-w-10 items-center justify-center rounded-xl px-3 text-sm font-medium transition-colors';
-const ACTIVE = 'bg-pink-500 text-white shadow-sm';
-const INACTIVE = 'bg-white text-black-700 shadow-sm hover:bg-black-100';
-const DISABLED = 'bg-white text-black-400 shadow-sm cursor-not-allowed';
+  'flex h-8 w-8 items-center justify-center rounded-lg text-sm font-medium transition-colors';
+const ACTIVE = 'bg-pink-500 text-white border border-pink-500';
+const INACTIVE = 'bg-white text-black-700 border border-black-200 hover:bg-black-200';
+const DISABLED = 'bg-white text-black-400 border border-black-200 cursor-not-allowed';
 
 export default function Pagination({ currentPage, totalPages, onChange }: PaginationProps) {
   if (totalPages <= 0) return null;
@@ -24,26 +24,28 @@ export default function Pagination({ currentPage, totalPages, onChange }: Pagina
   const isFirst = currentPage <= 1;
   const isLast = currentPage >= totalPages;
 
-  function handlePrev() {
+  function handleFirst() {
     if (isFirst) return;
-    onChange(currentPage - 1);
+    onChange(1);
   }
 
-  function handleNext() {
+  function handleLast() {
     if (isLast) return;
-    onChange(currentPage + 1);
+    onChange(totalPages);
   }
 
   return (
-    <div className="flex items-center gap-2">
+    <div className="flex items-center gap-1">
       <button
         type="button"
-        onClick={handlePrev}
+        onClick={handleFirst}
         disabled={isFirst}
         className={cn(BUTTON_BASE, isFirst ? DISABLED : INACTIVE)}
-        aria-label="이전 페이지"
+        aria-label="첫 번째 페이지"
       >
-        <ChevronDownIcon className="h-4 w-4 rotate-90" />
+        <ChevronDownIcon
+          className={cn('h-4 w-4 rotate-90', isFirst && '[&_path]:stroke-black-400')}
+        />
       </button>
 
       {pages.map((page) => (
@@ -60,12 +62,14 @@ export default function Pagination({ currentPage, totalPages, onChange }: Pagina
 
       <button
         type="button"
-        onClick={handleNext}
+        onClick={handleLast}
         disabled={isLast}
         className={cn(BUTTON_BASE, isLast ? DISABLED : INACTIVE)}
-        aria-label="다음 페이지"
+        aria-label="마지막 페이지"
       >
-        <ChevronDownIcon className="h-4 w-4 -rotate-90" />
+        <ChevronDownIcon
+          className={cn('h-4 w-4 -rotate-90', isLast && '[&_path]:stroke-black-400')}
+        />
       </button>
     </div>
   );

@@ -1,8 +1,6 @@
 export type PostCategory = 'RESOURCE' | 'FREE' | 'QUESTION';
 
-export type HotPostCategory = PostCategory;
-
-export interface ListPost {
+export interface MoabangPost {
   postId: number;
   title: string;
   thumbnail?: string;
@@ -14,15 +12,4 @@ export interface ListPost {
   commentCount: number;
   createdAt: string;
   viewCount?: number;
-}
-
-export interface HotPost {
-  postId: number;
-  title: string;
-  contentPreview: string;
-  thumbnail?: string;
-  category: HotPostCategory;
-  categoryName: string;
-  authorName?: string;
-  createdAt: string;
 }

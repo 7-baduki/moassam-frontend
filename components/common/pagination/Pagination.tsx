@@ -24,24 +24,24 @@ export default function Pagination({ currentPage, totalPages, onChange }: Pagina
   const isFirst = currentPage <= 1;
   const isLast = currentPage >= totalPages;
 
-  function handlePrev() {
+  function handleFirst() {
     if (isFirst) return;
-    onChange(currentPage - 1);
+    onChange(1);
   }
 
-  function handleNext() {
+  function handleLast() {
     if (isLast) return;
-    onChange(currentPage + 1);
+    onChange(totalPages);
   }
 
   return (
     <div className="flex items-center gap-2">
       <button
         type="button"
-        onClick={handlePrev}
+        onClick={handleFirst}
         disabled={isFirst}
         className={cn(BUTTON_BASE, isFirst ? DISABLED : INACTIVE)}
-        aria-label="이전 페이지"
+        aria-label="첫 번째 페이지"
       >
         <ChevronDownIcon className="h-4 w-4 rotate-90" />
       </button>
@@ -60,10 +60,10 @@ export default function Pagination({ currentPage, totalPages, onChange }: Pagina
 
       <button
         type="button"
-        onClick={handleNext}
+        onClick={handleLast}
         disabled={isLast}
         className={cn(BUTTON_BASE, isLast ? DISABLED : INACTIVE)}
-        aria-label="다음 페이지"
+        aria-label="마지막 페이지"
       >
         <ChevronDownIcon className="h-4 w-4 -rotate-90" />
       </button>

@@ -4,6 +4,7 @@ import { useState } from 'react';
 import { Select } from '@/components/common/select/Select';
 import { Textarea } from '@/components/common/textarea/Textarea';
 import { Button } from '@/components/common/button/Button';
+import ObservationLoading from '@/components/observations/ObservationLoading';
 import type { SelectOption } from '@/components/common/select/select.type';
 
 const AGE_OPTIONS: SelectOption[] = [
@@ -27,12 +28,16 @@ export default function ObservationCreateForm() {
   const [age, setAge] = useState('');
   const [areas, setAreas] = useState<string[]>([]);
   const [content, setContent] = useState('');
+  const [isLoading, setIsLoading] = useState(false);
 
   const isFormValid = !!age && areas.length > 0 && content.trim().length > 0;
 
   const handleSubmit = () => {
+    setIsLoading(true);
     // TODO: API 연동
   };
+
+  if (isLoading) return <ObservationLoading />;
 
   return (
     <div className="flex flex-col items-center px-20 pt-25">

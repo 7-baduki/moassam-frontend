@@ -28,7 +28,11 @@ export default function Header({ isLoggedIn = false }: HeaderProps) {
             <Link
               key={href}
               href={href}
-              className={pathname.startsWith(href) ? 'font-semibold text-pink-500' : ''}
+              className={
+                pathname === href || pathname.startsWith(href + '/')
+                  ? 'font-semibold text-pink-500'
+                  : ''
+              }
             >
               {label}
             </Link>

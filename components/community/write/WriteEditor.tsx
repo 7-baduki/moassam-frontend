@@ -1,6 +1,7 @@
 'use client';
 
-import { useRef } from 'react';
+import { useRef, useState, useCallback } from 'react';
+import { TwitterPicker } from 'react-color';
 import { EditorContent, useEditor } from '@tiptap/react';
 import {
   EditorBoldIcon,
@@ -44,15 +45,43 @@ const FONT_FAMILIES = [
 
 const FONT_SIZES = ['10', '12', '14', '16', '18', '20', '24', '28', '32', '36'];
 
+const PICKER_COLORS = [
+  '#000000',
+  '#FF6900',
+  '#FCB900',
+  '#7BDCB5',
+  '#00D084',
+  '#8ED1FC',
+  '#0693E3',
+  '#ABB8C3',
+  '#EB144C',
+  '#F78DA7',
+];
+
 interface WriteEditorProps {
   value: string;
   onChange: (value: string) => void;
 }
 
 export default function WriteEditor({ value, onChange }: WriteEditorProps) {
-  const colorInputRef = useRef<HTMLInputElement>(null);
-  const highlightInputRef = useRef<HTMLInputElement>(null);
   const imageInputRef = useRef<HTMLInputElement>(null);
+  const colorBtnRef = useRef<HTMLDivElement>(null);
+  const highlightBtnRef = useRef<HTMLDivElement>(null);
+  const [showColorPicker, setShowColorPicker] = useState(false);
+  const [showHighlightPicker, setShowHighlightPicker] = useState(false);
+  const [pickerPos, setPickerPos] = useState({ top: 0, left: 0 });
+
+  const openPicker = useCallback(
+    (
+      ref: React.RefObject<HTMLDivElement | null>,
+      setter: React.Dispatch<React.SetStateAction<boolean>>,
+    ) => {
+      const rect = ref.current?.getBoundingClientRect();
+      if (rect) setPickerPos({ top: rect.bottom + 4, left: rect.left });
+      setter((v) => !v);
+    },
+    [],
+  );
 
   async function handleImageUpload(e: React.ChangeEvent<HTMLInputElement>) {
     const file = e.target.files?.[0];
@@ -155,39 +184,25 @@ export default function WriteEditor({ value, onChange }: WriteEditorProps) {
           <EditorStrikethroughIcon />
         </ToolbarButton>
 
-        <ToolbarButton onClick={() => colorInputRef.current?.click()} title="글자색">
-          <span className="relative">
+        <div ref={colorBtnRef}>
+          <ToolbarButton onClick={() => openPicker(colorBtnRef, setShowColorPicker)} title="글자색">
             <EditorTextColorIcon />
-            <input
-              ref={colorInputRef}
-              type="color"
-              value={currentColor}
-              onChange={(e) => editor.chain().focus().setColor(e.target.value).run()}
-              className="absolute inset-0 h-0 w-0 opacity-0"
-            />
-          </span>
-        </ToolbarButton>
+          </ToolbarButton>
+        </div>
 
-        <ToolbarButton
-          active={editor.isActive('highlight')}
-          onClick={() =>
-            editor.isActive('highlight')
-              ? editor.chain().focus().unsetHighlight().run()
-              : highlightInputRef.current?.click()
-          }
-          title="형광펜"
-        >
-          <span className="relative">
+        <div ref={highlightBtnRef}>
+          <ToolbarButton
+            active={editor.isActive('highlight')}
+            onClick={() =>
+              editor.isActive('highlight')
+                ? editor.chain().focus().unsetHighlight().run()
+                : openPicker(highlightBtnRef, setShowHighlightPicker)
+            }
+            title="형광펜"
+          >
             <EditorTextfillIcon />
-            <input
-              ref={highlightInputRef}
-              type="color"
-              defaultValue="#fef08a"
-              onChange={(e) => editor.chain().focus().setHighlight({ color: e.target.value }).run()}
-              className="absolute inset-0 h-0 w-0 opacity-0"
-            />
-          </span>
-        </ToolbarButton>
+          </ToolbarButton>
+        </div>
 
         <Divider />
 
@@ -262,6 +277,37 @@ export default function WriteEditor({ value, onChange }: WriteEditorProps) {
         editor={editor}
         className="prose-editor min-h-64 px-4 py-3 text-sm text-black-800"
       />
+
+      {showColorPicker && (
+        <>
+          <div className="fixed inset-0 z-[99]" onClick={() => setShowColorPicker(false)} />
+          <div className="fixed z-[100]" style={{ top: pickerPos.top, left: pickerPos.left }}>
+            <TwitterPicker
+              colors={PICKER_COLORS}
+              color={currentColor}
+              onChangeComplete={(color) => {
+                editor.chain().focus().setColor(color.hex).run();
+                setShowColorPicker(false);
+              }}
+            />
+          </div>
+        </>
+      )}
+
+      {showHighlightPicker && (
+        <>
+          <div className="fixed inset-0 z-[99]" onClick={() => setShowHighlightPicker(false)} />
+          <div className="fixed z-[100]" style={{ top: pickerPos.top, left: pickerPos.left }}>
+            <TwitterPicker
+              colors={PICKER_COLORS}
+              onChangeComplete={(color) => {
+                editor.chain().focus().setHighlight({ color: color.hex }).run();
+                setShowHighlightPicker(false);
+              }}
+            />
+          </div>
+        </>
+      )}
     </div>
   );
 }

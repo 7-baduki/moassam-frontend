@@ -36,11 +36,15 @@ async function uploadImage(file: File): Promise<string> {
 }
 
 const FONT_FAMILIES = [
-  { label: 'Pretendard', value: 'Pretendard' },
+  { label: '기본서체', value: 'Pretendard' },
+  { label: '나눔고딕', value: 'NanumGothic' },
+  { label: '나눔명조', value: 'NanumMyeongjo' },
+  { label: '맑은고딕', value: 'Malgun Gothic' },
   { label: '굴림', value: 'Gulim' },
   { label: '돋움', value: 'Dotum' },
-  { label: '맑은 고딕', value: 'Malgun Gothic' },
-  { label: '나눔고딕', value: 'NanumGothic' },
+  { label: '바탕', value: 'Batang' },
+  { label: '궁서', value: 'Gungsuh' },
+  { label: 'Arial', value: 'Arial' },
 ];
 
 const FONT_SIZES = ['10', '12', '14', '16', '18', '20', '24', '28', '32', '36'];

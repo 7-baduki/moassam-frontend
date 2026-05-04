@@ -55,7 +55,7 @@ export function ProfilePopover({ name, avatarSrc, onClose, onLogout }: ProfilePo
       </div>
 
       <Link
-        href="/mypage"
+        href="/mypage/dashboard"
         className="block w-full rounded-lg bg-pink-500 py-2.25 text-center text-base font-medium text-white hover:bg-pink-600"
         onClick={onClose}
       >

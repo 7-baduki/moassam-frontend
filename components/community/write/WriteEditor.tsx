@@ -319,7 +319,7 @@ export default function WriteEditor({ value, onChange }: WriteEditorProps) {
 
       <EditorContent
         editor={editor}
-        className="prose-editor min-h-64 px-4 py-3 text-sm text-black-800"
+        className="prose-editor prose-editor-scroll h-80 overflow-y-auto px-4 py-3 text-sm text-black-800"
       />
 
       {showColorPicker && (

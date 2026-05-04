@@ -106,6 +106,18 @@ html {
   min-height: 256px;
 }
 
+.prose-editor.prose-editor-scroll .ProseMirror {
+  min-height: calc(100% - 24px);
+}
+
+.prose-editor.prose-editor-scroll {
+  scrollbar-width: none;
+}
+
+.prose-editor.prose-editor-scroll::-webkit-scrollbar {
+  display: none;
+}
+
 .prose-editor .ProseMirror p {
   margin: 0.25rem 0;
 }

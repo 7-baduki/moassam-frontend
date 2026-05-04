@@ -6,6 +6,7 @@ export { default as BookmarkCountIcon } from './BookmarkCountIcon.svg';
 export { default as CommentCountIcon } from './CommentCountIcon.svg';
 export { default as ErrorIcon } from './ErrorIcon.svg';
 export { default as LikeCountIcon } from './LikeCountIcon.svg';
+export { default as ObservationCountIcon } from './ObservationCountIcon.svg';
 export { default as LockIcon } from './LockIcon.svg';
 export { default as LoginBottomLogoIcon } from './LoginBottomLogoIcon.svg';
 export { default as LoginGoogleIcon } from './LoginGoogleIcon.svg';

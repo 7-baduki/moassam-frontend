@@ -2,7 +2,7 @@
 
 import { useRef, useState, useCallback } from 'react';
 import { TwitterPicker } from 'react-color';
-import { EditorContent, useEditor } from '@tiptap/react';
+import { EditorContent, useEditor, useEditorState } from '@tiptap/react';
 import {
   EditorBoldIcon,
   EditorItalicIcon,
@@ -46,7 +46,7 @@ const FONT_FAMILIES = [
 const FONT_SIZES = ['10', '12', '14', '16', '18', '20', '24', '28', '32', '36'];
 
 const PICKER_COLORS = [
-  '#000000',
+  '#343434',
   '#FF6900',
   '#FCB900',
   '#7BDCB5',
@@ -111,12 +111,31 @@ export default function WriteEditor({ value, onChange }: WriteEditorProps) {
     },
   });
 
+  const editorState = useEditorState({
+    editor,
+    selector: (ctx) => ({
+      isBold: ctx.editor?.isActive('bold'),
+      isItalic: ctx.editor?.isActive('italic'),
+      isUnderline: ctx.editor?.isActive('underline'),
+      isStrike: ctx.editor?.isActive('strike'),
+      isAlignLeft: ctx.editor?.isActive({ textAlign: 'left' }),
+      isAlignCenter: ctx.editor?.isActive({ textAlign: 'center' }),
+      isAlignRight: ctx.editor?.isActive({ textAlign: 'right' }),
+      isAlignJustify: ctx.editor?.isActive({ textAlign: 'justify' }),
+      isBulletList: ctx.editor?.isActive('bulletList'),
+      fontFamily: ctx.editor?.getAttributes('textStyle').fontFamily ?? 'Pretendard',
+      fontSize: ctx.editor?.getAttributes('textStyle').fontSize?.replace('px', '') ?? '14',
+      color: ctx.editor?.getAttributes('textStyle').color ?? '#343434',
+      highlightColor: ctx.editor?.getAttributes('highlight').color ?? '#343434',
+    }),
+  });
+
   if (!editor) return null;
 
-  const currentFontFamily = editor.getAttributes('textStyle').fontFamily ?? 'Pretendard';
-  const currentFontSize = editor.getAttributes('textStyle').fontSize?.replace('px', '') ?? '14';
-  const currentColor = editor.getAttributes('textStyle').color ?? '#343434';
-  const currentHighlightColor = editor.getAttributes('highlight').color ?? '#FCB900';
+  const currentFontFamily = editorState?.fontFamily ?? 'Pretendard';
+  const currentFontSize = editorState?.fontSize ?? '14';
+  const currentColor = editorState?.color ?? '#343434';
+  const currentHighlightColor = editorState?.highlightColor ?? '#FCB900';
 
   return (
     <div className="rounded-lg border border-black-200 bg-white">
@@ -154,7 +173,7 @@ export default function WriteEditor({ value, onChange }: WriteEditorProps) {
         <Divider />
 
         <ToolbarButton
-          active={editor.isActive('bold')}
+          active={editorState?.isBold}
           onClick={() => editor.chain().focus().toggleBold().run()}
           title="굵게"
         >
@@ -162,7 +181,7 @@ export default function WriteEditor({ value, onChange }: WriteEditorProps) {
         </ToolbarButton>
 
         <ToolbarButton
-          active={editor.isActive('italic')}
+          active={editorState?.isItalic}
           onClick={() => editor.chain().focus().toggleItalic().run()}
           title="기울임"
         >
@@ -170,7 +189,7 @@ export default function WriteEditor({ value, onChange }: WriteEditorProps) {
         </ToolbarButton>
 
         <ToolbarButton
-          active={editor.isActive('underline')}
+          active={editorState?.isUnderline}
           onClick={() => editor.chain().focus().toggleUnderline().run()}
           title="밑줄"
         >
@@ -178,7 +197,7 @@ export default function WriteEditor({ value, onChange }: WriteEditorProps) {
         </ToolbarButton>
 
         <ToolbarButton
-          active={editor.isActive('strike')}
+          active={editorState?.isStrike}
           onClick={() => editor.chain().focus().toggleStrike().run()}
           title="취소선"
         >
@@ -193,12 +212,7 @@ export default function WriteEditor({ value, onChange }: WriteEditorProps) {
 
         <div ref={highlightBtnRef}>
           <ToolbarButton
-            active={editor.isActive('highlight')}
-            onClick={() =>
-              editor.isActive('highlight')
-                ? editor.chain().focus(undefined, { scrollIntoView: false }).unsetHighlight().run()
-                : openPicker(highlightBtnRef, setShowHighlightPicker)
-            }
+            onClick={() => openPicker(highlightBtnRef, setShowHighlightPicker)}
             title="형광펜"
           >
             <EditorTextfillIcon style={{ color: currentHighlightColor }} />
@@ -208,7 +222,7 @@ export default function WriteEditor({ value, onChange }: WriteEditorProps) {
         <Divider />
 
         <ToolbarButton
-          active={editor.isActive({ textAlign: 'left' })}
+          active={editorState?.isAlignLeft}
           onClick={() => editor.chain().focus().setTextAlign('left').run()}
           title="왼쪽 정렬"
         >
@@ -216,7 +230,7 @@ export default function WriteEditor({ value, onChange }: WriteEditorProps) {
         </ToolbarButton>
 
         <ToolbarButton
-          active={editor.isActive({ textAlign: 'center' })}
+          active={editorState?.isAlignCenter}
           onClick={() => editor.chain().focus().setTextAlign('center').run()}
           title="가운데 정렬"
         >
@@ -224,7 +238,7 @@ export default function WriteEditor({ value, onChange }: WriteEditorProps) {
         </ToolbarButton>
 
         <ToolbarButton
-          active={editor.isActive({ textAlign: 'right' })}
+          active={editorState?.isAlignRight}
           onClick={() => editor.chain().focus().setTextAlign('right').run()}
           title="오른쪽 정렬"
         >
@@ -232,7 +246,7 @@ export default function WriteEditor({ value, onChange }: WriteEditorProps) {
         </ToolbarButton>
 
         <ToolbarButton
-          active={editor.isActive({ textAlign: 'justify' })}
+          active={editorState?.isAlignJustify}
           onClick={() => editor.chain().focus().setTextAlign('justify').run()}
           title="양쪽 정렬"
         >
@@ -242,7 +256,7 @@ export default function WriteEditor({ value, onChange }: WriteEditorProps) {
         <Divider />
 
         <ToolbarButton
-          active={editor.isActive('bulletList')}
+          active={editorState?.isBulletList}
           onClick={() => editor.chain().focus().toggleBulletList().run()}
           title="글머리 기호"
         >
@@ -339,7 +353,7 @@ function ToolbarButton({ children, onClick, active, title }: ToolbarButtonProps)
       onClick={onClick}
       title={title}
       className={`flex h-7 min-w-7 items-center justify-center rounded px-1 text-sm transition-colors ${
-        active ? 'bg-black-200 text-black-800' : 'text-black-700 hover:bg-black-100'
+        active ? 'bg-black-400 text-black-800' : 'text-black-700 hover:bg-black-300'
       }`}
     >
       {children}

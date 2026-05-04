@@ -19,13 +19,14 @@ type ErrorFallbackProps = {
   error: Error & { response?: { data?: { detail?: string } } };
   actionLabel: string;
   onAction: () => void;
+  className?: string;
 };
 
-export function ErrorFallback({ error, actionLabel, onAction }: ErrorFallbackProps) {
+export function ErrorFallback({ error, actionLabel, onAction, className }: ErrorFallbackProps) {
   const errorMessage = error.response?.data?.detail ?? error.message;
 
   return (
-    <div className="flex flex-col items-center gap-4.5 pt-7.5">
+    <div className={`flex flex-col items-center gap-4.5 ${className ?? ''}`}>
       <Image src={ErrorMascot} alt="에러 마스코트" width={280} height={309} />
       <div className="flex w-52.5 flex-col items-center gap-4.5">
         <div className="flex flex-col items-center gap-2 px-2 text-center">

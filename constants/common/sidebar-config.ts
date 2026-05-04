@@ -1,5 +1,11 @@
 export interface SidebarTabItem {
   label: string;
+  href?: string;
+  children?: SidebarChildTabItem[];
+}
+
+export interface SidebarChildTabItem {
+  label: string;
   href: string;
 }
 
@@ -23,10 +29,16 @@ const COMMUNITY_TABS: SidebarTabItem[] = [
 ];
 
 const MY_PAGE_TABS: SidebarTabItem[] = [
-  { label: '대시보드', href: '/my/dashboard' },
-  { label: '관찰일지 내역', href: '/my/observations' },
-  { label: '내 활동', href: '/my/activity' },
-  { label: '북마크', href: '/my/bookmarks' },
+  { label: '대시보드', href: '/mypage/dashboard' },
+  { label: '관찰일지 내역', href: '/mypage/observations' },
+  {
+    label: '내 활동',
+    children: [
+      { label: '게시글', href: '/mypage/posts' },
+      { label: '댓글', href: '/mypage/comments' },
+    ],
+  },
+  { label: '북마크', href: '/mypage/bookmarks' },
 ];
 
 export const SIDEBAR_ROUTE_CONFIGS: SidebarRouteConfig[] = [
@@ -41,7 +53,7 @@ export const SIDEBAR_ROUTE_CONFIGS: SidebarRouteConfig[] = [
     ],
   },
   {
-    prefix: '/my',
+    prefix: '/mypage',
     visible: true,
     sections: [
       {

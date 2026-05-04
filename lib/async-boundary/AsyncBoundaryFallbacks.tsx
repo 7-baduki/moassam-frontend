@@ -1,12 +1,16 @@
 import Image from 'next/image';
 
 import { Button } from '@/components/common/button/Button';
+import Spinner from '@/components/common/spinner/Spinner';
 import ErrorMascot from '@/app/assets/images/error-mascot.png';
+import LoadingMascot from '@/app/assets/images/loading-mascot.png';
 
-export function LoadingSpinner() {
+export function LoadingSpinner({ className }: { className?: string }) {
   return (
-    <div className="flex items-center justify-center py-10">
-      <div className="h-7.5 w-7.5 animate-spin rounded-full border-3 border-pink-50 border-t-pink-500" />
+    <div className={`flex flex-col items-center ${className ?? ''}`}>
+      <Image src={LoadingMascot} alt="로딩 마스코트" className="mb-3" width={160} height={160} />
+      <p className="mb-7.75 text-xl font-semibold text-black">잠시만 기다려 주세요</p>
+      <Spinner />
     </div>
   );
 }

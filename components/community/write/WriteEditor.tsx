@@ -3,6 +3,7 @@
 import { useRef, useState, useCallback } from 'react';
 import { TwitterPicker } from 'react-color';
 import { EditorContent, useEditor, useEditorState } from '@tiptap/react';
+import { BubbleMenu } from '@tiptap/react/menus';
 import {
   EditorBoldIcon,
   EditorItalicIcon,
@@ -104,7 +105,7 @@ export default function WriteEditor({ value, onChange }: WriteEditorProps) {
       Underline,
       TextStyleKit,
       TextAlign.configure({ types: ['heading', 'paragraph'] }),
-      TableKit,
+      TableKit.configure({ table: { resizable: true } }),
       Highlight.configure({ multicolor: true }),
       ResizableImage,
     ],
@@ -292,6 +293,28 @@ export default function WriteEditor({ value, onChange }: WriteEditorProps) {
         </ToolbarButton>
       </div>
 
+      <BubbleMenu editor={editor} shouldShow={({ editor }) => editor.isActive('table')}>
+        <div className="flex items-center gap-0.5 rounded-lg border border-black-200 bg-white px-1.5 py-1 shadow-md">
+          <TableBubbleButton onClick={() => editor.chain().focus().addRowAfter().run()}>
+            행 추가
+          </TableBubbleButton>
+          <TableBubbleButton onClick={() => editor.chain().focus().deleteRow().run()}>
+            행 삭제
+          </TableBubbleButton>
+          <div className="mx-1 h-4 w-px bg-black-200" />
+          <TableBubbleButton onClick={() => editor.chain().focus().addColumnAfter().run()}>
+            열 추가
+          </TableBubbleButton>
+          <TableBubbleButton onClick={() => editor.chain().focus().deleteColumn().run()}>
+            열 삭제
+          </TableBubbleButton>
+          <div className="mx-1 h-4 w-px bg-black-200" />
+          <TableBubbleButton onClick={() => editor.chain().focus().deleteTable().run()} danger>
+            표 삭제
+          </TableBubbleButton>
+        </div>
+      </BubbleMenu>
+
       <EditorContent
         editor={editor}
         className="prose-editor min-h-64 px-4 py-3 text-sm text-black-800"
@@ -336,6 +359,26 @@ export default function WriteEditor({ value, onChange }: WriteEditorProps) {
         </>
       )}
     </div>
+  );
+}
+
+function TableBubbleButton({
+  children,
+  onClick,
+  danger,
+}: {
+  children: React.ReactNode;
+  onClick: () => void;
+  danger?: boolean;
+}) {
+  return (
+    <button
+      type="button"
+      onClick={onClick}
+      className={`rounded px-2 py-0.5 text-xs transition-colors hover:bg-black-100 ${danger ? 'text-red-500' : 'text-black-700'}`}
+    >
+      {children}
+    </button>
   );
 }
 

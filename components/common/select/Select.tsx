@@ -84,7 +84,7 @@ export function Select(props: SelectProps) {
           className={cn(
             'absolute top-full z-100 w-full bg-white',
             size === 'md'
-              ? 'border-x border-b border-black-300'
+              ? 'border-x border-b border-black-300 py-2.5'
               : 'rounded-b-lg [box-shadow:0_1px_8px_0_rgba(0,0,0,0.04)]',
           )}
         >

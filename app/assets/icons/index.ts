@@ -1,4 +1,6 @@
+export { default as ChevronDoubleLeftIcon } from './ChevronDoubleLeftIcon.svg';
 export { default as CheckIcon } from './CheckIcon.svg';
+export { default as CopyIcon } from './CopyIcon.svg';
 export { default as ChevronDownIcon } from './ChevronDownIcon.svg';
 export { default as CommentCountIcon } from './CommentCountIcon.svg';
 export { default as ErrorIcon } from './ErrorIcon.svg';
@@ -10,6 +12,7 @@ export { default as LoginKakaoIcon } from './LoginKakaoIcon.svg';
 export { default as LoginNaverIcon } from './LoginNaverIcon.svg';
 export { default as MainLogoIcon } from './MainLogoIcon.svg';
 export { default as MoreDotIcon } from './MoreDotIcon.svg';
+export { default as PlusIcon } from './PlusIcon.svg';
 export { default as ProfileIcon } from './ProfileIcon.svg';
 export { default as SearchIcon } from './SearchIcon.svg';
 export { default as SuccessIcon } from './SuccessIcon.svg';

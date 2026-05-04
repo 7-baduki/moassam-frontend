@@ -6,7 +6,7 @@ import MoabangSection from './MoabangSection';
 export default function MoabangBoundary() {
   return (
     <AsyncBoundary
-      pendingFallback={<LoadingSpinner />}
+      pendingFallback={<LoadingSpinner className="pt-11.25" />}
       rejectedFallback={({ error, reset }) => (
         <ErrorFallback error={error} actionLabel="다시 시도" onAction={reset} />
       )}

@@ -1,0 +1,13 @@
+export { default as EditorBoldIcon } from './BoldIcon.svg';
+export { default as EditorItalicIcon } from './ItalicIcon.svg';
+export { default as EditorUnderlineIcon } from './UnderlineIcon.svg';
+export { default as EditorStrikethroughIcon } from './StrikethroughIcon.svg';
+export { default as EditorTextColorIcon } from './TextColorIcon.svg';
+export { default as EditorTextfillIcon } from './TextfillIcon.svg';
+export { default as EditorTextLeftIcon } from './TextLeftIcon.svg';
+export { default as EditorTextCenterIcon } from './TextCenterIcon.svg';
+export { default as EditorTextRightIcon } from './TextRightIcon.svg';
+export { default as EditorTextJustifyIcon } from './TextJustifyIcon.svg';
+export { default as EditorListIcon } from './ListIcon.svg';
+export { default as EditorTableIcon } from './TableIcon.svg';
+export { default as EditorImageIcon } from './EditorImageIcon.svg';

@@ -11,7 +11,7 @@ export default async function WritePage({ searchParams }: WritePageProps) {
   const initialBoard: BoardType = board === 'free' ? 'free' : 'moabang';
 
   return (
-    <div>
+    <div className="min-w-[700px]">
       <CommunityTitleBar
         title="새글작성"
         description="자유게시판 글 작성 시 1회, 모아방 자료 업로드 시 3회 AI 생성 횟수가 충전돼요."

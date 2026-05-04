@@ -26,6 +26,7 @@
     "@tanstack/react-query": "^5.99.2",
     "@tiptap/extension-color": "^3.22.5",
     "@tiptap/extension-font-family": "^3.22.5",
+    "@tiptap/extension-font-size": "3.0.0-next.3",
     "@tiptap/extension-highlight": "^3.22.5",
     "@tiptap/extension-image": "^3.22.5",
     "@tiptap/extension-table": "^3.22.5",
@@ -40,9 +41,11 @@
     "focus-trap-react": "^12.0.1",
     "next": "16.2.4",
     "react": "19.2.4",
+    "react-color": "^2.19.3",
     "react-dom": "19.2.4",
     "sonner": "^2.0.7",
     "tailwind-merge": "^3.5.0",
+    "tiptap-extension-resize-image": "^1.4.0",
     "zustand": "^5.0.12"
   },
   "lint-staged": {
@@ -69,6 +72,7 @@
     "@testing-library/user-event": "^14.6.1",
     "@types/node": "^20",
     "@types/react": "^19",
+    "@types/react-color": "^3.0.13",
     "@types/react-dom": "^19",
     "@vitejs/plugin-react": "^6.0.1",
     "@vitest/browser-playwright": "4.1.5",

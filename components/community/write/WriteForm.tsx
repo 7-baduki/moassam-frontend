@@ -4,6 +4,7 @@ import { useState } from 'react';
 import WriteCategorySelect from './WriteCategorySelect';
 import WriteTitleInput from './WriteTitleInput';
 import WriteFileUpload from './WriteFileUpload';
+import WriteEditor from './WriteEditor';
 import type { BoardType, WriteFormValues } from './write.type';
 
 interface WriteFormProps {
@@ -32,6 +33,10 @@ export default function WriteForm({ initialBoard }: WriteFormProps) {
       <WriteCategorySelect values={values} onChange={handleChange} />
       <WriteTitleInput value={values.title} onChange={(value) => handleChange('title', value)} />
       <WriteFileUpload files={values.files} onChange={(files) => handleChange('files', files)} />
+      <WriteEditor
+        value={values.content}
+        onChange={(content) => handleChange('content', content)}
+      />
     </div>
   );
 }

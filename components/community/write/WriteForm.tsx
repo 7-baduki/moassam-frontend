@@ -2,6 +2,8 @@
 
 import { useState } from 'react';
 import WriteCategorySelect from './WriteCategorySelect';
+import WriteTitleInput from './WriteTitleInput';
+import WriteFileUpload from './WriteFileUpload';
 import type { BoardType, WriteFormValues } from './write.type';
 
 interface WriteFormProps {
@@ -28,6 +30,8 @@ export default function WriteForm({ initialBoard }: WriteFormProps) {
   return (
     <div className="flex flex-col gap-4">
       <WriteCategorySelect values={values} onChange={handleChange} />
+      <WriteTitleInput value={values.title} onChange={(value) => handleChange('title', value)} />
+      <WriteFileUpload files={values.files} onChange={(files) => handleChange('files', files)} />
     </div>
   );
 }

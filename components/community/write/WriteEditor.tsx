@@ -116,6 +116,7 @@ export default function WriteEditor({ value, onChange }: WriteEditorProps) {
   const currentFontFamily = editor.getAttributes('textStyle').fontFamily ?? 'Pretendard';
   const currentFontSize = editor.getAttributes('textStyle').fontSize?.replace('px', '') ?? '14';
   const currentColor = editor.getAttributes('textStyle').color ?? '#343434';
+  const currentHighlightColor = editor.getAttributes('highlight').color ?? '#FCB900';
 
   return (
     <div className="rounded-lg border border-black-200 bg-white">
@@ -186,7 +187,7 @@ export default function WriteEditor({ value, onChange }: WriteEditorProps) {
 
         <div ref={colorBtnRef}>
           <ToolbarButton onClick={() => openPicker(colorBtnRef, setShowColorPicker)} title="글자색">
-            <EditorTextColorIcon />
+            <EditorTextColorIcon style={{ color: currentColor }} />
           </ToolbarButton>
         </div>
 
@@ -195,12 +196,12 @@ export default function WriteEditor({ value, onChange }: WriteEditorProps) {
             active={editor.isActive('highlight')}
             onClick={() =>
               editor.isActive('highlight')
-                ? editor.chain().focus().unsetHighlight().run()
+                ? editor.chain().focus(undefined, { scrollIntoView: false }).unsetHighlight().run()
                 : openPicker(highlightBtnRef, setShowHighlightPicker)
             }
             title="형광펜"
           >
-            <EditorTextfillIcon />
+            <EditorTextfillIcon style={{ color: currentHighlightColor }} />
           </ToolbarButton>
         </div>
 
@@ -286,7 +287,11 @@ export default function WriteEditor({ value, onChange }: WriteEditorProps) {
               colors={PICKER_COLORS}
               color={currentColor}
               onChangeComplete={(color) => {
-                editor.chain().focus().setColor(color.hex).run();
+                editor
+                  .chain()
+                  .focus(undefined, { scrollIntoView: false })
+                  .setColor(color.hex)
+                  .run();
                 setShowColorPicker(false);
               }}
             />
@@ -301,7 +306,11 @@ export default function WriteEditor({ value, onChange }: WriteEditorProps) {
             <TwitterPicker
               colors={PICKER_COLORS}
               onChangeComplete={(color) => {
-                editor.chain().focus().setHighlight({ color: color.hex }).run();
+                editor
+                  .chain()
+                  .focus(undefined, { scrollIntoView: false })
+                  .setHighlight({ color: color.hex })
+                  .run();
                 setShowHighlightPicker(false);
               }}
             />

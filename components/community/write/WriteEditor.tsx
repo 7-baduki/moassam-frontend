@@ -26,6 +26,7 @@ import TextAlign from '@tiptap/extension-text-align';
 import { TableKit } from '@tiptap/extension-table';
 import Highlight from '@tiptap/extension-highlight';
 import ResizableImage from 'tiptap-extension-resize-image';
+import Placeholder from '@tiptap/extension-placeholder';
 
 async function uploadImage(file: File): Promise<string> {
   // TODO: API 연결 시 아래 base64 로직을 FormData 업로드로 교체
@@ -108,6 +109,7 @@ export default function WriteEditor({ value, onChange }: WriteEditorProps) {
       TableKit.configure({ table: { resizable: true } }),
       Highlight.configure({ multicolor: true }),
       ResizableImage,
+      Placeholder.configure({ placeholder: '내용을 입력하세요.', showOnlyCurrent: false }),
     ],
     immediatelyRender: false,
     content: value,

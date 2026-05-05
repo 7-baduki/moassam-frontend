@@ -2,7 +2,7 @@
 
 import { Select } from '@/components/common/select';
 import { AGE_OPTIONS, BOARD_OPTIONS, MATERIAL_TYPE_OPTIONS, TOPIC_OPTIONS } from './write-selects';
-import type { BoardType, WriteFormValues } from './write.type';
+import type { WriteFormValues } from './write.type';
 
 interface WriteCategorySelectProps {
   values: Pick<WriteFormValues, 'boardType' | 'age' | 'materialType' | 'topic'>;
@@ -12,7 +12,9 @@ interface WriteCategorySelectProps {
 export default function WriteCategorySelect({ values, onChange }: WriteCategorySelectProps) {
   const { boardType, age, materialType, topic } = values;
 
-  const handleBoardTypeChange = (value: BoardType) => {
+  const handleBoardTypeChange = (value: string) => {
+    if (value !== 'moabang' && value !== 'free') return;
+
     onChange('boardType', value);
     onChange('age', undefined);
     onChange('materialType', undefined);

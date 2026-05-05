@@ -106,6 +106,13 @@ html {
   min-height: 256px;
 }
 
+.prose-editor .ProseMirror:focus,
+.prose-editor .ProseMirror:focus-visible,
+.prose-editor .ProseMirror.ProseMirror-focused {
+  outline: none;
+  box-shadow: none;
+}
+
 .prose-editor.prose-editor-scroll .ProseMirror {
   min-height: calc(100% - 24px);
 }
@@ -122,7 +129,7 @@ html {
   margin: 0.25rem 0;
 }
 
-.prose-editor .ProseMirror > p.is-empty.is-editor-empty:first-child::before {
+.prose-editor .ProseMirror > p.is-empty.is-editor-empty:only-child::before {
   content: attr(data-placeholder);
   color: #9d9d9d;
   pointer-events: none;

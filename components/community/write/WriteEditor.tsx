@@ -100,6 +100,26 @@ export default function WriteEditor({ value, onChange }: WriteEditorProps) {
     }
   }
 
+  const handleWrapperDrop = (e: React.DragEvent<HTMLDivElement>) => {
+    if (!editor) return;
+    if ((e.target as HTMLElement).closest('.ProseMirror')) return;
+
+    const file = e.dataTransfer.files[0];
+    if (!file?.type.startsWith('image/')) return;
+
+    e.preventDefault();
+    uploadImage(file).then((url) => {
+      if (url) editor.chain().focus().setImage({ src: url }).run();
+    });
+  };
+
+  const handleWrapperClick = (e: React.MouseEvent<HTMLDivElement>) => {
+    if (!editor) return;
+    const target = e.target as HTMLElement;
+    if (target.closest('button, select, input, .ProseMirror')) return;
+    editor.chain().focus().run();
+  };
+
   const editor = useEditor({
     extensions: [
       StarterKit,
@@ -166,7 +186,12 @@ export default function WriteEditor({ value, onChange }: WriteEditorProps) {
   const currentHighlightColor = editorState?.highlightColor ?? '#FCB900';
 
   return (
-    <div className="rounded-lg border border-black-200 bg-white">
+    <div
+      className="rounded-lg border border-black-200 bg-white"
+      onDrop={handleWrapperDrop}
+      onDragOver={(e) => e.preventDefault()}
+      onClick={handleWrapperClick}
+    >
       <div className="flex h-10.75 items-center gap-0.5 overflow-x-auto border-b border-black-200 bg-black-200 px-2">
         <select
           value={currentFontFamily}

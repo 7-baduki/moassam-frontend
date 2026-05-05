@@ -171,7 +171,7 @@ export default function WriteEditor({ value, onChange }: WriteEditorProps) {
         <select
           value={currentFontFamily}
           onChange={(e) => editor.chain().focus().setFontFamily(e.target.value).run()}
-          className="h-7 rounded px-1 text-xs text-black-800 outline-none hover:bg-black-100"
+          className="h-7 cursor-pointer rounded px-1 text-xs text-black-800 outline-none hover:bg-black-100"
         >
           {FONT_FAMILIES.map((f) => (
             <option key={f.value} value={f.value}>
@@ -189,7 +189,7 @@ export default function WriteEditor({ value, onChange }: WriteEditorProps) {
               .setFontSize(e.target.value + 'px')
               .run()
           }
-          className="h-7 w-14 rounded px-1 text-xs text-black-800 outline-none hover:bg-black-100"
+          className="h-7 w-14 cursor-pointer rounded px-1 text-xs text-black-800 outline-none hover:bg-black-100"
         >
           {FONT_SIZES.map((s) => (
             <option key={s} value={s}>

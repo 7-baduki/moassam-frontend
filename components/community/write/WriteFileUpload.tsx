@@ -133,6 +133,7 @@ export default function WriteFileUpload({ files, onChange }: WriteFileUploadProp
                   <button
                     type="button"
                     onClick={() => onChange([])}
+                    aria-label="모든 파일 삭제"
                     className="flex items-center justify-center"
                   >
                     <UploadXIcon width={16} height={16} className="block text-black-400" />
@@ -154,6 +155,7 @@ export default function WriteFileUpload({ files, onChange }: WriteFileUploadProp
                       <button
                         type="button"
                         onClick={() => removeFile(index)}
+                        aria-label={`${file.name} 삭제`}
                         className="flex items-center justify-center"
                       >
                         <UploadXIcon width={16} height={16} className="block" />

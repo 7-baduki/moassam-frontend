@@ -1,14 +1,18 @@
-interface LoginTooltipProps {
+import { cn } from '@/utils/cn';
+
+interface TooltipProps {
   label: string;
+  className?: string;
+  style?: React.CSSProperties;
 }
 
-export function Tooltip({ label }: LoginTooltipProps) {
+export function Tooltip({ label, className, style }: TooltipProps) {
   return (
-    <div className="absolute -top-9 left-1/2 z-200 -translate-x-1/2 opacity-90">
-      <div className="rounded-[20px] bg-[#3D3D3D] px-3.75 py-1.5 text-xs font-medium whitespace-nowrap text-white">
+    <div className={cn('absolute -top-9 left-1/2 z-200 -translate-x-1/2', className)} style={style}>
+      <div className="rounded-[20px] bg-black/80 px-3.75 py-1.5 text-xs font-medium whitespace-nowrap text-white">
         {label}
       </div>
-      <div className="mx-auto h-0 w-0 border-x-12 border-t-16 border-x-transparent border-t-[#3D3D3D]" />
+      <div className="mx-auto h-0 w-0 border-x-12 border-t-16 border-x-transparent border-t-black/80" />
     </div>
   );
 }

@@ -113,6 +113,25 @@ export default function WriteEditor({ value, onChange }: WriteEditorProps) {
     ],
     immediatelyRender: false,
     content: value,
+    editorProps: {
+      handleDrop(view, event, _slice, moved) {
+        if (moved) return false;
+        const file = event.dataTransfer?.files[0];
+        if (!file?.type.startsWith('image/')) return false;
+
+        event.preventDefault();
+        const pos = view.posAtCoords({ left: event.clientX, top: event.clientY });
+        if (!pos) return true;
+
+        uploadImage(file).then((url) => {
+          if (!url) return;
+          const node = view.state.schema.nodes.imageResize?.create({ src: url });
+          if (!node) return;
+          view.dispatch(view.state.tr.insert(pos.pos, node));
+        });
+        return true;
+      },
+    },
     onUpdate({ editor }) {
       onChange(editor.getHTML());
     },

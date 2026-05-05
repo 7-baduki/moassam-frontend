@@ -17,7 +17,7 @@ export function ChargeGuide({ className }: ChargeGuideProps) {
         <p>모아방과 자유게시판에 글을 작성하면 횟수를 더 얻을 수 있어요</p>
       </div>
 
-      <div className="grid grid-cols-2 gap-10">
+      <div className="grid grid-cols-1 gap-10 xl:grid-cols-2">
         <Link
           href="/community/moabang"
           className="relative overflow-hidden rounded-[20px] bg-yellow-200 px-8 py-8.75 leading-[140%] transition-all hover:bg-yellow-400 hover:shadow-[0px_4px_16px_0px_#0000002E]"
@@ -37,7 +37,7 @@ export function ChargeGuide({ className }: ChargeGuideProps) {
             alt="아 마스코트"
             width={160}
             height={160}
-            className="absolute right-8 bottom-0"
+            className="absolute right-8 bottom-0 w-40 xl:w-[clamp(5rem,8.3vw,10rem)]"
           />
         </Link>
 
@@ -60,7 +60,7 @@ export function ChargeGuide({ className }: ChargeGuideProps) {
             alt="쌤 마스코트"
             width={160}
             height={160}
-            className="absolute right-8 bottom-0"
+            className="absolute right-8 bottom-0 w-40 xl:w-[clamp(5rem,8.3vw,10rem)]"
           />
         </Link>
       </div>

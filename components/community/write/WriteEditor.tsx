@@ -139,9 +139,11 @@ export default function WriteEditor({ value, onChange }: WriteEditorProps) {
       handleDrop(view, event, _slice, moved) {
         if (moved) return false;
         const file = event.dataTransfer?.files[0];
-        if (!file?.type.startsWith('image/')) return false;
+        if (!file) return false;
 
         event.preventDefault();
+        if (!file.type.startsWith('image/')) return true;
+
         const pos = view.posAtCoords({ left: event.clientX, top: event.clientY });
         if (!pos) return true;
 

@@ -1,8 +1,10 @@
 'use client';
 
+import { useState } from 'react';
 import { ProfileSummary } from '@/components/mypage/dashboard/ProfileSummary';
 import { GenerationCount } from '@/components/mypage/dashboard/GenerationCount';
 import { ChargeGuide } from '@/components/mypage/dashboard/ChargeGuide';
+import { ProfileEditModal } from '@/components/mypage/dashboard/ProfileEditModal';
 
 export default function DashboardPage() {
   const mockUser = {
@@ -13,7 +15,8 @@ export default function DashboardPage() {
     totalCount: 10,
   };
 
-  const handleEditClick = () => {};
+  const [isEditModalOpen, setIsEditModalOpen] = useState(false);
+  const [isWithdrawModalOpen, setIsWithdrawModalOpen] = useState(false);
 
   return (
     <div className="flex flex-col">
@@ -21,12 +24,21 @@ export default function DashboardPage() {
         name={mockUser.name}
         observationCount={mockUser.observationCount}
         bookmarkCount={mockUser.bookmarkCount}
-        onEditClick={handleEditClick}
+        onEditClick={() => setIsEditModalOpen(true)}
       />
 
       <GenerationCount used={mockUser.usedCount} total={mockUser.totalCount} className="mt-22.5" />
 
       <ChargeGuide className="mt-10" />
+
+      <ProfileEditModal
+        isOpen={isEditModalOpen}
+        onClose={() => setIsEditModalOpen(false)}
+        onWithdrawClick={() => {
+          setIsEditModalOpen(false);
+          setIsWithdrawModalOpen(true);
+        }}
+      />
     </div>
   );
 }

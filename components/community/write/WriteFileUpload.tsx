@@ -108,7 +108,7 @@ export default function WriteFileUpload({ files, onChange }: WriteFileUploadProp
         onDragOver={handleDragOver}
         onDragLeave={handleDragLeave}
         onDrop={handleDrop}
-        className={`relative h-[100px] overflow-y-auto rounded-lg border border-dashed transition-colors ${isDragging ? 'border-pink-500 bg-pink-50' : 'border-black-300 bg-white'}`}
+        className={`relative h-25 overflow-y-auto rounded-lg border border-dashed transition-colors ${isDragging ? 'border-pink-500 bg-pink-50' : 'border-black-300 bg-white'}`}
       >
         {isDragging && (
           <div className="absolute inset-0 z-10 flex items-center justify-center rounded-lg bg-pink-50">

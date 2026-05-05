@@ -13,7 +13,7 @@ const MAX_FILES_BYTES = 10 * 1024 * 1024;
 const WriteEditor = dynamic(() => import('./WriteEditor'), {
   ssr: false,
   loading: () => (
-    <div className="h-[363px] animate-pulse rounded-lg border border-black-200 bg-black-100" />
+    <div className="h-90.75 animate-pulse rounded-lg border border-black-200 bg-black-100" />
   ),
 });
 

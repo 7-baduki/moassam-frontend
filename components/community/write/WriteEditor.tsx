@@ -167,7 +167,7 @@ export default function WriteEditor({ value, onChange }: WriteEditorProps) {
 
   return (
     <div className="rounded-lg border border-black-200 bg-white">
-      <div className="flex h-[43px] items-center gap-0.5 overflow-x-auto border-b border-black-200 bg-black-200 px-2">
+      <div className="flex h-10.75 items-center gap-0.5 overflow-x-auto border-b border-black-200 bg-black-200 px-2">
         <select
           value={currentFontFamily}
           onChange={(e) => editor.chain().focus().setFontFamily(e.target.value).run()}
@@ -360,8 +360,8 @@ export default function WriteEditor({ value, onChange }: WriteEditorProps) {
 
       {showColorPicker && (
         <>
-          <div className="fixed inset-0 z-[99]" onClick={() => setShowColorPicker(false)} />
-          <div className="fixed z-[100]" style={{ top: pickerPos.top, left: pickerPos.left }}>
+          <div className="fixed inset-0 z-99" onClick={() => setShowColorPicker(false)} />
+          <div className="fixed z-100" style={{ top: pickerPos.top, left: pickerPos.left }}>
             <TwitterPicker
               colors={PICKER_COLORS}
               color={currentColor}
@@ -380,8 +380,8 @@ export default function WriteEditor({ value, onChange }: WriteEditorProps) {
 
       {showHighlightPicker && (
         <>
-          <div className="fixed inset-0 z-[99]" onClick={() => setShowHighlightPicker(false)} />
-          <div className="fixed z-[100]" style={{ top: pickerPos.top, left: pickerPos.left }}>
+          <div className="fixed inset-0 z-99" onClick={() => setShowHighlightPicker(false)} />
+          <div className="fixed z-100" style={{ top: pickerPos.top, left: pickerPos.left }}>
             <TwitterPicker
               colors={PICKER_COLORS}
               onChangeComplete={(color) => {

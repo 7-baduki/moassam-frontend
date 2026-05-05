@@ -122,7 +122,7 @@ html {
   margin: 0.25rem 0;
 }
 
-.prose-editor .ProseMirror p.is-empty.is-editor-empty::before {
+.prose-editor .ProseMirror > p.is-empty.is-editor-empty:first-child::before {
   content: attr(data-placeholder);
   color: #9d9d9d;
   pointer-events: none;

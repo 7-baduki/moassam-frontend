@@ -1,11 +1,18 @@
 'use client';
 
 import { useState } from 'react';
+import dynamic from 'next/dynamic';
 import WriteCategorySelect from './WriteCategorySelect';
 import WriteTitleInput from './WriteTitleInput';
 import WriteFileUpload from './WriteFileUpload';
-import WriteEditor from './WriteEditor';
 import type { BoardType, WriteFormValues } from './write.type';
+
+const WriteEditor = dynamic(() => import('./WriteEditor'), {
+  ssr: false,
+  loading: () => (
+    <div className="h-[363px] animate-pulse rounded-lg border border-black-200 bg-black-100" />
+  ),
+});
 
 interface WriteFormProps {
   initialBoard: BoardType;

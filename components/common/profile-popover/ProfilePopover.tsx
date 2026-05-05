@@ -65,7 +65,7 @@ export function ProfilePopover({ name, avatarSrc, onClose, onLogout }: ProfilePo
       <Button
         variant="ghost"
         size="full"
-        className="pt-11.5 pb-5 text-xs text-black-500"
+        className="mt-11.5 mb-5 text-xs text-black-500"
         onClick={onLogout}
       >
         로그아웃

@@ -18,6 +18,7 @@ import {
   EditorListIcon,
   EditorTableIcon,
   EditorImageIcon,
+  EditorTrashIcon,
 } from '@/app/assets/icons/editor';
 import StarterKit from '@tiptap/starter-kit';
 import Underline from '@tiptap/extension-underline';
@@ -25,7 +26,7 @@ import { TextStyleKit } from '@tiptap/extension-text-style';
 import TextAlign from '@tiptap/extension-text-align';
 import { TableKit } from '@tiptap/extension-table';
 import Highlight from '@tiptap/extension-highlight';
-import ResizableImage from 'tiptap-extension-resize-image';
+import Image from '@tiptap/extension-image';
 import Placeholder from '@tiptap/extension-placeholder';
 
 async function uploadImage(file: File): Promise<string> {
@@ -108,7 +109,10 @@ export default function WriteEditor({ value, onChange }: WriteEditorProps) {
       TextAlign.configure({ types: ['heading', 'paragraph'] }),
       TableKit.configure({ table: { resizable: true } }),
       Highlight.configure({ multicolor: true }),
-      ResizableImage,
+      Image.configure({
+        inline: true,
+        resize: { enabled: true, alwaysPreserveAspectRatio: true },
+      }),
       Placeholder.configure({ placeholder: '내용을 입력하세요.', showOnlyCurrent: false }),
     ],
     immediatelyRender: false,
@@ -125,7 +129,7 @@ export default function WriteEditor({ value, onChange }: WriteEditorProps) {
 
         uploadImage(file).then((url) => {
           if (!url) return;
-          const node = view.state.schema.nodes.imageResize?.create({ src: url });
+          const node = view.state.schema.nodes.image?.create({ src: url });
           if (!node) return;
           view.dispatch(view.state.tr.insert(pos.pos, node));
         });
@@ -313,6 +317,21 @@ export default function WriteEditor({ value, onChange }: WriteEditorProps) {
           <EditorTableIcon />
         </ToolbarButton>
       </div>
+
+      <BubbleMenu
+        editor={editor}
+        shouldShow={({ editor }) => editor.isActive('image')}
+        options={{ placement: 'top' }}
+      >
+        <button
+          type="button"
+          onClick={() => editor.chain().focus().deleteSelection().run()}
+          title="이미지 삭제"
+          className="flex h-7 w-7 items-center justify-center rounded-md border border-black-200 bg-white text-black-700 shadow-md transition-colors hover:bg-black-100"
+        >
+          <EditorTrashIcon />
+        </button>
+      </BubbleMenu>
 
       <BubbleMenu editor={editor} shouldShow={({ editor }) => editor.isActive('table')}>
         <div className="flex items-center gap-0.5 rounded-lg border border-black-200 bg-white px-1.5 py-1 shadow-md">

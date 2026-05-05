@@ -11,3 +11,4 @@ export { default as EditorTextJustifyIcon } from './TextJustifyIcon.svg';
 export { default as EditorListIcon } from './ListIcon.svg';
 export { default as EditorTableIcon } from './TableIcon.svg';
 export { default as EditorImageIcon } from './EditorImageIcon.svg';
+export { default as EditorTrashIcon } from './TrashIcon.svg';

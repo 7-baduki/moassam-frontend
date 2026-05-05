@@ -241,3 +241,49 @@ html {
   border-radius: 4px;
   display: inline-block;
 }
+
+.prose-editor .ProseMirror [data-resize-container][data-node='image'] {
+  display: inline-flex;
+  max-width: 100%;
+}
+
+.prose-editor .ProseMirror [data-resize-wrapper] {
+  display: inline-block;
+  max-width: 100%;
+}
+
+.prose-editor .ProseMirror [data-resize-handle] {
+  width: 10px;
+  height: 10px;
+  background-color: #ffffff;
+  border: 1.5px solid #0693e3;
+  border-radius: 2px;
+  z-index: 10;
+  opacity: 0;
+  transition: opacity 0.12s ease-in-out;
+}
+
+.prose-editor .ProseMirror [data-resize-container]:hover [data-resize-handle],
+.prose-editor .ProseMirror [data-resize-container][data-resize-state='true'] [data-resize-handle] {
+  opacity: 1;
+}
+
+.prose-editor .ProseMirror [data-resize-handle='top-left'] {
+  transform: translate(-50%, -50%);
+  cursor: nwse-resize;
+}
+
+.prose-editor .ProseMirror [data-resize-handle='top-right'] {
+  transform: translate(50%, -50%);
+  cursor: nesw-resize;
+}
+
+.prose-editor .ProseMirror [data-resize-handle='bottom-left'] {
+  transform: translate(-50%, 50%);
+  cursor: nesw-resize;
+}
+
+.prose-editor .ProseMirror [data-resize-handle='bottom-right'] {
+  transform: translate(50%, 50%);
+  cursor: nwse-resize;
+}

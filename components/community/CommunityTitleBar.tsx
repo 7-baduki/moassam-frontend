@@ -9,6 +9,7 @@ interface CommunityTitleBarProps {
   description: string;
   onWrite?: () => void;
   hideSearch?: boolean;
+  writeDisabled?: boolean;
 }
 
 export default function CommunityTitleBar({
@@ -16,6 +17,7 @@ export default function CommunityTitleBar({
   description,
   onWrite,
   hideSearch = false,
+  writeDisabled = false,
 }: CommunityTitleBarProps) {
   const [searchValue, setSearchValue] = useState('');
 
@@ -37,7 +39,7 @@ export default function CommunityTitleBar({
             onClear={() => setSearchValue('')}
           />
         )}
-        <Button size="sm" onClick={onWrite}>
+        <Button size="sm" onClick={onWrite} disabled={writeDisabled}>
           새글작성
         </Button>
       </div>

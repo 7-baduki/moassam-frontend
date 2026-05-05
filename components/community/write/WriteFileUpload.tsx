@@ -23,13 +23,11 @@ export default function WriteFileUpload({ files, onChange }: WriteFileUploadProp
   const [isDragging, setIsDragging] = useState(false);
 
   const totalBytes = files.reduce((sum, file) => sum + file.size, 0);
+  const isOverLimit = totalBytes > MAX_SIZE_BYTES;
 
   function addFiles(incoming: FileList | null) {
-    if (!incoming) return;
-    const next = [...files, ...Array.from(incoming)];
-    const nextBytes = next.reduce((sum, file) => sum + file.size, 0);
-    if (nextBytes > MAX_SIZE_BYTES) return;
-    onChange(next);
+    if (!incoming || incoming.length === 0) return;
+    onChange([...files, ...Array.from(incoming)]);
   }
 
   function removeFile(index: number) {
@@ -62,9 +60,16 @@ export default function WriteFileUpload({ files, onChange }: WriteFileUploadProp
         >
           내 PC
         </Button>
-        <span className="text-sm text-black-500">
-          현재 {formatBytes(totalBytes)} / 전체 {MAX_SIZE_MB}MB
-        </span>
+        <div className="flex items-center gap-2">
+          {isOverLimit && (
+            <span className="text-xs text-red-500">
+              최대 {MAX_SIZE_MB}MB까지 첨부할 수 있습니다.
+            </span>
+          )}
+          <span className={`text-sm ${isOverLimit ? 'text-red-500' : 'text-black-500'}`}>
+            현재 {formatBytes(totalBytes)} / 전체 {MAX_SIZE_MB}MB
+          </span>
+        </div>
         <input
           ref={inputRef}
           type="file"

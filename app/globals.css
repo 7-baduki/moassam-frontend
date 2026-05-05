@@ -213,7 +213,6 @@ html {
   border: 1px solid #e2e2e2;
   padding: 0.4rem 0.6rem;
   min-width: 2rem;
-  word-break: break-word;
   overflow-wrap: break-word;
 }
 

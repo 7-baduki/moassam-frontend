@@ -1,11 +1,36 @@
 'use client';
 
 import { useRef, useState } from 'react';
+import type { ComponentType, SVGProps } from 'react';
 import { Button } from '@/components/common/button/Button';
 import { UploadDragIcon, UploadXIcon } from '@/app/assets/icons';
+import {
+  FilePdfIcon,
+  FilePngIcon,
+  FileJpgIcon,
+  FilePptIcon,
+  FileDocIcon,
+  FileDefaultIcon,
+} from '@/app/assets/icons/editor';
 
 const MAX_SIZE_MB = 10;
 const MAX_SIZE_BYTES = MAX_SIZE_MB * 1024 * 1024;
+
+const FILE_ICON_BY_EXT: Record<string, ComponentType<SVGProps<SVGSVGElement>>> = {
+  pdf: FilePdfIcon,
+  png: FilePngIcon,
+  jpg: FileJpgIcon,
+  jpeg: FileJpgIcon,
+  ppt: FilePptIcon,
+  pptx: FilePptIcon,
+  doc: FileDocIcon,
+  docx: FileDocIcon,
+};
+
+function getFileIcon(fileName: string): ComponentType<SVGProps<SVGSVGElement>> {
+  const ext = fileName.split('.').pop()?.toLowerCase() ?? '';
+  return FILE_ICON_BY_EXT[ext] ?? FileDefaultIcon;
+}
 
 interface WriteFileUploadProps {
   files: File[];
@@ -110,31 +135,41 @@ export default function WriteFileUpload({ files, onChange }: WriteFileUploadProp
                     <UploadXIcon width={16} height={16} className="block text-black-400" />
                   </button>
                 </th>
-                <th className="text-left align-middle font-medium">파일명</th>
+                <th className="pl-2 text-left align-middle font-medium">파일명</th>
                 <th className="pr-8 text-center align-middle font-medium">용량</th>
               </tr>
             </thead>
             <tbody>
-              {files.map((file, index) => (
-                <tr
-                  key={index}
-                  className="h-8 border-b border-black-100 align-middle last:border-none"
-                >
-                  <td className="pl-3 align-middle">
-                    <button
-                      type="button"
-                      onClick={() => removeFile(index)}
-                      className="flex items-center justify-center"
+              {files.map((file, index) => {
+                const FileIcon = getFileIcon(file.name);
+                return (
+                  <tr
+                    key={index}
+                    className="h-8 border-b border-black-100 align-middle last:border-none"
+                  >
+                    <td className="pl-3 align-middle">
+                      <button
+                        type="button"
+                        onClick={() => removeFile(index)}
+                        className="flex items-center justify-center"
+                      >
+                        <UploadXIcon width={16} height={16} className="block" />
+                      </button>
+                    </td>
+                    <td className="pl-2 align-middle text-sm text-black-800">
+                      <span className="flex items-center gap-2">
+                        <FileIcon width={16} height={16} className="shrink-0" />
+                        {file.name}
+                      </span>
+                    </td>
+                    <td
+                      className={`pr-8 text-center align-middle text-xs ${file.size > MAX_SIZE_BYTES ? 'text-red-500' : 'text-black-600'}`}
                     >
-                      <UploadXIcon width={16} height={16} className="block" />
-                    </button>
-                  </td>
-                  <td className="align-middle text-sm text-black-800">{file.name}</td>
-                  <td className="pr-8 text-center align-middle text-xs text-black-600">
-                    {formatBytes(file.size)}
-                  </td>
-                </tr>
-              ))}
+                      {formatBytes(file.size)}
+                    </td>
+                  </tr>
+                );
+              })}
             </tbody>
           </table>
         )}

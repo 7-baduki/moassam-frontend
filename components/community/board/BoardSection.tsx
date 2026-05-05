@@ -61,7 +61,6 @@ export default function BoardSection() {
     <section className="flex flex-col" aria-label="게시글 목록">
       <CommunityTitleBar
         title="자유게시판"
-        description="자유롭게 이야기를 나누는 공간입니다"
         onWrite={() => router.push('/community/write?board=free')}
       />
       <CommunityFilter

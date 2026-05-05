@@ -21,7 +21,6 @@ import {
   EditorTrashIcon,
 } from '@/app/assets/icons/editor';
 import StarterKit from '@tiptap/starter-kit';
-import Underline from '@tiptap/extension-underline';
 import { TextStyleKit } from '@tiptap/extension-text-style';
 import TextAlign from '@tiptap/extension-text-align';
 import { TableKit } from '@tiptap/extension-table';
@@ -104,7 +103,6 @@ export default function WriteEditor({ value, onChange }: WriteEditorProps) {
   const editor = useEditor({
     extensions: [
       StarterKit,
-      Underline,
       TextStyleKit,
       TextAlign.configure({ types: ['heading', 'paragraph'] }),
       TableKit.configure({ table: { resizable: true } }),

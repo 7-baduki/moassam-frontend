@@ -12,12 +12,12 @@ interface WriteCategorySelectProps {
 export default function WriteCategorySelect({ values, onChange }: WriteCategorySelectProps) {
   const { boardType, age, materialType, topic } = values;
 
-  function handleBoardTypeChange(value: string) {
-    onChange('boardType', value as BoardType);
+  const handleBoardTypeChange = (value: BoardType) => {
+    onChange('boardType', value);
     onChange('age', undefined);
     onChange('materialType', undefined);
     onChange('topic', undefined);
-  }
+  };
 
   return (
     <div className="flex gap-3">

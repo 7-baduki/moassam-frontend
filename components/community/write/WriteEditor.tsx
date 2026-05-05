@@ -101,13 +101,13 @@ export default function WriteEditor({ value, onChange }: WriteEditorProps) {
   }
 
   const handleWrapperDrop = (e: React.DragEvent<HTMLDivElement>) => {
+    e.preventDefault();
     if (!editor) return;
     if ((e.target as HTMLElement).closest('.ProseMirror')) return;
 
     const file = e.dataTransfer.files[0];
     if (!file?.type.startsWith('image/')) return;
 
-    e.preventDefault();
     uploadImage(file).then((url) => {
       if (url) editor.chain().focus().setImage({ src: url }).run();
     });

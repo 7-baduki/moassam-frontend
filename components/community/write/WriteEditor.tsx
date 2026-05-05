@@ -131,7 +131,7 @@ export default function WriteEditor({ value, onChange }: WriteEditorProps) {
         inline: true,
         resize: { enabled: true, alwaysPreserveAspectRatio: true },
       }),
-      Placeholder.configure({ placeholder: '내용을 입력하세요.', showOnlyCurrent: false }),
+      Placeholder.configure({ placeholder: '내용을 입력하세요.' }),
     ],
     immediatelyRender: false,
     content: value,

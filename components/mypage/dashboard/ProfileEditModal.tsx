@@ -11,11 +11,16 @@ interface ProfileEditModalProps {
   isOpen: boolean;
   onClose: () => void;
   onWithdrawClick: () => void;
+  username: string;
 }
 
-export function ProfileEditModal({ isOpen, onClose, onWithdrawClick }: ProfileEditModalProps) {
+export function ProfileEditModal({
+  isOpen,
+  onClose,
+  onWithdrawClick,
+  username,
+}: ProfileEditModalProps) {
   const [displayName, setDisplayName] = useState('');
-  const [username, setUsername] = useState('');
 
   useEffect(() => {
     if (!isOpen) return;
@@ -57,13 +62,12 @@ export function ProfileEditModal({ isOpen, onClose, onWithdrawClick }: ProfileEd
                 onChange={(e) => setDisplayName(e.target.value.replace(/\s/g, ''))}
               />
             </div>
-            <div className="flex flex-col rounded-[10px] border-[0.5px] border-black-400 px-3 py-2 focus-within:border-pink-500">
+            <div className="flex flex-col rounded-[10px] border-[0.5px] border-black-400 px-3 py-2">
               <span className="mb-0.5 text-xs font-medium text-black-500">사용자 이름</span>
               <input
-                className="text-sm font-medium text-black outline-none placeholder:text-black-600"
-                placeholder="moassam@gmail.com"
+                className="text-sm font-medium text-black-500 outline-none"
                 value={username}
-                onChange={(e) => setUsername(e.target.value)}
+                readOnly
               />
             </div>
           </div>
@@ -80,7 +84,7 @@ export function ProfileEditModal({ isOpen, onClose, onWithdrawClick }: ProfileEd
               <Button variant="outline" size="sm" onClick={onClose}>
                 취소
               </Button>
-              <Button variant="primary" size="sm" onClick={onClose}>
+              <Button variant="primary" size="sm" onClick={onClose} disabled={!displayName}>
                 저장
               </Button>
             </div>

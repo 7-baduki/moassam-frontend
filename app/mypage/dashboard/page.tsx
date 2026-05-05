@@ -9,6 +9,7 @@ import { ProfileEditModal } from '@/components/mypage/dashboard/ProfileEditModal
 export default function DashboardPage() {
   const mockUser = {
     name: '김모아',
+    username: 'moassam@naver.com',
     observationCount: 12,
     bookmarkCount: 10,
     usedCount: 6,
@@ -38,6 +39,7 @@ export default function DashboardPage() {
           setIsEditModalOpen(false);
           setIsWithdrawModalOpen(true);
         }}
+        username={mockUser.username}
       />
     </div>
   );

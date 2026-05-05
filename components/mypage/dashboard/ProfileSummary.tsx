@@ -18,7 +18,7 @@ export function ProfileSummary({
   onEditClick,
 }: ProfileSummaryProps) {
   return (
-    <div className="flex items-center divide-x-[0.5px] divide-black-500">
+    <div className="flex flex-col gap-8 xl:flex-row xl:items-center xl:divide-x-[0.5px] xl:divide-black-500">
       <div className="flex items-center gap-5 pr-25">
         <div className="h-21.25 w-21.25 overflow-hidden rounded-full">
           <Image src={DefaultAvatar} alt="프로필 아바타" width={85} height={85} />
@@ -36,10 +36,10 @@ export function ProfileSummary({
         </Button>
       </div>
 
-      <div className="flex flex-1 items-center gap-25 pl-25">
+      <div className="flex flex-1 items-stretch gap-25 xl:pl-25">
         <Link
           href="/mypage/observations"
-          className="flex flex-1 items-center justify-center gap-3 rounded-[10px] bg-white px-13 py-3.25 transition-shadow duration-200 hover:shadow-[2px_2px_6px_0px_#0000000F]"
+          className="flex flex-1 flex-col items-center justify-center gap-2 rounded-[10px] bg-white px-13 py-3.25 transition-shadow duration-200 hover:shadow-[2px_2px_6px_0px_#0000000F]"
         >
           <ObservationCountIcon />
           <div className="flex flex-col items-center text-black">
@@ -49,7 +49,7 @@ export function ProfileSummary({
         </Link>
         <Link
           href="/mypage/bookmarks"
-          className="flex flex-1 items-center justify-center gap-3 rounded-[10px] bg-white px-13 py-3.25 transition-shadow duration-200 hover:shadow-[2px_2px_6px_0px_#0000000F]"
+          className="flex flex-1 flex-col items-center justify-center gap-2 rounded-[10px] bg-white px-13 py-3.25 transition-shadow duration-200 hover:shadow-[2px_2px_6px_0px_#0000000F]"
         >
           <BookmarkCountIcon />
           <div className="flex flex-col items-center text-black">

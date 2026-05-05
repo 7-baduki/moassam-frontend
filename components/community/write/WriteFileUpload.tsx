@@ -100,7 +100,10 @@ export default function WriteFileUpload({ files, onChange }: WriteFileUploadProp
           type="file"
           multiple
           className="hidden"
-          onChange={(e) => addFiles(e.target.files)}
+          onChange={(e) => {
+            addFiles(e.target.files);
+            e.target.value = '';
+          }}
         />
       </div>
 

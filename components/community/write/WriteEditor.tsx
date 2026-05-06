@@ -2,6 +2,7 @@
 
 import { useRef, useState, useCallback } from 'react';
 import { TwitterPicker } from 'react-color';
+import { toast } from '@/utils/toast';
 import { EditorContent, useEditor, useEditorState } from '@tiptap/react';
 import { BubbleMenu } from '@tiptap/react/menus';
 import {
@@ -106,7 +107,10 @@ export default function WriteEditor({ value, onChange }: WriteEditorProps) {
     if ((e.target as HTMLElement).closest('.ProseMirror')) return;
 
     const file = e.dataTransfer.files[0];
-    if (!file?.type.startsWith('image/')) return;
+    if (!file?.type.startsWith('image/')) {
+      toast.warning({ title: '업로드 제한', description: '이미지 파일만 삽입할 수 있습니다' });
+      return;
+    }
 
     uploadImage(file).then((url) => {
       if (url) editor.chain().focus().setImage({ src: url }).run();
@@ -142,7 +146,10 @@ export default function WriteEditor({ value, onChange }: WriteEditorProps) {
         if (!file) return false;
 
         event.preventDefault();
-        if (!file.type.startsWith('image/')) return true;
+        if (!file.type.startsWith('image/')) {
+          toast.warning({ title: '업로드 제한', description: '이미지 파일만 삽입할 수 있습니다' });
+          return true;
+        }
 
         const pos = view.posAtCoords({ left: event.clientX, top: event.clientY });
         if (!pos) return true;
@@ -382,7 +389,7 @@ export default function WriteEditor({ value, onChange }: WriteEditorProps) {
 
       <EditorContent
         editor={editor}
-        className="prose-editor prose-editor-scroll h-80 overflow-y-auto px-4 py-3 text-sm text-black-800"
+        className="prose-editor min-h-107 px-4 py-3 text-sm text-black-800"
       />
 
       {showColorPicker && (

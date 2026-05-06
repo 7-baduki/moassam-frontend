@@ -28,8 +28,10 @@ export default function ObservationsPage() {
             href={`/observations/${observation.id}`}
             className="flex items-center rounded-[10px] bg-white px-5 py-3 transition-colors hover:bg-black-200"
           >
-            <span className="flex-1 text-sm font-medium text-black-800">{observation.title}</span>
-            <div className="flex items-center gap-5 text-xs font-medium text-black-500">
+            <span className="min-w-0 flex-1 truncate text-sm font-medium text-black-800">
+              {observation.title}
+            </span>
+            <div className="flex items-center gap-5 pl-10 text-xs font-medium text-black-500">
               <span>{observation.age}</span>
               <span>{observation.curriculum}</span>
               <span>{observation.createdAt}</span>

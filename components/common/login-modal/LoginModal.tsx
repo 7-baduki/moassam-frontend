@@ -11,9 +11,15 @@ import {
 import { useLoginModalStore } from '@/stores/loginModalStore';
 import { LoginButton } from './LoginButton';
 import { Tooltip } from '@/components/common/tooltip/Tooltip';
+import { KAKAO_AUTH_URL } from '@/constants/auth';
 
 export function LoginModal() {
-  const { isOpen, title, description, close, lastProvider } = useLoginModalStore();
+  const { isOpen, title, description, close, lastProvider, setLastProvider } = useLoginModalStore();
+
+  const handleKakaoLogin = () => {
+    setLastProvider('kakao');
+    window.location.href = KAKAO_AUTH_URL;
+  };
 
   useEffect(() => {
     if (!isOpen) return;
@@ -56,6 +62,7 @@ export function LoginModal() {
                   icon={<LoginKakaoIcon />}
                   label="카카오로 시작하기"
                   className="bg-[#FEE300] text-[#461E25]"
+                  onClick={handleKakaoLogin}
                 />
               </div>
               <div className="relative">

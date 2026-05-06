@@ -6,6 +6,7 @@ import Image from 'next/image';
 import { FocusTrap } from 'focus-trap-react';
 import { DefaultAvatar } from '@/app/assets/images';
 import { Button } from '@/components/common/button/Button';
+import { toast } from '@/utils/toast';
 
 interface ProfileEditModalProps {
   isOpen: boolean;
@@ -84,7 +85,15 @@ export function ProfileEditModal({
               <Button variant="outline" size="sm" onClick={onClose}>
                 취소
               </Button>
-              <Button variant="primary" size="sm" onClick={onClose} disabled={!displayName}>
+              <Button
+                variant="primary"
+                size="sm"
+                disabled={!displayName}
+                onClick={() => {
+                  onClose();
+                  toast.success({ title: '저장 완료', description: '변경사항이 저장되었어요' });
+                }}
+              >
                 저장
               </Button>
             </div>

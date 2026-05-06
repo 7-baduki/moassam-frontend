@@ -1,9 +1,9 @@
 import { create } from 'zustand';
 
 export const LAST_LOGIN_PROVIDER_KEY = 'lastLoginProvider';
-export type LoginProvider = 'kakao' | 'naver' | 'google';
+export type LoginProvider = 'kakao' | 'naver';
 
-const VALID_PROVIDERS: LoginProvider[] = ['kakao', 'naver', 'google'];
+const VALID_PROVIDERS: LoginProvider[] = ['kakao', 'naver'];
 const isValidProvider = (value: string | null): value is LoginProvider =>
   VALID_PROVIDERS.includes(value as LoginProvider);
 

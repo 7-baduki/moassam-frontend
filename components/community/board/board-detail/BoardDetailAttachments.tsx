@@ -41,15 +41,7 @@ export default function BoardDetailAttachments({ files }: BoardDetailAttachments
             aria-label="전체 다운로드"
             className="flex cursor-pointer items-center text-black-600 hover:text-black-800"
           >
-            <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
-              <path
-                d="M8 10.5L4.5 7M8 10.5L11.5 7M8 10.5V2.5M3 13.5H13"
-                stroke="currentColor"
-                strokeWidth="1.5"
-                strokeLinecap="round"
-                strokeLinejoin="round"
-              />
-            </svg>
+            {/* TODO: 다운로드 아이콘 필요 */}
           </button>
         </div>
       </div>

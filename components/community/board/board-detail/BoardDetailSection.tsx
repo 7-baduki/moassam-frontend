@@ -1,4 +1,5 @@
 import { Button } from '@/components/common/button/Button';
+import CommunityTitleBar from '@/components/community/CommunityTitleBar';
 import BoardDetailPost from './BoardDetailPost';
 import BoardDetailSideActions from './BoardDetailSideActions';
 import type { BoardDetail } from './board-detail.type';
@@ -63,25 +64,30 @@ interface BoardDetailSectionProps {
   postId: string;
 }
 
+// TODO: 실제 로그인 유저 ID로 교체 필요
+const CURRENT_USER_ID = 1;
+
 export default function BoardDetailSection({ postId: _ }: BoardDetailSectionProps) {
+  const isAuthor = MOCK_POST.authorId === CURRENT_USER_ID;
+
   return (
     <div>
-      <div className="mb-6 flex items-center justify-between">
-        <div className="flex items-center gap-3">
-          <h2 className="typo-line-m2 text-lg font-semibold text-black-800">자유게시판</h2>
-          <p className="typo-line-m4 text-sm font-medium text-black-600">
-            자유롭게 이야기를 나누는 공간입니다
-          </p>
-        </div>
-        <div className="flex gap-2.5">
-          <Button variant="outline" size="sm">
-            수정
-          </Button>
-          <Button variant="primary" size="sm">
-            삭제
-          </Button>
-        </div>
-      </div>
+      <CommunityTitleBar
+        title="자유게시판"
+        description="자유롭게 이야기를 나누는 공간입니다"
+        actions={
+          isAuthor ? (
+            <div className="flex gap-2.5">
+              <Button variant="outline" size="sm">
+                수정
+              </Button>
+              <Button variant="primary" size="sm">
+                삭제
+              </Button>
+            </div>
+          ) : null
+        }
+      />
 
       <div className="flex items-start gap-4">
         <div className="min-w-0 flex-1">

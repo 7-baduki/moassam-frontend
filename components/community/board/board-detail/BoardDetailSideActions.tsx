@@ -6,19 +6,9 @@ interface BoardDetailSideActionsProps {
   bookmarked: boolean;
 }
 
-function BookmarkIcon({ active }: { active: boolean }) {
-  return (
-    <svg width="22" height="22" viewBox="0 0 22 22" fill="none">
-      <path
-        d="M5 3H17C17.5523 3 18 3.44772 18 4V20L11 16.5L4 20V4C4 3.44772 4.44772 3 5 3Z"
-        stroke={active ? '#ff7b84' : '#9d9d9d'}
-        strokeWidth="1.5"
-        strokeLinecap="round"
-        strokeLinejoin="round"
-        fill={active ? '#ff7b84' : 'none'}
-      />
-    </svg>
-  );
+// TODO: 북마크 아이콘 필요 (active 여부에 따라 색상 변경)
+function BookmarkIcon({ active: _ }: { active: boolean }) {
+  return <div className="h-[22px] w-[22px]" />;
 }
 
 export default function BoardDetailSideActions({

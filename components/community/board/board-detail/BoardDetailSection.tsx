@@ -68,6 +68,7 @@ interface BoardDetailSectionProps {
 
 // TODO: 실제 로그인 유저 ID로 교체 필요
 const CURRENT_USER_ID = 1;
+const IS_LOGGED_IN = true;
 
 export default function BoardDetailSection({ postId: _ }: BoardDetailSectionProps) {
   const isAuthor = MOCK_POST.authorId === CURRENT_USER_ID;
@@ -97,6 +98,7 @@ export default function BoardDetailSection({ postId: _ }: BoardDetailSectionProp
             <BoardDetailComments
               commentCount={MOCK_POST.commentCount}
               currentUserId={CURRENT_USER_ID}
+              isLoggedIn={IS_LOGGED_IN}
             />
           </div>
         </div>

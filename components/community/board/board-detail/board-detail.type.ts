@@ -28,3 +28,11 @@ export interface BoardDetailResponse {
 }
 
 export type BoardDetail = BoardDetailResponse;
+
+export interface Comment {
+  commentId: number;
+  authorId: number;
+  authorNickName: string;
+  content: string;
+  createdAt: string;
+}

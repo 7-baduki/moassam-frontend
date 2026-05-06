@@ -22,3 +22,5 @@ export { default as ViewCountIcon } from './ViewCountIcon.svg';
 export { default as XCircleIcon } from './XCircleIcon.svg';
 export { default as XIcon } from './XIcon.svg';
 export { default as ToastWarningIcon } from './ToastWarningIcon.svg';
+export { default as UploadDragIcon } from './UploadDragIcon.svg';
+export { default as UploadXIcon } from './UploadXIcon.svg';

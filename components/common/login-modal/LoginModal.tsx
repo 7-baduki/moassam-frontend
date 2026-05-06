@@ -11,7 +11,7 @@ import {
 import { useLoginModalStore } from '@/stores/loginModalStore';
 import { LoginButton } from './LoginButton';
 import { Tooltip } from '@/components/common/tooltip/Tooltip';
-import { KAKAO_AUTH_URL } from '@/constants/auth';
+import { KAKAO_AUTH_URL, NAVER_AUTH_URL } from '@/constants/auth';
 
 export function LoginModal() {
   const { isOpen, title, description, close, lastProvider, setLastProvider } = useLoginModalStore();
@@ -19,6 +19,11 @@ export function LoginModal() {
   const handleKakaoLogin = () => {
     setLastProvider('kakao');
     window.location.href = KAKAO_AUTH_URL;
+  };
+
+  const handleNaverLogin = () => {
+    setLastProvider('naver');
+    window.location.href = NAVER_AUTH_URL;
   };
 
   useEffect(() => {
@@ -71,6 +76,7 @@ export function LoginModal() {
                   icon={<LoginNaverIcon />}
                   label="네이버로 시작하기"
                   className="bg-[#00CE45] text-white"
+                  onClick={handleNaverLogin}
                 />
               </div>
             </div>

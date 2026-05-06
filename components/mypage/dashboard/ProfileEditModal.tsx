@@ -57,7 +57,7 @@ export function ProfileEditModal({
               <span className="mb-0.5 text-xs font-medium text-black-500">표시 이름</span>
               <input
                 className="text-sm font-medium text-black outline-none placeholder:text-black-600"
-                placeholder="김모아 선생님"
+                placeholder="김모아선생님"
                 maxLength={15}
                 value={displayName}
                 onChange={(e) => setDisplayName(e.target.value.replace(/\s/g, ''))}

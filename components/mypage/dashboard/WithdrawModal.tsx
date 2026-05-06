@@ -102,7 +102,17 @@ export function WithdrawModal({ isOpen, onClose }: WithdrawModalProps) {
                 <br />더 나은 모습으로 기다릴게요
               </p>
               <div className="mt-auto">
-                <Button variant="primary" size="full" onClick={() => router.push('/')}>
+                <Button
+                  variant="primary"
+                  size="full"
+                  onClick={() => {
+                    toast.success({
+                      title: '회원 탈퇴가 완료되었어요',
+                      description: '그동안 모아쌤을 이용해주셔서 감사합니다',
+                    });
+                    router.push('/');
+                  }}
+                >
                   메인으로
                 </Button>
               </div>

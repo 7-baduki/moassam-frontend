@@ -39,7 +39,7 @@ export function ProfileEditModal({
       <div className="fixed inset-0 z-1000 flex items-center justify-center">
         <div className="overlay absolute inset-0" onClick={onClose} aria-hidden="true" />
         <div
-          className="relative z-10 w-95 rounded-[20px] bg-white px-7 pt-2.5 pb-6 leading-[140%]"
+          className="relative z-10 flex h-120 w-95 flex-col rounded-[20px] bg-white px-7 pt-2.5 pb-6 leading-[140%]"
           role="dialog"
           aria-modal="true"
           aria-labelledby="profile-edit-modal-title"

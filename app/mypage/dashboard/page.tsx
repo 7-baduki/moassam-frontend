@@ -5,6 +5,7 @@ import { ProfileSummary } from '@/components/mypage/dashboard/ProfileSummary';
 import { GenerationCount } from '@/components/mypage/dashboard/GenerationCount';
 import { ChargeGuide } from '@/components/mypage/dashboard/ChargeGuide';
 import { ProfileEditModal } from '@/components/mypage/dashboard/ProfileEditModal';
+import { WithdrawModal } from '@/components/mypage/dashboard/WithdrawModal';
 
 export default function DashboardPage() {
   const mockUser = {
@@ -41,6 +42,7 @@ export default function DashboardPage() {
         }}
         username={mockUser.username}
       />
+      <WithdrawModal isOpen={isWithdrawModalOpen} onClose={() => setIsWithdrawModalOpen(false)} />
     </div>
   );
 }

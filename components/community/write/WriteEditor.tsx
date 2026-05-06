@@ -201,7 +201,7 @@ export default function WriteEditor({ value, onChange }: WriteEditorProps) {
       onDragOver={(e) => e.preventDefault()}
       onClick={handleWrapperClick}
     >
-      <div className="flex h-10.75 items-center gap-0.5 overflow-x-auto border-b border-black-200 bg-black-200 px-2">
+      <div className="flex h-10.75 items-center gap-2 overflow-x-auto border-b border-black-200 bg-black-200 px-2">
         <select
           value={currentFontFamily}
           onChange={(e) => editor.chain().focus().setFontFamily(e.target.value).run()}
@@ -213,6 +213,8 @@ export default function WriteEditor({ value, onChange }: WriteEditorProps) {
             </option>
           ))}
         </select>
+
+        <Divider />
 
         <select
           value={currentFontSize}
@@ -455,7 +457,7 @@ function TableBubbleButton({
 }
 
 function Divider() {
-  return <div className="mx-1 h-5 w-px bg-black-300" />;
+  return <div className="-mx-1.5 h-4 w-px bg-black-300" />;
 }
 
 interface ToolbarButtonProps {

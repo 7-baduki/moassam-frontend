@@ -45,15 +45,23 @@ export default function WriteForm({ initialBoard }: WriteFormProps) {
   }
 
   return (
-    <div className="flex flex-col gap-4">
+    <div className="flex flex-col">
       <CommunityTitleBar title="새글작성" hideSearch onWrite={handleSubmit} />
-      <WriteCategorySelect values={values} onChange={handleChange} />
-      <WriteTitleInput value={values.title} onChange={(value) => handleChange('title', value)} />
-      <WriteFileUpload files={values.files} onChange={(files) => handleChange('files', files)} />
-      <WriteEditor
-        value={values.content}
-        onChange={(content) => handleChange('content', content)}
-      />
+      <div className="mt-2">
+        <WriteCategorySelect values={values} onChange={handleChange} />
+      </div>
+      <div className="mt-2">
+        <WriteTitleInput value={values.title} onChange={(value) => handleChange('title', value)} />
+      </div>
+      <div className="mt-7.5">
+        <WriteFileUpload files={values.files} onChange={(files) => handleChange('files', files)} />
+      </div>
+      <div className="mt-7.5">
+        <WriteEditor
+          value={values.content}
+          onChange={(content) => handleChange('content', content)}
+        />
+      </div>
     </div>
   );
 }

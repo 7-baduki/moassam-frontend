@@ -96,8 +96,8 @@ export default function WriteFileUpload({ files, onChange }: WriteFileUploadProp
           내 PC
         </Button>
         <div className="flex items-center gap-2">
-          <span className="text-sm text-black-500">
-            현재 {formatBytes(totalBytes)} / 전체 {MAX_SIZE_MB}MB
+          <span className="text-xs text-black-500">
+            현재 {(totalBytes / (1024 * 1024)).toFixed(1)}MB / 전체 {MAX_SIZE_MB}MB
           </span>
         </div>
         <input

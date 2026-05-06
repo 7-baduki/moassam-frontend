@@ -3,6 +3,7 @@
 import { useRef, useState } from 'react';
 import type { ComponentType, SVGProps } from 'react';
 import { Button } from '@/components/common/button/Button';
+import { toast } from '@/utils/toast';
 import { UploadDragIcon, UploadXIcon } from '@/app/assets/icons';
 import {
   FilePdfIcon,
@@ -14,6 +15,7 @@ import {
 } from '@/app/assets/icons/editor';
 
 const MAX_SIZE_MB = 10;
+const MAX_FILES = 5;
 
 const FILE_ICON_BY_EXT: Record<string, ComponentType<SVGProps<SVGSVGElement>>> = {
   pdf: FilePdfIcon,
@@ -45,11 +47,19 @@ function formatBytes(bytes: number): string {
 export default function WriteFileUpload({ files, onChange }: WriteFileUploadProps) {
   const inputRef = useRef<HTMLInputElement>(null);
   const [isDragging, setIsDragging] = useState(false);
+  const dragCounter = useRef(0);
 
   const totalBytes = files.reduce((sum, file) => sum + file.size, 0);
 
   function addFiles(incoming: FileList | null) {
     if (!incoming || incoming.length === 0) return;
+    if (files.length + incoming.length > MAX_FILES) {
+      toast.warning({
+        title: '업로드 제한',
+        description: `파일은 최대 ${MAX_FILES}개까지만 첨부할 수 있습니다`,
+      });
+      return;
+    }
     onChange([...files, ...Array.from(incoming)]);
   }
 
@@ -57,17 +67,19 @@ export default function WriteFileUpload({ files, onChange }: WriteFileUploadProp
     onChange(files.filter((_, i) => i !== index));
   }
 
-  function handleDragOver(e: React.DragEvent) {
-    e.preventDefault();
+  function handleDragEnter() {
+    dragCounter.current++;
     setIsDragging(true);
   }
 
   function handleDragLeave() {
-    setIsDragging(false);
+    dragCounter.current--;
+    if (dragCounter.current === 0) setIsDragging(false);
   }
 
   function handleDrop(e: React.DragEvent) {
     e.preventDefault();
+    dragCounter.current = 0;
     setIsDragging(false);
     addFiles(e.dataTransfer.files);
   }
@@ -99,73 +111,89 @@ export default function WriteFileUpload({ files, onChange }: WriteFileUploadProp
           }}
         />
       </div>
-
       <div
-        onDragOver={handleDragOver}
+        className="relative"
+        onDragEnter={handleDragEnter}
         onDragLeave={handleDragLeave}
+        onDragOver={(e) => e.preventDefault()}
         onDrop={handleDrop}
-        className={`relative h-34.5 overflow-y-auto rounded-lg border transition-colors ${files.length === 0 ? 'border-dashed' : ''} ${isDragging ? 'border-pink-500 bg-pink-50' : 'border-black-300 bg-white'}`}
       >
         {isDragging && (
-          <div className="absolute inset-0 z-10 flex items-center justify-center rounded-lg bg-pink-50">
+          <div
+            className="pointer-events-none absolute inset-0 z-10 flex items-center justify-center rounded-lg border-2 border-dashed border-pink-500"
+            style={{ background: 'rgba(255, 241, 242, 0.95)' }}
+          >
             <p className="typo-line-m2 text-sm text-pink-500">업로드할 파일을 여기에 놓으세요</p>
           </div>
         )}
-        {files.length === 0 ? (
-          <div className="flex h-full items-center justify-center gap-1 text-sm text-black-700">
-            <UploadDragIcon className="block" />
-            <p className="typo-line-m2" aria-label="업로드 안내 문구">
-              마우스로 파일을 끌어서 올리세요
-            </p>
-          </div>
-        ) : (
-          <table className="w-full text-xs leading-none">
-            <thead className="sticky top-0 bg-black-100">
-              <tr className="h-8 align-middle text-black-500">
-                <th className="w-8 pl-3 align-middle">
-                  <button
-                    type="button"
-                    onClick={() => onChange([])}
-                    aria-label="모든 파일 삭제"
-                    className="flex items-center justify-center"
-                  >
-                    <UploadXIcon width={16} height={16} className="block text-black-400" />
-                  </button>
-                </th>
-                <th className="pl-2 text-left align-middle font-medium">파일명</th>
-                <th className="pr-8 text-center align-middle font-medium">용량</th>
-              </tr>
-            </thead>
-            <tbody>
-              {files.map((file, index) => {
-                const FileIcon = getFileIcon(file.name);
-                return (
-                  <tr key={index} className="h-8 align-middle">
-                    <td className="pl-3 align-middle">
-                      <button
-                        type="button"
-                        onClick={() => removeFile(index)}
-                        aria-label={`${file.name} 삭제`}
-                        className="flex items-center justify-center"
-                      >
-                        <UploadXIcon width={16} height={16} className="block" />
-                      </button>
-                    </td>
-                    <td className="pl-2 align-middle text-sm text-black-800">
-                      <span className="flex items-center gap-2">
-                        <FileIcon width={16} height={16} className="shrink-0" />
-                        {file.name}
-                      </span>
-                    </td>
-                    <td className="pr-8 text-center align-middle text-xs text-black-600">
-                      {formatBytes(file.size)}
-                    </td>
-                  </tr>
-                );
-              })}
-            </tbody>
-          </table>
-        )}
+        <div
+          className="h-34.5 overflow-y-auto rounded-lg bg-white transition-colors"
+          style={
+            !isDragging && files.length === 0
+              ? {
+                  backgroundImage: `url("data:image/svg+xml,%3csvg width='100%25' height='100%25' xmlns='http://www.w3.org/2000/svg'%3e%3crect width='100%25' height='100%25' fill='none' rx='8' ry='8' stroke='%23e2e2e2' stroke-width='1.5' stroke-dasharray='8%2c6' stroke-linecap='square'/%3e%3c/svg%3e")`,
+                }
+              : isDragging
+                ? { border: '2px dashed #FF7B84' }
+                : { border: '1px solid #e2e2e2' }
+          }
+        >
+          {files.length === 0 ? (
+            <div className="flex h-full items-center justify-center gap-1 text-sm text-black-700">
+              <UploadDragIcon className="block" />
+              <p className="typo-line-m2" aria-label="업로드 안내 문구">
+                마우스로 파일을 끌어서 올리세요
+              </p>
+            </div>
+          ) : (
+            <table className="w-full text-xs leading-none">
+              <thead className="sticky top-0 bg-black-100">
+                <tr className="h-8 align-middle text-black-500">
+                  <th className="w-8 pl-3 align-middle">
+                    <button
+                      type="button"
+                      onClick={() => onChange([])}
+                      aria-label="모든 파일 삭제"
+                      className="flex items-center justify-center"
+                    >
+                      <UploadXIcon width={16} height={16} className="block text-black-400" />
+                    </button>
+                  </th>
+                  <th className="pl-2 text-left align-middle font-medium">파일명</th>
+                  <th className="pr-8 text-center align-middle font-medium">용량</th>
+                </tr>
+              </thead>
+              <tbody>
+                {files.map((file, index) => {
+                  const FileIcon = getFileIcon(file.name);
+                  return (
+                    <tr key={index} className="h-8 align-middle">
+                      <td className="pl-3 align-middle">
+                        <button
+                          type="button"
+                          onClick={() => removeFile(index)}
+                          aria-label={`${file.name} 삭제`}
+                          className="flex items-center justify-center"
+                        >
+                          <UploadXIcon width={16} height={16} className="block" />
+                        </button>
+                      </td>
+                      <td className="pl-2 align-middle text-sm text-black-800">
+                        <span className="flex items-center gap-2">
+                          <FileIcon width={16} height={16} className="shrink-0" />
+                          {file.name}
+                        </span>
+                      </td>
+                      <td className="pr-8 text-center align-middle text-xs text-black-600">
+                        {formatBytes(file.size)}
+                      </td>
+                    </tr>
+                  );
+                })}
+              </tbody>
+            </table>
+          )}
+        </div>
       </div>
     </div>
   );

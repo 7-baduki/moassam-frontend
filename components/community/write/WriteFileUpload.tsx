@@ -104,7 +104,7 @@ export default function WriteFileUpload({ files, onChange }: WriteFileUploadProp
         onDragOver={handleDragOver}
         onDragLeave={handleDragLeave}
         onDrop={handleDrop}
-        className={`relative h-25 overflow-y-auto rounded-lg border transition-colors ${files.length === 0 ? 'border-dashed' : ''} ${isDragging ? 'border-pink-500 bg-pink-50' : 'border-black-300 bg-white'}`}
+        className={`relative h-34.5 overflow-y-auto rounded-lg border transition-colors ${files.length === 0 ? 'border-dashed' : ''} ${isDragging ? 'border-pink-500 bg-pink-50' : 'border-black-300 bg-white'}`}
       >
         {isDragging && (
           <div className="absolute inset-0 z-10 flex items-center justify-center rounded-lg bg-pink-50">
@@ -140,10 +140,7 @@ export default function WriteFileUpload({ files, onChange }: WriteFileUploadProp
               {files.map((file, index) => {
                 const FileIcon = getFileIcon(file.name);
                 return (
-                  <tr
-                    key={index}
-                    className="h-8 border-b border-black-100 align-middle last:border-none"
-                  >
+                  <tr key={index} className="h-8 align-middle">
                     <td className="pl-3 align-middle">
                       <button
                         type="button"

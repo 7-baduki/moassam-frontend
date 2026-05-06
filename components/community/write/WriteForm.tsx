@@ -46,12 +46,7 @@ export default function WriteForm({ initialBoard }: WriteFormProps) {
 
   return (
     <div className="flex flex-col gap-4">
-      <CommunityTitleBar
-        title="새글작성"
-        description="자유게시판 글 작성 시 1회, 모아방 자료 업로드 시 3회 AI 생성 횟수가 충전돼요."
-        hideSearch
-        onWrite={handleSubmit}
-      />
+      <CommunityTitleBar title="새글작성" hideSearch onWrite={handleSubmit} />
       <WriteCategorySelect values={values} onChange={handleChange} />
       <WriteTitleInput value={values.title} onChange={(value) => handleChange('title', value)} />
       <WriteFileUpload files={values.files} onChange={(files) => handleChange('files', files)} />

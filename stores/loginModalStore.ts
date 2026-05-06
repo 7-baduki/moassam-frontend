@@ -17,6 +17,7 @@ interface LoginModalStore {
   lastProvider: LoginProvider | null;
   open: (title?: string, description?: string) => void;
   close: () => void;
+  setLastProvider: (provider: LoginProvider) => void;
 }
 
 export const useLoginModalStore = create<LoginModalStore>((set) => ({
@@ -30,4 +31,7 @@ export const useLoginModalStore = create<LoginModalStore>((set) => ({
     set({ isOpen: true, title, description, lastProvider });
   },
   close: () => set({ isOpen: false }),
+  setLastProvider: (provider: LoginProvider) => {
+    localStorage.setItem(LAST_LOGIN_PROVIDER_KEY, provider);
+  },
 }));

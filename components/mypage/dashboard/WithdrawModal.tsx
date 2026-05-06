@@ -7,6 +7,7 @@ import { FocusTrap } from 'focus-trap-react';
 import { XIcon } from '@/app/assets/icons';
 import { WithdrawMascot, WithdrawCompleteMascot } from '@/app/assets/images';
 import { Button } from '@/components/common/button/Button';
+import { toast } from '@/utils/toast';
 
 type WithdrawStep = 'confirm' | 'complete';
 
@@ -74,7 +75,17 @@ export function WithdrawModal({ isOpen, onClose }: WithdrawModalProps) {
                 정말로 탈퇴하시겠어요?
               </p>
               <div className="mt-auto flex gap-6">
-                <Button variant="outline" size="full" onClick={handleClose}>
+                <Button
+                  variant="outline"
+                  size="full"
+                  onClick={() => {
+                    handleClose();
+                    toast.success({
+                      title: '탈퇴가 취소되었어요',
+                      description: '계속 이용하실 수 있어요',
+                    });
+                  }}
+                >
                   더 써볼래요
                 </Button>
                 <Button variant="primary" size="full" onClick={() => setStep('complete')}>

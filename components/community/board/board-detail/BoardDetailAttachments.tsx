@@ -3,17 +3,12 @@
 import { useState } from 'react';
 import { ChevronDownIcon, DownloadIcon } from '@/app/assets/icons';
 import { cn } from '@/utils/cn';
+import { formatFileSize } from '@/utils/formatFileSize';
 import BoardDetailAttachmentCard from './BoardDetailAttachmentCard';
 import type { BoardDetailFile } from './board-detail.type';
 
 interface BoardDetailAttachmentsProps {
   files: BoardDetailFile[];
-}
-
-function formatFileSize(bytes: number): string {
-  if (bytes < 1024) return `${bytes}B`;
-  if (bytes < 1024 * 1024) return `${Math.round(bytes / 1024)}KB`;
-  return `${(bytes / (1024 * 1024)).toFixed(1)}MB`;
 }
 
 function getTotalSize(files: BoardDetailFile[]): number {

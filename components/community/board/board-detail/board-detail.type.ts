@@ -8,7 +8,7 @@ export interface BoardDetailFile {
   fileType: BoardFileType;
 }
 
-export interface BoardDetailResponse {
+export interface BoardDetail {
   postId: number;
   authorId: number;
   authorNickName: string;
@@ -26,8 +26,6 @@ export interface BoardDetailResponse {
   bookmarked: boolean;
   createdAt: string;
 }
-
-export type BoardDetail = BoardDetailResponse;
 
 export interface Comment {
   commentId: number;

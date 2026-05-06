@@ -10,6 +10,7 @@ import {
   FilePptIcon,
   FileJpgIcon,
 } from '@/app/assets/icons/editor';
+import { formatFileSize } from '@/utils/formatFileSize';
 import type { BoardDetailFile } from './board-detail.type';
 
 const FILE_ICON_MAP: Record<string, React.FC<React.SVGProps<SVGSVGElement>>> = {
@@ -25,12 +26,6 @@ const FILE_ICON_MAP: Record<string, React.FC<React.SVGProps<SVGSVGElement>>> = {
 
 interface BoardDetailAttachmentCardProps {
   file: BoardDetailFile;
-}
-
-function formatFileSize(bytes: number): string {
-  if (bytes < 1024) return `${bytes}B`;
-  if (bytes < 1024 * 1024) return `${Math.round(bytes / 1024)}KB`;
-  return `${(bytes / (1024 * 1024)).toFixed(1)}MB`;
 }
 
 function getExtension(fileName: string): string {

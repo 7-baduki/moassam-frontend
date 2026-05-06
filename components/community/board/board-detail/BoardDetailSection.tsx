@@ -19,7 +19,7 @@ const MOCK_POST: BoardDetail = {
   files: [
     {
       fileId: 1,
-      originalName: '뿌뿌뿌뿌 말동이.png',
+      originalName: '뿌뿌뿌뿌뿌뿌뿌뿌뿌뿌뿌뿌뿌뿌뿌뿌뿌뿌뿌뿌 말동이.png',
       url: 'https://picsum.photos/seed/file1/400/300',
       size: 331776,
       fileType: 'IMAGE',
@@ -37,6 +37,13 @@ const MOCK_POST: BoardDetail = {
       url: 'https://picsum.photos/seed/file3/400/300',
       size: 409600,
       fileType: 'IMAGE',
+    },
+    {
+      fileId: 4,
+      originalName: '수업계획서.svg',
+      url: '',
+      size: 51200,
+      fileType: 'FILE',
     },
   ],
   editorFiles: [
@@ -75,24 +82,27 @@ export default function BoardDetailSection({ postId: _ }: BoardDetailSectionProp
 
   return (
     <div>
-      <CommunityTitleBar
-        title="자유게시판"
-        actions={
-          isAuthor ? (
-            <div className="flex gap-2.5">
-              <Button variant="outline" size="sm">
-                수정
-              </Button>
-              <Button variant="primary" size="sm">
-                삭제
-              </Button>
-            </div>
-          ) : null
-        }
-      />
-
       <div className="flex items-start gap-4">
         <div className="min-w-0 flex-1">
+          <CommunityTitleBar
+            title="자유게시판"
+            actions={
+              isAuthor ? (
+                <div className="flex gap-2.5">
+                  <Button
+                    variant="outline"
+                    size="sm"
+                    className="border-black-400 text-black-700 hover:border-black-500 hover:text-black-800"
+                  >
+                    수정
+                  </Button>
+                  <Button variant="primary" size="sm">
+                    삭제
+                  </Button>
+                </div>
+              ) : null
+            }
+          />
           <BoardDetailPost post={MOCK_POST} />
           <div className="mt-7.5">
             <BoardDetailComments
@@ -110,7 +120,7 @@ export default function BoardDetailSection({ postId: _ }: BoardDetailSectionProp
         </div>
       </div>
 
-      <div className="fixed right-20 bottom-[70px]">
+      <div className="fixed right-20 bottom-17.5">
         <ScrollToTopButton />
       </div>
     </div>

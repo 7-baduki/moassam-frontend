@@ -16,10 +16,16 @@ export default function BoardDetailSideActions({
   const [isLiked, setIsLiked] = useState(false);
 
   return (
-    <div className="flex flex-col items-center gap-2 rounded-[30px] bg-black-300 p-1">
+    <div
+      role="group"
+      aria-label="게시글 액션"
+      className="flex flex-col items-center gap-2 rounded-[30px] bg-black-300 p-1"
+    >
       <button
         type="button"
         onClick={() => setIsBookmarked((prev) => !prev)}
+        aria-label={isBookmarked ? '북마크 취소' : '북마크'}
+        aria-pressed={isBookmarked}
         className="flex cursor-pointer flex-col items-center gap-1.5"
       >
         <DetailBookmarkIcon
@@ -29,11 +35,15 @@ export default function BoardDetailSideActions({
               : '[&_path]:fill-transparent [&_path]:stroke-black-600'
           }
         />
-        <span className="typo-line-p2 text-xs font-medium text-black-600">{likeCount}</span>
+        <span aria-hidden="true" className="typo-line-p2 text-xs font-medium text-black-600">
+          {likeCount}
+        </span>
       </button>
       <button
         type="button"
         onClick={() => setIsLiked((prev) => !prev)}
+        aria-label={isLiked ? '좋아요 취소' : '좋아요'}
+        aria-pressed={isLiked}
         className="flex cursor-pointer flex-col items-center gap-1.5"
       >
         <DetailHeartIcon
@@ -43,7 +53,9 @@ export default function BoardDetailSideActions({
               : '[&_path]:fill-transparent [&_path]:stroke-black-600'
           }
         />
-        <span className="typo-line-p2 text-xs font-medium text-black-600">{likeCount}</span>
+        <span aria-hidden="true" className="typo-line-p2 text-xs font-medium text-black-600">
+          {likeCount}
+        </span>
       </button>
     </div>
   );

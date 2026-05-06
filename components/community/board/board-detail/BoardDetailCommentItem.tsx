@@ -17,18 +17,23 @@ function formatCommentTime(isoString: string): string {
 
 export default function BoardDetailCommentItem({ comment, isAuthor }: BoardDetailCommentItemProps) {
   return (
-    <div className="flex items-start gap-2 border-b border-black-200 py-4 last:border-b-0">
-      <div className="h-9 w-9 shrink-0 rounded-full bg-black-200" />
+    <li className="flex items-start gap-2 border-b border-black-200 py-4 last:border-b-0">
+      <div aria-hidden="true" className="h-9 w-9 shrink-0 rounded-full bg-black-200" />
 
       <div className="flex min-w-0 flex-1 flex-col gap-1">
         <div className="flex items-center gap-1">
           <span className="text-sm font-semibold text-black-700">{comment.authorNickName}</span>
-          <span className="text-xs text-black-500">{formatCommentTime(comment.createdAt)}</span>
+          <span
+            aria-label={`작성 시간 ${formatCommentTime(comment.createdAt)}`}
+            className="text-xs text-black-500"
+          >
+            {formatCommentTime(comment.createdAt)}
+          </span>
         </div>
         <p className="text-sm font-medium whitespace-pre-wrap text-black-700">{comment.content}</p>
       </div>
 
       {isAuthor && <MoreButton onEdit={() => {}} onDelete={() => {}} />}
-    </div>
+    </li>
   );
 }

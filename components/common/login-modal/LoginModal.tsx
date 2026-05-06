@@ -46,7 +46,7 @@ export function LoginModal() {
           <p id="login-modal-title" className="mt-1.5 text-xl font-semibold text-pink-500">
             {title}
           </p>
-          <p className="text-sm text-black">{description}</p>
+          <p className="text-sm font-medium text-black">{description}</p>
 
           <div className="mt-[28.5px] flex w-full items-center gap-4.5 px-[24.5px]">
             <div className="h-px flex-1 bg-black-500" />

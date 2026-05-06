@@ -6,7 +6,6 @@ import {
   MainLogoIcon,
   LoginKakaoIcon,
   LoginNaverIcon,
-  LoginGoogleIcon,
   LoginBottomLogoIcon,
 } from '@/app/assets/icons';
 import { useLoginModalStore } from '@/stores/loginModalStore';
@@ -65,14 +64,6 @@ export function LoginModal() {
                   icon={<LoginNaverIcon />}
                   label="네이버로 시작하기"
                   className="bg-[#00CE45] text-white"
-                />
-              </div>
-              <div className="relative">
-                {lastProvider === 'google' && <Tooltip label="최근에 로그인 했어요!" />}
-                <LoginButton
-                  icon={<LoginGoogleIcon />}
-                  label="구글로 시작하기"
-                  className="border-[0.5px] border-black-500 bg-white text-black-800"
                 />
               </div>
             </div>

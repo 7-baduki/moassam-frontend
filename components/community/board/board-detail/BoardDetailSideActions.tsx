@@ -1,34 +1,49 @@
-import { LikeCountIcon, CommentCountIcon } from '@/app/assets/icons';
+'use client';
+
+import { useState } from 'react';
+import { DetailBookmarkIcon, DetailHeartIcon } from '@/app/assets/icons';
 
 interface BoardDetailSideActionsProps {
   likeCount: number;
-  commentCount: number;
   bookmarked: boolean;
-}
-
-// TODO: 북마크 아이콘 필요 (active 여부에 따라 색상 변경)
-function BookmarkIcon({ active: _ }: { active: boolean }) {
-  return <div className="h-[22px] w-[22px]" />;
 }
 
 export default function BoardDetailSideActions({
   likeCount,
-  commentCount,
-  bookmarked,
+  bookmarked: initialBookmarked,
 }: BoardDetailSideActionsProps) {
+  const [isBookmarked, setIsBookmarked] = useState(initialBookmarked);
+  const [isLiked, setIsLiked] = useState(false);
+
   return (
-    <div className="flex flex-col items-center gap-5 rounded-2xl border border-black-200 bg-white px-3 py-5 shadow-sm">
-      <button type="button" className="flex cursor-pointer flex-col items-center gap-1.5">
-        <BookmarkIcon active={bookmarked} />
-        <span className="text-xs font-semibold text-black-600">{likeCount}</span>
+    <div className="flex flex-col items-center gap-2 rounded-[30px] bg-black-300 p-1">
+      <button
+        type="button"
+        onClick={() => setIsBookmarked((prev) => !prev)}
+        className="flex cursor-pointer flex-col items-center gap-1.5"
+      >
+        <DetailBookmarkIcon
+          className={
+            isBookmarked
+              ? '[&_path]:fill-black-600 [&_path]:stroke-black-600'
+              : '[&_path]:fill-transparent [&_path]:stroke-black-600'
+          }
+        />
+        <span className="typo-line-p2 text-xs font-medium text-black-600">{likeCount}</span>
       </button>
-      <button type="button" className="flex cursor-pointer flex-col items-center gap-1.5">
-        <LikeCountIcon className="h-[22px] w-[22px] text-black-500" />
-        <span className="text-xs font-semibold text-black-600">{likeCount}</span>
-      </button>
-      <button type="button" className="flex cursor-pointer flex-col items-center gap-1.5">
-        <CommentCountIcon className="h-[22px] w-[22px] text-black-500" />
-        <span className="text-xs font-semibold text-black-600">{commentCount}</span>
+      <button
+        type="button"
+        onClick={() => setIsLiked((prev) => !prev)}
+        className="flex cursor-pointer flex-col items-center gap-1.5"
+      >
+        <DetailHeartIcon
+          className={
+            isLiked
+              ? '[&_path]:fill-black-600 [&_path]:stroke-black-600'
+              : '[&_path]:fill-transparent [&_path]:stroke-black-600'
+          }
+        />
+        <span className="typo-line-p2 text-xs font-medium text-black-600">{likeCount}</span>
       </button>
     </div>
   );

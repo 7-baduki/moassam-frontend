@@ -24,3 +24,7 @@ export { default as XIcon } from './XIcon.svg';
 export { default as ToastWarningIcon } from './ToastWarningIcon.svg';
 export { default as UploadDragIcon } from './UploadDragIcon.svg';
 export { default as UploadXIcon } from './UploadXIcon.svg';
+export { default as DetailBookmarkIcon } from './DetailBookmarkIcon.svg';
+export { default as DetailHeartIcon } from './DetailHeartIcon.svg';
+export { default as DownloadIcon } from './DownloadIcon.svg';
+export { default as TopIcon } from './TopIcon.svg';

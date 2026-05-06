@@ -1,7 +1,9 @@
 import { Button } from '@/components/common/button/Button';
 import CommunityTitleBar from '@/components/community/CommunityTitleBar';
+import BoardDetailComments from './BoardDetailComments';
 import BoardDetailPost from './BoardDetailPost';
 import BoardDetailSideActions from './BoardDetailSideActions';
+import ScrollToTopButton from './ScrollToTopButton';
 import type { BoardDetail } from './board-detail.type';
 
 const MOCK_POST: BoardDetail = {
@@ -74,7 +76,6 @@ export default function BoardDetailSection({ postId: _ }: BoardDetailSectionProp
     <div>
       <CommunityTitleBar
         title="자유게시판"
-        description="자유롭게 이야기를 나누는 공간입니다"
         actions={
           isAuthor ? (
             <div className="flex gap-2.5">
@@ -92,14 +93,23 @@ export default function BoardDetailSection({ postId: _ }: BoardDetailSectionProp
       <div className="flex items-start gap-4">
         <div className="min-w-0 flex-1">
           <BoardDetailPost post={MOCK_POST} />
+          <div className="mt-7.5">
+            <BoardDetailComments
+              commentCount={MOCK_POST.commentCount}
+              currentUserId={CURRENT_USER_ID}
+            />
+          </div>
         </div>
-        <div className="sticky top-8 shrink-0">
+        <div className="sticky top-[263.2px] shrink-0">
           <BoardDetailSideActions
             likeCount={MOCK_POST.likeCount}
-            commentCount={MOCK_POST.commentCount}
             bookmarked={MOCK_POST.bookmarked}
           />
         </div>
+      </div>
+
+      <div className="fixed right-20 bottom-[70px]">
+        <ScrollToTopButton />
       </div>
     </div>
   );

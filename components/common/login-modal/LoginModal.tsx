@@ -11,7 +11,7 @@ import {
 } from '@/app/assets/icons';
 import { useLoginModalStore } from '@/stores/loginModalStore';
 import { LoginButton } from './LoginButton';
-import { Tooltip } from '@/components/common/Tooltip';
+import { Tooltip } from '@/components/common/tooltip/Tooltip';
 
 export function LoginModal() {
   const { isOpen, title, description, close, lastProvider } = useLoginModalStore();

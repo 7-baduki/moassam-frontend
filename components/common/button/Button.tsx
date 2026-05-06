@@ -22,7 +22,7 @@ const SIZE_STYLES: Record<ButtonSize, string> = {
 const VARIANT_STYLES: Record<ButtonVariant, string> = {
   primary: 'bg-pink-500 text-white hover:bg-pink-600 disabled:hover:bg-pink-500',
   outline:
-    'border border-pink-500 text-pink-500 hover:border-pink-600 hover:text-pink-600 disabled:border-black-700 disabled:text-black-700 disabled:hover:border-black-700 disabled:hover:text-black-700',
+    'border border-pink-500 bg-white text-pink-500 hover:border-pink-600 hover:text-pink-600 disabled:border-black-700 disabled:text-black-700 disabled:hover:border-black-700 disabled:hover:text-black-700',
   ghost: 'bg-transparent text-black-700 hover:underline disabled:hover:no-underline',
 };
 

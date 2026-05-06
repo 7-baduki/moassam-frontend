@@ -37,7 +37,7 @@ export default function BoardDetailAttachmentCard({ file }: BoardDetailAttachmen
   const FileIcon = FILE_ICON_MAP[ext] ?? FileDefaultIcon;
 
   return (
-    <div className="group relative h-[120px] w-[180px] shrink-0 cursor-pointer overflow-hidden rounded-xl bg-black-200">
+    <div className="group relative h-30 w-45 shrink-0 cursor-pointer overflow-hidden rounded-xl bg-black-200">
       {file.fileType === 'IMAGE' ? (
         <Image src={file.url} alt={file.originalName} fill className="object-cover" sizes="180px" />
       ) : (
@@ -69,7 +69,7 @@ export default function BoardDetailAttachmentCard({ file }: BoardDetailAttachmen
           </div>
         </div>
 
-        <div className="flex items-end gap-[5px]">
+        <div className="flex items-end gap-1.25">
           <div className="flex min-w-0 flex-1 flex-col gap-0.5">
             <span className="typo-line-p2 text-[11px] font-medium text-white">
               {formatFileSize(file.size)}

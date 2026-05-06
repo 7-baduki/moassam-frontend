@@ -14,7 +14,6 @@ import {
 } from '@/app/assets/icons/editor';
 
 const MAX_SIZE_MB = 10;
-const MAX_SIZE_BYTES = MAX_SIZE_MB * 1024 * 1024;
 
 const FILE_ICON_BY_EXT: Record<string, ComponentType<SVGProps<SVGSVGElement>>> = {
   pdf: FilePdfIcon,
@@ -48,7 +47,6 @@ export default function WriteFileUpload({ files, onChange }: WriteFileUploadProp
   const [isDragging, setIsDragging] = useState(false);
 
   const totalBytes = files.reduce((sum, file) => sum + file.size, 0);
-  const isOverLimit = totalBytes > MAX_SIZE_BYTES;
 
   function addFiles(incoming: FileList | null) {
     if (!incoming || incoming.length === 0) return;
@@ -86,12 +84,7 @@ export default function WriteFileUpload({ files, onChange }: WriteFileUploadProp
           내 PC
         </Button>
         <div className="flex items-center gap-2">
-          {isOverLimit && (
-            <span className="text-xs text-red-500">
-              최대 {MAX_SIZE_MB}MB까지 첨부할 수 있습니다.
-            </span>
-          )}
-          <span className={`text-sm ${isOverLimit ? 'text-red-500' : 'text-black-500'}`}>
+          <span className="text-sm text-black-500">
             현재 {formatBytes(totalBytes)} / 전체 {MAX_SIZE_MB}MB
           </span>
         </div>
@@ -128,7 +121,7 @@ export default function WriteFileUpload({ files, onChange }: WriteFileUploadProp
         ) : (
           <table className="w-full text-xs leading-none">
             <thead className="sticky top-0 bg-black-100">
-              <tr className="h-8 border-b border-black-200 align-middle text-black-500">
+              <tr className="h-8 align-middle text-black-500">
                 <th className="w-8 pl-3 align-middle">
                   <button
                     type="button"
@@ -167,9 +160,7 @@ export default function WriteFileUpload({ files, onChange }: WriteFileUploadProp
                         {file.name}
                       </span>
                     </td>
-                    <td
-                      className={`pr-8 text-center align-middle text-xs ${file.size > MAX_SIZE_BYTES ? 'text-red-500' : 'text-black-600'}`}
-                    >
+                    <td className="pr-8 text-center align-middle text-xs text-black-600">
                       {formatBytes(file.size)}
                     </td>
                   </tr>

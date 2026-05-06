@@ -2,6 +2,7 @@
 
 import { useState } from 'react';
 import dynamic from 'next/dynamic';
+import { toast } from '@/utils/toast';
 import CommunityTitleBar from '@/components/community/CommunityTitleBar';
 import WriteCategorySelect from './WriteCategorySelect';
 import WriteTitleInput from './WriteTitleInput';
@@ -34,12 +35,14 @@ export default function WriteForm({ initialBoard }: WriteFormProps) {
   }
 
   function handleSubmit() {
+    const totalFilesBytes = values.files.reduce((sum, file) => sum + file.size, 0);
+    if (totalFilesBytes > MAX_FILES_BYTES) {
+      toast.warning({ title: '업로드 제한', description: '파일은 최대 10MB까지만 가능합니다' });
+      return;
+    }
     // TODO: API 연결
     console.log(values);
   }
-
-  const totalFilesBytes = values.files.reduce((sum, file) => sum + file.size, 0);
-  const isOverFileLimit = totalFilesBytes > MAX_FILES_BYTES;
 
   return (
     <div className="flex flex-col gap-4">
@@ -48,7 +51,6 @@ export default function WriteForm({ initialBoard }: WriteFormProps) {
         description="자유게시판 글 작성 시 1회, 모아방 자료 업로드 시 3회 AI 생성 횟수가 충전돼요."
         hideSearch
         onWrite={handleSubmit}
-        writeDisabled={isOverFileLimit}
       />
       <WriteCategorySelect values={values} onChange={handleChange} />
       <WriteTitleInput value={values.title} onChange={(value) => handleChange('title', value)} />

@@ -78,7 +78,6 @@ export default function MoabangSection() {
     <section className="flex flex-col" aria-label="게시글 목록">
       <CommunityTitleBar
         title="모아방"
-        description="수업자료를 공유하는 공간입니다"
         onWrite={() => router.push('/community/write?board=moabang')}
       />
       <CommunityFilter

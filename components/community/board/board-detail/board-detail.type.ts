@@ -24,6 +24,7 @@ export interface BoardDetail {
   commentCount: number;
   likeCount: number;
   bookmarked: boolean;
+  liked: boolean;
   createdAt: string;
 }
 

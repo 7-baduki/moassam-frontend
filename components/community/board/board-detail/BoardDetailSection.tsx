@@ -66,6 +66,7 @@ const MOCK_POST: BoardDetail = {
   commentCount: 4,
   likeCount: 12,
   bookmarked: false,
+  liked: false,
   createdAt: new Date(Date.now() - 3 * 60 * 60 * 1000).toISOString(),
 };
 
@@ -116,6 +117,7 @@ export default function BoardDetailSection({ postId: _ }: BoardDetailSectionProp
           <BoardDetailSideActions
             likeCount={MOCK_POST.likeCount}
             bookmarked={MOCK_POST.bookmarked}
+            liked={MOCK_POST.liked}
           />
         </div>
       </div>

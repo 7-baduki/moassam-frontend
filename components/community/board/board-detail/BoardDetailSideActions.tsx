@@ -6,14 +6,16 @@ import { DetailBookmarkIcon, DetailHeartIcon } from '@/app/assets/icons';
 interface BoardDetailSideActionsProps {
   likeCount: number;
   bookmarked: boolean;
+  liked: boolean;
 }
 
 export default function BoardDetailSideActions({
   likeCount,
   bookmarked: initialBookmarked,
+  liked: initialLiked,
 }: BoardDetailSideActionsProps) {
   const [isBookmarked, setIsBookmarked] = useState(initialBookmarked);
-  const [isLiked, setIsLiked] = useState(false);
+  const [isLiked, setIsLiked] = useState(initialLiked);
 
   return (
     <div

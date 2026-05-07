@@ -1,3 +1,4 @@
+import DOMPurify from 'dompurify';
 import Image from 'next/image';
 import { Badge } from '@/components/common/badge';
 import BoardDetailAttachments from './BoardDetailAttachments';
@@ -78,10 +79,9 @@ export default function BoardDetailPost({ post }: BoardDetailPostProps) {
 
       <hr className="mt-5 border-black-200" />
 
-      {/* API에서 HTML 문자열로 내려올 때 그대로 렌더링 */}
       <div
         className="mt-6 text-sm leading-relaxed font-medium text-black-700"
-        dangerouslySetInnerHTML={{ __html: post.content }}
+        dangerouslySetInnerHTML={{ __html: DOMPurify.sanitize(post.content) }}
       />
 
       {post.editorFiles.length > 0 && (

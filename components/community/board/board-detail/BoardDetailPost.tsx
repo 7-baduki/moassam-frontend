@@ -1,4 +1,4 @@
-import DOMPurify from 'dompurify';
+import DOMPurify from 'isomorphic-dompurify';
 import Image from 'next/image';
 import { Badge } from '@/components/common/badge';
 import BoardDetailAttachments from './BoardDetailAttachments';

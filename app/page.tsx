@@ -6,9 +6,9 @@ import SolutionSection from '@/components/home/SolutionSection';
 export default function Home() {
   return (
     <div className="min-w-[600px] bg-black-100">
-      <HeroSection isLoggedIn={true} />
+      <HeroSection isLoggedIn={false} />
       <ServiceSection />
-      <PainPointSection isLoggedIn={true} />
+      <PainPointSection isLoggedIn={false} />
       <SolutionSection isLoggedIn={false} />
     </div>
   );

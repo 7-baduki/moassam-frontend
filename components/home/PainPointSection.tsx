@@ -35,7 +35,11 @@ export default function PainPointSection({ isLoggedIn = false }: PainPointSectio
               <Image src={PainPointCard3Md} alt="페인포인트 카드 3" className="w-[270px]" />
             </div>
           ) : (
-            <Image src={PainPointMd} alt="페인포인트 예시" className="w-full md:hidden" />
+            <Image
+              src={PainPointMd}
+              alt="페인포인트 예시"
+              className="w-full max-w-[300px] md:hidden"
+            />
           )}
         </div>
       </div>

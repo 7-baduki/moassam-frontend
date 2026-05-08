@@ -16,7 +16,7 @@ interface SolutionSectionProps {
 export default function SolutionSection({ isLoggedIn = true }: SolutionSectionProps) {
   return (
     <section className="w-full bg-black-50 py-15 md:pt-17.5 md:pb-25" aria-label="해결방법 섹션">
-      <div className="mx-auto w-full max-w-[392px] md:max-w-293">
+      <div className="mx-auto w-full max-w-[416px] md:max-w-293">
         {/* 상단: 헤드라인 + 코멘트 */}
         <div className="flex flex-col items-center gap-4 md:flex-row md:items-start md:justify-between">
           <div className="flex flex-col items-center gap-4 md:items-start">
@@ -54,7 +54,7 @@ export default function SolutionSection({ isLoggedIn = true }: SolutionSectionPr
         </div>
 
         {/* CTA */}
-        <div className="mt-10 flex justify-center">
+        <div className="mt-7.5 flex justify-center md:mt-15">
           <Button variant="primary" size="md" className="h-13 w-57.5 text-[20px]">
             {isLoggedIn ? '커뮤니티 시작하기 >' : '3초 간편 로그인 시작 >'}
           </Button>

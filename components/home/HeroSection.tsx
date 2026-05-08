@@ -55,7 +55,7 @@ function LoggedOutHero() {
   return (
     <>
       {/* 텍스트 영역 */}
-      <div className="flex w-full flex-col items-center pt-16 pb-15">
+      <div className="flex w-full flex-col items-center pt-15 pb-10">
         {/* NEW 뱃지 줄 */}
         <div className="flex items-center gap-2 rounded-[22px] border border-black-300 bg-white py-[5.5px] pr-3.5 pl-2">
           <Badge label="NEW" variant="pink-light" />

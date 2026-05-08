@@ -15,7 +15,7 @@ interface SolutionSectionProps {
 
 export default function SolutionSection({ isLoggedIn = true }: SolutionSectionProps) {
   return (
-    <section className="w-full bg-black-50 py-15 md:py-20">
+    <section className="w-full bg-black-50 py-15 md:pt-17.5 md:pb-25" aria-label="해결방법 섹션">
       <div className="mx-auto w-full max-w-[392px] md:max-w-293">
         {/* 상단: 헤드라인 + 코멘트 */}
         <div className="flex flex-col items-center gap-4 md:flex-row md:items-start md:justify-between">

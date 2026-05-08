@@ -4,7 +4,6 @@ import { Button } from '@/components/common/button/Button';
 import { HeroBadge } from '@/app/assets/images';
 import HeroImage from '@/app/assets/images/hero-section.png';
 import HeroImageMd from '@/app/assets/images/hero-section-md.png';
-import { SolutionProcess } from '@/app/assets/images';
 
 interface HeroSectionProps {
   isLoggedIn?: boolean;
@@ -20,7 +19,7 @@ function LoggedInHero({
   remainingCount: number;
 }) {
   return (
-    <div className="relative flex w-full flex-col items-center py-20">
+    <div className="relative flex w-full flex-col items-center px-10 pt-15 pb-25 md:px-0">
       {/* 남은 횟수 뱃지 */}
       <div className="absolute top-6 right-0 mr-20 flex items-center gap-2 rounded-[30px] border border-yellow-600 bg-yellow-200 py-1 pr-3 pl-1 shadow-[2px_2px_8px_0px_#00000014]">
         <Image src={HeroBadge} alt="" width={24} height={24} />
@@ -30,14 +29,14 @@ function LoggedInHero({
       </div>
 
       {/* 인사 */}
-      <h1 className="typo-line-m2 text-[24px] font-semibold text-black-800">
+      <h1 className="typo-line-m2 text-[20px] font-semibold text-black-800">
         안녕하세요, {userName} 👋
       </h1>
 
       {/* 텍스트 에리어 */}
-      <div className="mt-6 flex w-full max-w-200 flex-col gap-4 rounded-2xl border border-pink-500 bg-white p-7">
+      <div className="mt-7.5 flex w-full max-w-200 flex-col gap-4 rounded-2xl border border-pink-500 bg-white p-7">
         <div className="h-29 bg-black-100 p-5">
-          <p className="typo-line-m4 flex items-center text-[20px] font-medium text-black-700">
+          <p className="typo-line-m4 flex items-center text-[16px] font-medium text-black-700">
             오늘 아이들과의 하루는 어땠나요?{' '}
             <span className="animate-blink ml-1 h-[1.2em] w-[2px] bg-pink-500" />
           </p>
@@ -102,7 +101,7 @@ export default function HeroSection({
   remainingCount = 7,
 }: HeroSectionProps) {
   return (
-    <section className="relative flex flex-col items-center bg-black-100">
+    <section className="relative flex flex-col items-center bg-black-100" aria-label="히어로 섹션">
       {isLoggedIn ? (
         <LoggedInHero userName={userName} remainingCount={remainingCount} />
       ) : (

@@ -5,10 +5,10 @@ import SolutionSection from '@/components/home/SolutionSection';
 
 export default function Home() {
   return (
-    <div className="bg-black-100">
-      <HeroSection isLoggedIn={false} />
+    <div className="min-w-[600px] bg-black-100">
+      <HeroSection isLoggedIn={true} />
       <ServiceSection />
-      <PainPointSection />
+      <PainPointSection isLoggedIn={true} />
       <SolutionSection isLoggedIn={false} />
     </div>
   );

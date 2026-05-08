@@ -24,7 +24,7 @@ const SERVICES = [
 export default function ServiceSection() {
   return (
     <section className="w-full bg-white py-20">
-      <div className="mx-auto flex w-full max-w-[1172px] items-start gap-18.5">
+      <div className="mx-auto flex w-full max-w-293 items-start gap-18.5">
         <div className="mt-7.5">
           <Badge label="주요 서비스" variant="pink-light" />
         </div>

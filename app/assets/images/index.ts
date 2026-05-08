@@ -16,3 +16,4 @@ export { default as SolutionComment1 } from './solution-comment1.png';
 export { default as SolutionComment2 } from './solution-comment2.png';
 export { default as SolutionComment3 } from './solution-comment3.png';
 export { default as SolutionProcess } from './solution-process.png';
+export { default as SolutionProcessMd } from './solution-process-md.png';

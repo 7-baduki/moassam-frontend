@@ -21,7 +21,7 @@ function LoggedInHero({
   return (
     <div className="relative flex w-full flex-col items-center py-20">
       {/* 남은 횟수 뱃지 */}
-      <div className="absolute top-6 right-0 mr-20 flex items-center gap-2 rounded-[30px] border border-yellow-600 bg-yellow-200 py-1 pr-3 pl-1">
+      <div className="absolute top-6 right-0 mr-20 flex items-center gap-2 rounded-[30px] border border-yellow-600 bg-yellow-200 py-1 pr-3 pl-1 shadow-[2px_2px_8px_0px_#00000014]">
         <Image src={HeroBadge} alt="" width={24} height={24} />
         <span className="typo-line-m2 text-xs font-semibold text-black-800">
           오늘 생성횟수 {remainingCount}기 남았어요!
@@ -57,7 +57,7 @@ function LoggedOutHero() {
       {/* 텍스트 영역 */}
       <div className="flex w-full flex-col items-center pt-16 pb-15">
         {/* NEW 뱃지 줄 */}
-        <div className="flex items-center gap-2 rounded-[22px] border border-black-300 px-2 py-[5.5px]">
+        <div className="flex items-center gap-2 rounded-[22px] border border-black-300 bg-white py-[5.5px] pr-3.5 pl-2">
           <Badge label="NEW" variant="pink-light" />
           <span className="typo-line-m2 text-sm font-medium text-black-700 md:text-xs">
             AI 문장 변환을 더한 유치원·어린이집 교사 커뮤니티

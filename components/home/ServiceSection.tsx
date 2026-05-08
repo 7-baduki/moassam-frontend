@@ -24,8 +24,8 @@ const SERVICES = [
 export default function ServiceSection() {
   return (
     <section className="w-full bg-white py-20">
-      <div className="mx-auto flex max-w-fit items-start gap-[74px]">
-        <div className="mt-[30px]">
+      <div className="mx-auto flex w-full max-w-[1172px] items-start gap-18.5">
+        <div className="mt-7.5">
           <Badge label="주요 서비스" variant="pink-light" />
         </div>
         <div className="flex gap-3.5">
@@ -33,14 +33,14 @@ export default function ServiceSection() {
             <Link
               key={label}
               href={href}
-              className="block w-[324px] shrink-0 transition-opacity hover:opacity-90"
+              className="block w-81 shrink-0 transition-opacity hover:opacity-90"
             >
               <Image
                 src={imageSrc}
                 alt={label}
                 width={324}
                 height={233}
-                className="h-[233px] w-[324px] rounded-2xl object-cover"
+                className="h-58.25 w-81 rounded-2xl object-cover"
               />
             </Link>
           ))}

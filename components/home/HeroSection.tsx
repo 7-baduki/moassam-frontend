@@ -3,6 +3,7 @@ import Badge from '@/components/common/badge/Badge';
 import { Button } from '@/components/common/button/Button';
 import { HeroBadge } from '@/app/assets/images';
 import HeroImage from '@/app/assets/images/hero-section.png';
+import HeroImageMd from '@/app/assets/images/hero-section-md.png';
 import { SolutionProcess } from '@/app/assets/images';
 
 interface HeroSectionProps {
@@ -83,7 +84,12 @@ function LoggedOutHero() {
         <Image
           src={HeroImage}
           alt="모아쌤 서비스 소개 일러스트"
-          className="w-full max-w-[719px] md:max-w-293"
+          className="hidden w-full max-w-293 md:block"
+        />
+        <Image
+          src={HeroImageMd}
+          alt="모아쌤 서비스 소개 일러스트"
+          className="block w-full max-w-[719px] md:hidden"
         />
       </div>
     </>

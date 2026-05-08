@@ -3,7 +3,7 @@ import CommunityTitleBar from '@/components/community/CommunityTitleBar';
 import BoardDetailComments from './BoardDetailComments';
 import BoardDetailPost from './BoardDetailPost';
 import BoardDetailSideActions from './BoardDetailSideActions';
-import ScrollToTopButton from './ScrollToTopButton';
+import ScrollToTopButton from '@/components/common/scroll-top/ScrollToTopButton';
 import type { BoardDetail } from './board-detail.type';
 
 const MOCK_POST: BoardDetail = {

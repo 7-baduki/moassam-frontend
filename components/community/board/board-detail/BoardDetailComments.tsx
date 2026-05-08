@@ -46,7 +46,10 @@ export default function BoardDetailComments({
   return (
     <section aria-label="댓글" className="rounded-2xl border border-black-200 bg-white p-7.5">
       <h2 id="comments-title" className="typo-line-m2 text-base font-semibold text-black-800">
-        댓글 <span className="text-pink-500">{commentCount}</span>
+        댓글{' '}
+        <span className={commentCount === 0 ? 'text-black-500' : 'text-pink-500'}>
+          {commentCount}
+        </span>
       </h2>
 
       <div className="mt-4">
@@ -62,7 +65,12 @@ export default function BoardDetailComments({
           rows={3}
           disabled={!isLoggedIn}
           action={
-            <Button size="sm" variant="primary" disabled={!isLoggedIn} aria-label="댓글 등록">
+            <Button
+              size="sm"
+              variant="primary"
+              disabled={!isLoggedIn || value.trim() === ''}
+              aria-label="댓글 등록"
+            >
               등록
             </Button>
           }

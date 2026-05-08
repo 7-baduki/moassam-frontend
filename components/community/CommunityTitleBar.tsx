@@ -1,6 +1,6 @@
 'use client';
 
-import { useState } from 'react';
+import { type ReactNode, useState } from 'react';
 import { Button } from '@/components/common/button/Button';
 import { Input } from '@/components/common/input/Input';
 
@@ -9,6 +9,7 @@ interface CommunityTitleBarProps {
   onWrite?: () => void;
   hideSearch?: boolean;
   writeDisabled?: boolean;
+  actions?: ReactNode;
 }
 
 export default function CommunityTitleBar({
@@ -16,6 +17,7 @@ export default function CommunityTitleBar({
   onWrite,
   hideSearch = false,
   writeDisabled = false,
+  actions,
 }: CommunityTitleBarProps) {
   const [searchValue, setSearchValue] = useState('');
 
@@ -28,22 +30,24 @@ export default function CommunityTitleBar({
           <span className="text-pink-500">3회</span> AI 생성 횟수가 충전돼요
         </p>
       </div>
-      <div className="flex items-center gap-3 py-[7.5px]">
-        {!hideSearch && (
-          <Input
-            variant="search"
-            size="sm"
-            aria-label="게시글 검색"
-            placeholder="검색"
-            value={searchValue}
-            onChange={(e) => setSearchValue(e.target.value)}
-            onClear={() => setSearchValue('')}
-          />
-        )}
-        <Button size="sm" onClick={onWrite} disabled={writeDisabled}>
-          새글작성
-        </Button>
-      </div>
+      {actions ?? (
+        <div className="flex items-center gap-3 py-[7.5px]">
+          {!hideSearch && (
+            <Input
+              variant="search"
+              size="sm"
+              aria-label="게시글 검색"
+              placeholder="검색"
+              value={searchValue}
+              onChange={(e) => setSearchValue(e.target.value)}
+              onClear={() => setSearchValue('')}
+            />
+          )}
+          <Button size="sm" onClick={onWrite} disabled={writeDisabled}>
+            새글작성
+          </Button>
+        </div>
+      )}
     </div>
   );
 }

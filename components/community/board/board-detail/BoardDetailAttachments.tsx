@@ -46,7 +46,6 @@ export default function BoardDetailAttachments({ files }: BoardDetailAttachments
             <DownloadIcon />
           </button>
         </div>
-        <span className="text-xs text-black-500">파일 보안 검사 자동 진행</span>
       </div>
 
       {isOpen && (

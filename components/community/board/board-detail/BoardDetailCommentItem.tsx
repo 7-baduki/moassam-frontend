@@ -25,7 +25,7 @@ export default function BoardDetailCommentItem({ comment, isAuthor }: BoardDetai
           <span className="text-sm font-semibold text-black-700">{comment.authorNickName}</span>
           <span
             aria-label={`작성 시간 ${formatCommentTime(comment.createdAt)}`}
-            className="text-xs text-black-500"
+            className="text-xs font-medium text-black-500"
           >
             {formatCommentTime(comment.createdAt)}
           </span>

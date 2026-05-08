@@ -34,20 +34,15 @@ export default function SolutionSection({ isLoggedIn = true }: SolutionSectionPr
         </div>
 
         {/* 프로세스: -mt로 코멘트 하단 10px 덮음 */}
-        <div
-          className="relative z-10 -mt-[10px] bg-white"
-          style={{ boxShadow: '2px 2px 40px 0px #00000014' }}
-        >
-          <Image
-            src={SolutionProcess}
-            alt="모아쌤 이용 프로세스"
-            className="w-full rounded-tr-lg rounded-br-lg rounded-bl-lg"
-          />
+        <div className="relative z-10 -mt-2.5" style={{ boxShadow: '2px 2px 40px 0px #00000014' }}>
+          <div className="overflow-hidden rounded-tr-lg rounded-br-lg rounded-bl-lg bg-white">
+            <Image src={SolutionProcess} alt="모아쌤 이용 프로세스" className="w-full" />
+          </div>
         </div>
 
         {/* CTA */}
         <div className="mt-10 flex justify-center">
-          <Button variant="primary" size="md" className="h-[52px] w-[230px] text-[20px]">
+          <Button variant="primary" size="md" className="h-13 w-57.5 text-[20px]">
             {isLoggedIn ? '커뮤니티 시작하기 >' : '3초 간편 로그인 시작 >'}
           </Button>
         </div>

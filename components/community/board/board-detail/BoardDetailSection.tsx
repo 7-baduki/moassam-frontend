@@ -98,7 +98,7 @@ export default function BoardDetailSection({ postId: _, title }: BoardDetailSect
                   >
                     수정
                   </Button>
-                  <Button variant="primary" size="sm">
+                  <Button variant="outline" size="sm">
                     삭제
                   </Button>
                 </div>

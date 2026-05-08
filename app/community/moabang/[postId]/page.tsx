@@ -9,5 +9,5 @@ interface MoabangDetailPageProps {
 export default async function MoabangDetailPage({ params }: MoabangDetailPageProps) {
   const { postId } = await params;
 
-  return <BoardDetailSection postId={postId} />;
+  return <BoardDetailSection postId={postId} title="모아방" />;
 }

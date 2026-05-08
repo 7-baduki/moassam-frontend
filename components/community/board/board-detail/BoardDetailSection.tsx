@@ -72,13 +72,14 @@ const MOCK_POST: BoardDetail = {
 
 interface BoardDetailSectionProps {
   postId: string;
+  title: string;
 }
 
 // TODO: 실제 로그인 유저 ID로 교체 필요
 const CURRENT_USER_ID = 1;
 const IS_LOGGED_IN = true;
 
-export default function BoardDetailSection({ postId: _ }: BoardDetailSectionProps) {
+export default function BoardDetailSection({ postId: _, title }: BoardDetailSectionProps) {
   const isAuthor = MOCK_POST.authorId === CURRENT_USER_ID;
 
   return (
@@ -86,7 +87,7 @@ export default function BoardDetailSection({ postId: _ }: BoardDetailSectionProp
       <div className="flex items-start gap-4">
         <div className="min-w-0 flex-1">
           <CommunityTitleBar
-            title="자유게시판"
+            title={title}
             actions={
               isAuthor ? (
                 <div className="flex gap-2.5">

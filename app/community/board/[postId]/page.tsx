@@ -9,5 +9,5 @@ interface BoardDetailPageProps {
 export default async function BoardDetailPage({ params }: BoardDetailPageProps) {
   const { postId } = await params;
 
-  return <BoardDetailSection postId={postId} />;
+  return <BoardDetailSection postId={postId} title="자유게시판" />;
 }

@@ -19,7 +19,7 @@ function LoggedInHero({
   remainingCount: number;
 }) {
   return (
-    <div className="relative flex w-full flex-col items-center px-10 pt-15 pb-25 md:px-0">
+    <div className="relative flex w-full flex-col items-center px-10 pt-15 pb-15 md:px-0 md:pb-25">
       {/* 남은 횟수 뱃지 */}
       <div className="absolute top-6 right-0 mr-20 flex items-center gap-2 rounded-[30px] border border-yellow-600 bg-yellow-200 py-1 pr-3 pl-1 shadow-[2px_2px_8px_0px_#00000014]">
         <Image src={HeroBadge} alt="" width={24} height={24} />

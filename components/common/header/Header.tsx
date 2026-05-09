@@ -8,15 +8,13 @@ import { Button } from '@/components/common/button/Button';
 import { MainLogoIcon } from '@/app/assets/icons';
 import { DefaultAvatar } from '@/app/assets/images';
 import { useLoginModalStore } from '@/stores/loginModalStore';
+import { useUserStore } from '@/stores/userStore';
 import { ProfilePopover } from '@/components/common/profile-popover/ProfilePopover';
 import NAV_ITEMS from '@/constants/common/nav-items';
 
-interface HeaderProps {
-  isLoggedIn?: boolean;
-}
-
-export default function Header({ isLoggedIn = false }: HeaderProps) {
+export default function Header() {
   const openLoginModal = useLoginModalStore((state) => state.open);
+  const user = useUserStore((state) => state.user);
   const pathname = usePathname() ?? '';
   const [isPopoverOpen, setIsPopoverOpen] = useState(false);
 
@@ -46,19 +44,24 @@ export default function Header({ isLoggedIn = false }: HeaderProps) {
         </nav>
       </div>
       <div className="relative flex items-center gap-5">
-        {isLoggedIn ? (
+        {user ? (
           <>
             <button
               className="h-9 w-9 cursor-pointer overflow-hidden rounded-full"
               onClick={() => setIsPopoverOpen((prev) => !prev)}
               aria-label="프로필 팝오버 열기"
             >
-              <Image src={DefaultAvatar} alt="프로필 아바타" width={36} height={36} />
+              <Image
+                src={user.profileImageUrl || DefaultAvatar}
+                alt="프로필 아바타"
+                width={36}
+                height={36}
+              />
             </button>
             {isPopoverOpen && (
               <ProfilePopover
-                name="김모아"
-                avatarSrc={DefaultAvatar}
+                name={user.nickname}
+                avatarSrc={user.profileImageUrl || DefaultAvatar}
                 onClose={() => setIsPopoverOpen(false)}
                 onLogout={() => setIsPopoverOpen(false)}
               />

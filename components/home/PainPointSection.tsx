@@ -1,3 +1,5 @@
+'use client';
+
 import Image from 'next/image';
 import Badge from '@/components/common/badge/Badge';
 import {
@@ -7,12 +9,11 @@ import {
   PainPointCard2Md,
   PainPointCard3Md,
 } from '@/app/assets/images';
+import { useUserStore } from '@/stores/userStore';
 
-interface PainPointSectionProps {
-  isLoggedIn?: boolean;
-}
-
-export default function PainPointSection({ isLoggedIn = false }: PainPointSectionProps) {
+export default function PainPointSection() {
+  const user = useUserStore((state) => state.user);
+  const isLoggedIn = !!user;
   return (
     <section className="w-full bg-black-100 pt-15 pb-13.5 md:py-25" aria-label="숨은 고충 섹션">
       <div className="mx-auto flex w-full max-w-[570px] flex-col items-center gap-7.5 md:max-w-[1172px] md:flex-row md:items-start md:gap-26">

@@ -1,15 +1,12 @@
+'use client';
+
 import Image from 'next/image';
 import Badge from '@/components/common/badge/Badge';
 import { Button } from '@/components/common/button/Button';
 import { HeroBadge } from '@/app/assets/images';
 import HeroImage from '@/app/assets/images/hero-section.png';
+import { useUserStore } from '@/stores/userStore';
 import HeroImageMd from '@/app/assets/images/hero-section-md.png';
-
-interface HeroSectionProps {
-  isLoggedIn?: boolean;
-  userName?: string;
-  remainingCount?: number;
-}
 
 function LoggedInHero({
   userName = '',
@@ -95,18 +92,12 @@ function LoggedOutHero() {
   );
 }
 
-export default function HeroSection({
-  isLoggedIn = true,
-  userName = '모아선생님',
-  remainingCount = 7,
-}: HeroSectionProps) {
+export default function HeroSection() {
+  const user = useUserStore((state) => state.user);
+
   return (
     <section className="relative flex flex-col items-center bg-black-100" aria-label="히어로 섹션">
-      {isLoggedIn ? (
-        <LoggedInHero userName={userName} remainingCount={remainingCount} />
-      ) : (
-        <LoggedOutHero />
-      )}
+      {user ? <LoggedInHero userName={user.nickname} remainingCount={7} /> : <LoggedOutHero />}
     </section>
   );
 }

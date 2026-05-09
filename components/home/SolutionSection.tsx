@@ -1,3 +1,5 @@
+'use client';
+
 import Image from 'next/image';
 import Badge from '@/components/common/badge/Badge';
 import { Button } from '@/components/common/button/Button';
@@ -8,12 +10,11 @@ import {
   SolutionProcess,
   SolutionProcessMd,
 } from '@/app/assets/images';
+import { useUserStore } from '@/stores/userStore';
 
-interface SolutionSectionProps {
-  isLoggedIn?: boolean;
-}
-
-export default function SolutionSection({ isLoggedIn = true }: SolutionSectionProps) {
+export default function SolutionSection() {
+  const user = useUserStore((state) => state.user);
+  const isLoggedIn = !!user;
   return (
     <section className="w-full bg-black-50 py-15 md:pt-17.5 md:pb-25" aria-label="해결방법 섹션">
       <div className="mx-auto w-full max-w-[416px] md:max-w-293">

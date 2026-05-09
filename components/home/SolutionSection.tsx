@@ -17,8 +17,7 @@ export default function SolutionSection() {
   const isLoggedIn = !!user;
   return (
     <section className="w-full bg-black-50 py-15 md:pt-17.5 md:pb-25" aria-label="해결방법 섹션">
-      <div className="mx-auto w-full max-w-[416px] md:max-w-293">
-        {/* 상단: 헤드라인 + 코멘트 */}
+      <div className="mx-auto w-full max-w-104 md:max-w-293">
         <div className="flex flex-col items-center gap-4 md:flex-row md:items-start md:justify-between">
           <div className="flex flex-col items-center gap-4 md:items-start">
             <Badge label="해결방법" variant="pink-light" />
@@ -27,7 +26,6 @@ export default function SolutionSection() {
             </h2>
           </div>
 
-          {/* 코멘트 이미지: 하단 10px는 프로세스 영역에 가려짐 */}
           <div className="hidden flex-col items-end gap-1.5 md:flex">
             <Image src={SolutionComment1} alt="" height={43} />
             <Image src={SolutionComment2} alt="" height={43} />
@@ -35,7 +33,6 @@ export default function SolutionSection() {
           </div>
         </div>
 
-        {/* 프로세스: -mt로 코멘트 하단 10px 덮음 (데스크톱만) */}
         <div
           className="relative z-10 mt-7.5 md:-mt-2.5"
           style={{ boxShadow: '2px 2px 40px 0px #00000014' }}
@@ -54,7 +51,6 @@ export default function SolutionSection() {
           </div>
         </div>
 
-        {/* CTA */}
         <div className="mt-7.5 flex justify-center md:mt-15">
           <Button variant="primary" size="md" className="h-13 w-57.5 text-[20px]">
             {isLoggedIn ? '커뮤니티 시작하기 >' : '3초 간편 로그인 시작 >'}

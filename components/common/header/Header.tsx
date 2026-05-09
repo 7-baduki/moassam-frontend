@@ -3,7 +3,7 @@
 import { useState } from 'react';
 import Link from 'next/link';
 import Image from 'next/image';
-import { usePathname } from 'next/navigation';
+import { usePathname, useRouter } from 'next/navigation';
 import { Button } from '@/components/common/button/Button';
 import { MainLogoIcon } from '@/app/assets/icons';
 import { DefaultAvatar } from '@/app/assets/images';
@@ -11,12 +11,22 @@ import { useLoginModalStore } from '@/stores/loginModalStore';
 import { useUserStore } from '@/stores/userStore';
 import { ProfilePopover } from '@/components/common/profile-popover/ProfilePopover';
 import NAV_ITEMS from '@/constants/common/nav-items';
+import { logout } from '@/api/auth.api';
 
 export default function Header() {
   const openLoginModal = useLoginModalStore((state) => state.open);
   const user = useUserStore((state) => state.user);
+  const clearUser = useUserStore((state) => state.clearUser);
   const pathname = usePathname() ?? '';
+  const router = useRouter();
   const [isPopoverOpen, setIsPopoverOpen] = useState(false);
+
+  const handleLogout = async () => {
+    await logout();
+    clearUser();
+    setIsPopoverOpen(false);
+    router.push('/');
+  };
 
   return (
     <header className="flex h-16 items-center justify-between border-b border-black-200 px-20">
@@ -63,7 +73,7 @@ export default function Header() {
                 name={user.nickname}
                 avatarSrc={user.profileImageUrl || DefaultAvatar}
                 onClose={() => setIsPopoverOpen(false)}
-                onLogout={() => setIsPopoverOpen(false)}
+                onLogout={handleLogout}
               />
             )}
           </>

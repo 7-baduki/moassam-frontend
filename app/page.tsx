@@ -8,11 +8,11 @@ export default async function Home() {
   const user = await getProfile();
 
   return (
-    <div className="min-w-[600px] bg-black-100">
+    <div className="min-w-150 bg-black-100">
       <HeroSection user={user} />
       <ServiceSection />
-      <PainPointSection />
-      <SolutionSection />
+      <PainPointSection isLoggedIn={!!user} />
+      <SolutionSection isLoggedIn={!!user} />
     </div>
   );
 }

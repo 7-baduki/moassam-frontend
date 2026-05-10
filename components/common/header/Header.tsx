@@ -12,10 +12,12 @@ import { useUserStore } from '@/stores/userStore';
 import { ProfilePopover } from '@/components/common/profile-popover/ProfilePopover';
 import NAV_ITEMS from '@/constants/common/nav-items';
 import { logout } from '@/api/auth.api';
+import { User } from '@/types/user.type';
 
-export default function Header() {
+export default function Header({ user: initialUser }: { user: User | null }) {
   const openLoginModal = useLoginModalStore((state) => state.open);
-  const user = useUserStore((state) => state.user);
+  const storeUser = useUserStore((state) => state.user);
+  const user = storeUser ?? initialUser;
   const clearUser = useUserStore((state) => state.clearUser);
   const pathname = usePathname() ?? '';
   const router = useRouter();

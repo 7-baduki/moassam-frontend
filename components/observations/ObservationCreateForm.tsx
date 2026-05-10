@@ -1,26 +1,33 @@
 'use client';
 
 import { useState } from 'react';
+import { useRouter } from 'next/navigation';
 import { Select } from '@/components/common/select/Select';
 import { Textarea } from '@/components/common/textarea/Textarea';
 import { Button } from '@/components/common/button/Button';
 import ObservationLoading from '@/components/observations/ObservationLoading';
 import { AGE_OPTIONS, AREA_OPTIONS } from '@/constants/observations/observation';
+import { useObservationMutation } from '@/hooks/queries/observations/useObservation';
 
 export default function ObservationCreateForm() {
+  const router = useRouter();
   const [age, setAge] = useState('');
   const [areas, setAreas] = useState<string[]>([]);
   const [content, setContent] = useState('');
-  const [isLoading, setIsLoading] = useState(false);
+
+  const { mutate: createObservation, isPending } = useObservationMutation({
+    onSuccess: ({ observationId }) => {
+      router.push(`/observations/${observationId}`);
+    },
+  });
 
   const isFormValid = !!age && areas.length > 0 && content.trim().length > 0;
 
   const handleSubmit = () => {
-    setIsLoading(true);
-    // TODO: API 연동
+    createObservation({ age, sectionTypes: areas, situation: content });
   };
 
-  if (isLoading) return <ObservationLoading />;
+  if (isPending) return <ObservationLoading />;
 
   return (
     <div className="flex flex-col items-center">
@@ -62,7 +69,7 @@ export default function ObservationCreateForm() {
             value={content}
             onChange={(e) => setContent(e.target.value)}
             action={
-              <Button size="md" onClick={handleSubmit} disabled={!isFormValid}>
+              <Button size="md" onClick={handleSubmit} disabled={!isFormValid || isPending}>
                 생성하기
               </Button>
             }

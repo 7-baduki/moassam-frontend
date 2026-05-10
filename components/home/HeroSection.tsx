@@ -7,6 +7,7 @@ import { HeroBadge } from '@/app/assets/images';
 import HeroImage from '@/app/assets/images/hero-section.png';
 import { useUserStore } from '@/stores/userStore';
 import HeroImageMd from '@/app/assets/images/hero-section-md.png';
+import { User } from '@/types/user.type';
 
 function LoggedInHero({
   userName = '',
@@ -85,8 +86,9 @@ function LoggedOutHero() {
   );
 }
 
-export default function HeroSection() {
-  const user = useUserStore((state) => state.user);
+export default function HeroSection({ user: initialUser }: { user: User | null }) {
+  const storeUser = useUserStore((state) => state.user);
+  const user = storeUser ?? initialUser;
 
   return (
     <section className="relative flex flex-col items-center bg-black-100" aria-label="히어로 섹션">

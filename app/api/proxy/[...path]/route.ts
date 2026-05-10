@@ -11,7 +11,6 @@ async function handler(req: NextRequest, { params }: { params: Promise<{ path: s
   url.search = req.nextUrl.search;
 
   const headers = new Headers(req.headers);
-  headers.set('Content-Type', 'application/json');
   if (accessToken) {
     headers.set('Authorization', `Bearer ${accessToken}`);
   }

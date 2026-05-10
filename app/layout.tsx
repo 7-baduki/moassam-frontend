@@ -1,7 +1,13 @@
 import type { Metadata } from 'next';
 import localFont from 'next/font/local';
+import { Toaster } from 'sonner';
 import './globals.css';
 import Providers from './providers';
+import Header from '@/components/common/header/Header';
+import Sidebar from '@/components/common/sidebar/Sidebar';
+import { LoginModal } from '@/components/common/login-modal/LoginModal';
+import UserInitializer from '@/components/auth/UserInitializer';
+import { getProfile } from '@/api/user.api';
 
 const pretendard = localFont({
   src: './fonts/PretendardVariable.woff2',
@@ -15,15 +21,26 @@ export const metadata: Metadata = {
   description: '유치원·어린이집 교사를 위한 AI 관찰일지 작성 및 수업자료 공유 커뮤니티 플랫폼',
 };
 
-export default function RootLayout({
+export default async function RootLayout({
   children,
 }: Readonly<{
   children: React.ReactNode;
 }>) {
+  const user = await getProfile();
+
   return (
     <html lang="ko" className={`${pretendard.variable} h-full antialiased`}>
-      <body className={`${pretendard.className} flex min-h-full flex-col`}>
-        <Providers>{children}</Providers>
+      <body className={`${pretendard.className} flex h-screen flex-col overflow-hidden`}>
+        <Header user={user} />
+        <Providers>
+          <UserInitializer user={user} />
+          <div className="flex flex-1 overflow-hidden">
+            <Sidebar />
+            <main className="flex-1 overflow-y-auto bg-black-100">{children}</main>
+          </div>
+        </Providers>
+        <Toaster position="top-right" offset={{ top: 69 }} />
+        <LoginModal />
       </body>
     </html>
   );

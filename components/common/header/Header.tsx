@@ -3,22 +3,34 @@
 import { useState } from 'react';
 import Link from 'next/link';
 import Image from 'next/image';
-import { usePathname } from 'next/navigation';
+import { usePathname, useRouter } from 'next/navigation';
 import { Button } from '@/components/common/button/Button';
 import { MainLogoIcon } from '@/app/assets/icons';
 import { DefaultAvatar } from '@/app/assets/images';
 import { useLoginModalStore } from '@/stores/loginModalStore';
+import { useUserStore } from '@/stores/userStore';
 import { ProfilePopover } from '@/components/common/profile-popover/ProfilePopover';
 import NAV_ITEMS from '@/constants/common/nav-items';
+import { User } from '@/types/user.type';
+import { useLogoutMutation } from '@/hooks/queries/auth/useAuth';
 
-interface HeaderProps {
-  isLoggedIn?: boolean;
-}
-
-export default function Header({ isLoggedIn = false }: HeaderProps) {
+export default function Header({ user: initialUser }: { user: User | null }) {
   const openLoginModal = useLoginModalStore((state) => state.open);
+  const storeUser = useUserStore((state) => state.user);
+  const user = storeUser ?? initialUser;
+  const clearUser = useUserStore((state) => state.clearUser);
   const pathname = usePathname() ?? '';
+  const router = useRouter();
   const [isPopoverOpen, setIsPopoverOpen] = useState(false);
+
+  const { mutate: handleLogout } = useLogoutMutation({
+    onSuccess: () => {
+      clearUser();
+      setIsPopoverOpen(false);
+      router.push('/');
+      router.refresh();
+    },
+  });
 
   return (
     <header className="flex h-16 items-center justify-between border-b border-black-200 px-20">
@@ -46,21 +58,26 @@ export default function Header({ isLoggedIn = false }: HeaderProps) {
         </nav>
       </div>
       <div className="relative flex items-center gap-5">
-        {isLoggedIn ? (
+        {user ? (
           <>
             <button
               className="h-9 w-9 cursor-pointer overflow-hidden rounded-full"
               onClick={() => setIsPopoverOpen((prev) => !prev)}
               aria-label="프로필 팝오버 열기"
             >
-              <Image src={DefaultAvatar} alt="프로필 아바타" width={36} height={36} />
+              <Image
+                src={user.profileImageUrl || DefaultAvatar}
+                alt="프로필 아바타"
+                width={36}
+                height={36}
+              />
             </button>
             {isPopoverOpen && (
               <ProfilePopover
-                name="김모아"
-                avatarSrc={DefaultAvatar}
+                name={user.nickname}
+                avatarSrc={user.profileImageUrl || DefaultAvatar}
                 onClose={() => setIsPopoverOpen(false)}
-                onLogout={() => setIsPopoverOpen(false)}
+                onLogout={handleLogout}
               />
             )}
           </>

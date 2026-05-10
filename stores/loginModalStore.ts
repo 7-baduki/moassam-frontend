@@ -1,9 +1,9 @@
 import { create } from 'zustand';
 
 export const LAST_LOGIN_PROVIDER_KEY = 'lastLoginProvider';
-export type LoginProvider = 'kakao' | 'naver' | 'google';
+export type LoginProvider = 'kakao' | 'naver';
 
-const VALID_PROVIDERS: LoginProvider[] = ['kakao', 'naver', 'google'];
+const VALID_PROVIDERS: LoginProvider[] = ['kakao', 'naver'];
 const isValidProvider = (value: string | null): value is LoginProvider =>
   VALID_PROVIDERS.includes(value as LoginProvider);
 
@@ -17,6 +17,7 @@ interface LoginModalStore {
   lastProvider: LoginProvider | null;
   open: (title?: string, description?: string) => void;
   close: () => void;
+  setLastProvider: (provider: LoginProvider) => void;
 }
 
 export const useLoginModalStore = create<LoginModalStore>((set) => ({
@@ -30,4 +31,7 @@ export const useLoginModalStore = create<LoginModalStore>((set) => ({
     set({ isOpen: true, title, description, lastProvider });
   },
   close: () => set({ isOpen: false }),
+  setLastProvider: (provider: LoginProvider) => {
+    localStorage.setItem(LAST_LOGIN_PROVIDER_KEY, provider);
+  },
 }));

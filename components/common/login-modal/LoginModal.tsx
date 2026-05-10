@@ -2,19 +2,24 @@
 
 import { useEffect } from 'react';
 import { FocusTrap } from 'focus-trap-react';
-import {
-  MainLogoIcon,
-  LoginKakaoIcon,
-  LoginNaverIcon,
-  LoginGoogleIcon,
-  LoginBottomLogoIcon,
-} from '@/app/assets/icons';
+import { MainLogoIcon, LoginKakaoIcon, LoginNaverIcon } from '@/app/assets/icons';
 import { useLoginModalStore } from '@/stores/loginModalStore';
 import { LoginButton } from './LoginButton';
 import { Tooltip } from '@/components/common/tooltip/Tooltip';
+import { KAKAO_AUTH_URL, NAVER_AUTH_URL } from '@/constants/auth';
 
 export function LoginModal() {
-  const { isOpen, title, description, close, lastProvider } = useLoginModalStore();
+  const { isOpen, title, description, close, lastProvider, setLastProvider } = useLoginModalStore();
+
+  const handleKakaoLogin = () => {
+    setLastProvider('kakao');
+    window.location.href = KAKAO_AUTH_URL;
+  };
+
+  const handleNaverLogin = () => {
+    setLastProvider('naver');
+    window.location.href = NAVER_AUTH_URL;
+  };
 
   useEffect(() => {
     if (!isOpen) return;
@@ -41,7 +46,7 @@ export function LoginModal() {
           <p id="login-modal-title" className="mt-1.5 text-xl font-semibold text-pink-500">
             {title}
           </p>
-          <p className="text-sm text-black">{description}</p>
+          <p className="text-sm font-medium text-black">{description}</p>
 
           <div className="mt-[28.5px] flex w-full items-center gap-4.5 px-[24.5px]">
             <div className="h-px flex-1 bg-black-500" />
@@ -57,6 +62,7 @@ export function LoginModal() {
                   icon={<LoginKakaoIcon />}
                   label="카카오로 시작하기"
                   className="bg-[#FEE300] text-[#461E25]"
+                  onClick={handleKakaoLogin}
                 />
               </div>
               <div className="relative">
@@ -65,20 +71,11 @@ export function LoginModal() {
                   icon={<LoginNaverIcon />}
                   label="네이버로 시작하기"
                   className="bg-[#00CE45] text-white"
-                />
-              </div>
-              <div className="relative">
-                {lastProvider === 'google' && <Tooltip label="최근에 로그인 했어요!" />}
-                <LoginButton
-                  icon={<LoginGoogleIcon />}
-                  label="구글로 시작하기"
-                  className="border-[0.5px] border-black-500 bg-white text-black-800"
+                  onClick={handleNaverLogin}
                 />
               </div>
             </div>
           </div>
-
-          <LoginBottomLogoIcon className="mt-4" />
         </div>
       </div>
     </FocusTrap>

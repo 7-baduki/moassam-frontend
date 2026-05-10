@@ -8,8 +8,6 @@ export { default as ErrorIcon } from './ErrorIcon.svg';
 export { default as LikeCountIcon } from './LikeCountIcon.svg';
 export { default as ObservationCountIcon } from './ObservationCountIcon.svg';
 export { default as LockIcon } from './LockIcon.svg';
-export { default as LoginBottomLogoIcon } from './LoginBottomLogoIcon.svg';
-export { default as LoginGoogleIcon } from './LoginGoogleIcon.svg';
 export { default as LoginKakaoIcon } from './LoginKakaoIcon.svg';
 export { default as LoginNaverIcon } from './LoginNaverIcon.svg';
 export { default as MainLogoIcon } from './MainLogoIcon.svg';

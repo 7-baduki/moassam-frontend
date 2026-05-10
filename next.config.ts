@@ -4,9 +4,9 @@ import type { NextConfig } from 'next';
 const nextConfig: NextConfig = {
   images: {
     remotePatterns: [
-      { hostname: 'picsum.photos' },
-      { hostname: 'kr.object.ncloudstorage.com' },
-      { hostname: 'k.kakaocdn.net' },
+      { protocol: 'https', hostname: 'picsum.photos' },
+      { protocol: 'https', hostname: 'kr.object.ncloudstorage.com' },
+      { protocol: 'https', hostname: 'k.kakaocdn.net' },
     ],
   },
   turbopack: {

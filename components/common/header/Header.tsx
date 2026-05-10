@@ -28,6 +28,7 @@ export default function Header({ user: initialUser }: { user: User | null }) {
     clearUser();
     setIsPopoverOpen(false);
     router.push('/');
+    router.refresh();
   };
 
   return (

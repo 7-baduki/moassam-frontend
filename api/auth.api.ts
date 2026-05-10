@@ -6,4 +6,5 @@ export const refresh = async (): Promise<void> => {
 
 export const logout = async (): Promise<void> => {
   await apiClient.post('/api/v1/auth/logout');
+  await fetch('/api/auth/logout', { method: 'POST' });
 };

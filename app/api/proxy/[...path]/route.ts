@@ -22,6 +22,10 @@ async function handler(req: NextRequest, { params }: { params: Promise<{ path: s
     body: req.method !== 'GET' && req.method !== 'HEAD' ? await req.text() : undefined,
   });
 
+  if (!response.body) {
+    return new NextResponse(null, { status: response.status });
+  }
+
   const data = await response.text();
 
   return new NextResponse(data, {

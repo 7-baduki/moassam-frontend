@@ -11,8 +11,8 @@ import { useLoginModalStore } from '@/stores/loginModalStore';
 import { useUserStore } from '@/stores/userStore';
 import { ProfilePopover } from '@/components/common/profile-popover/ProfilePopover';
 import NAV_ITEMS from '@/constants/common/nav-items';
-import { logout } from '@/api/auth.api';
 import { User } from '@/types/user.type';
+import { useLogoutMutation } from '@/hooks/queries/auth/useAuth';
 
 export default function Header({ user: initialUser }: { user: User | null }) {
   const openLoginModal = useLoginModalStore((state) => state.open);
@@ -23,13 +23,14 @@ export default function Header({ user: initialUser }: { user: User | null }) {
   const router = useRouter();
   const [isPopoverOpen, setIsPopoverOpen] = useState(false);
 
-  const handleLogout = async () => {
-    await logout();
-    clearUser();
-    setIsPopoverOpen(false);
-    router.push('/');
-    router.refresh();
-  };
+  const { mutate: handleLogout } = useLogoutMutation({
+    onSuccess: () => {
+      clearUser();
+      setIsPopoverOpen(false);
+      router.push('/');
+      router.refresh();
+    },
+  });
 
   return (
     <header className="flex h-16 items-center justify-between border-b border-black-200 px-20">

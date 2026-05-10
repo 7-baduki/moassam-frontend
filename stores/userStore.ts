@@ -3,7 +3,7 @@ import { User } from '@/types/user.type';
 
 interface UserStore {
   user: User | null;
-  setUser: (user: User) => void;
+  setUser: (user: User | null) => void;
   clearUser: () => void;
 }
 

@@ -10,6 +10,7 @@ import {
   useObservationDeleteMutation,
   useObservationListQuery,
 } from '@/hooks/queries/observations/useObservation';
+import { toast } from '@/utils/toast';
 
 export default function ObservationSidebarContent() {
   const pathname = usePathname();
@@ -23,6 +24,12 @@ export default function ObservationSidebarContent() {
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ['observations'] });
       router.push('/observations');
+    },
+    onError: () => {
+      toast.error({
+        title: '관찰일지 삭제에 실패했어요',
+        description: '잠시 후 다시 시도해주세요',
+      });
     },
   });
 

@@ -23,6 +23,10 @@ export default function ObservationSidebarContent() {
   const { mutate: deleteObservation } = useObservationDeleteMutation({
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ['observations'] });
+      toast.success({
+        title: '관찰일지 삭제가 완료되었어요',
+        description: '관찰일지가 목록에서 제거되었어요',
+      });
       router.push('/observations');
     },
     onError: () => {

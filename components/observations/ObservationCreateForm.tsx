@@ -4,12 +4,17 @@ import { useState, useTransition } from 'react';
 import { useRouter } from 'next/navigation';
 import { useQueryClient } from '@tanstack/react-query';
 import axios from 'axios';
+import { XIcon } from '@/app/assets/icons';
 import { Select } from '@/components/common/select/Select';
 import { Textarea } from '@/components/common/textarea/Textarea';
 import { Button } from '@/components/common/button/Button';
 import { Dialog } from '@/components/common/dialog/Dialog';
 import ObservationLoading from '@/components/observations/ObservationLoading';
-import { AGE_OPTIONS, AREA_OPTIONS } from '@/constants/observations/observation';
+import {
+  AGE_OPTIONS,
+  AREA_OPTIONS,
+  SECTION_TYPE_LABEL,
+} from '@/constants/observations/observation';
 import { useObservationMutation } from '@/hooks/queries/observations/useObservation';
 import { toast } from '@/utils/toast';
 
@@ -43,6 +48,23 @@ export default function ObservationCreateForm() {
   });
 
   const isFormValid = !!age && areas.length > 0 && content.trim().length > 0;
+
+  const selectedTags = [
+    ...(age
+      ? [
+          {
+            key: `age-${age}`,
+            label: `연령>${AGE_OPTIONS.find((o) => o.value === age)?.label ?? age}`,
+            onRemove: () => setAge(''),
+          },
+        ]
+      : []),
+    ...areas.map((area) => ({
+      key: `area-${area}`,
+      label: `5개 영역>${SECTION_TYPE_LABEL[area] ?? area}`,
+      onRemove: () => setAreas((prev) => prev.filter((a) => a !== area)),
+    })),
+  ];
 
   const handleSubmit = () => {
     createObservation({ age, sectionTypes: areas, situation: content });
@@ -82,7 +104,9 @@ export default function ObservationCreateForm() {
           관찰일지 맞춤 검색
         </h2>
 
-        <div className="w-full max-w-350 rounded-[20px] bg-white px-12.5 py-11.75">
+        <div
+          className={`w-full max-w-350 rounded-[20px] bg-white px-12.5 pt-11.75 ${selectedTags.length > 0 ? 'pb-5' : 'pb-11.75'}`}
+        >
           <section className="mb-5">
             <h2 className="mb-5 text-lg font-semibold text-black-800">기본정보</h2>
             <div className="flex gap-15">
@@ -121,6 +145,26 @@ export default function ObservationCreateForm() {
               }
             />
           </section>
+          {selectedTags.length > 0 && (
+            <div className="flex flex-wrap gap-3.5 pt-5">
+              {selectedTags.map((tag) => (
+                <span
+                  key={tag.key}
+                  className="flex items-center gap-1.5 p-1.5 text-xs font-medium text-pink-500"
+                >
+                  {tag.label}
+                  <button
+                    type="button"
+                    onClick={tag.onRemove}
+                    aria-label={`${tag.label} 제거`}
+                    className="cursor-pointer"
+                  >
+                    <XIcon className="text-black-700" />
+                  </button>
+                </span>
+              ))}
+            </div>
+          )}
         </div>
       </div>
     </>

@@ -8,6 +8,7 @@ import ObservationLoading from '@/components/observations/ObservationLoading';
 import { Button } from '@/components/common/button/Button';
 import { Dialog } from '@/components/common/dialog/Dialog';
 import { SECTION_TYPE_LABEL } from '@/constants/observations/observation';
+import { toast } from '@/utils/toast';
 import {
   useObservationItemQuery,
   useObservationRegenerateMutation,
@@ -29,6 +30,11 @@ export default function ObservationDetailPage({ params }: ObservationDetailPageP
     onError: (error) => {
       if (axios.isAxiosError(error) && error.response?.data?.code === 'CREDIT_NOT_ENOUGH') {
         setShowCreditDialog(true);
+      } else {
+        toast.error({
+          title: '관찰일지 재생성에 실패했어요',
+          description: '잠시 후 다시 시도해주세요',
+        });
       }
     },
   });

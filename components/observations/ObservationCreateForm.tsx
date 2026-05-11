@@ -10,6 +10,7 @@ import { Dialog } from '@/components/common/dialog/Dialog';
 import ObservationLoading from '@/components/observations/ObservationLoading';
 import { AGE_OPTIONS, AREA_OPTIONS } from '@/constants/observations/observation';
 import { useObservationMutation } from '@/hooks/queries/observations/useObservation';
+import { toast } from '@/utils/toast';
 
 export default function ObservationCreateForm() {
   const router = useRouter();
@@ -29,6 +30,11 @@ export default function ObservationCreateForm() {
     onError: (error) => {
       if (axios.isAxiosError(error) && error.response?.data?.code === 'CREDIT_NOT_ENOUGH') {
         setShowCreditDialog(true);
+      } else {
+        toast.error({
+          title: '관찰일지 생성에 실패했어요',
+          description: '잠시 후 다시 시도해주세요',
+        });
       }
     },
   });

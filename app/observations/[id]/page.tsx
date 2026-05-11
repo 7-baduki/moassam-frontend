@@ -51,7 +51,7 @@ export default function ObservationDetailPage({ params }: ObservationDetailPageP
         onOpenChange={setShowCreditDialog}
         iconType="lock"
         title="오늘 생성 횟수를 모두 사용했어요"
-        description="내일 다시 이용하거나 커뮤니티 게시글을 작성해 횟수를 생성할 수 있어요"
+        description="내일 다시 이용하거나 커뮤니티 게시글을 작성해 횟수를 추가할 수 있어요"
         buttons={[
           {
             children: '취소',
@@ -59,7 +59,7 @@ export default function ObservationDetailPage({ params }: ObservationDetailPageP
             onClick: () => setShowCreditDialog(false),
           },
           {
-            children: '커뮤니티',
+            children: '커뮤니티로 이동',
             onClick: () => router.push('/community/moabang'),
           },
         ]}

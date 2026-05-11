@@ -50,7 +50,7 @@ export function Dialog({
         <RadixDialog.Overlay className="overlay fixed inset-0 z-900" />
         <RadixDialog.Content
           className={cn(
-            'fixed top-1/2 left-1/2 z-1000 min-h-50 w-95 -translate-x-1/2 -translate-y-1/2',
+            'fixed top-1/2 left-1/2 z-1000 min-h-50 w-100 -translate-x-1/2 -translate-y-1/2',
             'flex flex-col justify-center rounded-[20px] bg-white p-6',
             'focus:outline-none',
           )}

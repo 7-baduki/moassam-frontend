@@ -16,3 +16,11 @@ export const AREA_OPTIONS: SelectOption[] = [
   { label: '예술경험', value: 'ART_EXPERIENCE' },
   { label: '자연탐구', value: 'NATURE_EXPLORATION' },
 ];
+
+export const SECTION_TYPE_LABEL: Record<string, string> = {
+  PHYSICAL_HEALTH: '신체 운동·건강',
+  COMMUNICATION: '의사소통',
+  SOCIAL_RELATIONSHIP: '사회관계',
+  ART_EXPERIENCE: '예술경험',
+  NATURE_EXPLORATION: '자연탐구',
+};

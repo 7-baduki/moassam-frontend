@@ -1,5 +1,6 @@
 'use client';
 
+import { useState } from 'react';
 import * as DropdownMenu from '@radix-ui/react-dropdown-menu';
 import { MoreDotIcon } from '@/app/assets/icons';
 import { cn } from '@/utils/cn';
@@ -12,9 +13,11 @@ interface MoreButtonProps {
 }
 
 export function MoreButton({ onEdit, onDelete, className }: MoreButtonProps) {
+  const [open, setOpen] = useState(false);
+
   return (
-    <DropdownMenu.Root>
-      <div className={cn('relative w-fit', className)}>
+    <DropdownMenu.Root open={open} onOpenChange={setOpen}>
+      <div className={cn(className, open && 'visible')}>
         <DropdownMenu.Trigger asChild>
           <button
             type="button"

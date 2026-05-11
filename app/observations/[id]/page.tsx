@@ -23,7 +23,7 @@ export default function ObservationDetailPage({ params }: ObservationDetailPageP
   const router = useRouter();
   const [showCreditDialog, setShowCreditDialog] = useState(false);
 
-  const { data: observation, refetch } = useObservationItemQuery(observationId);
+  const { data: observation, isLoading, refetch } = useObservationItemQuery(observationId);
   const { mutate: regenerate, isPending } = useObservationRegenerateMutation({
     onSuccess: () => refetch(),
     onError: (error) => {
@@ -33,7 +33,7 @@ export default function ObservationDetailPage({ params }: ObservationDetailPageP
     },
   });
 
-  if (isPending) return <ObservationLoading />;
+  if (isLoading || isPending) return <ObservationLoading />;
   if (!observation) return null;
 
   const items = [

@@ -1,4 +1,9 @@
-import { useInfiniteQuery, useMutation, UseMutationOptions, useQuery } from '@tanstack/react-query';
+import {
+  useInfiniteQuery,
+  useMutation,
+  UseMutationOptions,
+  useSuspenseQuery,
+} from '@tanstack/react-query';
 import {
   createObservation,
   deleteObservation,
@@ -23,10 +28,9 @@ export const useObservationListQuery = () => {
 };
 
 export const useObservationItemQuery = (id: number) => {
-  return useQuery({
+  return useSuspenseQuery({
     queryKey: ['observation', id],
     queryFn: () => getObservation(id),
-    enabled: !isNaN(id),
   });
 };
 

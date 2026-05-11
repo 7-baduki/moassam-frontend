@@ -19,3 +19,14 @@ export interface ObservationDetailResponse {
   summary: string;
   sections: ObservationSection[];
 }
+
+export interface ObservationListItem {
+  observationId: number;
+  title: string;
+}
+
+export interface ObservationListResponse {
+  items: ObservationListItem[];
+  nextCursor: number | null;
+  hasNext: boolean;
+}

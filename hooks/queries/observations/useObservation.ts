@@ -1,10 +1,25 @@
-import { useMutation, UseMutationOptions, useQuery } from '@tanstack/react-query';
-import { createObservation, getObservation, regenerateObservation } from '@/api/observation.api';
+import { useInfiniteQuery, useMutation, UseMutationOptions, useQuery } from '@tanstack/react-query';
+import {
+  createObservation,
+  getObservation,
+  getObservations,
+  regenerateObservation,
+} from '@/api/observation.api';
 import {
   ObservationCreateRequest,
   ObservationCreateResponse,
   ObservationDetailResponse,
 } from '@/types/observation.type';
+
+export const useObservationListQuery = () => {
+  return useInfiniteQuery({
+    queryKey: ['observations'],
+    queryFn: ({ pageParam }) => getObservations(pageParam),
+    initialPageParam: undefined as number | undefined,
+    getNextPageParam: (lastPage) =>
+      lastPage.hasNext ? (lastPage.nextCursor ?? undefined) : undefined,
+  });
+};
 
 export const useObservationItemQuery = (id: number) => {
   return useQuery({

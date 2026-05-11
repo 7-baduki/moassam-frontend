@@ -73,7 +73,7 @@ export default function ObservationDetail({ observationId }: ObservationDetailPr
             <ObservationResultCard key={item.title} title={item.title} content={item.content} />
           ))}
         </div>
-        <div className="flex justify-end py-15">
+        <div className="flex justify-end pt-15">
           <Button size="md" onClick={() => regenerate(observationId)}>
             재생성
           </Button>

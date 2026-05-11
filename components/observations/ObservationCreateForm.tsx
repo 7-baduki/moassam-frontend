@@ -2,6 +2,7 @@
 
 import { useState, useTransition } from 'react';
 import { useRouter } from 'next/navigation';
+import { useQueryClient } from '@tanstack/react-query';
 import axios from 'axios';
 import { Select } from '@/components/common/select/Select';
 import { Textarea } from '@/components/common/textarea/Textarea';
@@ -14,6 +15,7 @@ import { toast } from '@/utils/toast';
 
 export default function ObservationCreateForm() {
   const router = useRouter();
+  const queryClient = useQueryClient();
   const [age, setAge] = useState('');
   const [areas, setAreas] = useState<string[]>([]);
   const [content, setContent] = useState('');
@@ -23,6 +25,7 @@ export default function ObservationCreateForm() {
 
   const { mutate: createObservation, isPending: isMutating } = useObservationMutation({
     onSuccess: ({ observationId }) => {
+      queryClient.invalidateQueries({ queryKey: ['observations'] });
       startTransition(() => {
         router.push(`/observations/${observationId}`);
       });

@@ -43,7 +43,7 @@ export default function ObservationSidebarContent() {
   }, [hasNextPage, isFetchingNextPage, fetchNextPage]);
 
   return (
-    <div className="flex flex-col overflow-y-auto pt-20 pl-20">
+    <div className="flex h-full flex-col pt-20 pl-20">
       <Link
         href="/observations"
         className={`flex items-center gap-1 py-3 pl-5 text-sm hover:rounded-lg hover:bg-black-200 ${isCreatePage ? 'rounded-l-lg rounded-r-[40px] bg-pink-50 font-semibold text-pink-500' : 'font-semibold text-black'}`}
@@ -54,7 +54,7 @@ export default function ObservationSidebarContent() {
 
       <p className="py-3 pl-5 text-sm font-semibold text-black">최근 생성 일지</p>
 
-      <nav aria-label="관찰일지 목록">
+      <nav aria-label="관찰일지 목록" className="min-h-0 flex-1 overflow-y-auto">
         <ul className="flex flex-col">
           {logs.map((log) => {
             const isDetailPage = pathname === `/observations/${log.observationId}`;
@@ -74,9 +74,8 @@ export default function ObservationSidebarContent() {
             );
           })}
         </ul>
+        <div ref={bottomRef} className="h-1" />
       </nav>
-
-      <div ref={bottomRef} className="h-1" />
     </div>
   );
 }

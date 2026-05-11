@@ -2,16 +2,29 @@
 
 import { useEffect, useRef } from 'react';
 import Link from 'next/link';
-import { usePathname } from 'next/navigation';
+import { usePathname, useRouter } from 'next/navigation';
+import { useQueryClient } from '@tanstack/react-query';
 import { PlusIcon } from '@/app/assets/icons';
-import { useObservationListQuery } from '@/hooks/queries/observations/useObservation';
+import { MoreButton } from '@/components/common/more-button/MoreButton';
+import {
+  useObservationDeleteMutation,
+  useObservationListQuery,
+} from '@/hooks/queries/observations/useObservation';
 
 export default function ObservationSidebarContent() {
   const pathname = usePathname();
+  const router = useRouter();
+  const queryClient = useQueryClient();
   const isCreatePage = pathname === '/observations';
   const bottomRef = useRef<HTMLDivElement>(null);
 
   const { data, fetchNextPage, hasNextPage, isFetchingNextPage } = useObservationListQuery();
+  const { mutate: deleteObservation } = useObservationDeleteMutation({
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ['observations'] });
+      router.push('/observations');
+    },
+  });
 
   const logs = data?.pages.flatMap((page) => page.items) ?? [];
 
@@ -46,13 +59,17 @@ export default function ObservationSidebarContent() {
           {logs.map((log) => {
             const isDetailPage = pathname === `/observations/${log.observationId}`;
             return (
-              <li key={log.observationId}>
+              <li key={log.observationId} className="group flex items-center">
                 <Link
                   href={`/observations/${log.observationId}`}
-                  className={`block truncate px-5 py-3 text-sm hover:rounded-lg hover:bg-black-200 ${isDetailPage ? 'rounded-l-lg rounded-r-[40px] bg-pink-50 font-semibold text-pink-500' : 'font-medium text-black-700'}`}
+                  className={`flex-1 truncate px-5 py-3 text-sm hover:rounded-lg hover:bg-black-200 ${isDetailPage ? 'rounded-l-lg rounded-r-[40px] bg-pink-50 font-semibold text-pink-500' : 'font-medium text-black-700'}`}
                 >
                   {log.title}
                 </Link>
+                <MoreButton
+                  onDelete={() => deleteObservation(log.observationId)}
+                  className="invisible pr-2 group-hover:visible"
+                />
               </li>
             );
           })}

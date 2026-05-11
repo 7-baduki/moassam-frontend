@@ -26,6 +26,7 @@ export const useObservationItemQuery = (id: number) => {
   return useQuery({
     queryKey: ['observation', id],
     queryFn: () => getObservation(id),
+    enabled: !isNaN(id),
   });
 };
 

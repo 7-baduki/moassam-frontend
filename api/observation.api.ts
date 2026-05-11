@@ -29,3 +29,7 @@ export const getObservations = async (cursor?: number): Promise<ObservationListR
   });
   return response.data.data;
 };
+
+export const deleteObservation = async (id: number): Promise<void> => {
+  await apiClient.delete(`/api/v1/observations/${id}`);
+};

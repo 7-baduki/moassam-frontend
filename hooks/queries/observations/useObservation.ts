@@ -1,6 +1,7 @@
 import { useInfiniteQuery, useMutation, UseMutationOptions, useQuery } from '@tanstack/react-query';
 import {
   createObservation,
+  deleteObservation,
   getObservation,
   getObservations,
   regenerateObservation,
@@ -42,6 +43,13 @@ export const useObservationRegenerateMutation = (
 ) => {
   return useMutation({
     mutationFn: regenerateObservation,
+    ...options,
+  });
+};
+
+export const useObservationDeleteMutation = (options?: UseMutationOptions<void, Error, number>) => {
+  return useMutation({
+    mutationFn: deleteObservation,
     ...options,
   });
 };

@@ -59,16 +59,16 @@ export default function ObservationSidebarContent() {
           {logs.map((log) => {
             const isDetailPage = pathname === `/observations/${log.observationId}`;
             return (
-              <li key={log.observationId} className="group flex items-center">
+              <li key={log.observationId} className="group relative flex items-center">
                 <Link
                   href={`/observations/${log.observationId}`}
-                  className={`flex-1 truncate px-5 py-3 text-sm hover:rounded-lg hover:bg-black-200 ${isDetailPage ? 'rounded-l-lg rounded-r-[40px] bg-pink-50 font-semibold text-pink-500' : 'font-medium text-black-700'}`}
+                  className={`flex-1 truncate py-3 pr-8 pl-5 text-sm hover:rounded-lg hover:bg-black-200 ${isDetailPage ? 'rounded-l-lg rounded-r-[40px] bg-pink-50 font-semibold text-pink-500' : 'font-medium text-black-700'}`}
                 >
                   {log.title}
                 </Link>
                 <MoreButton
                   onDelete={() => deleteObservation(log.observationId)}
-                  className="invisible pr-2 group-hover:visible"
+                  className="invisible absolute top-1/2 right-2.5 -translate-y-1/2 group-hover:visible"
                 />
               </li>
             );

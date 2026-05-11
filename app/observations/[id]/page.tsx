@@ -1,18 +1,30 @@
-import { notFound } from 'next/navigation';
+'use client';
+
+import { use } from 'react';
 import ObservationResultCard from '@/components/observations/ObservationResultCard';
+import ObservationLoading from '@/components/observations/ObservationLoading';
 import { Button } from '@/components/common/button/Button';
-import { getObservationDetail } from '@/api/observation.server.api';
 import { SECTION_TYPE_LABEL } from '@/constants/observations/observation';
+import {
+  useObservationItemQuery,
+  useObservationRegenerateMutation,
+} from '@/hooks/queries/observations/useObservation';
 
 interface ObservationDetailPageProps {
   params: Promise<{ id: string }>;
 }
 
-export default async function ObservationDetailPage({ params }: ObservationDetailPageProps) {
-  const { id } = await params;
-  const observation = await getObservationDetail(Number(id));
+export default function ObservationDetailPage({ params }: ObservationDetailPageProps) {
+  const { id } = use(params);
+  const observationId = Number(id);
 
-  if (!observation) return notFound();
+  const { data: observation, refetch } = useObservationItemQuery(observationId);
+  const { mutate: regenerate, isPending } = useObservationRegenerateMutation({
+    onSuccess: () => refetch(),
+  });
+
+  if (isPending) return <ObservationLoading />;
+  if (!observation) return null;
 
   const items = [
     { title: '총평', content: observation.summary },
@@ -30,7 +42,9 @@ export default async function ObservationDetailPage({ params }: ObservationDetai
         ))}
       </div>
       <div className="flex justify-end py-15">
-        <Button size="md">재생성</Button>
+        <Button size="md" onClick={() => regenerate(observationId)}>
+          재생성
+        </Button>
       </div>
     </div>
   );

@@ -1,6 +1,6 @@
 'use client';
 
-import { useState } from 'react';
+import { useState, useTransition } from 'react';
 import { useRouter } from 'next/navigation';
 import { Select } from '@/components/common/select/Select';
 import { Textarea } from '@/components/common/textarea/Textarea';
@@ -15,9 +15,13 @@ export default function ObservationCreateForm() {
   const [areas, setAreas] = useState<string[]>([]);
   const [content, setContent] = useState('');
 
-  const { mutate: createObservation, isPending } = useObservationMutation({
+  const [isPending, startTransition] = useTransition();
+
+  const { mutate: createObservation, isPending: isMutating } = useObservationMutation({
     onSuccess: ({ observationId }) => {
-      router.push(`/observations/${observationId}`);
+      startTransition(() => {
+        router.push(`/observations/${observationId}`);
+      });
     },
   });
 
@@ -27,7 +31,7 @@ export default function ObservationCreateForm() {
     createObservation({ age, sectionTypes: areas, situation: content });
   };
 
-  if (isPending) return <ObservationLoading />;
+  if (isMutating || isPending) return <ObservationLoading />;
 
   return (
     <div className="flex flex-col items-center">
@@ -69,7 +73,11 @@ export default function ObservationCreateForm() {
             value={content}
             onChange={(e) => setContent(e.target.value)}
             action={
-              <Button size="md" onClick={handleSubmit} disabled={!isFormValid || isPending}>
+              <Button
+                size="md"
+                onClick={handleSubmit}
+                disabled={!isFormValid || isMutating || isPending}
+              >
                 생성하기
               </Button>
             }

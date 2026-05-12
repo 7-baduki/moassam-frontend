@@ -11,13 +11,12 @@ import { useLoginModalStore } from '@/stores/loginModalStore';
 import { useUserStore } from '@/stores/userStore';
 import { ProfilePopover } from '@/components/common/profile-popover/ProfilePopover';
 import NAV_ITEMS from '@/constants/common/nav-items';
-import { User } from '@/types/user.type';
 import { useLogoutMutation } from '@/hooks/queries/auth/useAuth';
+import { useUser } from '@/components/auth/UserContext';
 
-export default function Header({ user: initialUser }: { user: User | null }) {
+export default function Header() {
   const openLoginModal = useLoginModalStore((state) => state.open);
-  const storeUser = useUserStore((state) => state.user);
-  const user = storeUser ?? initialUser;
+  const user = useUser();
   const clearUser = useUserStore((state) => state.clearUser);
   const pathname = usePathname() ?? '';
   const router = useRouter();

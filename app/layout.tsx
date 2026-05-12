@@ -31,8 +31,8 @@ export default async function RootLayout({
   return (
     <html lang="ko" className={`${pretendard.variable} h-full antialiased`}>
       <body className={`${pretendard.className} flex h-screen flex-col overflow-hidden`}>
-        <Header user={user} />
         <Providers>
+          <Header user={user} />
           <UserInitializer user={user} />
           <div className="flex flex-1 overflow-hidden">
             <Sidebar />

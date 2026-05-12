@@ -27,10 +27,16 @@ async function handler(req: NextRequest, { params }: { params: Promise<{ path: s
 
   const data = await response.text();
 
-  return new NextResponse(data, {
+  const nextResponse = new NextResponse(data, {
     status: response.status,
     headers: { 'Content-Type': response.headers.get('Content-Type') ?? 'application/json' },
   });
+
+  response.headers.getSetCookie().forEach((cookie) => {
+    nextResponse.headers.append('Set-Cookie', cookie);
+  });
+
+  return nextResponse;
 }
 
 export const GET = handler;

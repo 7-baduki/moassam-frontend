@@ -38,7 +38,7 @@ export default function ObservationCreateForm() {
     onError: (error) => {
       if (axios.isAxiosError(error) && error.response?.data?.code === 'CREDIT_NOT_ENOUGH') {
         setShowCreditDialog(true);
-      } else {
+      } else if (!(error as { isHandled?: boolean }).isHandled) {
         toast.error({
           title: '관찰일지 생성에 실패했어요',
           description: '잠시 후 다시 시도해주세요',

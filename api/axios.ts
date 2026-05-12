@@ -33,6 +33,7 @@ apiClient.interceptors.response.use(
     const user = useUserStore.getState().user;
     if (!user) {
       useLoginModalStore.getState().open('로그인이 필요해요!', '로그인 후 이용할 수 있어요');
+      error.isHandled = true;
       return Promise.reject(error);
     }
 
@@ -56,6 +57,7 @@ apiClient.interceptors.response.use(
       processPendingQueue(refreshError);
       await fetch('/api/auth/logout', { method: 'POST' });
       useLoginModalStore.getState().open('세션이 만료되었어요!', '다시 로그인해 주세요');
+      if (axios.isAxiosError(refreshError)) refreshError.isHandled = true;
       return Promise.reject(refreshError);
     } finally {
       isRefreshing = false;

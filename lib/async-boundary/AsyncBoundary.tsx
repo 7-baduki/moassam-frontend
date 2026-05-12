@@ -15,7 +15,9 @@ export function AsyncBoundary({ pendingFallback, rejectedFallback, children }: P
     <QueryErrorResetBoundary>
       {({ reset }) => (
         <ErrorBoundary fallback={rejectedFallback} onReset={reset}>
-          <Suspense fallback={pendingFallback}>{children}</Suspense>
+          <Suspense clientOnly fallback={pendingFallback}>
+            {children}
+          </Suspense>
         </ErrorBoundary>
       )}
     </QueryErrorResetBoundary>

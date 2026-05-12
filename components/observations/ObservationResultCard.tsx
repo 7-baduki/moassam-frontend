@@ -2,6 +2,7 @@
 
 import { CopyIcon } from '@/app/assets/icons';
 import { Button } from '@/components/common/button/Button';
+import { toast } from '@/utils/toast';
 
 interface ObservationResultCardProps {
   title: string;
@@ -9,8 +10,13 @@ interface ObservationResultCardProps {
 }
 
 export default function ObservationResultCard({ title, content }: ObservationResultCardProps) {
-  const handleCopy = () => {
-    navigator.clipboard.writeText(content);
+  const handleCopy = async () => {
+    try {
+      await navigator.clipboard.writeText(content);
+      toast.success({ title: '복사 완료', description: '클립보드에 저장되었어요' });
+    } catch {
+      toast.error({ title: '복사 실패', description: '잠시 후 다시 시도해주세요' });
+    }
   };
 
   return (

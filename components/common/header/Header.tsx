@@ -8,7 +8,6 @@ import { Button } from '@/components/common/button/Button';
 import { MainLogoIcon } from '@/app/assets/icons';
 import { DefaultAvatar } from '@/app/assets/images';
 import { useLoginModalStore } from '@/stores/loginModalStore';
-import { useUserStore } from '@/stores/userStore';
 import { ProfilePopover } from '@/components/common/profile-popover/ProfilePopover';
 import NAV_ITEMS from '@/constants/common/nav-items';
 import { useLogoutMutation } from '@/hooks/queries/auth/useAuth';
@@ -17,14 +16,12 @@ import { useUser } from '@/lib/user-context';
 export default function Header() {
   const openLoginModal = useLoginModalStore((state) => state.open);
   const user = useUser();
-  const clearUser = useUserStore((state) => state.clearUser);
   const pathname = usePathname() ?? '';
   const router = useRouter();
   const [isPopoverOpen, setIsPopoverOpen] = useState(false);
 
   const { mutate: handleLogout } = useLogoutMutation({
     onSuccess: () => {
-      clearUser();
       setIsPopoverOpen(false);
       router.push('/');
       router.refresh();

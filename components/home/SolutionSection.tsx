@@ -10,7 +10,10 @@ import {
   SolutionProcess,
   SolutionProcessMd,
 } from '@/app/assets/images';
-export default function SolutionSection({ isLoggedIn }: { isLoggedIn: boolean }) {
+import { useUser } from '@/lib/user-context';
+export default function SolutionSection() {
+  const user = useUser();
+  const isLoggedIn = !!user;
   return (
     <section className="w-full bg-black-50 py-15 md:pt-17.5 md:pb-25" aria-label="해결방법 섹션">
       <div className="mx-auto w-full max-w-104 md:max-w-293">

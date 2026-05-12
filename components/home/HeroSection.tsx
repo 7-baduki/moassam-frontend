@@ -5,9 +5,8 @@ import Badge from '@/components/common/badge/Badge';
 import { Button } from '@/components/common/button/Button';
 import { HeroBadge } from '@/app/assets/images';
 import HeroImage from '@/app/assets/images/hero-section.png';
-import { useUserStore } from '@/stores/userStore';
 import HeroImageMd from '@/app/assets/images/hero-section-md.png';
-import { User } from '@/types/user.type';
+import { useUser } from '@/lib/user-context';
 
 function LoggedInHero({
   userName = '',
@@ -86,9 +85,8 @@ function LoggedOutHero() {
   );
 }
 
-export default function HeroSection({ user: initialUser }: { user: User | null }) {
-  const storeUser = useUserStore((state) => state.user);
-  const user = storeUser ?? initialUser;
+export default function HeroSection() {
+  const user = useUser();
 
   return (
     <section className="relative flex flex-col items-center bg-black-100" aria-label="히어로 섹션">

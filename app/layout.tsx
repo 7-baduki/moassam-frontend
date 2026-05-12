@@ -6,7 +6,7 @@ import Providers from './providers';
 import Header from '@/components/common/header/Header';
 import Sidebar from '@/components/common/sidebar/Sidebar';
 import { LoginModal } from '@/components/common/login-modal/LoginModal';
-import { UserProvider } from '@/components/auth/UserContext';
+import { UserProvider } from '@/lib/user-context';
 import { getProfile } from '@/api/user.api';
 
 const pretendard = localFont({

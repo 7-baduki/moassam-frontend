@@ -12,7 +12,7 @@ import { useUserStore } from '@/stores/userStore';
 import { ProfilePopover } from '@/components/common/profile-popover/ProfilePopover';
 import NAV_ITEMS from '@/constants/common/nav-items';
 import { useLogoutMutation } from '@/hooks/queries/auth/useAuth';
-import { useUser } from '@/components/auth/UserContext';
+import { useUser } from '@/lib/user-context';
 
 export default function Header() {
   const openLoginModal = useLoginModalStore((state) => state.open);

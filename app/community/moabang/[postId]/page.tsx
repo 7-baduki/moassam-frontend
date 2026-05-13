@@ -1,4 +1,4 @@
-import BoardDetailSection from '@/components/community/board/board-detail/BoardDetailSection';
+import BoardDetailBoundary from '@/components/community/board/board-detail/BoardDetailBoundary';
 
 interface MoabangDetailPageProps {
   params: Promise<{
@@ -9,5 +9,5 @@ interface MoabangDetailPageProps {
 export default async function MoabangDetailPage({ params }: MoabangDetailPageProps) {
   const { postId } = await params;
 
-  return <BoardDetailSection postId={postId} title="모아방" />;
+  return <BoardDetailBoundary postId={Number(postId)} title="모아방" />;
 }

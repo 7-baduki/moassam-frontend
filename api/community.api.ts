@@ -8,7 +8,11 @@ import type {
   CreatePostRequest,
   CreatePostResponse,
 } from '@/components/community/write/write.type';
-import type { BoardDetail } from '@/components/community/board/board-detail/board-detail.type';
+import type {
+  BoardDetail,
+  CommentRequest,
+  CommentIdResponse,
+} from '@/components/community/board/board-detail/board-detail.type';
 
 export async function getPostDetail(postId: number): Promise<BoardDetail> {
   const { data } = await apiClient.get(`/api/v1/posts/${postId}`);
@@ -23,6 +27,27 @@ export async function getMoabangPosts(params: MoabangListParams): Promise<Moaban
 export async function getBoardPosts(params: BoardListParams): Promise<BoardListResponse> {
   const { data } = await apiClient.get('/api/v1/posts/free', { params });
   return data.data;
+}
+
+export async function createComment(
+  postId: number,
+  request: CommentRequest,
+): Promise<CommentIdResponse> {
+  const { data } = await apiClient.post(`/api/v1/posts/${postId}/comments`, request);
+  return data.data;
+}
+
+export async function updateComment(
+  postId: number,
+  commentId: number,
+  request: CommentRequest,
+): Promise<CommentIdResponse> {
+  const { data } = await apiClient.patch(`/api/v1/posts/${postId}/comments/${commentId}`, request);
+  return data.data;
+}
+
+export async function deleteComment(postId: number, commentId: number): Promise<void> {
+  await apiClient.delete(`/api/v1/posts/${postId}/comments/${commentId}`);
 }
 
 export async function createPost(

@@ -20,9 +20,9 @@ export const MOABANG_AGE_FILTER_TABS: TabOption[] = [ALL_TAB, ...MOABANG_AGES];
 export const MOABANG_CATEGORY_FILTER_TABS: TabOption[] = [ALL_TAB, ...MOABANG_CATEGORIES];
 
 export const BOARD_CATEGORIES: TabOption[] = [
-  { label: '고민', value: 'concern' },
-  { label: '질문', value: 'question' },
-  { label: '잡담', value: 'counseling' },
+  { label: '고민', value: 'WORRY' },
+  { label: '질문', value: 'QUESTION' },
+  { label: '잡담', value: 'CHAT' },
 ];
 
 export const BOARD_CATEGORY_FILTER_TABS: TabOption[] = [ALL_TAB, ...BOARD_CATEGORIES];

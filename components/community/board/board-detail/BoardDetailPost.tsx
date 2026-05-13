@@ -6,6 +6,7 @@ import { AGE_OPTIONS, MATERIAL_TYPE_OPTIONS } from '@/components/community/write
 import type { PostAge, ResourceType } from '@/components/community/moabang/moabang.type';
 import BoardDetailAttachments from './BoardDetailAttachments';
 import type { BoardDetail } from './board-detail.type';
+import { formatRelativeTime } from '@/utils/formatRelativeTime';
 
 const HEAD_TAG_LABELS: Record<string, string> = {
   QUESTION: '질문',
@@ -40,21 +41,6 @@ const RESOURCE_TYPE_VARIANT: Record<ResourceType, BadgeVariant> = {
   JOURNAL: 'outline-pink',
   NOTICE: 'outline-gray',
 };
-
-function formatRelativeTime(isoString: string): string {
-  const date = new Date(isoString);
-  const now = new Date();
-  const diffMs = now.getTime() - date.getTime();
-  const diffMins = Math.floor(diffMs / 60000);
-  const diffHours = Math.floor(diffMins / 60);
-  const diffDays = Math.floor(diffHours / 24);
-
-  if (diffMins < 1) return '방금 전';
-  if (diffHours < 1) return `${diffMins}분 전`;
-  if (diffDays < 1) return `${diffHours}시간 전`;
-  if (diffDays < 7) return `${diffDays}일 전`;
-  return date.toLocaleDateString('ko-KR');
-}
 
 interface BoardDetailPostProps {
   post: BoardDetail;

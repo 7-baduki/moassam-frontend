@@ -3,6 +3,7 @@ import Image from 'next/image';
 import { ViewCountIcon, LikeCountIcon, CommentCountIcon } from '@/app/assets/icons';
 import { Badge } from '@/components/common/badge';
 import type { MoabangPost, ResourceType } from './moabang.type';
+import { formatRelativeTime } from '@/utils/formatRelativeTime';
 
 const RESOURCE_TYPE_LABEL: Record<ResourceType, string> = {
   ACTIVITY: '활동자료',
@@ -53,7 +54,7 @@ export default function MoabangCard({ post }: MoabangCardProps) {
                 {post.commentCount.toLocaleString()}
               </span>
             </div>
-            <span>{post.createdAt}</span>
+            <span>{formatRelativeTime(post.createdAt)}</span>
           </div>
         </div>
       </article>

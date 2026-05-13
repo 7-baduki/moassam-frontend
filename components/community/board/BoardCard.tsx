@@ -2,6 +2,7 @@ import Link from 'next/link';
 import { ViewCountIcon, LikeCountIcon, CommentCountIcon } from '@/app/assets/icons';
 import { Badge } from '@/components/common/badge';
 import type { BoardPost, HeadTag } from './board.type';
+import { formatRelativeTime } from '@/utils/formatRelativeTime';
 
 const HEAD_TAG_LABEL: Record<HeadTag, string> = {
   WORRY: '고민',
@@ -50,7 +51,7 @@ export default function BoardCard({ post }: BoardCardProps) {
               {post.commentCount.toLocaleString()}
             </span>
           </div>
-          <span>{post.createdAt}</span>
+          <span>{formatRelativeTime(post.createdAt)}</span>
         </div>
       </article>
     </Link>

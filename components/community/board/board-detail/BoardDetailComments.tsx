@@ -3,6 +3,7 @@
 import { useState } from 'react';
 import { Button } from '@/components/common/button/Button';
 import { Textarea } from '@/components/common/textarea/Textarea';
+import type { Comment } from './board-detail.type';
 import BoardDetailCommentItem from './BoardDetailCommentItem';
 import {
   useCommentsQuery,
@@ -24,7 +25,9 @@ export default function BoardDetailComments({
 }: BoardDetailCommentsProps) {
   const [value, setValue] = useState('');
 
-  const { data: comments } = useCommentsQuery(postId);
+  // TODO: 500 에러 해결 후 주석 해제
+  // const { data: comments } = useCommentsQuery(postId);
+  const comments: Comment[] = [];
   const { mutate: createComment, isPending: isCreating } = useCreateCommentMutation(postId);
   const { mutate: updateComment } = useUpdateCommentMutation(postId);
   const { mutate: deleteComment } = useDeleteCommentMutation(postId);

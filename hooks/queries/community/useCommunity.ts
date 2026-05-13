@@ -4,6 +4,7 @@ import {
   getBoardPosts,
   createPost,
   getPostDetail,
+  getComments,
   createComment,
   updateComment,
   deleteComment,
@@ -30,6 +31,44 @@ export function useBoardPostsQuery(params: BoardListParams) {
   return useSuspenseQuery({
     queryKey: ['board', 'posts', params],
     queryFn: () => getBoardPosts(params),
+  });
+}
+
+export function useCommentsQuery(postId: number) {
+  return useSuspenseQuery({
+    queryKey: ['post', 'comments', postId],
+    queryFn: () => getComments(postId),
+  });
+}
+
+export function useCreateCommentMutation(postId: number) {
+  const queryClient = useQueryClient();
+
+  return useMutation({
+    mutationFn: (content: string) => createComment(postId, { content }),
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ['post', 'detail', postId] });
+      queryClient.invalidateQueries({ queryKey: ['post', 'comments', postId] });
+    },
+  });
+}
+
+export function useUpdateCommentMutation(postId: number) {
+  return useMutation({
+    mutationFn: ({ commentId, content }: { commentId: number; content: string }) =>
+      updateComment(postId, commentId, { content }),
+  });
+}
+
+export function useDeleteCommentMutation(postId: number) {
+  const queryClient = useQueryClient();
+
+  return useMutation({
+    mutationFn: (commentId: number) => deleteComment(postId, commentId),
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ['post', 'detail', postId] });
+      queryClient.invalidateQueries({ queryKey: ['post', 'comments', postId] });
+    },
   });
 }
 

@@ -32,8 +32,8 @@ export interface BoardDetail {
 
 export interface Comment {
   commentId: number;
-  authorId: number;
-  authorNickName: string;
+  postId: number;
+  authorNickname: string;
   content: string;
   createdAt: string;
 }

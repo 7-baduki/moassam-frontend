@@ -47,8 +47,8 @@ export default function BoardDetailSection({ postId, title }: BoardDetailSection
           <BoardDetailPost post={post} />
           <div className="mt-7.5">
             <BoardDetailComments
+              postId={postId}
               commentCount={post.commentCount}
-              currentUserId={CURRENT_USER_ID}
               isLoggedIn={IS_LOGGED_IN}
             />
           </div>

@@ -3,45 +3,36 @@
 import { useState } from 'react';
 import { Button } from '@/components/common/button/Button';
 import { Textarea } from '@/components/common/textarea/Textarea';
-import type { Comment } from './board-detail.type';
 import BoardDetailCommentItem from './BoardDetailCommentItem';
-
-const MOCK_COMMENTS: Comment[] = [
-  {
-    commentId: 1,
-    authorId: 2,
-    authorNickName: '나미리선생님',
-    content: '아직 추천합니다\n얼글루팡치고\n워라밸라밸라밸',
-    createdAt: new Date().toISOString(),
-  },
-  {
-    commentId: 2,
-    authorId: 3,
-    authorNickName: '김지은선생님',
-    content: '미래를 위해 이직하세요\n화이팅!',
-    createdAt: new Date().toISOString(),
-  },
-  {
-    commentId: 3,
-    authorId: 3,
-    authorNickName: '김지은선생님',
-    content: '저도 공감합니다*********************************************',
-    createdAt: new Date().toISOString(),
-  },
-];
+import {
+  useCommentsQuery,
+  useCreateCommentMutation,
+  useDeleteCommentMutation,
+  useUpdateCommentMutation,
+} from '@/hooks/queries/community/useCommunity';
 
 interface BoardDetailCommentsProps {
+  postId: number;
   commentCount: number;
-  currentUserId: number;
   isLoggedIn: boolean;
 }
 
 export default function BoardDetailComments({
+  postId,
   commentCount,
-  currentUserId,
   isLoggedIn,
 }: BoardDetailCommentsProps) {
   const [value, setValue] = useState('');
+
+  const { data: comments } = useCommentsQuery(postId);
+  const { mutate: createComment, isPending: isCreating } = useCreateCommentMutation(postId);
+  const { mutate: updateComment } = useUpdateCommentMutation(postId);
+  const { mutate: deleteComment } = useDeleteCommentMutation(postId);
+
+  function handleSubmit() {
+    if (!value.trim()) return;
+    createComment(value, { onSuccess: () => setValue('') });
+  }
 
   return (
     <section aria-label="댓글" className="rounded-2xl border border-black-200 bg-white p-7.5">
@@ -63,13 +54,14 @@ export default function BoardDetailComments({
           }
           maxLength={3000}
           rows={3}
-          disabled={!isLoggedIn}
+          disabled={!isLoggedIn || isCreating}
           action={
             <Button
               size="sm"
               variant="primary"
-              disabled={!isLoggedIn || value.trim() === ''}
+              disabled={!isLoggedIn || value.trim() === '' || isCreating}
               aria-label="댓글 등록"
+              onClick={handleSubmit}
             >
               등록
             </Button>
@@ -78,11 +70,12 @@ export default function BoardDetailComments({
       </div>
 
       <ul aria-labelledby="comments-title" className="mt-4">
-        {MOCK_COMMENTS.map((comment) => (
+        {comments.map((comment) => (
           <BoardDetailCommentItem
             key={comment.commentId}
             comment={comment}
-            isAuthor={comment.authorId === currentUserId}
+            onUpdate={(commentId, content) => updateComment({ commentId, content })}
+            onDelete={(commentId) => deleteComment(commentId)}
           />
         ))}
       </ul>

@@ -8,6 +8,12 @@ import type {
   CreatePostRequest,
   CreatePostResponse,
 } from '@/components/community/write/write.type';
+import type { BoardDetail } from '@/components/community/board/board-detail/board-detail.type';
+
+export async function getPostDetail(postId: number): Promise<BoardDetail> {
+  const { data } = await apiClient.get(`/api/v1/posts/${postId}`);
+  return data.data;
+}
 
 export async function getMoabangPosts(params: MoabangListParams): Promise<MoabangListResponse> {
   const { data } = await apiClient.get('/api/v1/posts/moabang', { params });

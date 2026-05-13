@@ -5,10 +5,10 @@ import BoardCard from './BoardCard';
 import CommunityTitleBar from '@/components/community/CommunityTitleBar';
 import CommunityFilter from '@/components/community/CommunityFilter';
 import Pagination from '@/components/common/pagination/Pagination';
-import type { BoardPost } from './board.type';
 import { BOARD_CATEGORY_FILTER_TABS } from '@/constants/community/community-tabs';
-
-const PAGE_SIZE = 8;
+import { useBoardPostsQuery } from '@/hooks/queries/community/useCommunity';
+import { EmptyState } from '@/components/common/empty-state/EmptyState';
+import type { HeadTag } from './board.type';
 
 function getValidParam<T extends { value: string }>(
   raw: string | null,
@@ -19,32 +19,22 @@ function getValidParam<T extends { value: string }>(
   return fallback;
 }
 
-const MOCK_POSTS: BoardPost[] = Array.from({ length: 80 }, (_, i) => ({
-  postId: i + 1,
-  categoryName: '고민',
-  title: '자유놀이 시간마다 자꾸 같은 놀잇감만 찾는 아이들, 어떻게 도와주시나요?',
-  contentPreview:
-    '한 가지 놀잇감에만 입몰하는 건 좋은데 다른 활동으로는 잘 확장이 안 돼서요. 억지로 바꾸게 하기보다 자연스럽게 관심을 넓혀주고 싶은데 비슷한 경우 어떻게 하시는지 궁금합니다.',
-  authorName: '햇살선생님',
-  likeCount: 46,
-  commentCount: 119,
-  viewCount: 1230,
-  createdAt: '3시간 전',
-}));
-
 export default function BoardSection() {
   const router = useRouter();
   const pathname = usePathname();
   const searchParams = useSearchParams();
 
   const category = getValidParam(searchParams.get('category'), BOARD_CATEGORY_FILTER_TABS, 'all');
-
-  const totalPages = Math.max(1, Math.ceil(MOCK_POSTS.length / PAGE_SIZE));
   const rawPage = Number(searchParams.get('page'));
-  const currentPage = Number.isInteger(rawPage) && rawPage >= 1 ? Math.min(rawPage, totalPages) : 1;
+  const currentPage = Number.isInteger(rawPage) && rawPage >= 1 ? rawPage : 1;
 
-  const startIndex = (currentPage - 1) * PAGE_SIZE;
-  const visiblePosts = MOCK_POSTS.slice(startIndex, startIndex + PAGE_SIZE);
+  const { data } = useBoardPostsQuery({
+    headTag: category !== 'all' ? (category as HeadTag) : undefined,
+    page: currentPage - 1,
+    size: 9,
+  });
+
+  const totalPages = Math.max(1, data.totalPages);
 
   function updateParam(key: string, value: string, resetPage = false) {
     const params = new URLSearchParams(searchParams.toString());
@@ -68,14 +58,26 @@ export default function BoardSection() {
         category={category}
         onCategoryChange={(value) => updateParam('category', value, true)}
       />
-      <div className="grid grid-cols-2 gap-5">
-        {visiblePosts.map((post) => (
-          <BoardCard key={post.postId} post={post} />
-        ))}
-      </div>
-      <div className="mt-15 flex justify-center">
-        <Pagination currentPage={currentPage} totalPages={totalPages} onChange={handlePageChange} />
-      </div>
+      {data.data.length === 0 ? (
+        <div className="flex flex-1 items-center justify-center pt-20">
+          <EmptyState message="아직 등록된 게시글이 없어요" />
+        </div>
+      ) : (
+        <>
+          <div className="grid grid-cols-2 gap-5">
+            {data.data.map((post) => (
+              <BoardCard key={post.postId} post={post} />
+            ))}
+          </div>
+          <div className="mt-15 flex justify-center">
+            <Pagination
+              currentPage={currentPage}
+              totalPages={totalPages}
+              onChange={handlePageChange}
+            />
+          </div>
+        </>
+      )}
     </section>
   );
 }

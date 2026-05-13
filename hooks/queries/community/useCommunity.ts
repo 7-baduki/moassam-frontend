@@ -1,7 +1,8 @@
-import { useSuspenseQuery } from '@tanstack/react-query';
-import { getMoabangPosts, getBoardPosts } from '@/api/community.api';
+import { useSuspenseQuery, useMutation, useQueryClient } from '@tanstack/react-query';
+import { getMoabangPosts, getBoardPosts, createPost } from '@/api/community.api';
 import type { MoabangListParams } from '@/components/community/moabang/moabang.type';
 import type { BoardListParams } from '@/components/community/board/board.type';
+import type { CreatePostRequest } from '@/components/community/write/write.type';
 
 export function useMoabangPostsQuery(params: MoabangListParams) {
   return useSuspenseQuery({
@@ -14,5 +15,18 @@ export function useBoardPostsQuery(params: BoardListParams) {
   return useSuspenseQuery({
     queryKey: ['board', 'posts', params],
     queryFn: () => getBoardPosts(params),
+  });
+}
+
+export function useCreatePostMutation() {
+  const queryClient = useQueryClient();
+
+  return useMutation({
+    mutationFn: ({ request, files }: { request: CreatePostRequest; files: File[] }) =>
+      createPost(request, files),
+    onSuccess: (_, { request }) => {
+      const queryKey = request.category === 'MOABANG' ? 'moabang' : 'board';
+      queryClient.invalidateQueries({ queryKey: [queryKey, 'posts'] });
+    },
   });
 }

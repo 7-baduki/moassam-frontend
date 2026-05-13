@@ -12,3 +12,16 @@ export interface WriteFormValues {
   resourceType?: ResourceType;
   headTag?: HeadTag;
 }
+
+export interface CreatePostRequest {
+  category: 'MOABANG' | 'FREE';
+  postAge?: PostAge;
+  resourceType?: ResourceType;
+  headTag?: HeadTag;
+  title: string;
+  content: string;
+}
+
+export interface CreatePostResponse {
+  postId: number;
+}

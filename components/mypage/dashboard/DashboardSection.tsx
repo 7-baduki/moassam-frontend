@@ -40,6 +40,7 @@ export default function DashboardSection() {
           setIsWithdrawModalOpen(true);
         }}
         username={user?.email ?? ''}
+        nickname={user?.nickname ?? ''}
       />
       <WithdrawModal isOpen={isWithdrawModalOpen} onClose={() => setIsWithdrawModalOpen(false)} />
     </div>

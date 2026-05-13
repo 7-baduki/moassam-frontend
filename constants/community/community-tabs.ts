@@ -3,17 +3,17 @@ import type { TabOption } from '@/components/common/tabs/Tabs';
 const ALL_TAB: TabOption = { label: '전체', value: 'all' };
 
 export const MOABANG_AGES: TabOption[] = [
-  { label: '영아', value: 'infant' },
-  { label: '만 3세', value: 'age3' },
-  { label: '만 4세', value: 'age4' },
-  { label: '만 5세', value: 'age5' },
+  { label: '영아', value: 'INFANT' },
+  { label: '만 3세', value: 'AGE_3' },
+  { label: '만 4세', value: 'AGE_4' },
+  { label: '만 5세', value: 'AGE_5' },
 ];
 
 export const MOABANG_CATEGORIES: TabOption[] = [
-  { label: '활동자료', value: 'activity' },
-  { label: '계획안', value: 'plan' },
-  { label: '일지', value: 'journal' },
-  { label: '안내문', value: 'notice' },
+  { label: '활동자료', value: 'ACTIVITY' },
+  { label: '계획안', value: 'PLAN' },
+  { label: '일지', value: 'JOURNAL' },
+  { label: '안내문', value: 'NOTICE' },
 ];
 
 export const MOABANG_AGE_FILTER_TABS: TabOption[] = [ALL_TAB, ...MOABANG_AGES];

@@ -78,7 +78,11 @@ export default function MoabangSection() {
             ))}
           </div>
           <div className="mt-15 flex justify-center">
-            <Pagination currentPage={currentPage} totalPages={totalPages} onChange={handlePageChange} />
+            <Pagination
+              currentPage={currentPage}
+              totalPages={totalPages}
+              onChange={handlePageChange}
+            />
           </div>
         </>
       )}

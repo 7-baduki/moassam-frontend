@@ -7,7 +7,7 @@ import Header from '@/components/common/header/Header';
 import Sidebar from '@/components/common/sidebar/Sidebar';
 import { LoginModal } from '@/components/common/login-modal/LoginModal';
 import { UserProvider } from '@/lib/user-context';
-import { getProfile } from '@/api/user.api';
+import { getProfile } from '@/api/user-server.api';
 
 const pretendard = localFont({
   src: './fonts/PretendardVariable.woff2',

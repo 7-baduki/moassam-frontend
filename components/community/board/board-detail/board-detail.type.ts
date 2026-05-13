@@ -16,7 +16,7 @@ export interface BoardDetail {
   category: string;
   postAge: string | null;
   resourceType: string | null;
-  headTag: string;
+  headTag: string | null;
   content: string;
   files: BoardDetailFile[];
   editorFiles: BoardDetailFile[];

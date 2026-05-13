@@ -1,6 +1,9 @@
 import DOMPurify from 'isomorphic-dompurify';
 import Image from 'next/image';
 import { Badge } from '@/components/common/badge';
+import type { BadgeVariant } from '@/components/common/badge/badge.type';
+import { AGE_OPTIONS, MATERIAL_TYPE_OPTIONS } from '@/components/community/write/write-selects';
+import type { PostAge, ResourceType } from '@/components/community/moabang/moabang.type';
 import BoardDetailAttachments from './BoardDetailAttachments';
 import type { BoardDetail } from './board-detail.type';
 
@@ -13,6 +16,29 @@ const HEAD_TAG_LABELS: Record<string, string> = {
   NOTICE: '안내문',
   WORRY: '고민',
   CHAT: '잡담',
+};
+
+const POST_AGE_LABEL: Record<PostAge, string> = Object.fromEntries(
+  AGE_OPTIONS.map((o) => [o.value, o.label]),
+) as Record<PostAge, string>;
+
+const RESOURCE_TYPE_LABEL: Record<ResourceType, string> = Object.fromEntries(
+  MATERIAL_TYPE_OPTIONS.map((o) => [o.value, o.label]),
+) as Record<ResourceType, string>;
+
+const POST_AGE_VARIANT: Record<PostAge, BadgeVariant> = {
+  ALL: 'yellow',
+  INFANT: 'pink-light',
+  AGE_3: 'green-light',
+  AGE_4: 'pink-dark',
+  AGE_5: 'green-dark',
+};
+
+const RESOURCE_TYPE_VARIANT: Record<ResourceType, BadgeVariant> = {
+  ACTIVITY: 'outline-yellow',
+  PLAN: 'outline-green',
+  JOURNAL: 'outline-pink',
+  NOTICE: 'outline-gray',
 };
 
 function formatRelativeTime(isoString: string): string {
@@ -35,7 +61,7 @@ interface BoardDetailPostProps {
 }
 
 export default function BoardDetailPost({ post }: BoardDetailPostProps) {
-  const headTagLabel = HEAD_TAG_LABELS[post.headTag] ?? post.headTag;
+  const isMoabang = post.postAge !== null || post.resourceType !== null;
 
   return (
     <article
@@ -43,7 +69,26 @@ export default function BoardDetailPost({ post }: BoardDetailPostProps) {
       className="rounded-2xl border border-black-200 bg-white p-7.5"
     >
       <div>
-        <Badge label={headTagLabel} variant="pink-light" />
+        {isMoabang ? (
+          <div className="flex gap-1.5">
+            {post.postAge && (
+              <Badge
+                label={POST_AGE_LABEL[post.postAge]}
+                variant={POST_AGE_VARIANT[post.postAge]}
+              />
+            )}
+            {post.resourceType && (
+              <Badge
+                label={RESOURCE_TYPE_LABEL[post.resourceType]}
+                variant={RESOURCE_TYPE_VARIANT[post.resourceType]}
+              />
+            )}
+          </div>
+        ) : (
+          post.headTag && (
+            <Badge label={HEAD_TAG_LABELS[post.headTag] ?? post.headTag} variant="pink-light" />
+          )
+        )}
 
         <h1 id="post-title" className="typo-line-m2 mt-3.5 text-xl font-semibold text-black-800">
           {post.title}

@@ -15,9 +15,9 @@ export interface WriteFormValues {
 
 export interface CreatePostRequest {
   category: 'MOABANG' | 'FREE';
-  postAge?: PostAge;
-  resourceType?: ResourceType;
-  headTag?: HeadTag;
+  postAge: PostAge | null;
+  resourceType: ResourceType | null;
+  headTag: HeadTag | null;
   title: string;
   content: string;
 }

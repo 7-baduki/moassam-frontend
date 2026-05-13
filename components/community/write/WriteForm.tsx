@@ -46,18 +46,19 @@ export default function WriteForm({ initialBoard }: WriteFormProps) {
       return;
     }
 
+    const request = {
+      category: values.boardType === 'moabang' ? 'MOABANG' : 'FREE',
+      postAge: values.postAge ?? null,
+      resourceType: values.resourceType ?? null,
+      headTag: values.headTag ?? null,
+      title: values.title,
+      content: values.content,
+    } as const;
+    console.log('[WriteForm] request:', request);
+    console.log('[WriteForm] files:', values.files);
+
     createPost(
-      {
-        request: {
-          category: values.boardType === 'moabang' ? 'MOABANG' : 'FREE',
-          postAge: values.postAge,
-          resourceType: values.resourceType,
-          headTag: values.headTag,
-          title: values.title,
-          content: values.content,
-        },
-        files: values.files,
-      },
+      { request, files: values.files },
       {
         onSuccess: ({ postId }) => {
           const path = values.boardType === 'moabang' ? 'moabang' : 'board';

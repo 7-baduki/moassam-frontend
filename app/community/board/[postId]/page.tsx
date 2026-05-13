@@ -1,4 +1,4 @@
-import BoardDetailSection from '@/components/community/board/board-detail/BoardDetailSection';
+import BoardDetailBoundary from '@/components/community/board/board-detail/BoardDetailBoundary';
 
 interface BoardDetailPageProps {
   params: Promise<{
@@ -9,5 +9,5 @@ interface BoardDetailPageProps {
 export default async function BoardDetailPage({ params }: BoardDetailPageProps) {
   const { postId } = await params;
 
-  return <BoardDetailSection postId={postId} title="자유게시판" />;
+  return <BoardDetailBoundary postId={Number(postId)} title="자유게시판" />;
 }

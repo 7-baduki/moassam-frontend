@@ -1,12 +1,14 @@
 'use client';
 
 import { useState } from 'react';
+import { useRouter } from 'next/navigation';
 import dynamic from 'next/dynamic';
 import { toast } from '@/utils/toast';
 import CommunityTitleBar from '@/components/community/CommunityTitleBar';
 import WriteCategorySelect from './WriteCategorySelect';
 import WriteTitleInput from './WriteTitleInput';
 import WriteFileUpload from './WriteFileUpload';
+import { useCreatePostMutation } from '@/hooks/queries/community/useCommunity';
 import type { BoardType, WriteFormValues } from './write.type';
 
 const MAX_FILES_BYTES = 10 * 1024 * 1024;
@@ -23,6 +25,9 @@ interface WriteFormProps {
 }
 
 export default function WriteForm({ initialBoard }: WriteFormProps) {
+  const router = useRouter();
+  const { mutate: createPost, isPending } = useCreatePostMutation();
+
   const [values, setValues] = useState<WriteFormValues>({
     boardType: initialBoard,
     title: '',
@@ -40,13 +45,39 @@ export default function WriteForm({ initialBoard }: WriteFormProps) {
       toast.warning({ title: '업로드 제한', description: '파일은 최대 10MB까지만 가능합니다' });
       return;
     }
-    // TODO: API 연결
-    console.log(values);
+
+    createPost(
+      {
+        request: {
+          category: values.boardType === 'moabang' ? 'MOABANG' : 'FREE',
+          postAge: values.postAge,
+          resourceType: values.resourceType,
+          headTag: values.headTag,
+          title: values.title,
+          content: values.content,
+        },
+        files: values.files,
+      },
+      {
+        onSuccess: ({ postId }) => {
+          const path = values.boardType === 'moabang' ? 'moabang' : 'board';
+          router.push(`/community/${path}/${postId}`);
+        },
+        onError: () => {
+          toast.error({ title: '게시글 등록 실패', description: '잠시 후 다시 시도해주세요' });
+        },
+      },
+    );
   }
 
   return (
     <div className="flex flex-col">
-      <CommunityTitleBar title="새글작성" hideSearch onWrite={handleSubmit} />
+      <CommunityTitleBar
+        title="새글작성"
+        hideSearch
+        onWrite={handleSubmit}
+        writeDisabled={isPending}
+      />
       <div className="mt-2">
         <WriteCategorySelect values={values} onChange={handleChange} />
       </div>

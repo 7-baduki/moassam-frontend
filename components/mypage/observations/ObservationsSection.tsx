@@ -7,7 +7,7 @@ import { useMyObservationsQuery } from '@/hooks/queries/user/useMyObservations';
 import { AGE_OPTIONS } from '@/constants/observations/observation';
 
 const CURRICULUM_LABEL: Record<string, string> = {
-  NURI: '누리과정',
+  NURI: '개정 누리과정',
   STANDARD: '개정 표준보육과정',
 };
 

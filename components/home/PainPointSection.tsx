@@ -9,7 +9,10 @@ import {
   PainPointCard2Md,
   PainPointCard3Md,
 } from '@/app/assets/images';
-export default function PainPointSection({ isLoggedIn }: { isLoggedIn: boolean }) {
+import { useUser } from '@/lib/user-context';
+export default function PainPointSection() {
+  const user = useUser();
+  const isLoggedIn = !!user;
   return (
     <section className="w-full bg-black-100 pt-15 pb-13.5 md:py-25" aria-label="숨은 고충 섹션">
       <div className="mx-auto flex w-full max-w-142.5 flex-col items-center gap-7.5 md:max-w-293 md:flex-row md:items-start md:gap-26">

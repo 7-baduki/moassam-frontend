@@ -44,7 +44,7 @@ export function ProfileSummary({
           <ObservationCountIcon />
           <div className="flex flex-col items-center text-black">
             <span className="text-base font-semibold">{observationCount}</span>
-            <span className="text-xs font-normal">관찰일지</span>
+            <span className="text-xs font-normal whitespace-nowrap">관찰일지</span>
           </div>
         </Link>
         <Link
@@ -54,7 +54,7 @@ export function ProfileSummary({
           <BookmarkCountIcon />
           <div className="flex flex-col items-center text-black">
             <span className="text-base font-semibold">{bookmarkCount}</span>
-            <span className="text-xs font-normal">북마크</span>
+            <span className="text-xs font-normal whitespace-nowrap">북마크</span>
           </div>
         </Link>
       </div>

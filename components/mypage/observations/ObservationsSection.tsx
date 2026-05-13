@@ -4,7 +4,9 @@ import { useState } from 'react';
 import Link from 'next/link';
 import Pagination from '@/components/common/pagination/Pagination';
 import { useMyObservationsQuery } from '@/hooks/queries/user/useMyObservations';
+import { useObservationDeleteMutation } from '@/hooks/queries/observations/useObservation';
 import { AGE_OPTIONS } from '@/constants/observations/observation';
+import { MoreButton } from '@/components/common/more-button/MoreButton';
 
 const CURRICULUM_LABEL: Record<string, string> = {
   NURI: '개정 누리과정',
@@ -17,7 +19,11 @@ function formatDate(dateStr: string) {
 
 export default function ObservationsSection() {
   const [currentPage, setCurrentPage] = useState(0);
-  const { data } = useMyObservationsQuery(currentPage);
+  const { data, refetch } = useMyObservationsQuery(currentPage);
+
+  const { mutate: handleDelete } = useObservationDeleteMutation({
+    onSuccess: () => refetch(),
+  });
 
   return (
     <div className="flex flex-col gap-5">
@@ -25,24 +31,29 @@ export default function ObservationsSection() {
 
       <div className="flex flex-col gap-3">
         {data?.data.map((observation) => (
-          <Link
+          <div
             key={observation.observationId}
-            href={`/observations/${observation.observationId}`}
             className="flex items-center rounded-[10px] bg-white px-5 py-3 transition-colors hover:bg-black-200"
           >
-            <span className="min-w-0 flex-1 truncate text-sm font-medium text-black-800">
-              {observation.title}
-            </span>
-            <div className="flex items-center gap-5 pl-10 text-xs font-medium text-black-500">
-              <span>
-                {AGE_OPTIONS.find((o) => o.value === observation.age)?.label ?? observation.age}
+            <Link
+              href={`/observations/${observation.observationId}`}
+              className="flex min-w-0 flex-1 items-center"
+            >
+              <span className="min-w-0 flex-1 truncate text-sm font-medium text-black-800">
+                {observation.title}
               </span>
-              <span className="w-21.75">
-                {CURRICULUM_LABEL[observation.curriculumType] ?? observation.curriculumType}
-              </span>
-              <span>{formatDate(observation.createdAt)}</span>
-            </div>
-          </Link>
+              <div className="flex items-center gap-5 pl-10 text-xs font-medium text-black-500">
+                <span>
+                  {AGE_OPTIONS.find((o) => o.value === observation.age)?.label ?? observation.age}
+                </span>
+                <span className="w-21.75">
+                  {CURRICULUM_LABEL[observation.curriculumType] ?? observation.curriculumType}
+                </span>
+                <span>{formatDate(observation.createdAt)}</span>
+              </div>
+            </Link>
+            <MoreButton className="ml-5" onDelete={() => handleDelete(observation.observationId)} />
+          </div>
         ))}
       </div>
 

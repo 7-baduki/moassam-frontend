@@ -1,3 +1,6 @@
+import type { PostAge, ResourceType } from '@/components/community/moabang/moabang.type';
+import type { HeadTag } from '@/components/community/board/board.type';
+
 export type BoardType = 'moabang' | 'free';
 
 export interface WriteFormValues {
@@ -5,7 +8,7 @@ export interface WriteFormValues {
   content: string;
   files: File[];
   boardType: BoardType;
-  age?: string;
-  materialType?: string;
-  topic?: string;
+  postAge?: PostAge;
+  resourceType?: ResourceType;
+  headTag?: HeadTag;
 }

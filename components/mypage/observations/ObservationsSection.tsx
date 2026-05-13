@@ -37,7 +37,7 @@ export default function ObservationsSection() {
               <span>
                 {AGE_OPTIONS.find((o) => o.value === observation.age)?.label ?? observation.age}
               </span>
-              <span>
+              <span className="w-21.75">
                 {CURRICULUM_LABEL[observation.curriculumType] ?? observation.curriculumType}
               </span>
               <span>{formatDate(observation.createdAt)}</span>

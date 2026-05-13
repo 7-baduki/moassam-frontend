@@ -1,6 +1,7 @@
 'use client';
 
 import { useEffect, useState } from 'react';
+import { useRouter } from 'next/navigation';
 import Image from 'next/image';
 
 import { FocusTrap } from 'focus-trap-react';
@@ -25,10 +26,12 @@ export function ProfileEditModal({
   nickname,
 }: ProfileEditModalProps) {
   const [displayName, setDisplayName] = useState(nickname);
+  const router = useRouter();
 
   const { mutate: handleUpdateProfile, isPending } = useProfileMutation({
     onSuccess: () => {
       onClose();
+      router.refresh();
       toast.success({ title: '저장 완료', description: '변경사항이 저장되었어요' });
     },
     onError: () => {

@@ -10,6 +10,7 @@ import {
   MOABANG_CATEGORY_FILTER_TABS,
 } from '@/constants/community/community-tabs';
 import { useMoabangPostsQuery } from '@/hooks/queries/community/useCommunity';
+import { EmptyState } from '@/components/common/empty-state/EmptyState';
 import type { PostAge, ResourceType } from './moabang.type';
 
 function getValidParam<T extends { value: string }>(
@@ -65,14 +66,22 @@ export default function MoabangSection() {
         category={category}
         onCategoryChange={(value) => updateParam('category', value, true)}
       />
-      <div className="grid grid-cols-3 gap-5">
-        {data.data.map((post) => (
-          <MoabangCard key={post.postId} post={post} />
-        ))}
-      </div>
-      <div className="mt-15 flex justify-center">
-        <Pagination currentPage={currentPage} totalPages={totalPages} onChange={handlePageChange} />
-      </div>
+      {data.data.length === 0 ? (
+        <div className="flex flex-1 items-center justify-center pt-20">
+          <EmptyState message="아직 등록된 게시글이 없어요" />
+        </div>
+      ) : (
+        <>
+          <div className="grid grid-cols-3 gap-5">
+            {data.data.map((post) => (
+              <MoabangCard key={post.postId} post={post} />
+            ))}
+          </div>
+          <div className="mt-15 flex justify-center">
+            <Pagination currentPage={currentPage} totalPages={totalPages} onChange={handlePageChange} />
+          </div>
+        </>
+      )}
     </section>
   );
 }

@@ -14,7 +14,7 @@ export interface BoardDetail {
   authorNickName: string;
   title: string;
   category: string;
-  age: string | null;
+  postAge: string | null;
   resourceType: string | null;
   headTag: string;
   content: string;
@@ -24,7 +24,7 @@ export interface BoardDetail {
   commentCount: number;
   likeCount: number;
   bookmarked: boolean;
-  liked: boolean;
+  isLiked: boolean;
   createdAt: string;
 }
 

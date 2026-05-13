@@ -27,6 +27,8 @@ export async function createPost(
   formData.append('request', new Blob([JSON.stringify(request)], { type: 'application/json' }));
   files.forEach((file) => formData.append('files', file));
 
-  const { data } = await apiClient.post('/api/v1/posts', formData);
+  const { data } = await apiClient.post('/api/v1/posts', formData, {
+    headers: { 'Content-Type': 'multipart/form-data' },
+  });
   return data.data;
 }

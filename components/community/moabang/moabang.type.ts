@@ -29,3 +29,9 @@ export interface MoabangListParams {
   page?: number;
   size?: number;
 }
+
+export interface MoabangSearchParams {
+  keyword: string;
+  page?: number;
+  size?: number;
+}

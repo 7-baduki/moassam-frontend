@@ -2,7 +2,7 @@
 
 import { useState } from 'react';
 import { DetailBookmarkIcon, DetailHeartIcon } from '@/app/assets/icons';
-import { useLikeMutation } from '@/hooks/queries/community/useCommunity';
+import { useLikeMutation, useBookmarkMutation } from '@/hooks/queries/community/useCommunity';
 
 interface BoardDetailSideActionsProps {
   postId: number;
@@ -22,12 +22,18 @@ export default function BoardDetailSideActions({
   const [optimisticLikeCount, setOptimisticLikeCount] = useState(likeCount);
 
   const { mutate: toggleLike } = useLikeMutation(postId);
+  const { mutate: toggleBookmark } = useBookmarkMutation(postId);
 
   function handleLikeToggle() {
     const nextLiked = !isLiked;
     setIsLiked(nextLiked);
     setOptimisticLikeCount((prev) => (nextLiked ? prev + 1 : prev - 1));
     toggleLike(isLiked);
+  }
+
+  function handleBookmarkToggle() {
+    setIsBookmarked((prev) => !prev);
+    toggleBookmark(isBookmarked);
   }
 
   return (
@@ -38,7 +44,7 @@ export default function BoardDetailSideActions({
     >
       <button
         type="button"
-        onClick={() => setIsBookmarked((prev) => !prev)}
+        onClick={handleBookmarkToggle}
         aria-label={isBookmarked ? '북마크 취소' : '북마크'}
         aria-pressed={isBookmarked}
         className="flex cursor-pointer flex-col items-center gap-1.5"

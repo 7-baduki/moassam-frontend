@@ -13,6 +13,8 @@ import {
   deleteComment,
   likePost,
   unlikePost,
+  bookmarkPost,
+  unbookmarkPost,
 } from '@/api/community.api';
 import type {
   MoabangListParams,
@@ -95,6 +97,20 @@ export function useLikeMutation(postId: number) {
 
   return useMutation({
     mutationFn: (isLiked: boolean) => (isLiked ? unlikePost(postId) : likePost(postId)),
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ['post', 'detail', postId] });
+      queryClient.invalidateQueries({ queryKey: ['moabang', 'posts'] });
+      queryClient.invalidateQueries({ queryKey: ['board', 'posts'] });
+    },
+  });
+}
+
+export function useBookmarkMutation(postId: number) {
+  const queryClient = useQueryClient();
+
+  return useMutation({
+    mutationFn: (isBookmarked: boolean) =>
+      isBookmarked ? unbookmarkPost(postId) : bookmarkPost(postId),
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ['post', 'detail', postId] });
     },

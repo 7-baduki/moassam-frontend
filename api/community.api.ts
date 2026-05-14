@@ -97,6 +97,14 @@ export async function unlikePost(postId: number): Promise<void> {
   await apiClient.delete(`/api/v1/posts/${postId}/likes`);
 }
 
+export async function bookmarkPost(postId: number): Promise<void> {
+  await apiClient.post(`/api/v1/posts/${postId}/bookmarks`);
+}
+
+export async function unbookmarkPost(postId: number): Promise<void> {
+  await apiClient.delete(`/api/v1/posts/${postId}/bookmarks`);
+}
+
 export async function createPost(
   request: CreatePostRequest,
   files: File[],

@@ -121,15 +121,8 @@ export function useUpdatePostMutation(postId: number) {
   const queryClient = useQueryClient();
 
   return useMutation({
-    mutationFn: ({
-      request,
-      files,
-      editorImages,
-    }: {
-      request: UpdatePostRequest;
-      files: File[];
-      editorImages: File[];
-    }) => updatePost(postId, request, files, editorImages),
+    mutationFn: ({ request, files }: { request: UpdatePostRequest; files: File[] }) =>
+      updatePost(postId, request, files),
     onSuccess: (_, { request }) => {
       queryClient.removeQueries({ queryKey: ['post', 'detail', postId] });
       const listKey = request.category === 'MOABANG' ? 'moabang' : 'board';
@@ -154,15 +147,8 @@ export function useCreatePostMutation() {
   const queryClient = useQueryClient();
 
   return useMutation({
-    mutationFn: ({
-      request,
-      files,
-      editorImages,
-    }: {
-      request: CreatePostRequest;
-      files: File[];
-      editorImages: File[];
-    }) => createPost(request, files, editorImages),
+    mutationFn: ({ request, files }: { request: CreatePostRequest; files: File[] }) =>
+      createPost(request, files),
     onSuccess: (_, { request }) => {
       const queryKey = request.category === 'MOABANG' ? 'moabang' : 'board';
       queryClient.invalidateQueries({ queryKey: [queryKey, 'posts'] });

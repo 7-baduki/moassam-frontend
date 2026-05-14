@@ -72,12 +72,10 @@ export async function updatePost(
   postId: number,
   request: UpdatePostRequest,
   files: File[],
-  editorImages: File[],
 ): Promise<CreatePostResponse> {
   const formData = new FormData();
   formData.append('request', new Blob([JSON.stringify(request)], { type: 'application/json' }));
   files.forEach((file) => formData.append('files', file));
-  editorImages.forEach((image) => formData.append('editorImages', image));
 
   const { data } = await apiClient.patch(`/api/v1/posts/${postId}`, formData, {
     headers: { 'Content-Type': 'multipart/form-data' },
@@ -108,12 +106,10 @@ export async function unbookmarkPost(postId: number): Promise<void> {
 export async function createPost(
   request: CreatePostRequest,
   files: File[],
-  editorImages: File[],
 ): Promise<CreatePostResponse> {
   const formData = new FormData();
   formData.append('request', new Blob([JSON.stringify(request)], { type: 'application/json' }));
   files.forEach((file) => formData.append('files', file));
-  editorImages.forEach((image) => formData.append('editorImages', image));
 
   const { data } = await apiClient.post('/api/v1/posts', formData, {
     headers: { 'Content-Type': 'multipart/form-data' },

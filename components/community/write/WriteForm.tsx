@@ -70,6 +70,34 @@ export default function WriteForm({
   }
 
   function handleSubmit() {
+    if (values.title.trim().length === 0) {
+      toast.warning({ title: '입력 확인', description: '제목을 입력해주세요' });
+      return;
+    }
+
+    const hasText = values.content.replace(/<[^>]*>/g, '').trim().length > 0;
+    const hasImage = /<img/i.test(values.content);
+    if (!hasText && !hasImage) {
+      toast.warning({ title: '입력 확인', description: '내용을 입력해주세요' });
+      return;
+    }
+
+    if (values.boardType === 'moabang') {
+      if (!values.postAge) {
+        toast.warning({ title: '입력 확인', description: '연령을 선택해주세요' });
+        return;
+      }
+      if (!values.resourceType) {
+        toast.warning({ title: '입력 확인', description: '자료 유형을 선택해주세요' });
+        return;
+      }
+    }
+
+    if (values.boardType === 'free' && !values.headTag) {
+      toast.warning({ title: '입력 확인', description: '말머리를 선택해주세요' });
+      return;
+    }
+
     const totalFilesBytes = values.files.reduce((sum, file) => sum + file.size, 0);
     if (totalFilesBytes > MAX_FILES_BYTES) {
       toast.warning({ title: '업로드 제한', description: '파일은 최대 10MB까지만 가능합니다' });
@@ -78,6 +106,7 @@ export default function WriteForm({
 
     const category = values.boardType === 'moabang' ? 'MOABANG' : 'FREE';
     const path = values.boardType === 'moabang' ? 'moabang' : 'board';
+    const content = values.content;
 
     if (isEdit && postId != null) {
       const request = {
@@ -86,12 +115,12 @@ export default function WriteForm({
         resourceType: values.resourceType ?? null,
         headTag: values.headTag ?? null,
         title: values.title,
-        content: values.content,
+        content,
         deleteFileIds,
       } as const;
 
       updatePost(
-        { request, files: values.files, editorImages: [] },
+        { request, files: values.files },
         {
           onSuccess: ({ postId: updatedPostId }) => {
             router.push(`/community/${path}/${updatedPostId}`);
@@ -108,7 +137,7 @@ export default function WriteForm({
         resourceType: values.resourceType ?? null,
         headTag: values.headTag ?? null,
         title: values.title,
-        content: values.content,
+        content,
       } as const;
 
       createPost(
@@ -149,10 +178,7 @@ export default function WriteForm({
         />
       </div>
       <div className="mt-7.5">
-        <WriteEditor
-          value={values.content}
-          onChange={(content) => handleChange('content', content)}
-        />
+        <WriteEditor value={values.content} onChange={(value) => handleChange('content', value)} />
       </div>
     </div>
   );

@@ -57,7 +57,9 @@ export default function WriteFileUpload({
   const [isDragging, setIsDragging] = useState(false);
   const dragCounter = useRef(0);
 
-  const totalBytes = files.reduce((sum, file) => sum + file.size, 0);
+  const totalBytes =
+    files.reduce((sum, file) => sum + file.size, 0) +
+    existingFiles.reduce((sum, file) => sum + file.size, 0);
   const hasAnyFile = existingFiles.length > 0 || files.length > 0;
 
   function addFiles(incoming: FileList | null) {
@@ -70,10 +72,16 @@ export default function WriteFileUpload({
       });
       return;
     }
-    onChange([...files, ...Array.from(incoming)]);
+    const added = Array.from(incoming);
+    console.log(
+      '[WriteFileUpload] 파일 추가:',
+      added.map((f) => ({ name: f.name, size: f.size })),
+    );
+    onChange([...files, ...added]);
   }
 
   function removeFile(index: number) {
+    console.log('[WriteFileUpload] 새 파일 삭제:', { name: files[index].name });
     onChange(files.filter((_, i) => i !== index));
   }
 
@@ -184,7 +192,13 @@ export default function WriteFileUpload({
                       <td className="pl-3 align-middle">
                         <button
                           type="button"
-                          onClick={() => onDeleteExistingFile?.(file.fileId)}
+                          onClick={() => {
+                            console.log('[WriteFileUpload] 기존 파일 삭제:', {
+                              fileId: file.fileId,
+                              name: file.originalName,
+                            });
+                            onDeleteExistingFile?.(file.fileId);
+                          }}
                           aria-label={`${file.originalName} 삭제`}
                           className="flex items-center justify-center"
                         >

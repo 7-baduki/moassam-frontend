@@ -68,6 +68,7 @@ export default function BoardDetailSection({ postId, title }: BoardDetailSection
         </div>
         <div className="sticky top-[263.2px] shrink-0">
           <BoardDetailSideActions
+            postId={postId}
             likeCount={post.likeCount}
             bookmarked={post.bookmarked}
             liked={post.isLiked}

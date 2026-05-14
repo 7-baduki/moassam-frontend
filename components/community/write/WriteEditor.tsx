@@ -1,6 +1,6 @@
 'use client';
 
-import { useRef, useState, useCallback } from 'react';
+import { useRef, useState, useCallback, useEffect } from 'react';
 import { TwitterPicker } from 'react-color';
 import { toast } from '@/utils/toast';
 import { EditorContent, useEditor, useEditorState } from '@tiptap/react';
@@ -28,14 +28,15 @@ import { TableKit } from '@tiptap/extension-table';
 import Highlight from '@tiptap/extension-highlight';
 import Image from '@tiptap/extension-image';
 import Placeholder from '@tiptap/extension-placeholder';
+import imageCompression from 'browser-image-compression';
 
 async function uploadImage(file: File): Promise<string> {
-  // TODO: API 연결 시 아래 base64 로직을 FormData 업로드로 교체
-  return new Promise((resolve) => {
-    const reader = new FileReader();
-    reader.onload = (e) => resolve(e.target?.result as string);
-    reader.readAsDataURL(file);
+  const compressed = await imageCompression(file, {
+    maxSizeMB: 0.3,
+    maxWidthOrHeight: 1280,
+    useWebWorker: true,
   });
+  return imageCompression.getDataUrlFromFile(compressed);
 }
 
 const FONT_FAMILIES = [
@@ -113,7 +114,9 @@ export default function WriteEditor({ value, onChange }: WriteEditorProps) {
     }
 
     uploadImage(file).then((url) => {
-      if (url) editor.chain().focus().setImage({ src: url }).run();
+      if (url) {
+        editor.chain().focus().setImage({ src: url }).run();
+      }
     });
   };
 
@@ -133,6 +136,7 @@ export default function WriteEditor({ value, onChange }: WriteEditorProps) {
       Highlight.configure({ multicolor: true }),
       Image.configure({
         inline: true,
+        allowBase64: true,
         resize: { enabled: true, alwaysPreserveAspectRatio: true },
       }),
       Placeholder.configure({ placeholder: '내용을 입력하세요.' }),
@@ -167,6 +171,14 @@ export default function WriteEditor({ value, onChange }: WriteEditorProps) {
       onChange(editor.getHTML());
     },
   });
+
+  useEffect(() => {
+    if (!editor || !value) return;
+    if (editor.isEmpty) {
+      editor.commands.setContent(value, { emitUpdate: false });
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [editor]);
 
   const editorState = useEditorState({
     editor,

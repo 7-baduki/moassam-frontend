@@ -7,6 +7,7 @@ import { Input } from '@/components/common/input/Input';
 interface CommunityTitleBarProps {
   title: string;
   onWrite?: () => void;
+  writeLabel?: string;
   hideSearch?: boolean;
   writeDisabled?: boolean;
   actions?: ReactNode;
@@ -15,6 +16,7 @@ interface CommunityTitleBarProps {
 export default function CommunityTitleBar({
   title,
   onWrite,
+  writeLabel = '새글작성',
   hideSearch = false,
   writeDisabled = false,
   actions,
@@ -44,7 +46,7 @@ export default function CommunityTitleBar({
             />
           )}
           <Button size="sm" onClick={onWrite} disabled={writeDisabled}>
-            새글작성
+            {writeLabel}
           </Button>
         </div>
       )}

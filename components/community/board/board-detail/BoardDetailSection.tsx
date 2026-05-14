@@ -1,25 +1,38 @@
 'use client';
 
+import { useRouter } from 'next/navigation';
 import { Button } from '@/components/common/button/Button';
 import CommunityTitleBar from '@/components/community/CommunityTitleBar';
 import BoardDetailComments from './BoardDetailComments';
 import BoardDetailPost from './BoardDetailPost';
 import BoardDetailSideActions from './BoardDetailSideActions';
 import ScrollToTopButton from '@/components/common/scroll-top/ScrollToTopButton';
-import { usePostDetailQuery } from '@/hooks/queries/community/useCommunity';
+import { usePostDetailQuery, useDeletePostMutation } from '@/hooks/queries/community/useCommunity';
 
 interface BoardDetailSectionProps {
   postId: number;
   title: string;
 }
 
-// TODO: 실제 로그인 유저 ID로 교체 필요
-const CURRENT_USER_ID = 1;
+// TODO: 백엔드에서 isAuthor 필드 추가 후 조건 처리 필요
 const IS_LOGGED_IN = true;
 
 export default function BoardDetailSection({ postId, title }: BoardDetailSectionProps) {
+  const router = useRouter();
   const { data: post } = usePostDetailQuery(postId);
-  const isAuthor = post.authorId === CURRENT_USER_ID;
+  const { mutate: deletePost, isPending: isDeleting } = useDeletePostMutation();
+
+  function handleEdit() {
+    router.push(`/community/edit/${postId}`);
+  }
+
+  function handleDelete() {
+    if (!window.confirm('게시글을 삭제하시겠습니까?')) return;
+    deletePost(postId, {
+      onSuccess: () => router.back(),
+      onError: () => alert('삭제에 실패했습니다. 잠시 후 다시 시도해주세요.'),
+    });
+  }
 
   return (
     <div>
@@ -28,20 +41,19 @@ export default function BoardDetailSection({ postId, title }: BoardDetailSection
           <CommunityTitleBar
             title={title}
             actions={
-              isAuthor ? (
-                <div className="flex gap-2.5">
-                  <Button
-                    variant="outline"
-                    size="sm"
-                    className="border-black-400 text-black-700 hover:border-black-500 hover:text-black-800"
-                  >
-                    수정
-                  </Button>
-                  <Button variant="outline" size="sm">
-                    삭제
-                  </Button>
-                </div>
-              ) : null
+              <div className="flex gap-2.5">
+                <Button
+                  variant="outline"
+                  size="sm"
+                  className="border-black-400 text-black-700 hover:border-black-500 hover:text-black-800"
+                  onClick={handleEdit}
+                >
+                  수정
+                </Button>
+                <Button variant="outline" size="sm" onClick={handleDelete} disabled={isDeleting}>
+                  삭제
+                </Button>
+              </div>
             }
           />
           <BoardDetailPost post={post} />

@@ -130,6 +130,7 @@ export default function WriteForm({
     <div className="flex flex-col">
       <CommunityTitleBar
         title={isEdit ? '게시글 수정' : '새글작성'}
+        writeLabel={isEdit ? '수정완료' : '새글작성'}
         hideSearch
         onWrite={handleSubmit}
         writeDisabled={isPending}

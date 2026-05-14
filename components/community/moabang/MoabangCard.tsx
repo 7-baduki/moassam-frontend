@@ -36,7 +36,7 @@ export default function MoabangCard({ post }: MoabangCardProps) {
           <h3 className="typo-line-m4 mt-2.5 line-clamp-1 text-base font-semibold text-black-800">
             {post.title}
           </h3>
-          <p className="typo-line-m2 mt-4 truncate text-sm font-semibold text-black-600">
+          <p className="typo-line-m2 mt-4 truncate text-xs font-semibold text-black-600">
             {post.authorNickName}
           </p>
           <div className="mt-1.5 flex items-center justify-between text-xs text-black-500">

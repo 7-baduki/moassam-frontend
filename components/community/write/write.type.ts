@@ -25,3 +25,13 @@ export interface CreatePostRequest {
 export interface CreatePostResponse {
   postId: number;
 }
+
+export interface UpdatePostRequest {
+  category: 'MOABANG' | 'FREE';
+  postAge: PostAge | null;
+  resourceType: ResourceType | null;
+  headTag: HeadTag | null;
+  title: string;
+  content: string;
+  deleteFileIds: number[];
+}

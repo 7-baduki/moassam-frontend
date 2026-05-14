@@ -77,12 +77,7 @@ export default function BoardDetailSection({ postId, title }: BoardDetailSection
           />
           <BoardDetailPost post={post} />
           <div className="mt-7.5">
-            <BoardDetailComments
-              postId={postId}
-              commentCount={post.commentCount}
-              comments={post.comments}
-              isLoggedIn={isLoggedIn}
-            />
+            <BoardDetailComments postId={postId} comments={post.comments} isLoggedIn={isLoggedIn} />
           </div>
         </div>
         <div className="sticky top-[263.2px] shrink-0">

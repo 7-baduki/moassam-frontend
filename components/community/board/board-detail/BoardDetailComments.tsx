@@ -13,14 +13,12 @@ import {
 
 interface BoardDetailCommentsProps {
   postId: number;
-  commentCount: number;
   comments: Comment[];
   isLoggedIn: boolean;
 }
 
 export default function BoardDetailComments({
   postId,
-  commentCount,
   comments,
   isLoggedIn,
 }: BoardDetailCommentsProps) {

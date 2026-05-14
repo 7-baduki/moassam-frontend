@@ -11,6 +11,8 @@ import {
   createComment,
   updateComment,
   deleteComment,
+  likePost,
+  unlikePost,
 } from '@/api/community.api';
 import type {
   MoabangListParams,
@@ -82,6 +84,17 @@ export function useDeleteCommentMutation(postId: number) {
 
   return useMutation({
     mutationFn: (commentId: number) => deleteComment(postId, commentId),
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ['post', 'detail', postId] });
+    },
+  });
+}
+
+export function useLikeMutation(postId: number) {
+  const queryClient = useQueryClient();
+
+  return useMutation({
+    mutationFn: (isLiked: boolean) => (isLiked ? unlikePost(postId) : likePost(postId)),
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ['post', 'detail', postId] });
     },

@@ -2,20 +2,33 @@
 
 import { useState } from 'react';
 import { DetailBookmarkIcon, DetailHeartIcon } from '@/app/assets/icons';
+import { useLikeMutation } from '@/hooks/queries/community/useCommunity';
 
 interface BoardDetailSideActionsProps {
+  postId: number;
   likeCount: number;
   bookmarked: boolean;
   liked: boolean;
 }
 
 export default function BoardDetailSideActions({
+  postId,
   likeCount,
   bookmarked: initialBookmarked,
   liked: initialLiked,
 }: BoardDetailSideActionsProps) {
   const [isBookmarked, setIsBookmarked] = useState(initialBookmarked);
   const [isLiked, setIsLiked] = useState(initialLiked);
+  const [optimisticLikeCount, setOptimisticLikeCount] = useState(likeCount);
+
+  const { mutate: toggleLike } = useLikeMutation(postId);
+
+  function handleLikeToggle() {
+    const nextLiked = !isLiked;
+    setIsLiked(nextLiked);
+    setOptimisticLikeCount((prev) => (nextLiked ? prev + 1 : prev - 1));
+    toggleLike(isLiked);
+  }
 
   return (
     <div
@@ -37,13 +50,10 @@ export default function BoardDetailSideActions({
               : '[&_path]:fill-transparent [&_path]:stroke-black-600'
           }
         />
-        <span aria-hidden="true" className="typo-line-p2 text-xs font-medium text-black-600">
-          {likeCount}
-        </span>
       </button>
       <button
         type="button"
-        onClick={() => setIsLiked((prev) => !prev)}
+        onClick={handleLikeToggle}
         aria-label={isLiked ? '좋아요 취소' : '좋아요'}
         aria-pressed={isLiked}
         className="flex cursor-pointer flex-col items-center gap-1.5"
@@ -56,7 +66,7 @@ export default function BoardDetailSideActions({
           }
         />
         <span aria-hidden="true" className="typo-line-p2 text-xs font-medium text-black-600">
-          {likeCount}
+          {optimisticLikeCount}
         </span>
       </button>
     </div>

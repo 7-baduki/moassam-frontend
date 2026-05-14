@@ -31,12 +31,17 @@ import Placeholder from '@tiptap/extension-placeholder';
 import imageCompression from 'browser-image-compression';
 
 async function uploadImage(file: File): Promise<string> {
-  const compressed = await imageCompression(file, {
-    maxSizeMB: 0.3,
-    maxWidthOrHeight: 1280,
-    useWebWorker: true,
-  });
-  return imageCompression.getDataUrlFromFile(compressed);
+  try {
+    const compressed = await imageCompression(file, {
+      maxSizeMB: 0.3,
+      maxWidthOrHeight: 1280,
+      useWebWorker: true,
+    });
+    return await imageCompression.getDataUrlFromFile(compressed);
+  } catch {
+    toast.error({ title: '이미지 삽입 실패', description: '잠시 후 다시 시도해주세요' });
+    return '';
+  }
 }
 
 const FONT_FAMILIES = [
@@ -95,6 +100,11 @@ export default function WriteEditor({ value, onChange }: WriteEditorProps) {
     const file = e.target.files?.[0];
     if (!file || !editor) return;
     e.target.value = '';
+
+    if (!file.type.startsWith('image/')) {
+      toast.warning({ title: '업로드 제한', description: '이미지 파일만 삽입할 수 있습니다' });
+      return;
+    }
 
     const url = await uploadImage(file);
     if (url) {

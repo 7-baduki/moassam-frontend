@@ -98,7 +98,9 @@ export default function WriteForm({
       return;
     }
 
-    const totalFilesBytes = values.files.reduce((sum, file) => sum + file.size, 0);
+    const totalFilesBytes =
+      values.files.reduce((sum, file) => sum + file.size, 0) +
+      existingFiles.reduce((sum, file) => sum + file.size, 0);
     if (totalFilesBytes > MAX_FILES_BYTES) {
       toast.warning({ title: '업로드 제한', description: '파일은 최대 10MB까지만 가능합니다' });
       return;

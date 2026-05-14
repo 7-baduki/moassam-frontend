@@ -111,7 +111,7 @@ export default function BoardDetailPost({ post }: BoardDetailPostProps) {
       <hr className="mt-5 border-black-200" />
 
       <div
-        className="mt-6 text-sm leading-relaxed font-medium text-black-700"
+        className="mt-6 text-sm leading-relaxed font-medium text-black-700 [&_img]:h-auto [&_img]:max-w-full"
         dangerouslySetInnerHTML={{ __html: DOMPurify.sanitize(post.content) }}
       />
 

@@ -20,7 +20,6 @@ export const getProfile = cache(async (): Promise<User | null> => {
     if (!response.ok) return null;
 
     const data = await response.json();
-    console.log('[getProfile] response data:', JSON.stringify(data.data, null, 2));
     return data.data;
   } catch {
     return null;

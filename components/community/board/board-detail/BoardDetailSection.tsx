@@ -8,17 +8,17 @@ import BoardDetailPost from './BoardDetailPost';
 import BoardDetailSideActions from './BoardDetailSideActions';
 import ScrollToTopButton from '@/components/common/scroll-top/ScrollToTopButton';
 import { usePostDetailQuery, useDeletePostMutation } from '@/hooks/queries/community/useCommunity';
+import { useUserStore } from '@/stores/userStore';
 
 interface BoardDetailSectionProps {
   postId: number;
   title: string;
 }
 
-// TODO: 백엔드에서 isAuthor 필드 추가 후 조건 처리 필요
-const IS_LOGGED_IN = true;
-
 export default function BoardDetailSection({ postId, title }: BoardDetailSectionProps) {
   const router = useRouter();
+  const user = useUserStore((state) => state.user);
+  const isLoggedIn = user !== null;
   const { data: post } = usePostDetailQuery(postId);
   const { mutate: deletePost, isPending: isDeleting } = useDeletePostMutation();
 
@@ -62,7 +62,7 @@ export default function BoardDetailSection({ postId, title }: BoardDetailSection
               postId={postId}
               commentCount={post.commentCount}
               comments={post.comments}
-              isLoggedIn={IS_LOGGED_IN}
+              isLoggedIn={isLoggedIn}
             />
           </div>
         </div>

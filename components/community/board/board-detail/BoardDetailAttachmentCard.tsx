@@ -2,6 +2,7 @@
 
 import Image from 'next/image';
 import { DownloadIcon, XIcon } from '@/app/assets/icons';
+import { toast } from '@/utils/toast';
 import {
   FileDefaultIcon,
   FileDocIcon,
@@ -32,6 +33,26 @@ interface BoardDetailAttachmentCardProps {
 
 function getExtension(fileName: string): string {
   return fileName.split('.').pop()?.toLowerCase() ?? '';
+}
+
+async function downloadFile(url: string, fileName: string) {
+  try {
+    const params = new URLSearchParams({ url, filename: fileName });
+    const response = await fetch(`/api/download?${params}`);
+    if (!response.ok) {
+      toast.error({ title: '다운로드 실패', description: '잠시 후 다시 시도해주세요' });
+      return;
+    }
+    const blob = await response.blob();
+    const objectUrl = URL.createObjectURL(blob);
+    const a = document.createElement('a');
+    a.href = objectUrl;
+    a.download = fileName;
+    a.click();
+    URL.revokeObjectURL(objectUrl);
+  } catch {
+    toast.error({ title: '다운로드 실패', description: '잠시 후 다시 시도해주세요' });
+  }
 }
 
 export default function BoardDetailAttachmentCard({ file }: BoardDetailAttachmentCardProps) {
@@ -76,6 +97,7 @@ export default function BoardDetailAttachmentCard({ file }: BoardDetailAttachmen
               type="button"
               aria-label="다운로드"
               className="flex cursor-pointer items-center hover:opacity-80 focus-visible:rounded focus-visible:ring-2 focus-visible:ring-white"
+              onClick={() => void downloadFile(file.url, file.originalName)}
             >
               <DownloadIcon className="h-5 w-5 brightness-0 invert" />
             </button>

@@ -32,7 +32,7 @@ export default function BookmarksSection() {
           <div className="flex flex-col gap-3">
             {data?.data.map((bookmark) => (
               <Link
-                key={bookmark.postId}
+                key={`${bookmark.category}-${bookmark.postId}`}
                 href={`/community/${bookmark.category === 'FREE' ? 'board' : 'moabang'}/${bookmark.postId}`}
                 className="flex items-center rounded-[10px] bg-white px-5 py-3 transition-colors hover:bg-black-200"
               >

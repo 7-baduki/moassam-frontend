@@ -1,8 +1,7 @@
-import { cache } from 'react';
 import { cookies } from 'next/headers';
 import { User } from '@/types/user.type';
 
-export const getProfile = cache(async (): Promise<User | null> => {
+export const getProfile = async (): Promise<User | null> => {
   const cookieStore = await cookies();
   const accessToken = cookieStore.get('accessToken')?.value;
   if (!accessToken) return null;
@@ -24,4 +23,4 @@ export const getProfile = cache(async (): Promise<User | null> => {
   } catch {
     return null;
   }
-});
+};

@@ -4,6 +4,7 @@ import { useState } from 'react';
 import { useRouter } from 'next/navigation';
 import dynamic from 'next/dynamic';
 import { toast } from '@/utils/toast';
+import { Button } from '@/components/common/button/Button';
 import CommunityTitleBar from '@/components/community/CommunityTitleBar';
 import WriteCategorySelect from './WriteCategorySelect';
 import WriteTitleInput from './WriteTitleInput';
@@ -155,14 +156,36 @@ export default function WriteForm({
     }
   }
 
+  function handleCancel() {
+    const path = values.boardType === 'moabang' ? 'moabang' : 'board';
+    if (isEdit && postId != null) {
+      router.push(`/community/${path}/${postId}`);
+    } else {
+      router.push(`/community/${path}`);
+    }
+  }
+
   return (
     <div className="flex flex-col">
       <CommunityTitleBar
         title={isEdit ? '게시글 수정' : '새글작성'}
-        writeLabel={isEdit ? '수정완료' : '새글작성'}
         hideSearch
-        onWrite={handleSubmit}
-        writeDisabled={isPending}
+        actions={
+          <div className="flex gap-2.5">
+            <Button
+              variant="outline"
+              size="sm"
+              className="border-black-400 text-black-700 hover:border-black-500 hover:text-black-800"
+              onClick={handleCancel}
+              disabled={isPending}
+            >
+              취소
+            </Button>
+            <Button size="sm" variant="primary" onClick={handleSubmit} disabled={isPending}>
+              {isEdit ? '수정완료' : '새글작성'}
+            </Button>
+          </div>
+        }
       />
       <div className="mt-2">
         <WriteCategorySelect values={values} onChange={handleChange} />

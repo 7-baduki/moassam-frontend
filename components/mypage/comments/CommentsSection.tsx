@@ -27,7 +27,7 @@ export default function CommentsSection() {
             {data?.data.map((comment) => (
               <Link
                 key={comment.commentId}
-                href={`/community/board/${comment.commentId}`}
+                href={`/community/${comment.category === 'MOABANG' ? 'moabang' : 'board'}/${comment.postId}`}
                 className="flex items-center rounded-[10px] bg-white px-5 py-3 transition-colors hover:bg-black-200"
               >
                 <span className="min-w-0 flex-1 truncate text-sm font-medium text-black-800">

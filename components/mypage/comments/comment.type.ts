@@ -1,5 +1,9 @@
+export type PostCategory = 'FREE' | 'MOABANG';
+
 export interface MyComment {
   commentId: number;
+  postId: number;
+  category: PostCategory;
   content: string;
   postTitle: string;
   createdAt: string;

@@ -25,15 +25,26 @@ export default function BoardDetailSideActions({
   const { mutate: toggleBookmark } = useBookmarkMutation(postId);
 
   function handleLikeToggle() {
-    const nextLiked = !isLiked;
-    setIsLiked(nextLiked);
-    setOptimisticLikeCount((prev) => (nextLiked ? prev + 1 : prev - 1));
-    toggleLike(isLiked);
+    const prevLiked = isLiked;
+    const prevCount = optimisticLikeCount;
+    setIsLiked(!prevLiked);
+    setOptimisticLikeCount((prev) => (!prevLiked ? prev + 1 : prev - 1));
+    toggleLike(prevLiked, {
+      onError: () => {
+        setIsLiked(prevLiked);
+        setOptimisticLikeCount(prevCount);
+      },
+    });
   }
 
   function handleBookmarkToggle() {
-    setIsBookmarked((prev) => !prev);
-    toggleBookmark(isBookmarked);
+    const prevBookmarked = isBookmarked;
+    setIsBookmarked(!prevBookmarked);
+    toggleBookmark(prevBookmarked, {
+      onError: () => {
+        setIsBookmarked(prevBookmarked);
+      },
+    });
   }
 
   return (

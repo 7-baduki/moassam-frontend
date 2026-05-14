@@ -17,8 +17,6 @@ export default function CommentsSection() {
 
   return (
     <div className="flex flex-col gap-5">
-      <h1 className="text-lg font-semibold text-black">댓글</h1>
-
       {isEmpty ? (
         <div className="flex flex-1 items-center justify-center py-20">
           <EmptyState message="아직 작성한 댓글이 없어요" />

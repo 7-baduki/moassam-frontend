@@ -23,8 +23,6 @@ export default function BookmarksSection() {
 
   return (
     <div className="flex flex-col gap-5">
-      <h1 className="text-lg font-semibold text-black">북마크</h1>
-
       {isEmpty ? (
         <div className="flex flex-1 items-center justify-center py-20">
           <EmptyState message="아직 북마크한 게시글이 없어요" />

@@ -32,8 +32,6 @@ export default function ObservationsSection() {
 
   return (
     <div className="flex flex-col gap-5">
-      <h1 className="text-lg font-semibold text-black">관찰일지 내역</h1>
-
       {isEmpty ? (
         <div className="flex flex-1 items-center justify-center py-20">
           <EmptyState

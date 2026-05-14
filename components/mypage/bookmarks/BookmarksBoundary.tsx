@@ -5,13 +5,21 @@ import BookmarksSection from './BookmarksSection';
 
 export default function BookmarksBoundary() {
   return (
-    <AsyncBoundary
-      pendingFallback={<LoadingSpinner className="pt-11.25" />}
-      rejectedFallback={({ error, reset }) => (
-        <ErrorFallback error={error} actionLabel="다시 시도" onAction={reset} className="pt-7.5" />
-      )}
-    >
-      <BookmarksSection />
-    </AsyncBoundary>
+    <div className="flex flex-col gap-5">
+      <h1 className="text-lg font-semibold text-black">북마크</h1>
+      <AsyncBoundary
+        pendingFallback={<LoadingSpinner className="pt-11.25" />}
+        rejectedFallback={({ error, reset }) => (
+          <ErrorFallback
+            error={error}
+            actionLabel="다시 시도"
+            onAction={reset}
+            className="pt-7.5"
+          />
+        )}
+      >
+        <BookmarksSection />
+      </AsyncBoundary>
+    </div>
   );
 }

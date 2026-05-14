@@ -1,3 +1,4 @@
+import { notFound } from 'next/navigation';
 import BoardDetailBoundary from '@/components/community/board/board-detail/BoardDetailBoundary';
 
 interface BoardDetailPageProps {
@@ -8,6 +9,9 @@ interface BoardDetailPageProps {
 
 export default async function BoardDetailPage({ params }: BoardDetailPageProps) {
   const { postId } = await params;
+  const id = Number(postId);
 
-  return <BoardDetailBoundary postId={Number(postId)} title="자유게시판" />;
+  if (!Number.isInteger(id) || id <= 0) notFound();
+
+  return <BoardDetailBoundary postId={id} title="자유게시판" />;
 }

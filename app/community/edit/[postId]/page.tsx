@@ -1,3 +1,4 @@
+import { notFound } from 'next/navigation';
 import EditBoundary from '@/components/community/edit/EditBoundary';
 
 interface EditPageProps {
@@ -6,6 +7,9 @@ interface EditPageProps {
 
 export default async function EditPage({ params }: EditPageProps) {
   const { postId } = await params;
+  const id = Number(postId);
 
-  return <EditBoundary postId={Number(postId)} />;
+  if (!Number.isInteger(id) || id <= 0) notFound();
+
+  return <EditBoundary postId={id} />;
 }

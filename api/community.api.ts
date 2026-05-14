@@ -2,8 +2,13 @@ import apiClient from './axios';
 import type {
   MoabangListParams,
   MoabangListResponse,
+  MoabangSearchParams,
 } from '@/components/community/moabang/moabang.type';
-import type { BoardListParams, BoardListResponse } from '@/components/community/board/board.type';
+import type {
+  BoardListParams,
+  BoardListResponse,
+  BoardSearchParams,
+} from '@/components/community/board/board.type';
 import type {
   CreatePostRequest,
   CreatePostResponse,
@@ -25,8 +30,20 @@ export async function getMoabangPosts(params: MoabangListParams): Promise<Moaban
   return data.data;
 }
 
+export async function searchMoabangPosts(
+  params: MoabangSearchParams,
+): Promise<MoabangListResponse> {
+  const { data } = await apiClient.get('/api/v1/posts/moabang/search', { params });
+  return data.data;
+}
+
 export async function getBoardPosts(params: BoardListParams): Promise<BoardListResponse> {
   const { data } = await apiClient.get('/api/v1/posts/free', { params });
+  return data.data;
+}
+
+export async function searchBoardPosts(params: BoardSearchParams): Promise<BoardListResponse> {
+  const { data } = await apiClient.get('/api/v1/posts/free/search', { params });
   return data.data;
 }
 

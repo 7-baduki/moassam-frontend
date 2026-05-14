@@ -26,3 +26,9 @@ export interface BoardListParams {
   page?: number;
   size?: number;
 }
+
+export interface BoardSearchParams {
+  keyword: string;
+  page?: number;
+  size?: number;
+}

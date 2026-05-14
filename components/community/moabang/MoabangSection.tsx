@@ -9,9 +9,12 @@ import {
   MOABANG_AGE_FILTER_TABS,
   MOABANG_CATEGORY_FILTER_TABS,
 } from '@/constants/community/community-tabs';
-import { useMoabangPostsQuery } from '@/hooks/queries/community/useCommunity';
+import {
+  useMoabangPostsQuery,
+  useMoabangSearchQuery,
+} from '@/hooks/queries/community/useCommunity';
 import { EmptyState } from '@/components/common/empty-state/EmptyState';
-import type { PostAge, ResourceType } from './moabang.type';
+import type { PostAge, ResourceType, MoabangPost } from './moabang.type';
 
 function getValidParam<T extends { value: string }>(
   raw: string | null,
@@ -22,16 +25,31 @@ function getValidParam<T extends { value: string }>(
   return fallback;
 }
 
-export default function MoabangSection() {
-  const router = useRouter();
-  const pathname = usePathname();
-  const searchParams = useSearchParams();
+function PostGrid({ data }: { data: { data: MoabangPost[]; totalPages: number } }) {
+  return data.data.length === 0 ? (
+    <div className="flex flex-1 items-center justify-center pt-20">
+      <EmptyState message="아직 등록된 게시글이 없어요" />
+    </div>
+  ) : (
+    <div className="grid grid-cols-3 gap-5">
+      {data.data.map((post) => (
+        <MoabangCard key={post.postId} post={post} />
+      ))}
+    </div>
+  );
+}
 
-  const age = getValidParam(searchParams.get('age'), MOABANG_AGE_FILTER_TABS, 'all');
-  const category = getValidParam(searchParams.get('category'), MOABANG_CATEGORY_FILTER_TABS, 'all');
-  const rawPage = Number(searchParams.get('page'));
-  const currentPage = Number.isInteger(rawPage) && rawPage >= 1 ? rawPage : 1;
-
+function MoabangListContent({
+  age,
+  category,
+  currentPage,
+  onPageChange,
+}: {
+  age: string;
+  category: string;
+  currentPage: number;
+  onPageChange: (page: number) => void;
+}) {
   const { data } = useMoabangPostsQuery({
     postAge: age !== 'all' ? (age as PostAge) : undefined,
     resourceType: category !== 'all' ? (category as ResourceType) : undefined,
@@ -39,12 +57,71 @@ export default function MoabangSection() {
     size: 9,
   });
 
-  const totalPages = Math.max(1, data.totalPages);
+  return (
+    <>
+      <PostGrid data={data} />
+      {data.totalPages > 1 && (
+        <div className="mt-15 flex justify-center">
+          <Pagination
+            currentPage={currentPage}
+            totalPages={Math.max(1, data.totalPages)}
+            onChange={onPageChange}
+          />
+        </div>
+      )}
+    </>
+  );
+}
+
+function MoabangSearchContent({
+  keyword,
+  currentPage,
+  onPageChange,
+}: {
+  keyword: string;
+  currentPage: number;
+  onPageChange: (page: number) => void;
+}) {
+  const { data } = useMoabangSearchQuery({ keyword, page: currentPage - 1, size: 9 });
+
+  return (
+    <>
+      <PostGrid data={data} />
+      {data.totalPages > 1 && (
+        <div className="mt-15 flex justify-center">
+          <Pagination
+            currentPage={currentPage}
+            totalPages={Math.max(1, data.totalPages)}
+            onChange={onPageChange}
+          />
+        </div>
+      )}
+    </>
+  );
+}
+
+export default function MoabangSection() {
+  const router = useRouter();
+  const pathname = usePathname();
+  const searchParams = useSearchParams();
+
+  const keyword = searchParams.get('keyword') ?? '';
+  const age = getValidParam(searchParams.get('age'), MOABANG_AGE_FILTER_TABS, 'all');
+  const category = getValidParam(searchParams.get('category'), MOABANG_CATEGORY_FILTER_TABS, 'all');
+  const rawPage = Number(searchParams.get('page'));
+  const currentPage = Number.isInteger(rawPage) && rawPage >= 1 ? rawPage : 1;
 
   function updateParam(key: string, value: string, resetPage = false) {
     const params = new URLSearchParams(searchParams.toString());
     params.set(key, value);
     if (resetPage) params.set('page', '1');
+    router.push(`${pathname}?${params.toString()}`, { scroll: true });
+  }
+
+  function handleSearch(value: string) {
+    const params = new URLSearchParams();
+    if (value) params.set('keyword', value);
+    params.set('page', '1');
     router.push(`${pathname}?${params.toString()}`, { scroll: true });
   }
 
@@ -57,34 +134,31 @@ export default function MoabangSection() {
       <CommunityTitleBar
         title="모아방"
         onWrite={() => router.push('/community/write?board=moabang')}
+        onSearch={handleSearch}
       />
-      <CommunityFilter
-        ageTabs={MOABANG_AGE_FILTER_TABS}
-        age={age}
-        onAgeChange={(value) => updateParam('age', value, true)}
-        categoryTabs={MOABANG_CATEGORY_FILTER_TABS}
-        category={category}
-        onCategoryChange={(value) => updateParam('category', value, true)}
-      />
-      {data.data.length === 0 ? (
-        <div className="flex flex-1 items-center justify-center pt-20">
-          <EmptyState message="아직 등록된 게시글이 없어요" />
-        </div>
+      {!keyword && (
+        <CommunityFilter
+          ageTabs={MOABANG_AGE_FILTER_TABS}
+          age={age}
+          onAgeChange={(value) => updateParam('age', value, true)}
+          categoryTabs={MOABANG_CATEGORY_FILTER_TABS}
+          category={category}
+          onCategoryChange={(value) => updateParam('category', value, true)}
+        />
+      )}
+      {keyword ? (
+        <MoabangSearchContent
+          keyword={keyword}
+          currentPage={currentPage}
+          onPageChange={handlePageChange}
+        />
       ) : (
-        <>
-          <div className="grid grid-cols-3 gap-5">
-            {data.data.map((post) => (
-              <MoabangCard key={post.postId} post={post} />
-            ))}
-          </div>
-          <div className="mt-15 flex justify-center">
-            <Pagination
-              currentPage={currentPage}
-              totalPages={totalPages}
-              onChange={handlePageChange}
-            />
-          </div>
-        </>
+        <MoabangListContent
+          age={age}
+          category={category}
+          currentPage={currentPage}
+          onPageChange={handlePageChange}
+        />
       )}
     </section>
   );

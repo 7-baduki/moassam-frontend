@@ -1,7 +1,9 @@
 import { useSuspenseQuery, useMutation, useQueryClient } from '@tanstack/react-query';
 import {
   getMoabangPosts,
+  searchMoabangPosts,
   getBoardPosts,
+  searchBoardPosts,
   createPost,
   updatePost,
   deletePost,
@@ -10,8 +12,11 @@ import {
   updateComment,
   deleteComment,
 } from '@/api/community.api';
-import type { MoabangListParams } from '@/components/community/moabang/moabang.type';
-import type { BoardListParams } from '@/components/community/board/board.type';
+import type {
+  MoabangListParams,
+  MoabangSearchParams,
+} from '@/components/community/moabang/moabang.type';
+import type { BoardListParams, BoardSearchParams } from '@/components/community/board/board.type';
 import type { CreatePostRequest, UpdatePostRequest } from '@/components/community/write/write.type';
 
 export function usePostDetailQuery(postId: number) {
@@ -28,10 +33,24 @@ export function useMoabangPostsQuery(params: MoabangListParams) {
   });
 }
 
+export function useMoabangSearchQuery(params: MoabangSearchParams) {
+  return useSuspenseQuery({
+    queryKey: ['moabang', 'search', params],
+    queryFn: () => searchMoabangPosts(params),
+  });
+}
+
 export function useBoardPostsQuery(params: BoardListParams) {
   return useSuspenseQuery({
     queryKey: ['board', 'posts', params],
     queryFn: () => getBoardPosts(params),
+  });
+}
+
+export function useBoardSearchQuery(params: BoardSearchParams) {
+  return useSuspenseQuery({
+    queryKey: ['board', 'search', params],
+    queryFn: () => searchBoardPosts(params),
   });
 }
 

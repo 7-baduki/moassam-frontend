@@ -3,12 +3,14 @@
 import { useState } from 'react';
 import { useRouter } from 'next/navigation';
 import Link from 'next/link';
+import axios from 'axios';
 import Pagination from '@/components/common/pagination/Pagination';
 import { useMyObservationsQuery } from '@/hooks/queries/user/useMyObservations';
 import { useObservationDeleteMutation } from '@/hooks/queries/observations/useObservation';
 import { AGE_OPTIONS } from '@/constants/observations/observation';
 import { MoreButton } from '@/components/common/more-button/MoreButton';
 import { EmptyState } from '@/components/common/empty-state/EmptyState';
+import { toast } from '@/utils/toast';
 
 const CURRICULUM_LABEL: Record<string, string> = {
   NURI: '개정 누리과정',
@@ -26,6 +28,10 @@ export default function ObservationsSection() {
 
   const { mutate: handleDelete } = useObservationDeleteMutation({
     onSuccess: () => refetch(),
+    onError: (error) => {
+      if (axios.isAxiosError(error) && error.isHandled) return;
+      toast.error({ title: '삭제 실패', description: '잠시 후 다시 시도해주세요' });
+    },
   });
 
   const isEmpty = !data?.data || data.data.length === 0;

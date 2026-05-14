@@ -7,14 +7,11 @@ import { ChargeGuide } from '@/components/mypage/dashboard/ChargeGuide';
 import { ProfileEditModal } from '@/components/mypage/dashboard/ProfileEditModal';
 import { WithdrawModal } from '@/components/mypage/dashboard/WithdrawModal';
 import { useUser } from '@/lib/user-context';
-
-const MOCK_COUNTS = {
-  observationCount: 0,
-  bookmarkCount: 0,
-};
+import { useActivitySummaryQuery } from '@/hooks/queries/user/useActivitySummary';
 
 export default function DashboardSection() {
   const user = useUser();
+  const { data: activitySummary } = useActivitySummaryQuery();
 
   const [isEditModalOpen, setIsEditModalOpen] = useState(false);
   const [isWithdrawModalOpen, setIsWithdrawModalOpen] = useState(false);
@@ -23,8 +20,8 @@ export default function DashboardSection() {
     <div className="flex flex-col">
       <ProfileSummary
         name={user?.nickname ?? ''}
-        observationCount={MOCK_COUNTS.observationCount}
-        bookmarkCount={MOCK_COUNTS.bookmarkCount}
+        observationCount={activitySummary?.observationCount ?? 0}
+        bookmarkCount={activitySummary?.bookmarkedPostCount ?? 0}
         onEditClick={() => setIsEditModalOpen(true)}
       />
 

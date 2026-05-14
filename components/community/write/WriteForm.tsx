@@ -108,7 +108,6 @@ export default function WriteForm({
 
     const category = values.boardType === 'moabang' ? 'MOABANG' : 'FREE';
     const path = values.boardType === 'moabang' ? 'moabang' : 'board';
-    const content = values.content;
 
     if (isEdit && postId != null) {
       const request = {
@@ -117,7 +116,7 @@ export default function WriteForm({
         resourceType: values.resourceType ?? null,
         headTag: values.headTag ?? null,
         title: values.title,
-        content,
+        content: values.content,
         deleteFileIds,
       } as const;
 
@@ -139,7 +138,7 @@ export default function WriteForm({
         resourceType: values.resourceType ?? null,
         headTag: values.headTag ?? null,
         title: values.title,
-        content,
+        content: values.content,
       } as const;
 
       createPost(

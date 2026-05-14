@@ -77,6 +77,7 @@ interface WriteEditorProps {
 }
 
 export default function WriteEditor({ value, onChange }: WriteEditorProps) {
+  const initialValueRef = useRef(value);
   const imageInputRef = useRef<HTMLInputElement>(null);
   const colorBtnRef = useRef<HTMLDivElement>(null);
   const highlightBtnRef = useRef<HTMLDivElement>(null);
@@ -183,11 +184,10 @@ export default function WriteEditor({ value, onChange }: WriteEditorProps) {
   });
 
   useEffect(() => {
-    if (!editor || !value) return;
+    if (!editor || !initialValueRef.current) return;
     if (editor.isEmpty) {
-      editor.commands.setContent(value, { emitUpdate: false });
+      editor.commands.setContent(initialValueRef.current, { emitUpdate: false });
     }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [editor]);
 
   const editorState = useEditorState({

@@ -73,15 +73,10 @@ export default function WriteFileUpload({
       return;
     }
     const added = Array.from(incoming);
-    console.log(
-      '[WriteFileUpload] 파일 추가:',
-      added.map((f) => ({ name: f.name, size: f.size })),
-    );
     onChange([...files, ...added]);
   }
 
   function removeFile(index: number) {
-    console.log('[WriteFileUpload] 새 파일 삭제:', { name: files[index].name });
     onChange(files.filter((_, i) => i !== index));
   }
 
@@ -192,13 +187,7 @@ export default function WriteFileUpload({
                       <td className="pl-3 align-middle">
                         <button
                           type="button"
-                          onClick={() => {
-                            console.log('[WriteFileUpload] 기존 파일 삭제:', {
-                              fileId: file.fileId,
-                              name: file.originalName,
-                            });
-                            onDeleteExistingFile?.(file.fileId);
-                          }}
+                          onClick={() => onDeleteExistingFile?.(file.fileId)}
                           aria-label={`${file.originalName} 삭제`}
                           className="flex items-center justify-center"
                         >

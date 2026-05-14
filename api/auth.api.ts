@@ -13,6 +13,9 @@ export const logout = async (): Promise<void> => {
 };
 
 export const withdraw = async (): Promise<void> => {
-  await apiClient.delete('/api/v1/auth/withdraw');
-  await fetch('/api/auth/withdraw', { method: 'POST' });
+  try {
+    await apiClient.delete('/api/v1/auth/withdraw');
+  } finally {
+    await fetch('/api/auth/withdraw', { method: 'POST' });
+  }
 };

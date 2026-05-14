@@ -48,12 +48,12 @@ const FONT_FAMILIES = [
   { label: '기본서체', value: 'Pretendard' },
   { label: '나눔고딕', value: 'NanumGothic' },
   { label: '나눔명조', value: 'NanumMyeongjo' },
-  { label: '맑은고딕', value: 'Malgun Gothic' },
-  { label: '굴림', value: 'Gulim' },
-  { label: '돋움', value: 'Dotum' },
-  { label: '바탕', value: 'Batang' },
-  { label: '궁서', value: 'Gungsuh' },
-  { label: 'Arial', value: 'Arial' },
+  { label: 'Noto Sans', value: 'var(--font-noto-sans-kr)' },
+  { label: 'Noto Serif', value: 'var(--font-noto-serif-kr)' },
+  { label: '도현', value: 'var(--font-do-hyeon)' },
+  { label: '블랙한산스', value: 'var(--font-black-han-sans)' },
+  { label: '감자꽃', value: 'var(--font-gamja-flower)' },
+  { label: '궁서체', value: 'ChosunGs' },
 ];
 
 const FONT_SIZES = ['10', '12', '14', '16', '18', '20', '24', '28', '32', '36'];

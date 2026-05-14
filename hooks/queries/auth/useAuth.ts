@@ -4,8 +4,8 @@ import { logout } from '@/api/auth.api';
 export const useLogoutMutation = (options?: UseMutationOptions) => {
   const queryClient = useQueryClient();
   return useMutation({
-    mutationFn: logout,
     ...options,
+    mutationFn: logout,
     onSuccess: (...args) => {
       queryClient.clear();
       options?.onSuccess?.(...args);

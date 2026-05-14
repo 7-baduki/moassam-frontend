@@ -4,7 +4,7 @@ import { User } from '@/types/user.type';
 
 export const useProfileMutation = (options?: UseMutationOptions<User, Error, string>) => {
   return useMutation({
-    mutationFn: updateProfile,
     ...options,
+    mutationFn: updateProfile,
   });
 };

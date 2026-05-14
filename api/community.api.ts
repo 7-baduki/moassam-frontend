@@ -7,6 +7,7 @@ import type { BoardListParams, BoardListResponse } from '@/components/community/
 import type {
   CreatePostRequest,
   CreatePostResponse,
+  UpdatePostRequest,
 } from '@/components/community/write/write.type';
 import type {
   BoardDetail,
@@ -54,6 +55,27 @@ export async function updateComment(
 
 export async function deleteComment(postId: number, commentId: number): Promise<void> {
   await apiClient.delete(`/api/v1/posts/${postId}/comments/${commentId}`);
+}
+
+export async function updatePost(
+  postId: number,
+  request: UpdatePostRequest,
+  files: File[],
+  editorImages: File[],
+): Promise<CreatePostResponse> {
+  const formData = new FormData();
+  formData.append('request', new Blob([JSON.stringify(request)], { type: 'application/json' }));
+  files.forEach((file) => formData.append('files', file));
+  editorImages.forEach((image) => formData.append('editorImages', image));
+
+  const { data } = await apiClient.patch(`/api/v1/posts/${postId}`, formData, {
+    headers: { 'Content-Type': 'multipart/form-data' },
+  });
+  return data.data;
+}
+
+export async function deletePost(postId: number): Promise<void> {
+  await apiClient.delete(`/api/v1/posts/${postId}`);
 }
 
 export async function createPost(

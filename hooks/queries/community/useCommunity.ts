@@ -3,6 +3,8 @@ import {
   getMoabangPosts,
   getBoardPosts,
   createPost,
+  updatePost,
+  deletePost,
   getPostDetail,
   getComments,
   createComment,
@@ -11,7 +13,7 @@ import {
 } from '@/api/community.api';
 import type { MoabangListParams } from '@/components/community/moabang/moabang.type';
 import type { BoardListParams } from '@/components/community/board/board.type';
-import type { CreatePostRequest } from '@/components/community/write/write.type';
+import type { CreatePostRequest, UpdatePostRequest } from '@/components/community/write/write.type';
 
 export function usePostDetailQuery(postId: number) {
   return useSuspenseQuery({
@@ -69,6 +71,31 @@ export function useDeleteCommentMutation(postId: number) {
       queryClient.invalidateQueries({ queryKey: ['post', 'detail', postId] });
       queryClient.invalidateQueries({ queryKey: ['post', 'comments', postId] });
     },
+  });
+}
+
+export function useUpdatePostMutation(postId: number) {
+  const queryClient = useQueryClient();
+
+  return useMutation({
+    mutationFn: ({
+      request,
+      files,
+      editorImages,
+    }: {
+      request: UpdatePostRequest;
+      files: File[];
+      editorImages: File[];
+    }) => updatePost(postId, request, files, editorImages),
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ['post', 'detail', postId] });
+    },
+  });
+}
+
+export function useDeletePostMutation() {
+  return useMutation({
+    mutationFn: (postId: number) => deletePost(postId),
   });
 }
 

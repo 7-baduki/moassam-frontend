@@ -9,7 +9,6 @@ import type { Comment } from './board-detail.type';
 
 interface BoardDetailCommentItemProps {
   comment: Comment;
-  // TODO: 본인 댓글 여부 판단 로직 추후 연동 필요
   onUpdate: (commentId: number, content: string) => void;
   onDelete: (commentId: number) => void;
 }
@@ -105,8 +104,7 @@ export default function BoardDetailCommentItem({
         )}
       </div>
 
-      {/* TODO: isAuthor 조건 추후 연동 */}
-      {!isEditing && (
+      {!isEditing && comment.isMine && (
         <MoreButton onEdit={() => setIsEditing(true)} onDelete={() => setDeleteDialogOpen(true)} />
       )}
     </li>

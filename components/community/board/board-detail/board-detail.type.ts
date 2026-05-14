@@ -28,6 +28,7 @@ export interface BoardDetail {
   likeCount: number;
   bookmarked: boolean;
   isLiked: boolean;
+  isMine: boolean;
   createdAt: string;
 }
 
@@ -36,6 +37,7 @@ export interface Comment {
   postId: number;
   authorNickname: string;
   content: string;
+  isMine: boolean;
   createdAt: string;
 }
 

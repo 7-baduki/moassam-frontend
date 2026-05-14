@@ -61,17 +61,26 @@ export default function BoardDetailSection({ postId, title }: BoardDetailSection
             title={title}
             actions={
               <div className="flex gap-2.5">
-                <Button
-                  variant="outline"
-                  size="sm"
-                  className="border-black-400 text-black-700 hover:border-black-500 hover:text-black-800"
-                  onClick={handleEdit}
-                >
-                  수정
-                </Button>
-                <Button variant="outline" size="sm" onClick={handleDelete} disabled={isDeleting}>
-                  삭제
-                </Button>
+                {post.isMine && (
+                  <>
+                    <Button
+                      variant="outline"
+                      size="sm"
+                      className="border-black-400 text-black-700 hover:border-black-500 hover:text-black-800"
+                      onClick={handleEdit}
+                    >
+                      수정
+                    </Button>
+                    <Button
+                      variant="outline"
+                      size="sm"
+                      onClick={handleDelete}
+                      disabled={isDeleting}
+                    >
+                      삭제
+                    </Button>
+                  </>
+                )}
               </div>
             }
           />

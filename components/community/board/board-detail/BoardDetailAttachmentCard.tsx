@@ -10,8 +10,6 @@ import {
   FilePptIcon,
   FileJpgIcon,
 } from '@/app/assets/icons/editor';
-import { formatFileSize } from '@/utils/formatFileSize';
-import type { BoardDetailFile } from './board-detail.type';
 
 const FILE_ICON_MAP: Record<string, React.FC<React.SVGProps<SVGSVGElement>>> = {
   png: FilePngIcon,
@@ -23,6 +21,10 @@ const FILE_ICON_MAP: Record<string, React.FC<React.SVGProps<SVGSVGElement>>> = {
   doc: FileDocIcon,
   docx: FileDocIcon,
 };
+import { formatFileSize } from '@/utils/formatFileSize';
+import type { BoardDetailFile } from './board-detail.type';
+
+const IMAGE_EXTS = ['jpg', 'jpeg', 'png', 'gif', 'webp', 'svg'];
 
 interface BoardDetailAttachmentCardProps {
   file: BoardDetailFile;
@@ -34,16 +36,17 @@ function getExtension(fileName: string): string {
 
 export default function BoardDetailAttachmentCard({ file }: BoardDetailAttachmentCardProps) {
   const ext = getExtension(file.originalName);
+  const isImage = IMAGE_EXTS.includes(ext);
   const FileIcon = FILE_ICON_MAP[ext] ?? FileDefaultIcon;
 
   return (
     <div className="group relative h-30 w-45 shrink-0 cursor-pointer overflow-hidden rounded-xl border border-black-300 bg-black-200">
-      {file.fileType === 'IMAGE' ? (
+      {isImage ? (
         <Image src={file.url} alt={file.originalName} fill className="object-cover" sizes="180px" />
       ) : (
         <div className="flex h-full flex-col transition-opacity group-hover:opacity-0">
           <div className="flex flex-1 items-center justify-center bg-white">
-            <FileIcon width={48} height={48} className="text-black-300" />
+            <FileDefaultIcon width={48} height={48} className="text-black-300" />
           </div>
           <div className="flex h-[50px] flex-col justify-center gap-0.5 bg-black-100 px-2.5">
             <span className="typo-line-p2 text-[11px] font-medium text-black-600">

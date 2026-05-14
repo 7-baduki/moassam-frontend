@@ -25,7 +25,7 @@ export default function MoabangCard({ post }: MoabangCardProps) {
     >
       <article className="flex h-99.5 w-full flex-col overflow-hidden rounded-2xl bg-white shadow-sm">
         {post.thumbnailUrl && (
-          <div className="relative h-61.25 w-full shrink-0">
+          <div className="relative h-61.25 w-full shrink-0 border-b border-black-200">
             <Image src={post.thumbnailUrl} alt={post.title} fill className="object-cover" />
           </div>
         )}

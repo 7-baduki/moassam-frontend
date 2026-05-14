@@ -21,10 +21,11 @@ export default function BoardDetailSideActions({
   const [isLiked, setIsLiked] = useState(initialLiked);
   const [optimisticLikeCount, setOptimisticLikeCount] = useState(likeCount);
 
-  const { mutate: toggleLike } = useLikeMutation(postId);
-  const { mutate: toggleBookmark } = useBookmarkMutation(postId);
+  const { mutate: toggleLike, isPending: isLikePending } = useLikeMutation(postId);
+  const { mutate: toggleBookmark, isPending: isBookmarkPending } = useBookmarkMutation(postId);
 
   function handleLikeToggle() {
+    if (isLikePending) return;
     const prevLiked = isLiked;
     const prevCount = optimisticLikeCount;
     setIsLiked(!prevLiked);
@@ -38,6 +39,7 @@ export default function BoardDetailSideActions({
   }
 
   function handleBookmarkToggle() {
+    if (isBookmarkPending) return;
     const prevBookmarked = isBookmarked;
     setIsBookmarked(!prevBookmarked);
     toggleBookmark(prevBookmarked, {
@@ -58,7 +60,8 @@ export default function BoardDetailSideActions({
         onClick={handleBookmarkToggle}
         aria-label={isBookmarked ? '북마크 취소' : '북마크'}
         aria-pressed={isBookmarked}
-        className="flex cursor-pointer flex-col items-center gap-1.5"
+        disabled={isBookmarkPending}
+        className="flex cursor-pointer flex-col items-center gap-1.5 disabled:opacity-50"
       >
         <DetailBookmarkIcon
           className={
@@ -73,7 +76,8 @@ export default function BoardDetailSideActions({
         onClick={handleLikeToggle}
         aria-label={isLiked ? '좋아요 취소' : '좋아요'}
         aria-pressed={isLiked}
-        className="flex cursor-pointer flex-col items-center gap-1.5"
+        disabled={isLikePending}
+        className="flex cursor-pointer flex-col items-center gap-1.5 disabled:opacity-50"
       >
         <DetailHeartIcon
           className={

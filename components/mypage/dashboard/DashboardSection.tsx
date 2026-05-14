@@ -39,6 +39,7 @@ export default function DashboardSection() {
       <ChargeGuide className="mt-10" />
 
       <ProfileEditModal
+        key={isEditModalOpen ? 'open' : 'closed'}
         isOpen={isEditModalOpen}
         onClose={() => setIsEditModalOpen(false)}
         onWithdrawClick={() => {

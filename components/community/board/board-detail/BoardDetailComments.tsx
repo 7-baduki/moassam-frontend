@@ -39,8 +39,8 @@ export default function BoardDetailComments({
     <section aria-label="댓글" className="rounded-2xl border border-black-200 bg-white p-7.5">
       <h2 id="comments-title" className="typo-line-m2 text-base font-semibold text-black-800">
         댓글{' '}
-        <span className={commentCount === 0 ? 'text-black-500' : 'text-pink-500'}>
-          {commentCount}
+        <span className={comments.length === 0 ? 'text-black-500' : 'text-pink-500'}>
+          {comments.length}
         </span>
       </h2>
 

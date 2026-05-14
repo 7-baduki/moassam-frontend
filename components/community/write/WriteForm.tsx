@@ -110,6 +110,11 @@ export default function WriteForm({
     const category = values.boardType === 'moabang' ? 'MOABANG' : 'FREE';
     const path = values.boardType === 'moabang' ? 'moabang' : 'board';
 
+    if (isEdit && postId == null) {
+      toast.error({ title: '게시글 수정 실패', description: '잠시 후 다시 시도해주세요' });
+      return;
+    }
+
     if (isEdit && postId != null) {
       const request = {
         category,

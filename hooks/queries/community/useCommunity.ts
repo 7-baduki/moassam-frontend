@@ -87,15 +87,23 @@ export function useUpdatePostMutation(postId: number) {
       files: File[];
       editorImages: File[];
     }) => updatePost(postId, request, files, editorImages),
-    onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: ['post', 'detail', postId] });
+    onSuccess: (_, { request }) => {
+      queryClient.removeQueries({ queryKey: ['post', 'detail', postId] });
+      const listKey = request.category === 'MOABANG' ? 'moabang' : 'board';
+      queryClient.invalidateQueries({ queryKey: [listKey, 'posts'] });
     },
   });
 }
 
 export function useDeletePostMutation() {
+  const queryClient = useQueryClient();
+
   return useMutation({
     mutationFn: (postId: number) => deletePost(postId),
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ['moabang', 'posts'] });
+      queryClient.invalidateQueries({ queryKey: ['board', 'posts'] });
+    },
   });
 }
 

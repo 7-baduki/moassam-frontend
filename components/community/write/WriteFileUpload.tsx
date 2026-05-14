@@ -13,6 +13,7 @@ import {
   FileDocIcon,
   FileDefaultIcon,
 } from '@/app/assets/icons/editor';
+import type { BoardDetailFile } from '@/components/community/board/board-detail/board-detail.type';
 
 const MAX_SIZE_MB = 10;
 const MAX_FILES = 5;
@@ -36,6 +37,8 @@ function getFileIcon(fileName: string): ComponentType<SVGProps<SVGSVGElement>> {
 interface WriteFileUploadProps {
   files: File[];
   onChange: (files: File[]) => void;
+  existingFiles?: BoardDetailFile[];
+  onDeleteExistingFile?: (fileId: number) => void;
 }
 
 function formatBytes(bytes: number): string {
@@ -44,16 +47,23 @@ function formatBytes(bytes: number): string {
   return `${(bytes / 1024 / 1024).toFixed(1)}MB`;
 }
 
-export default function WriteFileUpload({ files, onChange }: WriteFileUploadProps) {
+export default function WriteFileUpload({
+  files,
+  onChange,
+  existingFiles = [],
+  onDeleteExistingFile,
+}: WriteFileUploadProps) {
   const inputRef = useRef<HTMLInputElement>(null);
   const [isDragging, setIsDragging] = useState(false);
   const dragCounter = useRef(0);
 
   const totalBytes = files.reduce((sum, file) => sum + file.size, 0);
+  const hasAnyFile = existingFiles.length > 0 || files.length > 0;
 
   function addFiles(incoming: FileList | null) {
     if (!incoming || incoming.length === 0) return;
-    if (files.length + incoming.length > MAX_FILES) {
+    const totalCount = existingFiles.length + files.length + incoming.length;
+    if (totalCount > MAX_FILES) {
       toast.warning({
         title: '업로드 제한',
         description: `파일은 최대 ${MAX_FILES}개까지만 첨부할 수 있습니다`,
@@ -129,7 +139,7 @@ export default function WriteFileUpload({ files, onChange }: WriteFileUploadProp
         <div
           className="h-34.5 overflow-y-auto rounded-lg bg-white transition-colors"
           style={
-            !isDragging && files.length === 0
+            !isDragging && !hasAnyFile
               ? {
                   backgroundImage: `url("data:image/svg+xml,%3csvg width='100%25' height='100%25' xmlns='http://www.w3.org/2000/svg'%3e%3crect width='100%25' height='100%25' fill='none' rx='8' ry='8' stroke='%23e2e2e2' stroke-width='1.5' stroke-dasharray='8%2c6' stroke-linecap='square'/%3e%3c/svg%3e")`,
                 }
@@ -138,7 +148,7 @@ export default function WriteFileUpload({ files, onChange }: WriteFileUploadProp
                 : { border: '1px solid #e2e2e2' }
           }
         >
-          {files.length === 0 ? (
+          {!hasAnyFile ? (
             <div className="flex h-full items-center justify-center gap-1 text-sm text-black-700">
               <UploadDragIcon className="block" />
               <p className="typo-line-m2" aria-label="업로드 안내 문구">
@@ -152,7 +162,10 @@ export default function WriteFileUpload({ files, onChange }: WriteFileUploadProp
                   <th className="w-8 pl-3 align-middle">
                     <button
                       type="button"
-                      onClick={() => onChange([])}
+                      onClick={() => {
+                        onChange([]);
+                        existingFiles.forEach((f) => onDeleteExistingFile?.(f.fileId));
+                      }}
                       aria-label="모든 파일 삭제"
                       className="flex items-center justify-center"
                     >
@@ -164,10 +177,36 @@ export default function WriteFileUpload({ files, onChange }: WriteFileUploadProp
                 </tr>
               </thead>
               <tbody>
+                {existingFiles.map((file) => {
+                  const FileIcon = getFileIcon(file.originalName);
+                  return (
+                    <tr key={`existing-${file.fileId}`} className="h-8 align-middle">
+                      <td className="pl-3 align-middle">
+                        <button
+                          type="button"
+                          onClick={() => onDeleteExistingFile?.(file.fileId)}
+                          aria-label={`${file.originalName} 삭제`}
+                          className="flex items-center justify-center"
+                        >
+                          <UploadXIcon width={16} height={16} className="block" />
+                        </button>
+                      </td>
+                      <td className="pl-2 align-middle text-sm text-black-800">
+                        <span className="flex items-center gap-2">
+                          <FileIcon width={16} height={16} className="shrink-0" />
+                          {file.originalName}
+                        </span>
+                      </td>
+                      <td className="pr-8 text-center align-middle text-xs text-black-600">
+                        {formatBytes(file.size)}
+                      </td>
+                    </tr>
+                  );
+                })}
                 {files.map((file, index) => {
                   const FileIcon = getFileIcon(file.name);
                   return (
-                    <tr key={index} className="h-8 align-middle">
+                    <tr key={`new-${index}`} className="h-8 align-middle">
                       <td className="pl-3 align-middle">
                         <button
                           type="button"

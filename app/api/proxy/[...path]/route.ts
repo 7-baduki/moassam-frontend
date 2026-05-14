@@ -25,7 +25,7 @@ async function handler(req: NextRequest, { params }: { params: Promise<{ path: s
     return new NextResponse(null, { status: response.status });
   }
 
-  const data = await response.text();
+  const data = await response.arrayBuffer();
 
   const nextResponse = new NextResponse(data, {
     status: response.status,

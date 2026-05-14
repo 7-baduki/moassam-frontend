@@ -11,10 +11,7 @@ export const getProfile = async (): Promise<User | null> => {
       headers: { Authorization: `Bearer ${accessToken}` },
     });
 
-    if (response.status === 401) {
-      cookieStore.delete('accessToken');
-      return null;
-    }
+    if (response.status === 401) return null;
 
     if (!response.ok) return null;
 

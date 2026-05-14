@@ -1,7 +1,9 @@
 'use client';
 
+import { useState } from 'react';
 import { useRouter } from 'next/navigation';
 import { Button } from '@/components/common/button/Button';
+import { Dialog } from '@/components/common/dialog/Dialog';
 import CommunityTitleBar from '@/components/community/CommunityTitleBar';
 import BoardDetailComments from './BoardDetailComments';
 import BoardDetailPost from './BoardDetailPost';
@@ -9,6 +11,7 @@ import BoardDetailSideActions from './BoardDetailSideActions';
 import ScrollToTopButton from '@/components/common/scroll-top/ScrollToTopButton';
 import { usePostDetailQuery, useDeletePostMutation } from '@/hooks/queries/community/useCommunity';
 import { useUserStore } from '@/stores/userStore';
+import { toast } from '@/utils/toast';
 
 interface BoardDetailSectionProps {
   postId: number;
@@ -21,21 +24,37 @@ export default function BoardDetailSection({ postId, title }: BoardDetailSection
   const isLoggedIn = user !== null;
   const { data: post } = usePostDetailQuery(postId);
   const { mutate: deletePost, isPending: isDeleting } = useDeletePostMutation();
+  const [deleteDialogOpen, setDeleteDialogOpen] = useState(false);
 
   function handleEdit() {
     router.push(`/community/edit/${postId}`);
   }
 
   function handleDelete() {
-    if (!window.confirm('게시글을 삭제하시겠습니까?')) return;
+    setDeleteDialogOpen(true);
+  }
+
+  function confirmDelete() {
+    setDeleteDialogOpen(false);
     deletePost(postId, {
       onSuccess: () => router.back(),
-      onError: () => alert('삭제에 실패했습니다. 잠시 후 다시 시도해주세요.'),
+      onError: () => toast.error({ title: '삭제 실패', description: '잠시 후 다시 시도해주세요' }),
     });
   }
 
   return (
     <div>
+      <Dialog
+        open={deleteDialogOpen}
+        onOpenChange={setDeleteDialogOpen}
+        iconType="error"
+        title="게시글을 삭제하시겠습니까?"
+        description="삭제된 게시글은 복구할 수 없습니다"
+        buttons={[
+          { children: '취소', variant: 'outline', onClick: () => setDeleteDialogOpen(false) },
+          { children: '삭제', variant: 'primary', onClick: confirmDelete, disabled: isDeleting },
+        ]}
+      />
       <div className="flex items-start gap-4">
         <div className="min-w-0 flex-1">
           <CommunityTitleBar

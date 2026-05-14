@@ -4,6 +4,7 @@ import { useState } from 'react';
 import { MoreButton } from '@/components/common/more-button/MoreButton';
 import { Textarea } from '@/components/common/textarea/Textarea';
 import { Button } from '@/components/common/button/Button';
+import { Dialog } from '@/components/common/dialog/Dialog';
 import type { Comment } from './board-detail.type';
 
 interface BoardDetailCommentItemProps {
@@ -27,6 +28,7 @@ export default function BoardDetailCommentItem({
 }: BoardDetailCommentItemProps) {
   const [isEditing, setIsEditing] = useState(false);
   const [editValue, setEditValue] = useState(comment.content);
+  const [deleteDialogOpen, setDeleteDialogOpen] = useState(false);
 
   function handleEditSubmit() {
     if (!editValue.trim()) return;
@@ -41,6 +43,24 @@ export default function BoardDetailCommentItem({
 
   return (
     <li className="flex items-start gap-2 border-b border-black-200 py-4 last:border-b-0">
+      <Dialog
+        open={deleteDialogOpen}
+        onOpenChange={setDeleteDialogOpen}
+        iconType="error"
+        title="댓글을 삭제하시겠습니까?"
+        description="삭제된 댓글은 복구할 수 없습니다"
+        buttons={[
+          { children: '취소', variant: 'outline', onClick: () => setDeleteDialogOpen(false) },
+          {
+            children: '삭제',
+            variant: 'primary',
+            onClick: () => {
+              setDeleteDialogOpen(false);
+              onDelete(comment.commentId);
+            },
+          },
+        ]}
+      />
       <div aria-hidden="true" className="h-9 w-9 shrink-0 rounded-full bg-black-200" />
 
       <div className="flex min-w-0 flex-1 flex-col gap-1">
@@ -87,10 +107,7 @@ export default function BoardDetailCommentItem({
 
       {/* TODO: isAuthor 조건 추후 연동 */}
       {!isEditing && (
-        <MoreButton
-          onEdit={() => setIsEditing(true)}
-          onDelete={() => onDelete(comment.commentId)}
-        />
+        <MoreButton onEdit={() => setIsEditing(true)} onDelete={() => setDeleteDialogOpen(true)} />
       )}
     </li>
   );

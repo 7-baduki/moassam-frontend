@@ -1,5 +1,6 @@
 export function formatRelativeTime(isoString: string): string {
   const date = new Date(isoString);
+  if (isNaN(date.getTime())) return '';
   const now = new Date();
   const diffMs = now.getTime() - date.getTime();
   const diffMins = Math.floor(diffMs / 60000);

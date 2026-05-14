@@ -6,7 +6,7 @@ import Providers from './providers';
 import Header from '@/components/common/header/Header';
 import Sidebar from '@/components/common/sidebar/Sidebar';
 import { LoginModal } from '@/components/common/login-modal/LoginModal';
-import UserInitializer from '@/components/auth/UserInitializer';
+import { UserProvider } from '@/lib/user-context';
 import { getProfile } from '@/api/user.api';
 
 const pretendard = localFont({
@@ -21,23 +21,24 @@ export const metadata: Metadata = {
   description: '유치원·어린이집 교사를 위한 AI 관찰일지 작성 및 수업자료 공유 커뮤니티 플랫폼',
 };
 
-export default async function RootLayout({
+export default function RootLayout({
   children,
 }: Readonly<{
   children: React.ReactNode;
 }>) {
-  const user = await getProfile();
+  const userPromise = getProfile();
 
   return (
     <html lang="ko" className={`${pretendard.variable} h-full antialiased`}>
       <body className={`${pretendard.className} flex h-screen flex-col overflow-hidden`}>
         <Providers>
-          <Header user={user} />
-          <UserInitializer user={user} />
-          <div className="flex flex-1 overflow-hidden">
-            <Sidebar />
-            <main className="flex-1 overflow-y-auto bg-black-100">{children}</main>
-          </div>
+          <UserProvider userPromise={userPromise}>
+            <Header />
+            <div className="flex flex-1 overflow-hidden">
+              <Sidebar />
+              <main className="flex-1 overflow-y-auto bg-black-100">{children}</main>
+            </div>
+          </UserProvider>
         </Providers>
         <Toaster position="top-right" offset={{ top: 69 }} />
         <LoginModal />

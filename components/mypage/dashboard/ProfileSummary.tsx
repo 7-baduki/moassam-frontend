@@ -6,6 +6,7 @@ import { ObservationCountIcon, BookmarkCountIcon } from '@/app/assets/icons';
 
 interface ProfileSummaryProps {
   name: string;
+  profileImageUrl?: string;
   observationCount: number;
   bookmarkCount: number;
   onEditClick: () => void;
@@ -13,6 +14,7 @@ interface ProfileSummaryProps {
 
 export function ProfileSummary({
   name,
+  profileImageUrl,
   observationCount,
   bookmarkCount,
   onEditClick,
@@ -21,7 +23,12 @@ export function ProfileSummary({
     <div className="flex flex-col gap-8 xl:flex-row xl:items-center xl:divide-x-[0.5px] xl:divide-black-500">
       <div className="flex items-center gap-5 xl:pr-[clamp(1rem,5.2vw,4rem)]">
         <div className="h-21.25 w-21.25 overflow-hidden rounded-full">
-          <Image src={DefaultAvatar} alt="프로필 아바타" width={85} height={85} />
+          <Image
+            src={profileImageUrl || DefaultAvatar}
+            alt="프로필 아바타"
+            width={85}
+            height={85}
+          />
         </div>
         <div className="flex flex-col gap-1">
           <p className="text-xl leading-[120%] font-semibold text-black">

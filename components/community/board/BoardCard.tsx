@@ -3,6 +3,7 @@ import { ViewCountIcon, LikeCountIcon, CommentCountIcon } from '@/app/assets/ico
 import { Badge } from '@/components/common/badge';
 import type { BoardPost, HeadTag } from './board.type';
 import { formatRelativeTime } from '@/utils/formatRelativeTime';
+import { stripHtml } from '@/utils/stripHtml';
 
 const HEAD_TAG_LABEL: Record<HeadTag, string> = {
   WORRY: '고민',
@@ -30,7 +31,7 @@ export default function BoardCard({ post }: BoardCardProps) {
         </h3>
         <div className="mt-7 h-14">
           <p className="typo-line-m2 line-clamp-2 overflow-hidden text-sm font-medium text-black-700">
-            {post.contentPreview}
+            {stripHtml(post.contentPreview)}
           </p>
         </div>
         <p className="typo-line-m2 mt-4 truncate text-xs font-semibold text-black-600">

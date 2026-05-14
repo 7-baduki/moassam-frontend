@@ -8,16 +8,8 @@ import Pagination from '@/components/common/pagination/Pagination';
 import { BOARD_CATEGORY_FILTER_TABS } from '@/constants/community/community-tabs';
 import { useBoardPostsQuery, useBoardSearchQuery } from '@/hooks/queries/community/useCommunity';
 import { EmptyState } from '@/components/common/empty-state/EmptyState';
+import { getValidParam } from '@/utils/getValidParam';
 import type { BoardPost, HeadTag } from './board.type';
-
-function getValidParam<T extends { value: string }>(
-  raw: string | null,
-  options: T[],
-  fallback: string,
-): string {
-  if (raw && options.some((o) => o.value === raw)) return raw;
-  return fallback;
-}
 
 function PostList({ data }: { data: { data: BoardPost[]; totalPages: number } }) {
   return data.data.length === 0 ? (

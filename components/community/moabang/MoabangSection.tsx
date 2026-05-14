@@ -14,16 +14,8 @@ import {
   useMoabangSearchQuery,
 } from '@/hooks/queries/community/useCommunity';
 import { EmptyState } from '@/components/common/empty-state/EmptyState';
+import { getValidParam } from '@/utils/getValidParam';
 import type { PostAge, ResourceType, MoabangPost } from './moabang.type';
-
-function getValidParam<T extends { value: string }>(
-  raw: string | null,
-  options: T[],
-  fallback: string,
-): string {
-  if (raw && options.some((o) => o.value === raw)) return raw;
-  return fallback;
-}
 
 function PostGrid({ data }: { data: { data: MoabangPost[]; totalPages: number } }) {
   return data.data.length === 0 ? (

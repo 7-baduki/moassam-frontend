@@ -16,8 +16,8 @@ interface FreePostListProps {
 }
 
 export default function FreePostList({ currentPage, onPageChange }: FreePostListProps) {
-  const { data, isLoading } = useMyFreePostsQuery(currentPage);
-  const isEmpty = !isLoading && (!data?.data || data.data.length === 0);
+  const { data } = useMyFreePostsQuery(currentPage);
+  const isEmpty = !data?.data || data.data.length === 0;
 
   if (isEmpty) {
     return (

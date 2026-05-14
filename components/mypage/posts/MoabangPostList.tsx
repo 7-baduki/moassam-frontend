@@ -16,8 +16,8 @@ interface MoabangPostListProps {
 }
 
 export default function MoabangPostList({ currentPage, onPageChange }: MoabangPostListProps) {
-  const { data, isLoading } = useMyMoabangPostsQuery(currentPage);
-  const isEmpty = !isLoading && (!data?.data || data.data.length === 0);
+  const { data } = useMyMoabangPostsQuery(currentPage);
+  const isEmpty = !data?.data || data.data.length === 0;
 
   if (isEmpty) {
     return (

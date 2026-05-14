@@ -22,13 +22,13 @@ function formatDate(dateStr: string) {
 export default function ObservationsSection() {
   const router = useRouter();
   const [currentPage, setCurrentPage] = useState(0);
-  const { data, refetch, isLoading } = useMyObservationsQuery(currentPage);
+  const { data, refetch } = useMyObservationsQuery(currentPage);
 
   const { mutate: handleDelete } = useObservationDeleteMutation({
     onSuccess: () => refetch(),
   });
 
-  const isEmpty = !isLoading && (!data?.data || data.data.length === 0);
+  const isEmpty = !data?.data || data.data.length === 0;
 
   return (
     <div className="flex flex-col gap-5">

@@ -18,8 +18,8 @@ function formatDate(dateStr: string) {
 
 export default function BookmarksSection() {
   const [currentPage, setCurrentPage] = useState(0);
-  const { data, isLoading } = useMyBookmarksQuery(currentPage);
-  const isEmpty = !isLoading && (!data?.data || data.data.length === 0);
+  const { data } = useMyBookmarksQuery(currentPage);
+  const isEmpty = !data?.data || data.data.length === 0;
 
   return (
     <div className="flex flex-col gap-5">

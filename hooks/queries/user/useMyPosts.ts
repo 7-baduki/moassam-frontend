@@ -1,15 +1,15 @@
-import { useQuery } from '@tanstack/react-query';
+import { useSuspenseQuery } from '@tanstack/react-query';
 import { getMyMoabangPosts, getMyFreePosts } from '@/api/post.api';
 
 export const useMyMoabangPostsQuery = (page: number) => {
-  return useQuery({
+  return useSuspenseQuery({
     queryKey: ['myMoabangPosts', page],
     queryFn: () => getMyMoabangPosts(page),
   });
 };
 
 export const useMyFreePostsQuery = (page: number) => {
-  return useQuery({
+  return useSuspenseQuery({
     queryKey: ['myFreePosts', page],
     queryFn: () => getMyFreePosts(page),
   });

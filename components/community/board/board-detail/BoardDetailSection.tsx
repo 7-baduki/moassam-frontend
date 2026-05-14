@@ -61,6 +61,7 @@ export default function BoardDetailSection({ postId, title }: BoardDetailSection
             <BoardDetailComments
               postId={postId}
               commentCount={post.commentCount}
+              comments={post.comments}
               isLoggedIn={IS_LOGGED_IN}
             />
           </div>

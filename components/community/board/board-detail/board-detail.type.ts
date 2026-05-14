@@ -22,6 +22,7 @@ export interface BoardDetail {
   content: string;
   files: BoardDetailFile[];
   editorFiles: BoardDetailFile[];
+  comments: Comment[];
   viewCount: number;
   commentCount: number;
   likeCount: number;

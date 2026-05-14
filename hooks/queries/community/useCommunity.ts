@@ -6,7 +6,6 @@ import {
   updatePost,
   deletePost,
   getPostDetail,
-  getComments,
   createComment,
   updateComment,
   deleteComment,
@@ -36,13 +35,6 @@ export function useBoardPostsQuery(params: BoardListParams) {
   });
 }
 
-export function useCommentsQuery(postId: number) {
-  return useSuspenseQuery({
-    queryKey: ['post', 'comments', postId],
-    queryFn: () => getComments(postId),
-  });
-}
-
 export function useCreateCommentMutation(postId: number) {
   const queryClient = useQueryClient();
 
@@ -50,15 +42,19 @@ export function useCreateCommentMutation(postId: number) {
     mutationFn: (content: string) => createComment(postId, { content }),
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ['post', 'detail', postId] });
-      queryClient.invalidateQueries({ queryKey: ['post', 'comments', postId] });
     },
   });
 }
 
 export function useUpdateCommentMutation(postId: number) {
+  const queryClient = useQueryClient();
+
   return useMutation({
     mutationFn: ({ commentId, content }: { commentId: number; content: string }) =>
       updateComment(postId, commentId, { content }),
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ['post', 'detail', postId] });
+    },
   });
 }
 
@@ -69,7 +65,6 @@ export function useDeleteCommentMutation(postId: number) {
     mutationFn: (commentId: number) => deleteComment(postId, commentId),
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ['post', 'detail', postId] });
-      queryClient.invalidateQueries({ queryKey: ['post', 'comments', postId] });
     },
   });
 }
@@ -111,8 +106,15 @@ export function useCreatePostMutation() {
   const queryClient = useQueryClient();
 
   return useMutation({
-    mutationFn: ({ request, files }: { request: CreatePostRequest; files: File[] }) =>
-      createPost(request, files),
+    mutationFn: ({
+      request,
+      files,
+      editorImages,
+    }: {
+      request: CreatePostRequest;
+      files: File[];
+      editorImages: File[];
+    }) => createPost(request, files, editorImages),
     onSuccess: (_, { request }) => {
       const queryKey = request.category === 'MOABANG' ? 'moabang' : 'board';
       queryClient.invalidateQueries({ queryKey: [queryKey, 'posts'] });

@@ -6,7 +6,6 @@ import { Textarea } from '@/components/common/textarea/Textarea';
 import type { Comment } from './board-detail.type';
 import BoardDetailCommentItem from './BoardDetailCommentItem';
 import {
-  useCommentsQuery,
   useCreateCommentMutation,
   useDeleteCommentMutation,
   useUpdateCommentMutation,
@@ -15,19 +14,18 @@ import {
 interface BoardDetailCommentsProps {
   postId: number;
   commentCount: number;
+  comments: Comment[];
   isLoggedIn: boolean;
 }
 
 export default function BoardDetailComments({
   postId,
   commentCount,
+  comments,
   isLoggedIn,
 }: BoardDetailCommentsProps) {
   const [value, setValue] = useState('');
 
-  // TODO: 500 에러 해결 후 주석 해제
-  // const { data: comments } = useCommentsQuery(postId);
-  const comments: Comment[] = [];
   const { mutate: createComment, isPending: isCreating } = useCreateCommentMutation(postId);
   const { mutate: updateComment } = useUpdateCommentMutation(postId);
   const { mutate: deleteComment } = useDeleteCommentMutation(postId);

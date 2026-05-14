@@ -11,7 +11,6 @@ import type {
 } from '@/components/community/write/write.type';
 import type {
   BoardDetail,
-  Comment,
   CommentRequest,
   CommentIdResponse,
 } from '@/components/community/board/board-detail/board-detail.type';
@@ -28,11 +27,6 @@ export async function getMoabangPosts(params: MoabangListParams): Promise<Moaban
 
 export async function getBoardPosts(params: BoardListParams): Promise<BoardListResponse> {
   const { data } = await apiClient.get('/api/v1/posts/free', { params });
-  return data.data;
-}
-
-export async function getComments(postId: number): Promise<Comment[]> {
-  const { data } = await apiClient.get(`/api/v1/posts/${postId}/comments`);
   return data.data;
 }
 
@@ -81,10 +75,12 @@ export async function deletePost(postId: number): Promise<void> {
 export async function createPost(
   request: CreatePostRequest,
   files: File[],
+  editorImages: File[],
 ): Promise<CreatePostResponse> {
   const formData = new FormData();
   formData.append('request', new Blob([JSON.stringify(request)], { type: 'application/json' }));
   files.forEach((file) => formData.append('files', file));
+  editorImages.forEach((image) => formData.append('editorImages', image));
 
   const { data } = await apiClient.post('/api/v1/posts', formData, {
     headers: { 'Content-Type': 'multipart/form-data' },

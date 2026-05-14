@@ -8,10 +8,14 @@ import { ProfileEditModal } from '@/components/mypage/dashboard/ProfileEditModal
 import { WithdrawModal } from '@/components/mypage/dashboard/WithdrawModal';
 import { useUser } from '@/lib/user-context';
 import { useActivitySummaryQuery } from '@/hooks/queries/user/useActivitySummary';
+import { useCreditsQuery } from '@/hooks/queries/user/useCredits';
 
 export default function DashboardSection() {
   const user = useUser();
   const { data: activitySummary } = useActivitySummaryQuery();
+  const { data: credits } = useCreditsQuery();
+
+  const TOTAL_CREDITS = 10;
 
   const [isEditModalOpen, setIsEditModalOpen] = useState(false);
   const [isWithdrawModalOpen, setIsWithdrawModalOpen] = useState(false);
@@ -26,7 +30,11 @@ export default function DashboardSection() {
         onEditClick={() => setIsEditModalOpen(true)}
       />
 
-      <GenerationCount used={6} total={10} className="mt-22.5" />
+      <GenerationCount
+        used={TOTAL_CREDITS - (credits?.balance ?? TOTAL_CREDITS)}
+        total={TOTAL_CREDITS}
+        className="mt-22.5"
+      />
 
       <ChargeGuide className="mt-10" />
 

@@ -1,18 +1,21 @@
 'use client';
 
 import { useEffect, useState } from 'react';
+import { useRouter } from 'next/navigation';
 import Image from 'next/image';
 
 import { FocusTrap } from 'focus-trap-react';
 import { DefaultAvatar } from '@/app/assets/images';
 import { Button } from '@/components/common/button/Button';
 import { toast } from '@/utils/toast';
+import { useProfileMutation } from '@/hooks/queries/user/useProfile';
 
 interface ProfileEditModalProps {
   isOpen: boolean;
   onClose: () => void;
   onWithdrawClick: () => void;
   username: string;
+  nickname: string;
 }
 
 export function ProfileEditModal({
@@ -20,8 +23,21 @@ export function ProfileEditModal({
   onClose,
   onWithdrawClick,
   username,
+  nickname,
 }: ProfileEditModalProps) {
-  const [displayName, setDisplayName] = useState('');
+  const [displayName, setDisplayName] = useState(nickname);
+  const router = useRouter();
+
+  const { mutate: handleUpdateProfile, isPending } = useProfileMutation({
+    onSuccess: () => {
+      onClose();
+      router.refresh();
+      toast.success({ title: '저장 완료', description: '변경사항이 저장되었어요' });
+    },
+    onError: () => {
+      toast.error({ title: '저장 실패', description: '잠시 후 다시 시도해주세요' });
+    },
+  });
 
   useEffect(() => {
     if (!isOpen) return;
@@ -88,11 +104,8 @@ export function ProfileEditModal({
               <Button
                 variant="primary"
                 size="sm"
-                disabled={!displayName}
-                onClick={() => {
-                  onClose();
-                  toast.success({ title: '저장 완료', description: '변경사항이 저장되었어요' });
-                }}
+                disabled={!displayName || isPending}
+                onClick={() => handleUpdateProfile(displayName)}
               >
                 저장
               </Button>

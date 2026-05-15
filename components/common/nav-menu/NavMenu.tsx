@@ -5,35 +5,28 @@ import Link from 'next/link';
 import Image from 'next/image';
 import { usePathname } from 'next/navigation';
 import { cn } from '@/utils/cn';
-import { ChevronDownIcon } from '@/app/assets/icons';
+import { ChevronDownIcon, MoreDotIcon, PlusIcon } from '@/app/assets/icons';
 import { DefaultAvatar } from '@/app/assets/images';
 import { useUser } from '@/lib/user-context';
 import { useLoginModalStore } from '@/stores/loginModalStore';
 import { Button } from '@/components/common/button/Button';
+import { useObservationRecentQuery } from '@/hooks/queries/observations/useObservation';
 
 interface NavMenuProps {
   isOpen: boolean;
   onLogout: () => void;
 }
 
-const NAV_SECTIONS = [
-  {
-    href: '/observations',
-    label: 'AI 관찰일지',
-    children: [
-      { label: '새 관찰일지', href: '/observations' },
-      { label: '관찰일지 목록 보기', href: '/mypage/observations' },
-    ],
-  },
-  {
-    href: '/community',
-    label: '커뮤니티',
-    children: [
-      { label: '모아방', href: '/community/moabang' },
-      { label: '자유게시판', href: '/community/board' },
-    ],
-  },
-];
+const COMMUNITY_SECTION = {
+  href: '/community',
+  label: '커뮤니티',
+  children: [
+    { label: '모아방', href: '/community/moabang' },
+    { label: '자유게시판', href: '/community/board' },
+  ],
+};
+
+const NAV_SECTIONS = [{ href: '/observations', label: 'AI 관찰일지' }, COMMUNITY_SECTION];
 
 export default function NavMenu({ isOpen, onLogout }: NavMenuProps) {
   const pathname = usePathname() ?? '';
@@ -50,6 +43,8 @@ export default function NavMenu({ isOpen, onLogout }: NavMenuProps) {
     setOpenSections((prev) => ({ ...prev, [href]: !prev[href] }));
   };
 
+  const { data: recentObservations } = useObservationRecentQuery();
+
   return (
     <div
       className={cn(
@@ -61,21 +56,16 @@ export default function NavMenu({ isOpen, onLogout }: NavMenuProps) {
       <nav className="flex min-h-[calc(100vh-3rem)] flex-col justify-between">
         <div>
           {NAV_SECTIONS.map((section) => {
-            const isSectionActive =
-              pathname === section.href || pathname.startsWith(section.href + '/');
             const isSectionOpen = openSections[section.href];
+            const isObservation = section.href === '/observations';
 
             return (
               <div key={section.href}>
                 <button
                   onClick={() => toggleSection(section.href)}
-                  className="flex w-full items-center justify-between px-4 py-3.75 text-base font-medium md:px-9"
+                  className="flex w-full items-center justify-between px-4 py-3.75 text-base font-semibold md:px-9"
                 >
-                  <span
-                    className={cn(isSectionActive ? 'font-semibold text-pink-500' : 'text-black')}
-                  >
-                    {section.label}
-                  </span>
+                  <span className="text-black">{section.label}</span>
                   <ChevronDownIcon
                     className={cn(
                       'h-4 w-4 text-black transition-transform',
@@ -85,24 +75,55 @@ export default function NavMenu({ isOpen, onLogout }: NavMenuProps) {
                 </button>
 
                 {isSectionOpen && (
-                  <ul className="flex flex-col pb-2">
-                    {section.children.map((child) => {
-                      const isActive = pathname === child.href;
-                      return (
-                        <li key={child.href}>
-                          <Link
-                            href={child.href}
-                            className={cn(
-                              'block px-8 py-3 text-sm leading-[140%] tracking-[-0.02em]',
-                              isActive ? 'font-semibold text-pink-500' : 'font-medium text-black',
-                            )}
-                          >
-                            {child.label}
-                          </Link>
-                        </li>
-                      );
-                    })}
-                  </ul>
+                  <div className="pb-2">
+                    {isObservation ? (
+                      <div className="bg-black-100 py-2.5">
+                        <Link
+                          href="/observations"
+                          className="flex items-center gap-0.5 px-6 py-3.5 text-xs font-semibold text-black md:px-9"
+                        >
+                          <PlusIcon className="h-4 w-4 shrink-0" />새 관찰일지
+                        </Link>
+                        {recentObservations && recentObservations.length > 0 && (
+                          <>
+                            <Link
+                              href="/mypage/observations"
+                              className="flex items-center gap-2 px-6 py-3 text-xs font-semibold text-black md:px-9"
+                            >
+                              최근 관찰일지
+                              <ChevronDownIcon className="h-3 w-3 -rotate-90 text-black" />
+                            </Link>
+                            <ul className="flex flex-col">
+                              {recentObservations.map((log) => (
+                                <li key={log.observationId}>
+                                  <Link
+                                    href={`/observations/${log.observationId}`}
+                                    className="flex items-center justify-between px-6 py-3.5 text-xs font-medium text-black-700 md:px-9"
+                                  >
+                                    <span className="truncate">{log.title}</span>
+                                    <MoreDotIcon className="h-4 w-4 shrink-0 text-black-600" />
+                                  </Link>
+                                </li>
+                              ))}
+                            </ul>
+                          </>
+                        )}
+                      </div>
+                    ) : (
+                      <ul className="flex flex-col bg-black-100 py-2.5">
+                        {COMMUNITY_SECTION.children.map((child) => (
+                          <li key={child.href}>
+                            <Link
+                              href={child.href}
+                              className="block px-6 py-3.5 text-xs font-semibold text-black md:px-9"
+                            >
+                              {child.label}
+                            </Link>
+                          </li>
+                        ))}
+                      </ul>
+                    )}
+                  </div>
                 )}
               </div>
             );

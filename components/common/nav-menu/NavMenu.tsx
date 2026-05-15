@@ -5,12 +5,17 @@ import Link from 'next/link';
 import Image from 'next/image';
 import { usePathname } from 'next/navigation';
 import { cn } from '@/utils/cn';
-import { ChevronDownIcon, MoreDotIcon, PlusIcon } from '@/app/assets/icons';
+import { ChevronDownIcon, PlusIcon } from '@/app/assets/icons';
 import { DefaultAvatar } from '@/app/assets/images';
 import { useUser } from '@/lib/user-context';
 import { useLoginModalStore } from '@/stores/loginModalStore';
 import { Button } from '@/components/common/button/Button';
-import { useObservationRecentQuery } from '@/hooks/queries/observations/useObservation';
+import {
+  useObservationRecentQuery,
+  useObservationDeleteMutation,
+} from '@/hooks/queries/observations/useObservation';
+import { useQueryClient } from '@tanstack/react-query';
+import { MoreButton } from '@/components/common/more-button/MoreButton';
 
 interface NavMenuProps {
   isOpen: boolean;
@@ -33,6 +38,7 @@ export default function NavMenu({ isOpen, onClose, onLogout }: NavMenuProps) {
   const pathname = usePathname() ?? '';
   const user = useUser();
   const openLoginModal = useLoginModalStore((state) => state.open);
+  const queryClient = useQueryClient();
 
   const [openSections, setOpenSections] = useState<Record<string, boolean>>(() =>
     Object.fromEntries(
@@ -43,6 +49,12 @@ export default function NavMenu({ isOpen, onClose, onLogout }: NavMenuProps) {
   const toggleSection = (href: string) => {
     setOpenSections((prev) => ({ ...prev, [href]: !prev[href] }));
   };
+
+  const { mutate: deleteObservation } = useObservationDeleteMutation({
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ['observations', 'recent'] });
+    },
+  });
 
   const { data: recentObservations } = useObservationRecentQuery();
 
@@ -98,15 +110,21 @@ export default function NavMenu({ isOpen, onClose, onLogout }: NavMenuProps) {
                             </Link>
                             <ul className="flex flex-col">
                               {recentObservations.map((log) => (
-                                <li key={log.observationId}>
+                                <li
+                                  key={log.observationId}
+                                  className="group relative flex items-center"
+                                >
                                   <Link
                                     href={`/observations/${log.observationId}`}
                                     onClick={onClose}
-                                    className="flex items-center justify-between rounded-lg px-6 py-3.5 text-xs font-medium text-black-700 hover:bg-black-200 md:px-9"
+                                    className="flex-1 truncate px-6 py-3.5 text-xs font-medium text-black-700 hover:rounded-lg hover:bg-black-200 md:px-9"
                                   >
-                                    <span className="truncate">{log.title}</span>
-                                    <MoreDotIcon className="h-4 w-4 shrink-0 text-black-600" />
+                                    {log.title}
                                   </Link>
+                                  <MoreButton
+                                    onDelete={() => deleteObservation(log.observationId)}
+                                    className="absolute top-1/2 right-6 -translate-y-1/2 md:right-9"
+                                  />
                                 </li>
                               ))}
                             </ul>

@@ -80,7 +80,7 @@ export default function NavMenu({ isOpen, onLogout }: NavMenuProps) {
                       <div className="bg-black-100 py-2.5">
                         <Link
                           href="/observations"
-                          className="flex items-center gap-0.5 px-6 py-3.5 text-xs font-semibold text-black md:px-9"
+                          className="flex items-center gap-0.5 rounded-lg px-6 py-3.5 text-xs font-semibold text-black hover:bg-black-200 md:px-9"
                         >
                           <PlusIcon className="h-4 w-4 shrink-0" />새 관찰일지
                         </Link>
@@ -88,7 +88,7 @@ export default function NavMenu({ isOpen, onLogout }: NavMenuProps) {
                           <>
                             <Link
                               href="/mypage/observations"
-                              className="flex items-center gap-2 px-6 py-3 text-xs font-semibold text-black md:px-9"
+                              className="flex items-center gap-2 rounded-lg px-6 py-3 text-xs font-semibold text-black hover:bg-black-200 md:px-9"
                             >
                               최근 관찰일지
                               <ChevronDownIcon className="h-3 w-3 -rotate-90 text-black" />
@@ -98,7 +98,7 @@ export default function NavMenu({ isOpen, onLogout }: NavMenuProps) {
                                 <li key={log.observationId}>
                                   <Link
                                     href={`/observations/${log.observationId}`}
-                                    className="flex items-center justify-between px-6 py-3.5 text-xs font-medium text-black-700 md:px-9"
+                                    className="flex items-center justify-between rounded-lg px-6 py-3.5 text-xs font-medium text-black-700 hover:bg-black-200 md:px-9"
                                   >
                                     <span className="truncate">{log.title}</span>
                                     <MoreDotIcon className="h-4 w-4 shrink-0 text-black-600" />
@@ -115,7 +115,7 @@ export default function NavMenu({ isOpen, onLogout }: NavMenuProps) {
                           <li key={child.href}>
                             <Link
                               href={child.href}
-                              className="block px-6 py-3.5 text-xs font-semibold text-black md:px-9"
+                              className="block rounded-lg px-6 py-3.5 text-xs font-semibold text-black hover:bg-black-200 md:px-9"
                             >
                               {child.label}
                             </Link>

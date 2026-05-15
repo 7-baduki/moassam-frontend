@@ -101,7 +101,7 @@ export default function NavMenu({ isOpen, onClose, onLogout }: NavMenuProps) {
                         <Link
                           href="/mypage/observations"
                           onClick={onClose}
-                          className="mt-2 flex items-center gap-2 rounded-lg px-6 py-3 text-xs font-semibold text-black hover:bg-black-200 md:px-9"
+                          className="mt-2 flex items-center gap-2 rounded-lg px-6 py-3.5 text-xs font-semibold text-black hover:bg-black-200 md:px-9"
                         >
                           최근 관찰일지
                           <ChevronDownIcon className="h-3 w-3 -rotate-90 text-black" />

@@ -14,6 +14,7 @@ import { useObservationRecentQuery } from '@/hooks/queries/observations/useObser
 
 interface NavMenuProps {
   isOpen: boolean;
+  onClose: () => void;
   onLogout: () => void;
 }
 
@@ -28,7 +29,7 @@ const COMMUNITY_SECTION = {
 
 const NAV_SECTIONS = [{ href: '/observations', label: 'AI 관찰일지' }, COMMUNITY_SECTION];
 
-export default function NavMenu({ isOpen, onLogout }: NavMenuProps) {
+export default function NavMenu({ isOpen, onClose, onLogout }: NavMenuProps) {
   const pathname = usePathname() ?? '';
   const user = useUser();
   const openLoginModal = useLoginModalStore((state) => state.open);
@@ -80,6 +81,7 @@ export default function NavMenu({ isOpen, onLogout }: NavMenuProps) {
                       <div className="bg-black-100 py-2.5">
                         <Link
                           href="/observations"
+                          onClick={onClose}
                           className="flex items-center gap-0.5 rounded-lg px-6 py-3.5 text-xs font-semibold text-black hover:bg-black-200 md:px-9"
                         >
                           <PlusIcon className="h-4 w-4 shrink-0" />새 관찰일지
@@ -88,6 +90,7 @@ export default function NavMenu({ isOpen, onLogout }: NavMenuProps) {
                           <>
                             <Link
                               href="/mypage/observations"
+                              onClick={onClose}
                               className="flex items-center gap-2 rounded-lg px-6 py-3 text-xs font-semibold text-black hover:bg-black-200 md:px-9"
                             >
                               최근 관찰일지
@@ -98,6 +101,7 @@ export default function NavMenu({ isOpen, onLogout }: NavMenuProps) {
                                 <li key={log.observationId}>
                                   <Link
                                     href={`/observations/${log.observationId}`}
+                                    onClick={onClose}
                                     className="flex items-center justify-between rounded-lg px-6 py-3.5 text-xs font-medium text-black-700 hover:bg-black-200 md:px-9"
                                   >
                                     <span className="truncate">{log.title}</span>
@@ -115,6 +119,7 @@ export default function NavMenu({ isOpen, onLogout }: NavMenuProps) {
                           <li key={child.href}>
                             <Link
                               href={child.href}
+                              onClick={onClose}
                               className="block rounded-lg px-6 py-3.5 text-xs font-semibold text-black hover:bg-black-200 md:px-9"
                             >
                               {child.label}
@@ -135,6 +140,7 @@ export default function NavMenu({ isOpen, onLogout }: NavMenuProps) {
             <>
               <Link
                 href="/mypage/dashboard"
+                onClick={onClose}
                 className="flex items-center gap-5 px-4 py-[18.5px] md:px-9"
               >
                 <div className="h-12.5 w-12.5 shrink-0 overflow-hidden rounded-full">

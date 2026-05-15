@@ -99,7 +99,12 @@ export default function Header() {
           )}
         </div>
       </div>
-      <NavMenu key={pathname} isOpen={isNavMenuOpen} onLogout={handleLogout} />
+      <NavMenu
+        key={pathname}
+        isOpen={isNavMenuOpen}
+        onClose={() => setIsNavMenuOpen(false)}
+        onLogout={handleLogout}
+      />
     </header>
   );
 }

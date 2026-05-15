@@ -1,5 +1,12 @@
 import type { Metadata } from 'next';
 import localFont from 'next/font/local';
+import {
+  Noto_Sans_KR,
+  Noto_Serif_KR,
+  Do_Hyeon,
+  Black_Han_Sans,
+  Gamja_Flower,
+} from 'next/font/google';
 import { Toaster } from 'sonner';
 import './globals.css';
 import Providers from './providers';
@@ -16,6 +23,36 @@ const pretendard = localFont({
   variable: '--font-pretendard',
 });
 
+const notoSansKR = Noto_Sans_KR({
+  subsets: ['latin'],
+  display: 'swap',
+  variable: '--font-noto-sans-kr',
+});
+const notoSerifKR = Noto_Serif_KR({
+  subsets: ['latin'],
+  weight: ['400', '700'],
+  display: 'swap',
+  variable: '--font-noto-serif-kr',
+});
+const doHyeon = Do_Hyeon({
+  subsets: ['latin'],
+  weight: '400',
+  display: 'swap',
+  variable: '--font-do-hyeon',
+});
+const blackHanSans = Black_Han_Sans({
+  subsets: ['latin'],
+  weight: '400',
+  display: 'swap',
+  variable: '--font-black-han-sans',
+});
+const gamjaFlower = Gamja_Flower({
+  subsets: ['latin'],
+  weight: '400',
+  display: 'swap',
+  variable: '--font-gamja-flower',
+});
+
 export const metadata: Metadata = {
   title: '모아쌤',
   description: '유치원·어린이집 교사를 위한 AI 관찰일지 작성 및 수업자료 공유 커뮤니티 플랫폼',
@@ -28,8 +65,17 @@ export default function RootLayout({
 }>) {
   const userPromise = getProfile();
 
+  const fontVariables = [
+    pretendard.variable,
+    notoSansKR.variable,
+    notoSerifKR.variable,
+    doHyeon.variable,
+    blackHanSans.variable,
+    gamjaFlower.variable,
+  ].join(' ');
+
   return (
-    <html lang="ko" className={`${pretendard.variable} h-full antialiased`}>
+    <html lang="ko" className={`${fontVariables} h-full antialiased`}>
       <body className={`${pretendard.className} flex h-screen flex-col overflow-hidden`}>
         <Providers>
           <UserProvider userPromise={userPromise}>

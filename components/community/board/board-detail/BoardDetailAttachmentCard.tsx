@@ -2,6 +2,7 @@
 
 import Image from 'next/image';
 import { DownloadIcon, XIcon } from '@/app/assets/icons';
+import { toast } from '@/utils/toast';
 import {
   FileDefaultIcon,
   FileDocIcon,
@@ -10,8 +11,6 @@ import {
   FilePptIcon,
   FileJpgIcon,
 } from '@/app/assets/icons/editor';
-import { formatFileSize } from '@/utils/formatFileSize';
-import type { BoardDetailFile } from './board-detail.type';
 
 const FILE_ICON_MAP: Record<string, React.FC<React.SVGProps<SVGSVGElement>>> = {
   png: FilePngIcon,
@@ -23,6 +22,10 @@ const FILE_ICON_MAP: Record<string, React.FC<React.SVGProps<SVGSVGElement>>> = {
   doc: FileDocIcon,
   docx: FileDocIcon,
 };
+import { formatFileSize } from '@/utils/formatFileSize';
+import type { BoardDetailFile } from './board-detail.type';
+
+const IMAGE_EXTS = ['jpg', 'jpeg', 'png', 'gif', 'webp', 'svg'];
 
 interface BoardDetailAttachmentCardProps {
   file: BoardDetailFile;
@@ -32,18 +35,39 @@ function getExtension(fileName: string): string {
   return fileName.split('.').pop()?.toLowerCase() ?? '';
 }
 
+async function downloadFile(url: string, fileName: string) {
+  try {
+    const params = new URLSearchParams({ url, filename: fileName });
+    const response = await fetch(`/api/download?${params}`);
+    if (!response.ok) {
+      toast.error({ title: '다운로드 실패', description: '잠시 후 다시 시도해주세요' });
+      return;
+    }
+    const blob = await response.blob();
+    const objectUrl = URL.createObjectURL(blob);
+    const a = document.createElement('a');
+    a.href = objectUrl;
+    a.download = fileName;
+    a.click();
+    URL.revokeObjectURL(objectUrl);
+  } catch {
+    toast.error({ title: '다운로드 실패', description: '잠시 후 다시 시도해주세요' });
+  }
+}
+
 export default function BoardDetailAttachmentCard({ file }: BoardDetailAttachmentCardProps) {
   const ext = getExtension(file.originalName);
+  const isImage = IMAGE_EXTS.includes(ext);
   const FileIcon = FILE_ICON_MAP[ext] ?? FileDefaultIcon;
 
   return (
     <div className="group relative h-30 w-45 shrink-0 cursor-pointer overflow-hidden rounded-xl border border-black-300 bg-black-200">
-      {file.fileType === 'IMAGE' ? (
+      {isImage ? (
         <Image src={file.url} alt={file.originalName} fill className="object-cover" sizes="180px" />
       ) : (
         <div className="flex h-full flex-col transition-opacity group-hover:opacity-0">
           <div className="flex flex-1 items-center justify-center bg-white">
-            <FileIcon width={48} height={48} className="text-black-300" />
+            <FileDefaultIcon width={48} height={48} className="text-black-300" />
           </div>
           <div className="flex h-[50px] flex-col justify-center gap-0.5 bg-black-100 px-2.5">
             <span className="typo-line-p2 text-[11px] font-medium text-black-600">
@@ -73,6 +97,7 @@ export default function BoardDetailAttachmentCard({ file }: BoardDetailAttachmen
               type="button"
               aria-label="다운로드"
               className="flex cursor-pointer items-center hover:opacity-80 focus-visible:rounded focus-visible:ring-2 focus-visible:ring-white"
+              onClick={() => void downloadFile(file.url, file.originalName)}
             >
               <DownloadIcon className="h-5 w-5 brightness-0 invert" />
             </button>

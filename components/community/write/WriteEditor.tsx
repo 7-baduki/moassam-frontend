@@ -1,6 +1,6 @@
 'use client';
 
-import { useRef, useState, useCallback } from 'react';
+import { useRef, useState, useCallback, useEffect } from 'react';
 import { TwitterPicker } from 'react-color';
 import { toast } from '@/utils/toast';
 import { EditorContent, useEditor, useEditorState } from '@tiptap/react';
@@ -28,26 +28,32 @@ import { TableKit } from '@tiptap/extension-table';
 import Highlight from '@tiptap/extension-highlight';
 import Image from '@tiptap/extension-image';
 import Placeholder from '@tiptap/extension-placeholder';
+import imageCompression from 'browser-image-compression';
 
 async function uploadImage(file: File): Promise<string> {
-  // TODO: API 연결 시 아래 base64 로직을 FormData 업로드로 교체
-  return new Promise((resolve) => {
-    const reader = new FileReader();
-    reader.onload = (e) => resolve(e.target?.result as string);
-    reader.readAsDataURL(file);
-  });
+  try {
+    const compressed = await imageCompression(file, {
+      maxSizeMB: 0.3,
+      maxWidthOrHeight: 1280,
+      useWebWorker: true,
+    });
+    return await imageCompression.getDataUrlFromFile(compressed);
+  } catch {
+    toast.error({ title: '이미지 삽입 실패', description: '잠시 후 다시 시도해주세요' });
+    return '';
+  }
 }
 
 const FONT_FAMILIES = [
   { label: '기본서체', value: 'Pretendard' },
   { label: '나눔고딕', value: 'NanumGothic' },
   { label: '나눔명조', value: 'NanumMyeongjo' },
-  { label: '맑은고딕', value: 'Malgun Gothic' },
-  { label: '굴림', value: 'Gulim' },
-  { label: '돋움', value: 'Dotum' },
-  { label: '바탕', value: 'Batang' },
-  { label: '궁서', value: 'Gungsuh' },
-  { label: 'Arial', value: 'Arial' },
+  { label: 'Noto Sans', value: 'var(--font-noto-sans-kr)' },
+  { label: 'Noto Serif', value: 'var(--font-noto-serif-kr)' },
+  { label: '도현', value: 'var(--font-do-hyeon)' },
+  { label: '블랙한산스', value: 'var(--font-black-han-sans)' },
+  { label: '감자꽃', value: 'var(--font-gamja-flower)' },
+  { label: '궁서체', value: 'ChosunGs' },
 ];
 
 const FONT_SIZES = ['10', '12', '14', '16', '18', '20', '24', '28', '32', '36'];
@@ -71,6 +77,7 @@ interface WriteEditorProps {
 }
 
 export default function WriteEditor({ value, onChange }: WriteEditorProps) {
+  const initialValueRef = useRef(value);
   const imageInputRef = useRef<HTMLInputElement>(null);
   const colorBtnRef = useRef<HTMLDivElement>(null);
   const highlightBtnRef = useRef<HTMLDivElement>(null);
@@ -95,6 +102,11 @@ export default function WriteEditor({ value, onChange }: WriteEditorProps) {
     if (!file || !editor) return;
     e.target.value = '';
 
+    if (!file.type.startsWith('image/')) {
+      toast.warning({ title: '업로드 제한', description: '이미지 파일만 삽입할 수 있습니다' });
+      return;
+    }
+
     const url = await uploadImage(file);
     if (url) {
       editor.chain().focus().setImage({ src: url }).run();
@@ -113,7 +125,9 @@ export default function WriteEditor({ value, onChange }: WriteEditorProps) {
     }
 
     uploadImage(file).then((url) => {
-      if (url) editor.chain().focus().setImage({ src: url }).run();
+      if (url) {
+        editor.chain().focus().setImage({ src: url }).run();
+      }
     });
   };
 
@@ -133,6 +147,7 @@ export default function WriteEditor({ value, onChange }: WriteEditorProps) {
       Highlight.configure({ multicolor: true }),
       Image.configure({
         inline: true,
+        allowBase64: true,
         resize: { enabled: true, alwaysPreserveAspectRatio: true },
       }),
       Placeholder.configure({ placeholder: '내용을 입력하세요.' }),
@@ -167,6 +182,13 @@ export default function WriteEditor({ value, onChange }: WriteEditorProps) {
       onChange(editor.getHTML());
     },
   });
+
+  useEffect(() => {
+    if (!editor || !initialValueRef.current) return;
+    if (editor.isEmpty) {
+      editor.commands.setContent(initialValueRef.current, { emitUpdate: false });
+    }
+  }, [editor]);
 
   const editorState = useEditorState({
     editor,

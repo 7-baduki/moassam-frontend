@@ -6,6 +6,7 @@ const nextConfig: NextConfig = {
     remotePatterns: [
       { protocol: 'https', hostname: 'picsum.photos' },
       { protocol: 'https', hostname: 'kr.object.ncloudstorage.com' },
+      { protocol: 'https', hostname: 'moassam-storage.kr.object.ncloudstorage.com' },
       { protocol: 'https', hostname: 'k.kakaocdn.net' },
     ],
   },

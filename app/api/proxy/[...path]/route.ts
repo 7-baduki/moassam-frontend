@@ -18,14 +18,14 @@ async function handler(req: NextRequest, { params }: { params: Promise<{ path: s
   const response = await fetch(url.toString(), {
     method: req.method,
     headers,
-    body: req.method !== 'GET' && req.method !== 'HEAD' ? await req.text() : undefined,
+    body: req.method !== 'GET' && req.method !== 'HEAD' ? await req.arrayBuffer() : undefined,
   });
 
   if (!response.body) {
     return new NextResponse(null, { status: response.status });
   }
 
-  const data = await response.text();
+  const data = await response.arrayBuffer();
 
   const nextResponse = new NextResponse(data, {
     status: response.status,

@@ -5,51 +5,105 @@ import BoardCard from './BoardCard';
 import CommunityTitleBar from '@/components/community/CommunityTitleBar';
 import CommunityFilter from '@/components/community/CommunityFilter';
 import Pagination from '@/components/common/pagination/Pagination';
-import type { BoardPost } from './board.type';
 import { BOARD_CATEGORY_FILTER_TABS } from '@/constants/community/community-tabs';
+import { useBoardPostsQuery, useBoardSearchQuery } from '@/hooks/queries/community/useCommunity';
+import { EmptyState } from '@/components/common/empty-state/EmptyState';
+import { getValidParam } from '@/utils/getValidParam';
+import type { BoardPost, HeadTag } from './board.type';
 
-const PAGE_SIZE = 8;
-
-function getValidParam<T extends { value: string }>(
-  raw: string | null,
-  options: T[],
-  fallback: string,
-): string {
-  if (raw && options.some((o) => o.value === raw)) return raw;
-  return fallback;
+function PostList({ data }: { data: { data: BoardPost[]; totalPages: number } }) {
+  return data.data.length === 0 ? (
+    <div className="flex flex-1 items-center justify-center pt-20">
+      <EmptyState message="아직 등록된 게시글이 없어요" />
+    </div>
+  ) : (
+    <div className="grid grid-cols-2 gap-5">
+      {data.data.map((post) => (
+        <BoardCard key={post.postId} post={post} />
+      ))}
+    </div>
+  );
 }
 
-const MOCK_POSTS: BoardPost[] = Array.from({ length: 80 }, (_, i) => ({
-  postId: i + 1,
-  categoryName: '고민',
-  title: '자유놀이 시간마다 자꾸 같은 놀잇감만 찾는 아이들, 어떻게 도와주시나요?',
-  contentPreview:
-    '한 가지 놀잇감에만 입몰하는 건 좋은데 다른 활동으로는 잘 확장이 안 돼서요. 억지로 바꾸게 하기보다 자연스럽게 관심을 넓혀주고 싶은데 비슷한 경우 어떻게 하시는지 궁금합니다.',
-  authorName: '햇살선생님',
-  likeCount: 46,
-  commentCount: 119,
-  viewCount: 1230,
-  createdAt: '3시간 전',
-}));
+function BoardListContent({
+  category,
+  currentPage,
+  onPageChange,
+}: {
+  category: string;
+  currentPage: number;
+  onPageChange: (page: number) => void;
+}) {
+  const { data } = useBoardPostsQuery({
+    headTag: category !== 'all' ? (category as HeadTag) : undefined,
+    page: currentPage - 1,
+    size: 9,
+  });
+
+  return (
+    <>
+      <PostList data={data} />
+      {data.totalPages > 1 && (
+        <div className="mt-15 flex justify-center">
+          <Pagination
+            currentPage={currentPage}
+            totalPages={Math.max(1, data.totalPages)}
+            onChange={onPageChange}
+          />
+        </div>
+      )}
+    </>
+  );
+}
+
+function BoardSearchContent({
+  keyword,
+  currentPage,
+  onPageChange,
+}: {
+  keyword: string;
+  currentPage: number;
+  onPageChange: (page: number) => void;
+}) {
+  const { data } = useBoardSearchQuery({ keyword, page: currentPage - 1, size: 9 });
+
+  return (
+    <>
+      <PostList data={data} />
+      {data.totalPages > 1 && (
+        <div className="mt-15 flex justify-center">
+          <Pagination
+            currentPage={currentPage}
+            totalPages={Math.max(1, data.totalPages)}
+            onChange={onPageChange}
+          />
+        </div>
+      )}
+    </>
+  );
+}
 
 export default function BoardSection() {
   const router = useRouter();
   const pathname = usePathname();
   const searchParams = useSearchParams();
 
+  const keyword = searchParams.get('keyword') ?? '';
   const category = getValidParam(searchParams.get('category'), BOARD_CATEGORY_FILTER_TABS, 'all');
-
-  const totalPages = Math.max(1, Math.ceil(MOCK_POSTS.length / PAGE_SIZE));
   const rawPage = Number(searchParams.get('page'));
-  const currentPage = Number.isInteger(rawPage) && rawPage >= 1 ? Math.min(rawPage, totalPages) : 1;
-
-  const startIndex = (currentPage - 1) * PAGE_SIZE;
-  const visiblePosts = MOCK_POSTS.slice(startIndex, startIndex + PAGE_SIZE);
+  const currentPage = Number.isInteger(rawPage) && rawPage >= 1 ? rawPage : 1;
 
   function updateParam(key: string, value: string, resetPage = false) {
     const params = new URLSearchParams(searchParams.toString());
     params.set(key, value);
     if (resetPage) params.set('page', '1');
+    router.push(`${pathname}?${params.toString()}`, { scroll: false });
+  }
+
+  function handleSearch(value: string) {
+    const params = new URLSearchParams();
+    if (value) params.set('keyword', value);
+    params.set('page', '1');
     router.push(`${pathname}?${params.toString()}`, { scroll: false });
   }
 
@@ -62,20 +116,28 @@ export default function BoardSection() {
       <CommunityTitleBar
         title="자유게시판"
         onWrite={() => router.push('/community/write?board=free')}
+        onSearch={handleSearch}
       />
-      <CommunityFilter
-        categoryTabs={BOARD_CATEGORY_FILTER_TABS}
-        category={category}
-        onCategoryChange={(value) => updateParam('category', value, true)}
-      />
-      <div className="grid grid-cols-2 gap-5">
-        {visiblePosts.map((post) => (
-          <BoardCard key={post.postId} post={post} />
-        ))}
-      </div>
-      <div className="mt-15 flex justify-center">
-        <Pagination currentPage={currentPage} totalPages={totalPages} onChange={handlePageChange} />
-      </div>
+      {!keyword && (
+        <CommunityFilter
+          categoryTabs={BOARD_CATEGORY_FILTER_TABS}
+          category={category}
+          onCategoryChange={(value) => updateParam('category', value, true)}
+        />
+      )}
+      {keyword ? (
+        <BoardSearchContent
+          keyword={keyword}
+          currentPage={currentPage}
+          onPageChange={handlePageChange}
+        />
+      ) : (
+        <BoardListContent
+          category={category}
+          currentPage={currentPage}
+          onPageChange={handlePageChange}
+        />
+      )}
     </section>
   );
 }

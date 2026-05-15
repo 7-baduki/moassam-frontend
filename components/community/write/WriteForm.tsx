@@ -173,7 +173,7 @@ export default function WriteForm({
   return (
     <div className="flex flex-col">
       <CommunityTitleBar
-        title={isEdit ? '게시글 수정' : '등록'}
+        title={isEdit ? '게시글 수정' : '새글작성'}
         hideSearch
         actions={
           <div className="flex gap-2.5">

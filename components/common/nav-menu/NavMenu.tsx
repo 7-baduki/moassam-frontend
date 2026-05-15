@@ -98,37 +98,35 @@ export default function NavMenu({ isOpen, onClose, onLogout }: NavMenuProps) {
                         >
                           <PlusIcon className="h-4 w-4 shrink-0" />새 관찰일지
                         </Link>
+                        <Link
+                          href="/mypage/observations"
+                          onClick={onClose}
+                          className="flex items-center gap-2 rounded-lg px-6 py-3 text-xs font-semibold text-black hover:bg-black-200 md:px-9"
+                        >
+                          최근 관찰일지
+                          <ChevronDownIcon className="h-3 w-3 -rotate-90 text-black" />
+                        </Link>
                         {recentObservations && recentObservations.length > 0 && (
-                          <>
-                            <Link
-                              href="/mypage/observations"
-                              onClick={onClose}
-                              className="flex items-center gap-2 rounded-lg px-6 py-3 text-xs font-semibold text-black hover:bg-black-200 md:px-9"
-                            >
-                              최근 관찰일지
-                              <ChevronDownIcon className="h-3 w-3 -rotate-90 text-black" />
-                            </Link>
-                            <ul className="flex flex-col">
-                              {recentObservations.map((log) => (
-                                <li
-                                  key={log.observationId}
-                                  className="group relative flex items-center"
+                          <ul className="flex flex-col">
+                            {recentObservations.map((log) => (
+                              <li
+                                key={log.observationId}
+                                className="group relative flex items-center"
+                              >
+                                <Link
+                                  href={`/observations/${log.observationId}`}
+                                  onClick={onClose}
+                                  className="flex-1 truncate px-6 py-3.5 text-xs font-medium text-black-700 hover:rounded-lg hover:bg-black-200 md:px-9"
                                 >
-                                  <Link
-                                    href={`/observations/${log.observationId}`}
-                                    onClick={onClose}
-                                    className="flex-1 truncate px-6 py-3.5 text-xs font-medium text-black-700 hover:rounded-lg hover:bg-black-200 md:px-9"
-                                  >
-                                    {log.title}
-                                  </Link>
-                                  <MoreButton
-                                    onDelete={() => deleteObservation(log.observationId)}
-                                    className="absolute top-1/2 right-6 -translate-y-1/2 md:right-9"
-                                  />
-                                </li>
-                              ))}
-                            </ul>
-                          </>
+                                  {log.title}
+                                </Link>
+                                <MoreButton
+                                  onDelete={() => deleteObservation(log.observationId)}
+                                  className="absolute top-1/2 right-6 -translate-y-1/2 md:right-9"
+                                />
+                              </li>
+                            ))}
+                          </ul>
                         )}
                       </div>
                     ) : (

@@ -16,27 +16,31 @@ function LoggedInHero({
   remainingCount: number;
 }) {
   return (
-    <div className="relative flex w-full flex-col items-center px-10 pt-15 pb-15 md:px-0 md:pb-25">
-      <div className="absolute top-6 right-0 mr-10 flex items-center gap-2 rounded-[30px] border border-yellow-600 bg-yellow-200 py-1 pr-3 pl-1 shadow-[2px_2px_8px_0px_#00000014] md:mr-20">
-        <Image src={HeroBadge} alt="" width={24} height={24} />
-        <span className="typo-line-m2 text-xs font-semibold text-black-800">
+    <div className="relative flex w-full flex-col items-center px-4 pt-10 pb-5.75 md:px-0 md:pt-15 md:pb-25">
+      <div className="absolute top-4 left-1/2 flex -translate-x-1/2 items-center gap-2 rounded-[30px] border border-yellow-600 bg-yellow-200 py-0.5 pr-3 pl-1 shadow-[2px_2px_8px_0px_#00000014] md:top-5 md:right-0 md:left-auto md:mr-20 md:translate-x-0 md:py-1">
+        <Image src={HeroBadge} alt="" width={20} height={20} className="md:h-6 md:w-6" />
+        <span className="typo-line-m2 text-[11px] font-semibold text-black-800 md:text-xs">
           오늘 생성횟수 {remainingCount}개 남았어요!
         </span>
       </div>
 
-      <h1 className="typo-line-m2 text-[20px] font-semibold text-black-800">
+      <h1 className="typo-line-m2 mt-9 text-[16px] font-semibold text-black-800 md:mt-0 md:text-[20px]">
         안녕하세요, {userName} 👋
       </h1>
 
-      <div className="mt-7.5 flex w-full max-w-200 flex-col gap-4 rounded-2xl border border-pink-500 bg-white p-7">
-        <div className="h-29 bg-black-100 p-5">
-          <p className="typo-line-m4 flex items-center text-[16px] font-medium text-black-700">
+      <div className="mt-7.5 flex w-full max-w-200 flex-col gap-1.75 rounded-2xl border border-pink-500 bg-white p-3 md:gap-4 md:p-7">
+        <div className="h-13 rounded-sm bg-black-100 p-2.25 md:h-29 md:rounded-lg md:p-5">
+          <p className="typo-line-m4 flex items-center text-sm font-medium text-black-700 md:text-[16px]">
             오늘 아이들과의 하루는 어땠나요?{' '}
             <span className="animate-blink ml-1 h-[1.2em] w-0.5 bg-pink-500" />
           </p>
         </div>
         <div className="flex justify-end">
-          <Button size="md" variant="primary" className="h-13 w-57.5 text-[20px]">
+          <Button
+            size="md"
+            variant="primary"
+            className="h-8 w-30 text-[12px] md:h-13 md:w-57.5 md:text-[20px]"
+          >
             관찰일지 시작하기 &gt;
           </Button>
         </div>
@@ -51,20 +55,22 @@ function LoggedOutHero() {
       <div className="flex w-full flex-col items-center pt-15 pb-10">
         <div className="flex items-center gap-2 rounded-[22px] border border-black-300 bg-white py-[5.5px] pr-3.5 pl-2">
           <Badge label="NEW" variant="pink-light" />
-          <span className="typo-line-m2 text-sm font-medium text-black-700 md:text-xs">
+          <span className="typo-line-m2 text-[11px] font-medium text-black-700 md:text-xs">
             AI 문장 변환을 더한 유치원·어린이집 교사 커뮤니티
           </span>
         </div>
 
         <div className="mt-4 flex flex-col items-center gap-5 text-center">
-          <h1 className="typo-line-m2 text-[32px] font-semibold text-black-800 md:text-[40px]">
+          <h1 className="typo-line-m2 text-[20px] font-semibold text-black-800 md:text-[40px]">
             <span className="text-pink-500">관찰일지</span>부터{' '}
             <span className="text-pink-500">수업자료</span>까지
             <br />
             선생님의 준비 시간을 줄여드릴게요
           </h1>
-          <p className="typo-line-m4 text-base font-semibold text-black-600 md:text-xl">
-            이제부터 반복되는 관찰일지와 자료 준비, 모아쌤에서 한 번에 끝내세요!
+          <p className="typo-line-m4 text-center text-[13px] font-semibold text-black-600 md:text-xl">
+            이제부터 반복되는 관찰일지와 자료 준비,
+            <br />
+            모아쌤에서 한 번에 끝내세요!
           </p>
         </div>
       </div>

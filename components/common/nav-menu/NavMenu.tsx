@@ -63,7 +63,7 @@ export default function NavMenu({ isOpen, onLogout }: NavMenuProps) {
               <div key={section.href}>
                 <button
                   onClick={() => toggleSection(section.href)}
-                  className="flex w-full items-center justify-between px-4 py-3.75 text-base font-semibold md:px-9"
+                  className="flex w-full items-center justify-between py-3.75 pr-6 pl-4 text-base font-semibold md:px-9"
                 >
                   <span className="text-black">{section.label}</span>
                   <ChevronDownIcon

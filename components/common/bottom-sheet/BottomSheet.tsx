@@ -23,7 +23,7 @@ export function BottomSheet({
             'focus:outline-none',
           )}
         >
-          <div className="flex items-center justify-between px-4 py-5">
+          <div className="flex items-center justify-between border-b border-black-200 px-4 py-5">
             <div className="flex items-center gap-2">
               <RadixDialog.Title className="text-[15px] font-semibold text-black-800">
                 {title}

@@ -88,6 +88,17 @@ html {
   animation: blink 1s step-end infinite;
 }
 
+.animate-lift {
+  transition:
+    box-shadow 200ms,
+    transform 200ms;
+}
+
+.animate-lift:hover {
+  transform: translateY(-0.125rem);
+  box-shadow: 2px 8px 40px 0px #00000008;
+}
+
 .typo-line-m2 {
   line-height: 140%;
   letter-spacing: -0.02em;

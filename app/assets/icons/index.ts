@@ -1,4 +1,5 @@
 export { default as ChevronDoubleLeftIcon } from './ChevronDoubleLeftIcon.svg';
+export { default as ChevronRightIcon } from './ChevronRightIcon.svg';
 export { default as CheckIcon } from './CheckIcon.svg';
 export { default as CopyIcon } from './CopyIcon.svg';
 export { default as ChevronDownIcon } from './ChevronDownIcon.svg';

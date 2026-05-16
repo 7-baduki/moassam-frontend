@@ -1,7 +1,8 @@
 'use client';
 
-import { Suspense } from 'react';
 import Image from 'next/image';
+import Link from 'next/link';
+import { motion } from 'framer-motion';
 import Badge from '@/components/common/badge/Badge';
 import { Button } from '@/components/common/button/Button';
 import { HeroBadge } from '@/app/assets/images';
@@ -9,24 +10,58 @@ import HeroImage from '@/app/assets/images/hero-section.png';
 import HeroImageMd from '@/app/assets/images/hero-section-md.png';
 import { useUser } from '@/lib/user-context';
 import { useCreditsQuery } from '@/hooks/queries/user/useCredits';
+import { AsyncBoundary } from '@/lib/async-boundary';
 
-function LoggedInHero({ userName = '' }: { userName: string }) {
+function CreditBadge() {
   const { data: credits } = useCreditsQuery();
 
   return (
-    <div className="relative flex w-full flex-col items-center px-4 pt-10 pb-5.75 md:px-0 md:pt-15 md:pb-25">
-      <div className="absolute top-4 left-1/2 flex -translate-x-1/2 items-center gap-2 rounded-[30px] border border-yellow-600 bg-yellow-200 py-0.5 pr-3 pl-1 shadow-[2px_2px_8px_0px_#00000014] md:top-5 md:right-0 md:left-auto md:mr-20 md:translate-x-0 md:py-1">
+    <div className="absolute top-4 left-1/2 -translate-x-1/2 md:top-5 md:right-0 md:left-auto md:mr-20 md:translate-x-0">
+      <motion.div
+        initial={{ opacity: 0, y: -8, scale: 0.92 }}
+        animate={{ opacity: 1, y: 0, scale: 1 }}
+        transition={{ duration: 0.4, ease: [0.22, 1, 0.36, 1] }}
+        className="flex items-center gap-2 rounded-[30px] border border-yellow-600 bg-yellow-200 py-0.5 pr-3 pl-1 shadow-[2px_2px_8px_0px_#00000014] md:py-1"
+      >
         <Image src={HeroBadge} alt="" width={20} height={20} className="md:h-6 md:w-6" />
         <span className="typo-line-m2 text-[11px] font-semibold text-black-800 md:text-xs">
           오늘 생성횟수 {credits?.balance ?? 0}개 남았어요!
         </span>
-      </div>
+      </motion.div>
+    </div>
+  );
+}
 
-      <h1 className="typo-line-m2 mt-9 text-[16px] font-semibold text-black-800 md:mt-0 md:text-[20px]">
+const fadeUp = {
+  hidden: { opacity: 0, y: 12 },
+  show: { opacity: 1, y: 0 },
+};
+
+function LoggedInHero({ userName = '' }: { userName: string }) {
+  return (
+    <motion.div
+      initial="hidden"
+      animate="show"
+      transition={{ staggerChildren: 0.12, delayChildren: 0.05 }}
+      className="relative flex w-full flex-col items-center px-4 pt-10 pb-5.75 md:px-0 md:pt-15 md:pb-25"
+    >
+      <AsyncBoundary pendingFallback={null} rejectedFallback={() => null}>
+        <CreditBadge />
+      </AsyncBoundary>
+
+      <motion.h1
+        variants={fadeUp}
+        transition={{ duration: 0.5, ease: [0.22, 1, 0.36, 1] }}
+        className="typo-line-m2 mt-9 text-[16px] font-semibold text-black-800 md:mt-0 md:text-[20px]"
+      >
         안녕하세요, {userName} 👋
-      </h1>
+      </motion.h1>
 
-      <div className="mt-7.5 flex w-full max-w-200 flex-col gap-1.75 rounded-2xl border border-pink-500 bg-white p-3 md:gap-4 md:p-7">
+      <motion.div
+        variants={fadeUp}
+        transition={{ duration: 0.5, ease: [0.22, 1, 0.36, 1] }}
+        className="mt-7.5 flex w-full max-w-200 flex-col gap-1.75 rounded-2xl border border-pink-500 bg-white p-3 md:gap-4 md:p-7"
+      >
         <div className="h-13 rounded-sm bg-black-100 p-2.25 md:h-29 md:rounded-lg md:p-5">
           <p className="typo-line-m4 flex items-center text-sm font-medium text-black-700 md:text-[16px]">
             오늘 아이들과의 하루는 어땠나요?{' '}
@@ -34,16 +69,18 @@ function LoggedInHero({ userName = '' }: { userName: string }) {
           </p>
         </div>
         <div className="flex justify-end">
-          <Button
-            size="md"
-            variant="primary"
-            className="h-8 w-30 text-[12px] md:h-13 md:w-57.5 md:text-[20px]"
-          >
-            관찰일지 시작하기 &gt;
-          </Button>
+          <Link href="/observations">
+            <Button
+              size="md"
+              variant="primary"
+              className="h-8 w-30 text-[12px] md:h-13 md:w-57.5 md:text-[20px]"
+            >
+              관찰일지 시작하기 &gt;
+            </Button>
+          </Link>
         </div>
-      </div>
-    </div>
+      </motion.div>
+    </motion.div>
   );
 }
 
@@ -94,13 +131,7 @@ export default function HeroSection() {
 
   return (
     <section className="relative flex flex-col items-center bg-black-100" aria-label="히어로 섹션">
-      {user ? (
-        <Suspense fallback={null}>
-          <LoggedInHero userName={user.nickname} />
-        </Suspense>
-      ) : (
-        <LoggedOutHero />
-      )}
+      {user ? <LoggedInHero userName={user.nickname} /> : <LoggedOutHero />}
     </section>
   );
 }

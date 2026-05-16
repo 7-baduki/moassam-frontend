@@ -4,8 +4,9 @@ import { useState, useTransition } from 'react';
 import { useRouter } from 'next/navigation';
 import { useQueryClient } from '@tanstack/react-query';
 import axios from 'axios';
-import { XIcon } from '@/app/assets/icons';
+import { XIcon, ChevronDownIcon } from '@/app/assets/icons';
 import { Select } from '@/components/common/select/Select';
+import { SelectBottomSheet } from '@/components/common/bottom-sheet/SelectBottomSheet';
 import { Textarea } from '@/components/common/textarea/Textarea';
 import { Button } from '@/components/common/button/Button';
 import { Dialog } from '@/components/common/dialog/Dialog';
@@ -16,6 +17,7 @@ import {
   SECTION_TYPE_LABEL,
 } from '@/constants/observations/observation';
 import { useObservationMutation } from '@/hooks/queries/observations/useObservation';
+import { useIsMobile } from '@/hooks/useIsMobile';
 import { toast } from '@/utils/toast';
 
 export default function ObservationCreateForm() {
@@ -27,6 +29,10 @@ export default function ObservationCreateForm() {
 
   const [isPending, startTransition] = useTransition();
   const [showCreditDialog, setShowCreditDialog] = useState(false);
+  const [ageBottomSheetOpen, setAgeBottomSheetOpen] = useState(false);
+  const [areaBottomSheetOpen, setAreaBottomSheetOpen] = useState(false);
+
+  const isMobile = useIsMobile();
 
   const { mutate: createObservation, isPending: isMutating } = useObservationMutation({
     onSuccess: ({ observationId }) => {
@@ -116,23 +122,66 @@ export default function ObservationCreateForm() {
               기본정보
             </h2>
             <div className="flex flex-col gap-5 md:flex-row md:gap-15">
-              <Select
-                size="md"
-                options={AGE_OPTIONS}
-                triggerLabel="연령"
-                value={age}
-                onChange={setAge}
-                className="w-full md:w-90"
-              />
-              <Select
-                multiple
-                size="md"
-                options={AREA_OPTIONS}
-                triggerLabel="5개 영역"
-                value={areas}
-                onChange={setAreas}
-                className="w-full md:w-90"
-              />
+              {isMobile ? (
+                <>
+                  <button
+                    type="button"
+                    onClick={() => setAgeBottomSheetOpen(true)}
+                    className="flex w-full items-center justify-between rounded-lg border border-black-300 p-2.5 text-sm font-medium text-black-800"
+                  >
+                    <span>연령</span>
+                    <ChevronDownIcon width={20} height={20} className="shrink-0" />
+                  </button>
+                  <button
+                    type="button"
+                    onClick={() => setAreaBottomSheetOpen(true)}
+                    className="flex w-full items-center justify-between rounded-lg border border-black-300 p-2.5 text-sm font-medium text-black-800"
+                  >
+                    <span>5개 영역</span>
+                    <ChevronDownIcon width={20} height={20} className="shrink-0" />
+                  </button>
+                  <SelectBottomSheet
+                    open={ageBottomSheetOpen}
+                    onOpenChange={setAgeBottomSheetOpen}
+                    title="연령"
+                    options={AGE_OPTIONS}
+                    value={age}
+                    onChange={setAge}
+                    onConfirm={() => setAgeBottomSheetOpen(false)}
+                  />
+                  <SelectBottomSheet
+                    multiple
+                    open={areaBottomSheetOpen}
+                    onOpenChange={setAreaBottomSheetOpen}
+                    title="5개 영역"
+                    description="중복선택 가능"
+                    options={AREA_OPTIONS}
+                    value={areas}
+                    onChange={setAreas}
+                    onConfirm={() => setAreaBottomSheetOpen(false)}
+                  />
+                </>
+              ) : (
+                <>
+                  <Select
+                    size="md"
+                    options={AGE_OPTIONS}
+                    triggerLabel="연령"
+                    value={age}
+                    onChange={setAge}
+                    className="w-full md:w-90"
+                  />
+                  <Select
+                    multiple
+                    size="md"
+                    options={AREA_OPTIONS}
+                    triggerLabel="5개 영역"
+                    value={areas}
+                    onChange={setAreas}
+                    className="w-full md:w-90"
+                  />
+                </>
+              )}
             </div>
           </section>
 

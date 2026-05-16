@@ -56,7 +56,7 @@ export default function NavMenu({ isOpen, onClose, onLogout }: NavMenuProps) {
     },
   });
 
-  const { data: recentObservations } = useObservationRecentQuery();
+  const { data: recentObservations } = useObservationRecentQuery(!!user);
 
   return (
     <div

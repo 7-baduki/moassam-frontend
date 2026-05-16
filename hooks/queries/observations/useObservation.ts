@@ -18,11 +18,12 @@ import {
   ObservationDetailResponse,
 } from '@/types/observation.type';
 
-export const useObservationRecentQuery = () => {
+export const useObservationRecentQuery = (enabled = true) => {
   return useQuery({
     queryKey: ['observations', 'recent'],
     queryFn: () => getObservations(),
     select: (data) => data.items.slice(0, 4),
+    enabled,
   });
 };
 

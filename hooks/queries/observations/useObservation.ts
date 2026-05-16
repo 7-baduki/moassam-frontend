@@ -1,5 +1,6 @@
 import {
   useInfiniteQuery,
+  useQuery,
   useMutation,
   UseMutationOptions,
   useSuspenseQuery,
@@ -16,6 +17,14 @@ import {
   ObservationCreateResponse,
   ObservationDetailResponse,
 } from '@/types/observation.type';
+
+export const useObservationRecentQuery = () => {
+  return useQuery({
+    queryKey: ['observations', 'recent'],
+    queryFn: () => getObservations(),
+    select: (data) => data.items.slice(0, 4),
+  });
+};
 
 export const useObservationListQuery = () => {
   return useInfiniteQuery({

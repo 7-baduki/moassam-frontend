@@ -42,7 +42,7 @@ export function LoginModal() {
           aria-modal="true"
           aria-labelledby="login-modal-title"
         >
-          <MainLogoIcon />
+          <MainLogoIcon className="h-10 w-10" />
           <p id="login-modal-title" className="mt-1.5 text-xl font-semibold text-pink-500">
             {title}
           </p>

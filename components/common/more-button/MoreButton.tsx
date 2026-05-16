@@ -33,7 +33,7 @@ export function MoreButton({ onEdit, onDelete, className }: MoreButtonProps) {
         <DropdownMenu.Content
           align="end"
           sideOffset={6}
-          className="z-100 w-25 overflow-hidden rounded-2xl border border-black-200 bg-white py-2 shadow-[0px_1px_8px_0px_rgba(0,0,0,0.04)]"
+          className="z-500 w-25 overflow-hidden rounded-2xl border border-black-200 bg-white py-2 shadow-[0px_1px_8px_0px_rgba(0,0,0,0.04)]"
         >
           {onEdit && (
             <DropdownMenu.Item asChild onSelect={onEdit}>

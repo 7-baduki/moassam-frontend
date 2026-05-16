@@ -52,7 +52,7 @@ function LoggedInHero({ userName = '' }: { userName: string }) {
         initial={{ opacity: 0, y: 12 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.5, ease: 'easeOut', delay: 0.17 }}
-        className="mt-7.5 flex w-full max-w-[993px] flex-col gap-1.75 rounded-2xl border border-pink-500 bg-white p-3 md:gap-4 md:p-7"
+        className="mt-7.5 flex w-full max-w-248.25 flex-col gap-1.75 rounded-2xl border border-pink-500 bg-white p-3 md:gap-4 md:p-7"
       >
         <div className="h-13 rounded-sm bg-black-100 p-2.25 md:h-29 md:rounded-lg md:p-5">
           <p className="typo-line-m4 flex items-center text-sm font-medium text-black-700 md:text-base">

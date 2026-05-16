@@ -70,7 +70,7 @@ export default function SolutionSection() {
           <Image
             src={SolutionProcessMd}
             alt="모아쌤 이용 프로세스"
-            className={`mx-auto w-[283px] md:w-[392px] xl:hidden ${PROCESS_IMG_CLASS}`}
+            className={`mx-auto w-70.75 md:w-98 xl:hidden ${PROCESS_IMG_CLASS}`}
           />
         </motion.div>
 
@@ -81,7 +81,7 @@ export default function SolutionSection() {
             className="inline-flex h-8 w-30 items-center justify-center gap-1 py-[7.5px] text-xs whitespace-nowrap md:h-13 md:w-57.5 md:gap-2 md:pt-3.5 md:pb-2.5 md:text-xl"
           >
             {isLoggedIn ? '커뮤니티 시작하기' : '3초 간편 로그인 시작'}
-            <span className="inline-flex h-[7px] w-[7px] items-center justify-center md:h-[14px] md:w-[14px]">
+            <span className="inline-flex h-1.75 w-1.75 items-center justify-center md:h-3.5 md:w-3.5">
               <ChevronRightIcon className="h-[5.6px] w-[2.8px] md:h-[11.2px] md:w-[5.6px]" />
             </span>
           </Button>

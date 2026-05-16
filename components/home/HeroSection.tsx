@@ -34,7 +34,7 @@ function CreditBadge() {
 
 function LoggedInHero({ userName = '' }: { userName: string }) {
   return (
-    <div className="relative flex w-full flex-col items-center px-4 pt-10 pb-5.75 md:px-0 md:pt-15 md:pb-25">
+    <div className="relative flex w-full flex-col items-center px-4 pt-10 pb-5.75 md:px-8 md:py-15 xl:px-0">
       <AsyncBoundary pendingFallback={null} rejectedFallback={() => null}>
         <CreditBadge />
       </AsyncBoundary>
@@ -52,7 +52,7 @@ function LoggedInHero({ userName = '' }: { userName: string }) {
         initial={{ opacity: 0, y: 12 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.5, ease: 'easeOut', delay: 0.17 }}
-        className="mt-7.5 flex w-full max-w-200 flex-col gap-1.75 rounded-2xl border border-pink-500 bg-white p-3 md:gap-4 md:p-7"
+        className="mt-7.5 flex w-full max-w-[993px] flex-col gap-1.75 rounded-2xl border border-pink-500 bg-white p-3 md:gap-4 md:p-7"
       >
         <div className="h-13 rounded-sm bg-black-100 p-2.25 md:h-29 md:rounded-lg md:p-5">
           <p className="typo-line-m4 flex items-center text-sm font-medium text-black-700 md:text-base">
@@ -78,8 +78,8 @@ function LoggedInHero({ userName = '' }: { userName: string }) {
 
 function LoggedOutHero() {
   return (
-    <>
-      <div className="flex w-full flex-col items-center pt-15 pb-10">
+    <div className="flex w-full flex-col items-center gap-10 pt-15 pb-15">
+      <div className="flex flex-col items-center">
         <div className="flex items-center gap-2 rounded-[22px] border border-black-300 bg-white py-[5.5px] pr-3.5 pl-2">
           <Badge label="NEW" variant="pink-light" />
           <span className="typo-line-m2 text-[11px] font-medium text-black-700 md:text-xs">
@@ -88,13 +88,13 @@ function LoggedOutHero() {
         </div>
 
         <div className="mt-4 flex flex-col items-center gap-5 text-center">
-          <h1 className="typo-line-m2 text-xl font-semibold text-black-800 md:text-[40px]">
+          <h1 className="typo-line-m2 text-xl font-semibold text-black-800 md:text-[32px] xl:text-[40px]">
             <span className="text-pink-500">관찰일지</span>부터{' '}
             <span className="text-pink-500">수업자료</span>까지
             <br />
             선생님의 준비 시간을 줄여드릴게요
           </h1>
-          <p className="typo-line-m4 text-center text-[13px] font-semibold text-black-600 md:text-xl">
+          <p className="typo-line-m4 text-center text-[13px] font-semibold text-black-600 md:text-base xl:text-xl">
             이제부터 반복되는 관찰일지와 자료 준비,
             <br />
             모아쌤에서 한 번에 끝내세요!
@@ -102,19 +102,19 @@ function LoggedOutHero() {
         </div>
       </div>
 
-      <div className="flex w-full justify-center pb-15">
+      <div className="flex w-full justify-center">
         <Image
           src={HeroImage}
           alt="모아쌤 서비스 소개 일러스트"
-          className="hidden w-full max-w-293 md:block"
+          className="hidden w-full max-w-293 xl:block"
         />
         <Image
           src={HeroImageMd}
           alt="모아쌤 서비스 소개 일러스트"
-          className="w-full max-w-179.75 md:hidden"
+          className="mx-8 w-full max-w-179.75 xl:hidden"
         />
       </div>
-    </>
+    </div>
   );
 }
 

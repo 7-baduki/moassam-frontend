@@ -11,7 +11,6 @@ export { default as ServiceObservations } from './service-observations.png';
 export { default as ServiceBoard } from './service-board.png';
 export { default as ServiceMoabang } from './service-moabang.png';
 export { default as PainPoint } from './pain-point.png';
-export { default as PainPointMd } from './pain-point-md.png';
 export { default as PainPointCard1Md } from './pain-point-card1-md.png';
 export { default as PainPointCard2Md } from './pain-point-card2-md.png';
 export { default as PainPointCard3Md } from './pain-point-card3-md.png';

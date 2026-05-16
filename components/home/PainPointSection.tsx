@@ -4,15 +4,12 @@ import Image from 'next/image';
 import Badge from '@/components/common/badge/Badge';
 import {
   PainPoint,
-  PainPointMd,
   PainPointCard1Md,
   PainPointCard2Md,
   PainPointCard3Md,
 } from '@/app/assets/images';
-import { useUser } from '@/lib/user-context';
+
 export default function PainPointSection() {
-  const user = useUser();
-  const isLoggedIn = !!user;
   return (
     <section className="w-full bg-black-100 pt-15 pb-13.5 md:py-25" aria-label="숨은 고충 섹션">
       <div className="mx-auto flex w-full max-w-142.5 flex-col items-center gap-7.5 md:max-w-293 md:flex-row md:items-start md:gap-26">
@@ -25,18 +22,26 @@ export default function PainPointSection() {
           </p>
         </div>
         <div className="min-w-0 md:flex-1">
-          <Image src={PainPoint} alt="페인포인트 예시" className="hidden w-full md:block" />
-          {isLoggedIn ? (
-            <div className="flex flex-col items-center gap-7.5 md:hidden">
-              <div className="flex gap-7.5">
-                <Image src={PainPointCard1Md} alt="페인포인트 카드 1" className="w-67.5" />
-                <Image src={PainPointCard2Md} alt="페인포인트 카드 2" className="w-67.5" />
-              </div>
-              <Image src={PainPointCard3Md} alt="페인포인트 카드 3" className="w-67.5" />
+          <Image src={PainPoint} alt="페인포인트 예시" className="hidden w-full lg:block" />
+          <div className="flex flex-col items-center gap-7.5 lg:hidden">
+            <div className="flex gap-7.5">
+              <Image
+                src={PainPointCard1Md}
+                alt="페인포인트 카드 1"
+                className="h-40 w-39 object-cover md:h-[285px] md:w-67.5"
+              />
+              <Image
+                src={PainPointCard2Md}
+                alt="페인포인트 카드 2"
+                className="h-40 w-39 object-cover md:h-[285px] md:w-67.5"
+              />
             </div>
-          ) : (
-            <Image src={PainPointMd} alt="페인포인트 예시" className="w-full max-w-75 md:hidden" />
-          )}
+            <Image
+              src={PainPointCard3Md}
+              alt="페인포인트 카드 3"
+              className="h-40 w-39 object-cover md:h-[285px] md:w-67.5"
+            />
+          </div>
         </div>
       </div>
     </section>

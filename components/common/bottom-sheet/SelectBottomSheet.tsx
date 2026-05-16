@@ -28,7 +28,7 @@ export function SelectBottomSheet(props: SelectBottomSheetProps) {
 
   return (
     <BottomSheet open={open} onOpenChange={onOpenChange} title={title} description={description}>
-      <ul className="overflow-y-auto">
+      <ul className="max-h-[50vh] overflow-y-auto">
         {options.map((option) => {
           const selected = isSelected(option.value);
           return (

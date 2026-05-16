@@ -146,11 +146,11 @@ export default function ObservationCreateForm() {
             />
           </section>
           {selectedTags.length > 0 && (
-            <div className="flex flex-wrap gap-3.5 pt-5">
+            <div className="flex flex-wrap gap-3 pt-5">
               {selectedTags.map((tag) => (
                 <span
                   key={tag.key}
-                  className="flex items-center gap-1.5 p-1.5 text-xs font-medium text-pink-500"
+                  className="flex items-center gap-2.5 rounded-[20px] bg-pink-50 px-3.5 py-2 text-xs font-medium text-pink-500"
                 >
                   {tag.label}
                   <button
@@ -159,7 +159,7 @@ export default function ObservationCreateForm() {
                     aria-label={`${tag.label} 제거`}
                     className="cursor-pointer"
                   >
-                    <XIcon className="text-black-700" />
+                    <XIcon width={20} height={20} className="text-pink-900" />
                   </button>
                 </span>
               ))}

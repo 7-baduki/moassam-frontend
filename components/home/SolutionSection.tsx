@@ -13,6 +13,7 @@ import {
 } from '@/app/assets/images';
 import { useUser } from '@/lib/user-context';
 import { useScrollRoot } from '@/lib/scroll-root';
+import { ChevronRightIcon } from '@/app/assets/icons';
 
 const PROCESS_IMG_CLASS =
   'rounded-tr-lg rounded-br-lg rounded-bl-lg shadow-[2px_2px_40px_0px_#00000014]';
@@ -31,21 +32,21 @@ export default function SolutionSection() {
   });
 
   return (
-    <section className="w-full bg-black-50 py-15 md:pt-17.5 md:pb-25" aria-label="해결방법 섹션">
-      <div className="mx-auto w-full max-w-104 md:max-w-293">
-        <div className="flex flex-col items-center gap-4 md:flex-row md:items-start md:justify-between">
+    <section className="w-full bg-black-50 py-15 xl:py-25" aria-label="해결방법 섹션">
+      <div className="mx-auto w-full max-w-104 xl:max-w-293">
+        <div className="flex flex-col items-center gap-4 xl:flex-row xl:items-start xl:justify-between">
           <motion.div
-            className="flex flex-col items-center gap-2 md:items-start md:gap-4"
+            className="flex flex-col items-center gap-2 xl:items-start xl:gap-4"
             {...fadeUp(0)}
           >
             <Badge label="해결방법" variant="pink-light" />
-            <h2 className="typo-line-m2 text-center text-base font-semibold text-black-800 md:text-left md:text-2xl">
+            <h2 className="typo-line-m2 text-center text-base font-semibold text-black-800 xl:text-left xl:text-2xl">
               막막했던 기록부터 자료까지,
               <br />한 번에 끝내세요!
             </h2>
           </motion.div>
 
-          <div className="hidden flex-col items-end gap-1.5 md:flex">
+          <div className="hidden flex-col items-end gap-1.5 xl:flex">
             {COMMENTS.map((src, i) => (
               <motion.div key={i} {...fadeUp(0.1 + i * 0.12)}>
                 <Image src={src} alt="" height={43} />
@@ -55,28 +56,31 @@ export default function SolutionSection() {
         </div>
 
         <motion.div
-          className="relative z-10 mt-4 md:-mt-2.5 md:overflow-hidden md:rounded-tr-lg md:rounded-br-lg md:rounded-bl-lg md:bg-white"
+          className="relative z-10 mt-4 xl:-mt-2.5 xl:overflow-hidden xl:rounded-tr-lg xl:rounded-br-lg xl:rounded-bl-lg xl:bg-white"
           {...fadeUp(0.2)}
         >
           <Image
             src={SolutionProcess}
             alt="모아쌤 이용 프로세스"
-            className={`hidden w-full md:block ${PROCESS_IMG_CLASS}`}
+            className={`hidden w-full xl:block ${PROCESS_IMG_CLASS}`}
           />
           <Image
             src={SolutionProcessMd}
             alt="모아쌤 이용 프로세스"
-            className={`mx-auto w-[283px] md:hidden ${PROCESS_IMG_CLASS}`}
+            className={`mx-auto w-[283px] md:w-[392px] xl:hidden ${PROCESS_IMG_CLASS}`}
           />
         </motion.div>
 
-        <motion.div className="mt-6 flex justify-center md:mt-15" {...fadeUp(0.3)}>
+        <motion.div className="mt-4 flex justify-center xl:mt-15" {...fadeUp(0.3)}>
           <Button
             variant="primary"
             size="md"
-            className="w-30 py-[7.5px] pr-2 pl-3.5 text-xs md:h-13 md:w-57.5 md:px-0 md:py-2 md:text-xl"
+            className="inline-flex h-8 w-30 items-center justify-center gap-1 py-[7.5px] text-xs whitespace-nowrap md:h-13 md:w-57.5 md:gap-2 md:pt-3.5 md:pb-2.5 md:text-xl"
           >
-            {isLoggedIn ? '커뮤니티 시작하기 >' : '3초 간편 로그인 시작 >'}
+            {isLoggedIn ? '커뮤니티 시작하기' : '3초 간편 로그인 시작'}
+            <span className="inline-flex h-[7px] w-[7px] items-center justify-center md:h-[14px] md:w-[14px]">
+              <ChevronRightIcon className="h-[5.6px] w-[2.8px] md:h-[11.2px] md:w-[5.6px]" />
+            </span>
           </Button>
         </motion.div>
       </div>

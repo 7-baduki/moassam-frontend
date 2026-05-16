@@ -30,23 +30,23 @@ export default function PainPointSection() {
 
   return (
     <section className="w-full bg-black-100 pt-15 pb-13.5 md:py-25" aria-label="숨은 고충 섹션">
-      <div className="mx-auto flex w-full max-w-142.5 flex-col items-center gap-7.5 md:max-w-293 md:flex-row md:items-start md:gap-26">
+      <div className="mx-auto flex w-full max-w-142.5 flex-col items-center gap-7.5 md:max-w-293 xl:flex-row xl:items-start xl:gap-26">
         <motion.div
-          className="flex flex-col items-center gap-4 md:shrink-0 md:items-start"
+          className="flex flex-col items-center gap-4 xl:shrink-0 xl:items-start"
           {...fadeUp(0)}
         >
           <Badge label="숨은고충" variant="pink-light" />
-          <p className="typo-line-m2 text-center text-xl font-semibold text-black-800 md:text-left md:text-2xl">
+          <p className="typo-line-m2 text-center text-xl font-semibold text-black-800 xl:text-left xl:text-2xl">
             이런 순간,
             <br />
             자주 있지 않나요?
           </p>
         </motion.div>
-        <div className="min-w-0 md:flex-1">
+        <div className="min-w-0 xl:flex-1">
           <motion.div {...fadeUp(0.1)}>
-            <Image src={PainPoint} alt="페인포인트 예시" className="hidden w-full lg:block" />
+            <Image src={PainPoint} alt="페인포인트 예시" className="hidden w-full xl:block" />
           </motion.div>
-          <div className="flex flex-col items-center gap-7.5 lg:hidden">
+          <div className="flex flex-col items-center gap-7.5 xl:hidden">
             <div className="flex gap-7.5">
               {PAIN_CARDS.slice(0, 2).map(({ src, alt, delay }) => (
                 <motion.div key={alt} {...fadeUp(delay)}>

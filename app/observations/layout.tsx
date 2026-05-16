@@ -12,7 +12,7 @@ export default function ObservationsLayout({ children }: { children: React.React
             <ObservationCreditBadgeWrapper />
           </Suspense>
         </div>
-        <div className="px-20 pt-25 pb-15">{children}</div>
+        <div className="px-3.75 pt-16 md:px-8 md:py-18 xl:px-20 xl:pt-25 xl:pb-15">{children}</div>
       </div>
     </div>
   );

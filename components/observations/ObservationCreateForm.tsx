@@ -93,29 +93,36 @@ export default function ObservationCreateForm() {
         ]}
       />
       <div className="flex flex-col items-center">
-        <div className="mb-12.5 text-center">
-          <h1 className="text-xl font-semibold text-black">관찰일지를 완성해보세요!</h1>
-          <p className="mt-0.5 text-sm font-medium text-black">
+        <div className="mb-5 text-center md:mb-12.5">
+          <h1 className="text-base font-semibold text-black md:text-xl">
+            관찰일지를
+            <br className="md:hidden" />
+            완성해보세요!
+          </h1>
+          <p className="mt-5 text-sm font-medium text-black md:mt-0.5 md:text-sm">
             간단한 입력으로 영유아의 행동을 기록할 수 있어요
           </p>
         </div>
 
-        <h2 className="mb-5 w-full max-w-350 text-lg font-semibold text-black">
+        <h2 className="mb-5 hidden w-full max-w-350 font-semibold text-black md:block md:text-lg">
           관찰일지 맞춤 검색
         </h2>
 
         <div
           className={`w-full max-w-350 rounded-[20px] bg-white px-12.5 pt-11.75 ${selectedTags.length > 0 ? 'pb-5' : 'pb-11.75'}`}
         >
-          <section className="mb-5">
-            <h2 className="mb-5 text-lg font-semibold text-black-800">기본정보</h2>
-            <div className="flex gap-15">
+          <section className="mb-12.5 xl:mb-5">
+            <h2 className="mb-1.5 text-base font-semibold text-black-800 md:mb-5 md:text-lg">
+              기본정보
+            </h2>
+            <div className="flex flex-col gap-5 md:flex-row md:gap-15">
               <Select
                 size="md"
                 options={AGE_OPTIONS}
                 triggerLabel="연령"
                 value={age}
                 onChange={setAge}
+                className="w-full md:w-90"
               />
               <Select
                 multiple
@@ -124,20 +131,25 @@ export default function ObservationCreateForm() {
                 triggerLabel="5개 영역"
                 value={areas}
                 onChange={setAreas}
+                className="w-full md:w-90"
               />
             </div>
           </section>
 
           <section>
-            <h2 className="mb-5 text-lg font-semibold text-black-800">관찰상황 입력</h2>
+            <h2 className="mb-1.5 text-base font-semibold text-black-800 md:mb-5 md:text-lg">
+              관찰상황 입력
+            </h2>
             <Textarea
               placeholder="영유아의 행동이나 상황을 구체적인 문장으로 입력해주세요"
               value={content}
               onChange={(e) => setContent(e.target.value)}
+              className="text-[14px] md:text-sm"
               action={
                 <Button
-                  size="md"
+                  size="sm"
                   onClick={handleSubmit}
+                  className="md:w-35 md:py-2 md:text-base"
                   disabled={!isFormValid || isMutating || isPending}
                 >
                   생성하기
@@ -150,7 +162,7 @@ export default function ObservationCreateForm() {
               {selectedTags.map((tag) => (
                 <span
                   key={tag.key}
-                  className="flex items-center gap-2.5 rounded-[20px] bg-pink-50 px-3.5 py-2 text-xs font-medium text-pink-500"
+                  className="flex items-center gap-px rounded-[20px] bg-pink-50 px-2.5 py-1 text-xs font-medium text-pink-500 md:gap-2.5 md:px-3.5 md:py-2"
                 >
                   {tag.label}
                   <button
@@ -159,7 +171,8 @@ export default function ObservationCreateForm() {
                     aria-label={`${tag.label} 제거`}
                     className="cursor-pointer"
                   >
-                    <XIcon width={20} height={20} className="text-pink-900" />
+                    <XIcon width={18} height={18} className="text-pink-900 md:hidden" />
+                    <XIcon width={20} height={20} className="hidden text-pink-900 md:block" />
                   </button>
                 </span>
               ))}

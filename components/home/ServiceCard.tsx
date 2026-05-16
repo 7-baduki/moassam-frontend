@@ -40,7 +40,7 @@ export default function ServiceCard({
         className="absolute top-0 right-3.75 z-5 opacity-0 transition-opacity group-hover:z-15 group-hover:opacity-100 max-sm:h-23.5 max-sm:w-25 md:right-2"
       />
 
-      <div className="relative flex h-49.75 w-81 flex-col max-sm:h-28.25 max-sm:w-58">
+      <div className="relative flex h-49.75 w-full flex-col max-sm:h-28.25">
         {/* 상단 */}
         <div
           className="flex h-17.75 shrink-0 items-end rounded-tl-2xl rounded-tr-2xl max-sm:mt-5 max-sm:h-7"
@@ -56,7 +56,7 @@ export default function ServiceCard({
 
         {/* 하단 */}
         <div
-          className="relative z-10 flex flex-1 flex-col justify-between rounded-br-2xl rounded-bl-2xl p-5 max-sm:h-16.25 max-sm:flex-none max-sm:flex-row max-sm:items-center max-sm:justify-between max-sm:px-5 max-sm:py-3"
+          className="relative z-10 flex flex-1 flex-col justify-between rounded-br-2xl rounded-bl-2xl p-5 max-sm:h-16.25 max-sm:flex-none max-sm:flex-row max-sm:items-center max-sm:py-3"
           style={{ background: lowerBg, backdropFilter: 'blur(4px)' }}
         >
           <p
@@ -68,10 +68,10 @@ export default function ServiceCard({
           <div className="flex items-center gap-2 self-end">
             <span className="text-sm font-medium text-black-700 max-sm:hidden">바로가기</span>
             <div
-              className="flex h-5 w-5 shrink-0 items-center justify-center rounded-sm text-xs font-bold text-white max-sm:h-3 max-sm:w-3"
+              className="flex h-5 w-5 shrink-0 items-center justify-center rounded-sm max-sm:h-3 max-sm:w-3"
               style={{ background: mainColor }}
             >
-              <ChevronRightIcon className="h-4 w-2 max-sm:h-[2.5px] max-sm:w-[5px]" />
+              <ChevronRightIcon className="h-[8px] w-[4px] max-sm:h-[4.8px] max-sm:w-[2.4px]" />
             </div>
           </div>
         </div>

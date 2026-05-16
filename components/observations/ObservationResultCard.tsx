@@ -20,7 +20,7 @@ export default function ObservationResultCard({ title, content }: ObservationRes
   };
 
   return (
-    <div className="flex flex-col rounded-2xl bg-white px-5 py-2.25 md:px-7.5 md:py-2.5 xl:px-15 xl:pt-[25.5px] xl:pb-[15.5px]">
+    <div className="animate-lift flex flex-col rounded-2xl bg-white px-5 py-2.25 md:px-7.5 md:py-2.5 xl:px-15 xl:pt-[25.5px] xl:pb-[15.5px]">
       <p className="border-b-[0.5px] border-b-black-400 pb-5 text-sm font-semibold text-pink-500 md:text-base">
         {title}
       </p>

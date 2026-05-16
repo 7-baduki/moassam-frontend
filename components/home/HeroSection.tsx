@@ -4,7 +4,6 @@ import Image from 'next/image';
 import Link from 'next/link';
 import { motion } from 'framer-motion';
 import Badge from '@/components/common/badge/Badge';
-import { Button } from '@/components/common/button/Button';
 import { HeroBadge } from '@/app/assets/images';
 import HeroImage from '@/app/assets/images/home/hero/hero-section.png';
 import HeroImageMd from '@/app/assets/images/home/hero/hero-section-md.png';
@@ -61,14 +60,11 @@ function LoggedInHero({ userName = '' }: { userName: string }) {
           </p>
         </div>
         <div className="flex justify-end">
-          <Link href="/observations">
-            <Button
-              size="md"
-              variant="primary"
-              className="h-8 w-30 text-xs md:h-13 md:w-57.5 md:text-xl"
-            >
-              관찰일지 시작하기 &gt;
-            </Button>
+          <Link
+            href="/observations"
+            className="flex h-8 w-30 cursor-pointer items-center justify-center rounded-lg bg-pink-500 text-xs font-medium text-white transition-colors hover:bg-pink-600 md:h-13 md:w-57.5 md:text-xl"
+          >
+            관찰일지 시작하기 &gt;
           </Link>
         </div>
       </motion.div>

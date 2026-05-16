@@ -31,7 +31,7 @@ export default function ObservationResultCard({ title, content }: ObservationRes
           size="sm"
           onClick={handleCopy}
           aria-label="복사"
-          className="flex w-auto items-center gap-1"
+          className="flex w-auto items-center gap-1 text-xs md:text-sm"
         >
           <CopyIcon />
           복사

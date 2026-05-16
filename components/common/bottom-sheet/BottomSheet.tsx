@@ -3,14 +3,7 @@
 import * as RadixDialog from '@radix-ui/react-dialog';
 import { XIcon } from '@/app/assets/icons';
 import { cn } from '@/utils/cn';
-
-interface BottomSheetProps {
-  open: boolean;
-  onOpenChange: (open: boolean) => void;
-  title: string;
-  description?: string;
-  children: React.ReactNode;
-}
+import type { BottomSheetProps } from './bottom-sheet.type';
 
 export function BottomSheet({
   open,

@@ -4,30 +4,7 @@ import { CheckIcon } from '@/app/assets/icons';
 import { Button } from '@/components/common/button/Button';
 import { cn } from '@/utils/cn';
 import { BottomSheet } from './BottomSheet';
-import type { SelectOption } from '@/components/common/select/select.type';
-
-interface SelectBottomSheetSharedProps {
-  open: boolean;
-  onOpenChange: (open: boolean) => void;
-  title: string;
-  description?: string;
-  options: SelectOption[];
-  onConfirm: () => void;
-}
-
-interface SingleSelectBottomSheetProps extends SelectBottomSheetSharedProps {
-  multiple?: false;
-  value?: string;
-  onChange?: (value: string) => void;
-}
-
-interface MultiSelectBottomSheetProps extends SelectBottomSheetSharedProps {
-  multiple: true;
-  value?: string[];
-  onChange?: (value: string[]) => void;
-}
-
-type SelectBottomSheetProps = SingleSelectBottomSheetProps | MultiSelectBottomSheetProps;
+import type { SelectBottomSheetProps } from './bottom-sheet.type';
 
 export function SelectBottomSheet(props: SelectBottomSheetProps) {
   const { open, onOpenChange, title, description, options, onConfirm } = props;

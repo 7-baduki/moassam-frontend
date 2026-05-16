@@ -18,16 +18,16 @@ import {
   ObservationDetailResponse,
 } from '@/types/observation.type';
 
-export const useObservationRecentQuery = (enabled = true) => {
+export function useObservationRecentQuery(enabled = true) {
   return useQuery({
     queryKey: ['observations', 'recent'],
     queryFn: () => getObservations(),
     select: (data) => data.items.slice(0, 4),
     enabled,
   });
-};
+}
 
-export const useObservationListQuery = () => {
+export function useObservationListQuery() {
   return useInfiniteQuery({
     queryKey: ['observations'],
     queryFn: ({ pageParam }) => getObservations(pageParam),
@@ -35,36 +35,36 @@ export const useObservationListQuery = () => {
     getNextPageParam: (lastPage) =>
       lastPage.hasNext ? (lastPage.nextCursor ?? undefined) : undefined,
   });
-};
+}
 
-export const useObservationItemQuery = (id: number) => {
+export function useObservationItemQuery(id: number) {
   return useSuspenseQuery({
     queryKey: ['observation', id],
     queryFn: () => getObservation(id),
   });
-};
+}
 
-export const useObservationMutation = (
+export function useObservationMutation(
   options?: UseMutationOptions<ObservationCreateResponse, Error, ObservationCreateRequest>,
-) => {
+) {
   return useMutation({
     mutationFn: createObservation,
     ...options,
   });
-};
+}
 
-export const useObservationRegenerateMutation = (
+export function useObservationRegenerateMutation(
   options?: UseMutationOptions<ObservationDetailResponse, Error, number>,
-) => {
+) {
   return useMutation({
     mutationFn: regenerateObservation,
     ...options,
   });
-};
+}
 
-export const useObservationDeleteMutation = (options?: UseMutationOptions<void, Error, number>) => {
+export function useObservationDeleteMutation(options?: UseMutationOptions<void, Error, number>) {
   return useMutation({
     mutationFn: deleteObservation,
     ...options,
   });
-};
+}

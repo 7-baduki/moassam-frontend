@@ -22,7 +22,10 @@ export default function Sidebar() {
   }
 
   return (
-    <aside className="h-full w-89.25 border-r border-black-200" aria-label="사이드 내비게이션">
+    <aside
+      className="hidden h-full w-89.25 border-r border-black-200 xl:block"
+      aria-label="사이드 내비게이션"
+    >
       <div className="flex h-full flex-col justify-between">
         {sidebarConfig.sections.map((section) => (
           <nav key={section.ariaLabel} aria-label={section.ariaLabel}>

@@ -5,20 +5,20 @@ import { AGE_OPTIONS, BOARD_OPTIONS, MATERIAL_TYPE_OPTIONS, TOPIC_OPTIONS } from
 import type { WriteFormValues } from './write.type';
 
 interface WriteCategorySelectProps {
-  values: Pick<WriteFormValues, 'boardType' | 'age' | 'materialType' | 'topic'>;
+  values: Pick<WriteFormValues, 'boardType' | 'postAge' | 'resourceType' | 'headTag'>;
   onChange: <K extends keyof WriteFormValues>(key: K, value: WriteFormValues[K]) => void;
 }
 
 export default function WriteCategorySelect({ values, onChange }: WriteCategorySelectProps) {
-  const { boardType, age, materialType, topic } = values;
+  const { boardType, postAge, resourceType, headTag } = values;
 
   const handleBoardTypeChange = (value: string) => {
     if (value !== 'moabang' && value !== 'free') return;
 
     onChange('boardType', value);
-    onChange('age', undefined);
-    onChange('materialType', undefined);
-    onChange('topic', undefined);
+    onChange('postAge', undefined);
+    onChange('resourceType', undefined);
+    onChange('headTag', undefined);
   };
 
   return (
@@ -36,20 +36,20 @@ export default function WriteCategorySelect({ values, onChange }: WriteCategoryS
           <Select
             size="md"
             className="bg-white"
-            triggerLabel={AGE_OPTIONS.find((o) => o.value === age)?.label ?? '연령'}
+            triggerLabel={AGE_OPTIONS.find((o) => o.value === postAge)?.label ?? '연령'}
             options={AGE_OPTIONS}
-            value={age}
-            onChange={(value) => onChange('age', value)}
+            value={postAge}
+            onChange={(value) => onChange('postAge', value as WriteFormValues['postAge'])}
           />
           <Select
             size="md"
             className="bg-white"
             triggerLabel={
-              MATERIAL_TYPE_OPTIONS.find((o) => o.value === materialType)?.label ?? '자료 유형'
+              MATERIAL_TYPE_OPTIONS.find((o) => o.value === resourceType)?.label ?? '자료 유형'
             }
             options={MATERIAL_TYPE_OPTIONS}
-            value={materialType}
-            onChange={(value) => onChange('materialType', value)}
+            value={resourceType}
+            onChange={(value) => onChange('resourceType', value as WriteFormValues['resourceType'])}
           />
         </>
       )}
@@ -57,10 +57,10 @@ export default function WriteCategorySelect({ values, onChange }: WriteCategoryS
         <Select
           size="md"
           className="bg-white"
-          triggerLabel={TOPIC_OPTIONS.find((o) => o.value === topic)?.label ?? '말머리'}
+          triggerLabel={TOPIC_OPTIONS.find((o) => o.value === headTag)?.label ?? '말머리'}
           options={TOPIC_OPTIONS}
-          value={topic}
-          onChange={(value) => onChange('topic', value)}
+          value={headTag}
+          onChange={(value) => onChange('headTag', value as WriteFormValues['headTag'])}
         />
       )}
     </div>

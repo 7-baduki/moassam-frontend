@@ -18,7 +18,7 @@ export function EmptyState({ message, description, actionLabel, onAction }: Empt
         {description && <p className="text-base font-medium text-black-400">{description}</p>}
       </div>
       {actionLabel && onAction && (
-        <Button size="lg" onClick={onAction}>
+        <Button size="lg" className="py-4" onClick={onAction}>
           {actionLabel}
         </Button>
       )}

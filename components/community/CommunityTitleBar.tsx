@@ -7,19 +7,34 @@ import { Input } from '@/components/common/input/Input';
 interface CommunityTitleBarProps {
   title: string;
   onWrite?: () => void;
+  writeLabel?: string;
   hideSearch?: boolean;
   writeDisabled?: boolean;
   actions?: ReactNode;
+  onSearch?: (keyword: string) => void;
 }
 
 export default function CommunityTitleBar({
   title,
   onWrite,
+  writeLabel = '새글작성',
   hideSearch = false,
   writeDisabled = false,
   actions,
+  onSearch,
 }: CommunityTitleBarProps) {
   const [searchValue, setSearchValue] = useState('');
+
+  function handleSearchClear() {
+    setSearchValue('');
+    onSearch?.('');
+  }
+
+  function handleKeyDown(e: React.KeyboardEvent<HTMLInputElement>) {
+    if (e.key === 'Enter') {
+      onSearch?.(searchValue.trim());
+    }
+  }
 
   return (
     <div className="mb-2 flex items-center justify-between">
@@ -40,11 +55,12 @@ export default function CommunityTitleBar({
               placeholder="검색"
               value={searchValue}
               onChange={(e) => setSearchValue(e.target.value)}
-              onClear={() => setSearchValue('')}
+              onClear={handleSearchClear}
+              onKeyDown={handleKeyDown}
             />
           )}
           <Button size="sm" onClick={onWrite} disabled={writeDisabled}>
-            새글작성
+            {writeLabel}
           </Button>
         </div>
       )}

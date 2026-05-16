@@ -1,5 +1,12 @@
 import type { Metadata } from 'next';
 import localFont from 'next/font/local';
+import {
+  Noto_Sans_KR,
+  Noto_Serif_KR,
+  Do_Hyeon,
+  Black_Han_Sans,
+  Gamja_Flower,
+} from 'next/font/google';
 import { Toaster } from 'sonner';
 import './globals.css';
 import Providers from './providers';
@@ -7,13 +14,43 @@ import Header from '@/components/common/header/Header';
 import Sidebar from '@/components/common/sidebar/Sidebar';
 import { LoginModal } from '@/components/common/login-modal/LoginModal';
 import { UserProvider } from '@/lib/user-context';
-import { getProfile } from '@/api/user.api';
+import { getProfile } from '@/api/user-server.api';
 
 const pretendard = localFont({
   src: './fonts/PretendardVariable.woff2',
   display: 'swap',
   weight: '45 920',
   variable: '--font-pretendard',
+});
+
+const notoSansKR = Noto_Sans_KR({
+  subsets: ['latin'],
+  display: 'swap',
+  variable: '--font-noto-sans-kr',
+});
+const notoSerifKR = Noto_Serif_KR({
+  subsets: ['latin'],
+  weight: ['400', '700'],
+  display: 'swap',
+  variable: '--font-noto-serif-kr',
+});
+const doHyeon = Do_Hyeon({
+  subsets: ['latin'],
+  weight: '400',
+  display: 'swap',
+  variable: '--font-do-hyeon',
+});
+const blackHanSans = Black_Han_Sans({
+  subsets: ['latin'],
+  weight: '400',
+  display: 'swap',
+  variable: '--font-black-han-sans',
+});
+const gamjaFlower = Gamja_Flower({
+  subsets: ['latin'],
+  weight: '400',
+  display: 'swap',
+  variable: '--font-gamja-flower',
 });
 
 export const metadata: Metadata = {
@@ -28,8 +65,17 @@ export default function RootLayout({
 }>) {
   const userPromise = getProfile();
 
+  const fontVariables = [
+    pretendard.variable,
+    notoSansKR.variable,
+    notoSerifKR.variable,
+    doHyeon.variable,
+    blackHanSans.variable,
+    gamjaFlower.variable,
+  ].join(' ');
+
   return (
-    <html lang="ko" className={`${pretendard.variable} h-full antialiased`}>
+    <html lang="ko" className={`${fontVariables} h-full antialiased`}>
       <body className={`${pretendard.className} flex h-screen flex-col overflow-hidden`}>
         <Providers>
           <UserProvider userPromise={userPromise}>

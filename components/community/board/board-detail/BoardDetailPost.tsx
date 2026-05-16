@@ -1,8 +1,12 @@
 import DOMPurify from 'isomorphic-dompurify';
 import Image from 'next/image';
 import { Badge } from '@/components/common/badge';
+import type { BadgeVariant } from '@/components/common/badge/badge.type';
+import { AGE_OPTIONS, MATERIAL_TYPE_OPTIONS } from '@/components/community/write/write-selects';
+import type { PostAge, ResourceType } from '@/components/community/moabang/moabang.type';
 import BoardDetailAttachments from './BoardDetailAttachments';
 import type { BoardDetail } from './board-detail.type';
+import { formatRelativeTime } from '@/utils/formatRelativeTime';
 
 const HEAD_TAG_LABELS: Record<string, string> = {
   QUESTION: '질문',
@@ -15,27 +19,35 @@ const HEAD_TAG_LABELS: Record<string, string> = {
   CHAT: '잡담',
 };
 
-function formatRelativeTime(isoString: string): string {
-  const date = new Date(isoString);
-  const now = new Date();
-  const diffMs = now.getTime() - date.getTime();
-  const diffMins = Math.floor(diffMs / 60000);
-  const diffHours = Math.floor(diffMins / 60);
-  const diffDays = Math.floor(diffHours / 24);
+const POST_AGE_LABEL: Record<PostAge, string> = Object.fromEntries(
+  AGE_OPTIONS.map((o) => [o.value, o.label]),
+) as Record<PostAge, string>;
 
-  if (diffMins < 1) return '방금 전';
-  if (diffHours < 1) return `${diffMins}분 전`;
-  if (diffDays < 1) return `${diffHours}시간 전`;
-  if (diffDays < 7) return `${diffDays}일 전`;
-  return date.toLocaleDateString('ko-KR');
-}
+const RESOURCE_TYPE_LABEL: Record<ResourceType, string> = Object.fromEntries(
+  MATERIAL_TYPE_OPTIONS.map((o) => [o.value, o.label]),
+) as Record<ResourceType, string>;
+
+const POST_AGE_VARIANT: Record<PostAge, BadgeVariant> = {
+  ALL: 'yellow',
+  INFANT: 'pink-light',
+  AGE_3: 'green-light',
+  AGE_4: 'pink-dark',
+  AGE_5: 'green-dark',
+};
+
+const RESOURCE_TYPE_VARIANT: Record<ResourceType, BadgeVariant> = {
+  ACTIVITY: 'outline-yellow',
+  PLAN: 'outline-green',
+  JOURNAL: 'outline-pink',
+  NOTICE: 'outline-gray',
+};
 
 interface BoardDetailPostProps {
   post: BoardDetail;
 }
 
 export default function BoardDetailPost({ post }: BoardDetailPostProps) {
-  const headTagLabel = HEAD_TAG_LABELS[post.headTag] ?? post.headTag;
+  const isMoabang = post.postAge !== null || post.resourceType !== null;
 
   return (
     <article
@@ -43,7 +55,26 @@ export default function BoardDetailPost({ post }: BoardDetailPostProps) {
       className="rounded-2xl border border-black-200 bg-white p-7.5"
     >
       <div>
-        <Badge label={headTagLabel} variant="pink-light" />
+        {isMoabang ? (
+          <div className="flex gap-1.5">
+            {post.postAge && (
+              <Badge
+                label={POST_AGE_LABEL[post.postAge]}
+                variant={POST_AGE_VARIANT[post.postAge]}
+              />
+            )}
+            {post.resourceType && (
+              <Badge
+                label={RESOURCE_TYPE_LABEL[post.resourceType]}
+                variant={RESOURCE_TYPE_VARIANT[post.resourceType]}
+              />
+            )}
+          </div>
+        ) : (
+          post.headTag && (
+            <Badge label={HEAD_TAG_LABELS[post.headTag] ?? post.headTag} variant="pink-light" />
+          )
+        )}
 
         <h1 id="post-title" className="typo-line-m2 mt-3.5 text-xl font-semibold text-black-800">
           {post.title}
@@ -80,7 +111,7 @@ export default function BoardDetailPost({ post }: BoardDetailPostProps) {
       <hr className="mt-5 border-black-200" />
 
       <div
-        className="mt-6 text-sm leading-relaxed font-medium text-black-700"
+        className="mt-6 text-sm leading-relaxed font-medium text-black-700 [&_img]:h-auto [&_img]:max-w-full"
         dangerouslySetInnerHTML={{ __html: DOMPurify.sanitize(post.content) }}
       />
 

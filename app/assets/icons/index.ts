@@ -27,3 +27,4 @@ export { default as DetailBookmarkIcon } from './DetailBookmarkIcon.svg';
 export { default as DetailHeartIcon } from './DetailHeartIcon.svg';
 export { default as DownloadIcon } from './DownloadIcon.svg';
 export { default as TopIcon } from './TopIcon.svg';
+export { default as HamburgerIcon } from './HamburgerIcon.svg';

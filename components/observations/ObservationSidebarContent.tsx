@@ -4,6 +4,7 @@ import { useEffect, useRef } from 'react';
 import Link from 'next/link';
 import { usePathname, useRouter } from 'next/navigation';
 import { useQueryClient } from '@tanstack/react-query';
+import axios from 'axios';
 import { PlusIcon } from '@/app/assets/icons';
 import { MoreButton } from '@/components/common/more-button/MoreButton';
 import {
@@ -29,7 +30,8 @@ export default function ObservationSidebarContent() {
       });
       router.push('/observations');
     },
-    onError: () => {
+    onError: (error) => {
+      if (axios.isAxiosError(error) && error.isHandled) return;
       toast.error({
         title: '관찰일지 삭제에 실패했어요',
         description: '잠시 후 다시 시도해주세요',

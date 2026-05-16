@@ -20,16 +20,19 @@ const PROCESS_IMG_CLASS =
 
 const COMMENTS = [SolutionComment1, SolutionComment2, SolutionComment3];
 
-export default function SolutionSection() {
-  const user = useUser();
-  const isLoggedIn = !!user;
-  const root = useScrollRoot();
-  const fadeUp = (delay = 0) => ({
+function createFadeUp(root: ReturnType<typeof useScrollRoot>, delay = 0) {
+  return {
     initial: { opacity: 0, y: 24 },
     whileInView: { opacity: 1, y: 0 },
     transition: { duration: 0.5, ease: 'easeOut' as const, delay },
     viewport: { once: true, amount: 0.15, root: root ?? undefined },
-  });
+  };
+}
+
+export default function SolutionSection() {
+  const user = useUser();
+  const isLoggedIn = !!user;
+  const root = useScrollRoot();
 
   return (
     <section className="w-full bg-black-50 py-15 xl:py-25" aria-label="해결방법 섹션">
@@ -37,7 +40,7 @@ export default function SolutionSection() {
         <div className="flex flex-col items-center gap-4 xl:flex-row xl:items-start xl:justify-between">
           <motion.div
             className="flex flex-col items-center gap-2 xl:items-start xl:gap-4"
-            {...fadeUp(0)}
+            {...createFadeUp(root, 0)}
           >
             <Badge label="해결방법" variant="pink-light" />
             <h2 className="typo-line-m2 text-center text-base font-semibold text-black-800 xl:text-left xl:text-2xl">
@@ -48,7 +51,7 @@ export default function SolutionSection() {
 
           <div className="hidden flex-col items-end gap-1.5 xl:flex">
             {COMMENTS.map((src, i) => (
-              <motion.div key={i} {...fadeUp(0.1 + i * 0.12)}>
+              <motion.div key={i} {...createFadeUp(root, 0.1 + i * 0.12)}>
                 <Image src={src} alt="" height={43} />
               </motion.div>
             ))}
@@ -57,7 +60,7 @@ export default function SolutionSection() {
 
         <motion.div
           className="relative z-10 mt-4 xl:-mt-2.5 xl:overflow-hidden xl:rounded-tr-lg xl:rounded-br-lg xl:rounded-bl-lg xl:bg-white"
-          {...fadeUp(0.2)}
+          {...createFadeUp(root, 0.2)}
         >
           <Image
             src={SolutionProcess}
@@ -71,7 +74,7 @@ export default function SolutionSection() {
           />
         </motion.div>
 
-        <motion.div className="mt-4 flex justify-center xl:mt-15" {...fadeUp(0.3)}>
+        <motion.div className="mt-4 flex justify-center xl:mt-15" {...createFadeUp(root, 0.3)}>
           <Button
             variant="primary"
             size="md"

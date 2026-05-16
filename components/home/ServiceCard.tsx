@@ -71,7 +71,7 @@ export default function ServiceCard({
               className="flex h-5 w-5 shrink-0 items-center justify-center rounded-sm max-sm:h-3 max-sm:w-3"
               style={{ background: mainColor }}
             >
-              <ChevronRightIcon className="h-[8px] w-[4px] max-sm:h-[4.8px] max-sm:w-[2.4px]" />
+              <ChevronRightIcon className="h-[8px] w-[4px] max-sm:h-[5px] max-sm:w-[2px]" />
             </div>
           </div>
         </div>

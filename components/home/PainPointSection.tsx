@@ -19,21 +19,27 @@ const PAIN_CARDS = [
   { src: PainPointCard3Md, alt: '페인포인트 카드 3', delay: 0.34 },
 ];
 
-export default function PainPointSection() {
-  const root = useScrollRoot();
-  const fadeUp = (delay = 0) => ({
+function createFadeUp(root: ReturnType<typeof useScrollRoot>, delay = 0) {
+  return {
     initial: { opacity: 0, y: 24 },
     whileInView: { opacity: 1, y: 0 },
     transition: { duration: 0.5, ease: 'easeOut' as const, delay },
     viewport: { once: true, amount: 0.15, root: root ?? undefined },
-  });
+  };
+}
+
+export default function PainPointSection() {
+  const root = useScrollRoot();
 
   return (
-    <section className="w-full bg-black-100 pt-15 pb-13.5 md:py-25" aria-label="숨은 고충 섹션">
+    <section
+      className="w-full bg-black-100 pt-15 pb-13.5 md:py-15 xl:py-25"
+      aria-label="숨은 고충 섹션"
+    >
       <div className="mx-auto flex w-full max-w-142.5 flex-col items-center gap-7.5 md:max-w-293 xl:flex-row xl:items-start xl:gap-26">
         <motion.div
           className="flex flex-col items-center gap-4 xl:shrink-0 xl:items-start"
-          {...fadeUp(0)}
+          {...createFadeUp(root, 0)}
         >
           <Badge label="숨은고충" variant="pink-light" />
           <p className="typo-line-m2 text-center text-xl font-semibold text-black-800 xl:text-left xl:text-2xl">
@@ -43,19 +49,19 @@ export default function PainPointSection() {
           </p>
         </motion.div>
         <div className="min-w-0 xl:flex-1">
-          <motion.div {...fadeUp(0.1)}>
+          <motion.div {...createFadeUp(root, 0.1)}>
             <Image src={PainPoint} alt="페인포인트 예시" className="hidden w-full xl:block" />
           </motion.div>
           <div className="flex flex-col items-center gap-7.5 xl:hidden">
             <div className="flex gap-7.5">
               {PAIN_CARDS.slice(0, 2).map(({ src, alt, delay }) => (
-                <motion.div key={alt} {...fadeUp(delay)}>
+                <motion.div key={alt} {...createFadeUp(root, delay)}>
                   <Image src={src} alt={alt} className={CARD_IMG_CLASS} />
                 </motion.div>
               ))}
             </div>
             {PAIN_CARDS.slice(2).map(({ src, alt, delay }) => (
-              <motion.div key={alt} {...fadeUp(delay)}>
+              <motion.div key={alt} {...createFadeUp(root, delay)}>
                 <Image src={src} alt={alt} className={CARD_IMG_CLASS} />
               </motion.div>
             ))}

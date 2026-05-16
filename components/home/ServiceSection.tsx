@@ -39,8 +39,8 @@ export default function ServiceSection() {
                 src={imageSrc}
                 alt={label}
                 width={324}
-                height={233}
-                className="h-58.25 w-81 rounded-2xl object-cover"
+                height={125}
+                className="h-31.25 w-81 rounded-2xl object-cover object-top"
               />
             </Link>
           ))}

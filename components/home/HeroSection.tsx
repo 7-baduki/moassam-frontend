@@ -1,5 +1,6 @@
 'use client';
 
+import { Suspense } from 'react';
 import Image from 'next/image';
 import Badge from '@/components/common/badge/Badge';
 import { Button } from '@/components/common/button/Button';
@@ -7,20 +8,17 @@ import { HeroBadge } from '@/app/assets/images';
 import HeroImage from '@/app/assets/images/hero-section.png';
 import HeroImageMd from '@/app/assets/images/hero-section-md.png';
 import { useUser } from '@/lib/user-context';
+import { useCreditsQuery } from '@/hooks/queries/user/useCredits';
 
-function LoggedInHero({
-  userName = '',
-  remainingCount = 0,
-}: {
-  userName: string;
-  remainingCount: number;
-}) {
+function LoggedInHero({ userName = '' }: { userName: string }) {
+  const { data: credits } = useCreditsQuery();
+
   return (
     <div className="relative flex w-full flex-col items-center px-4 pt-10 pb-5.75 md:px-0 md:pt-15 md:pb-25">
       <div className="absolute top-4 left-1/2 flex -translate-x-1/2 items-center gap-2 rounded-[30px] border border-yellow-600 bg-yellow-200 py-0.5 pr-3 pl-1 shadow-[2px_2px_8px_0px_#00000014] md:top-5 md:right-0 md:left-auto md:mr-20 md:translate-x-0 md:py-1">
         <Image src={HeroBadge} alt="" width={20} height={20} className="md:h-6 md:w-6" />
         <span className="typo-line-m2 text-[11px] font-semibold text-black-800 md:text-xs">
-          오늘 생성횟수 {remainingCount}개 남았어요!
+          오늘 생성횟수 {credits?.balance ?? 0}개 남았어요!
         </span>
       </div>
 
@@ -96,7 +94,13 @@ export default function HeroSection() {
 
   return (
     <section className="relative flex flex-col items-center bg-black-100" aria-label="히어로 섹션">
-      {user ? <LoggedInHero userName={user.nickname} remainingCount={7} /> : <LoggedOutHero />}
+      {user ? (
+        <Suspense fallback={null}>
+          <LoggedInHero userName={user.nickname} />
+        </Suspense>
+      ) : (
+        <LoggedOutHero />
+      )}
     </section>
   );
 }

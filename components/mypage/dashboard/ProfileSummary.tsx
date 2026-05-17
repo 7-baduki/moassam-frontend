@@ -44,12 +44,12 @@ export function ProfileSummary({
           </button>
         </div>
         <div className="flex gap-2.5 text-[14px] font-medium text-black-600 md:text-base">
-          <span>
+          <Link href="/mypage/observations" className="hover:underline hover:decoration-black-700">
             관찰일지 <span className="font-semibold text-black-700">{observationCount}</span>
-          </span>
-          <span>
+          </Link>
+          <Link href="/mypage/bookmarks" className="hover:underline hover:decoration-black-700">
             북마크 <span className="font-semibold text-black-700">{bookmarkCount}</span>
-          </span>
+          </Link>
         </div>
       </div>
 

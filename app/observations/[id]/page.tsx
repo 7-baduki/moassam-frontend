@@ -1,5 +1,5 @@
 import { notFound } from 'next/navigation';
-import ObservationBoundary from '@/components/observations/ObservationBoundary';
+import ObservationDetailBoundary from '@/components/observations/ObservationDetailBoundary';
 
 interface ObservationDetailPageProps {
   params: Promise<{ id: string }>;
@@ -11,5 +11,5 @@ export default async function ObservationDetailPage({ params }: ObservationDetai
 
   if (Number.isNaN(observationId) || observationId <= 0) notFound();
 
-  return <ObservationBoundary observationId={observationId} />;
+  return <ObservationDetailBoundary observationId={observationId} />;
 }

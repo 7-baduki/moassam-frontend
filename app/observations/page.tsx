@@ -1,5 +1,5 @@
-import ObservationCreateForm from '@/components/observations/ObservationCreateForm';
+import ObservationCreateFormBoundary from '@/components/observations/ObservationCreateFormBoundary';
 
 export default function ObservationsPage() {
-  return <ObservationCreateForm />;
+  return <ObservationCreateFormBoundary />;
 }

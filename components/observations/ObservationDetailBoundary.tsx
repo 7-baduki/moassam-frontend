@@ -3,11 +3,13 @@
 import { AsyncBoundary, LoadingSpinner, ErrorFallback } from '@/lib/async-boundary';
 import ObservationDetail from './ObservationDetail';
 
-interface ObservationBoundaryProps {
+interface ObservationDetailBoundaryProps {
   observationId: number;
 }
 
-export default function ObservationBoundary({ observationId }: ObservationBoundaryProps) {
+export default function ObservationDetailBoundary({
+  observationId,
+}: ObservationDetailBoundaryProps) {
   return (
     <AsyncBoundary
       pendingFallback={<LoadingSpinner className="h-full justify-center" />}

@@ -11,13 +11,13 @@ const MENU_ITEMS = [
 export default function MypageMenu() {
   return (
     <div className="mt-7.5 mb-12 xl:hidden">
-      <p className="mb-3 pl-3.75 text-base font-semibold text-black">보관함</p>
+      <p className="mb-3 pl-4 text-base font-semibold text-black md:pl-9">보관함</p>
       <ul className="flex flex-col bg-white">
         {MENU_ITEMS.map((item) => (
-          <li key={item.href} className="px-4 py-4.5">
+          <li key={item.href}>
             <Link
               href={item.href}
-              className="flex items-center justify-between text-sm font-medium text-black-800"
+              className="flex items-center justify-between px-4 py-4.5 text-sm font-medium text-black-800 hover:bg-black-200 md:px-9"
             >
               {item.label}
               <ChevronDownIcon className="h-4 w-4 -rotate-90 text-black-600" />

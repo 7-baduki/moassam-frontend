@@ -4,7 +4,7 @@ import { useState, useEffect, useRef, useCallback } from 'react';
 import { useRouter } from 'next/navigation';
 import Link from 'next/link';
 import Pagination from '@/components/common/pagination/Pagination';
-import { ViewCountIcon, ChevronDownIcon } from '@/app/assets/icons';
+import { ChevronDownIcon } from '@/app/assets/icons';
 import {
   useMyBookmarksQuery,
   useMyBookmarksInfiniteQuery,
@@ -44,10 +44,7 @@ function BookmarkItem({
         <div className="flex items-center gap-5 text-xs font-medium text-black-500 md:pl-10">
           <span>{CATEGORY_LABEL[bookmark.category] ?? bookmark.category}</span>
           <span>{formatDate(bookmark.createdAt)}</span>
-          <span className="flex items-center gap-1">
-            <ViewCountIcon />
-            {bookmark.viewCount}
-          </span>
+          <span>조회 {bookmark.viewCount}</span>
         </div>
       </Link>
       <MoreButton className="ml-5" onDelete={() => onDelete(bookmark.postId)} />

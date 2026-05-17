@@ -42,7 +42,9 @@ function BookmarkItem({
           {bookmark.title}
         </span>
         <div className="flex items-center gap-5 text-xs font-medium text-black-500 md:pl-10">
-          <span>{CATEGORY_LABEL[bookmark.category] ?? bookmark.category}</span>
+          <span className="w-14 shrink-0 md:w-auto">
+            {CATEGORY_LABEL[bookmark.category] ?? bookmark.category}
+          </span>
           <span>{formatDate(bookmark.createdAt)}</span>
           <span>조회 {bookmark.viewCount}</span>
         </div>

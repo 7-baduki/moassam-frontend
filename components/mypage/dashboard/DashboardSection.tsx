@@ -9,6 +9,7 @@ import { WithdrawModal } from '@/components/mypage/dashboard/WithdrawModal';
 import { useUser } from '@/lib/user-context';
 import { useActivitySummaryQuery } from '@/hooks/queries/user/useActivitySummary';
 import { useCreditsQuery } from '@/hooks/queries/user/useCredits';
+import MypageMenu from './MypageMenu';
 
 export default function DashboardSection() {
   const user = useUser();
@@ -37,6 +38,7 @@ export default function DashboardSection() {
       />
 
       <ChargeGuide className="mt-10" />
+      <MypageMenu />
 
       <ProfileEditModal
         key={isEditModalOpen ? 'open' : 'closed'}

@@ -80,7 +80,7 @@ function LoggedOutHero() {
         </div>
 
         <div className="mt-4 flex flex-col items-center gap-5 text-center">
-          <h1 className="typo-line-m2 md:text-[3 2px] text-xl font-semibold text-black-800 xl:text-[40px]">
+          <h1 className="typo-line-m2 text-xl font-semibold text-black-800 md:text-[32px] xl:text-[40px]">
             <span className="text-pink-500">관찰일지</span>부터{' '}
             <span className="text-pink-500">활동자료</span>까지
             <br />

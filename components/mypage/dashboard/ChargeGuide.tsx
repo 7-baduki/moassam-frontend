@@ -42,7 +42,7 @@ export function ChargeGuide({ className }: ChargeGuideProps) {
             alt="아 마스코트"
             width={160}
             height={160}
-            className="absolute right-4 bottom-1.25 w-40 md:right-8 md:bottom-0 xl:w-[clamp(5rem,8.3vw,10rem)]"
+            className="absolute right-4 bottom-3 w-20.75 md:right-8 md:bottom-0 md:w-40 xl:w-[clamp(5rem,8.3vw,10rem)]"
           />
         </Link>
 
@@ -67,7 +67,7 @@ export function ChargeGuide({ className }: ChargeGuideProps) {
             alt="쌤 마스코트"
             width={160}
             height={160}
-            className="absolute right-4 bottom-1.25 w-40 md:right-8 md:bottom-0 xl:w-[clamp(5rem,8.3vw,10rem)]"
+            className="absolute right-4 bottom-3 w-20.75 md:right-8 md:bottom-0 md:w-40 xl:w-[clamp(5rem,8.3vw,10rem)]"
           />
         </Link>
       </div>

@@ -35,7 +35,7 @@ export default function DashboardSection() {
       <GenerationCount
         used={TOTAL_CREDITS - (credits?.balance ?? TOTAL_CREDITS)}
         total={TOTAL_CREDITS}
-        className="mt-22.5"
+        className="mt-7.5 xl:mt-22.5"
       />
 
       <ChargeGuide className="mt-10" />

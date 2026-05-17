@@ -4,12 +4,12 @@ import Image from 'next/image';
 import Link from 'next/link';
 import { motion } from 'framer-motion';
 import Badge from '@/components/common/badge/Badge';
-import { HeroBadge } from '@/app/assets/images';
 import HeroImage from '@/app/assets/images/home/hero/hero-section.png';
 import HeroImageMd from '@/app/assets/images/home/hero/hero-section-md.png';
 import { useUser } from '@/lib/user-context';
 import { useCreditsQuery } from '@/hooks/queries/user/useCredits';
 import { AsyncBoundary } from '@/lib/async-boundary';
+import { ObservationCreditBadge } from '@/components/common/observation-credit-badge/ObservationCreditBadge';
 
 function CreditBadge() {
   const { data: credits } = useCreditsQuery();
@@ -20,12 +20,8 @@ function CreditBadge() {
         initial={{ opacity: 0, y: -8, scale: 0.92 }}
         animate={{ opacity: 1, y: 0, scale: 1 }}
         transition={{ duration: 0.4, ease: [0.22, 1, 0.36, 1] }}
-        className="flex items-center gap-2 rounded-[30px] border border-yellow-600 bg-yellow-200 py-0.5 pr-3 pl-1 shadow-[2px_2px_8px_0px_#00000014] md:py-1"
       >
-        <Image src={HeroBadge} alt="" width={24} height={24} className="h-5 w-5 md:h-6 md:w-6" />
-        <span className="typo-line-m2 text-[11px] font-semibold text-black-800 md:text-xs">
-          오늘 생성횟수 {credits?.balance ?? 0}개 남았어요!
-        </span>
+        <ObservationCreditBadge remainingCount={credits?.balance ?? 0} />
       </motion.div>
     </div>
   );

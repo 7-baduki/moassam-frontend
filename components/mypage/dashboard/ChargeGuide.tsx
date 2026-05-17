@@ -25,15 +25,17 @@ export function ChargeGuide({ className }: ChargeGuideProps) {
           href="/community/moabang"
           className="relative overflow-hidden rounded-[20px] bg-yellow-200 px-4 py-8.75 leading-[140%] transition-all hover:bg-yellow-400 hover:shadow-[0px_4px_16px_0px_#0000002E] md:px-8"
         >
-          <p className="text-xs font-medium text-black-700">
-            모아방에 자료 공유하고 생성 횟수
-            <span className="text-sm font-semibold text-yellow-900"> 3회</span> 추가
-          </p>
-          <div className="pt-29.25">
-            <p className="text-base font-semibold text-yellow-900">자료를 공유해주세요</p>
-            <p className="text-xs font-medium text-yellow-700">
-              작은 공유가 누군가에겐 큰 도움이 돼요
+          <div className="flex flex-col">
+            <p className="order-2 text-xs font-medium text-black-700 md:order-1">
+              모아방에 자료 공유하고 생성 횟수
+              <span className="text-sm font-semibold text-yellow-900"> 3회</span> 추가
             </p>
+            <div className="order-1 md:order-2 md:pt-29.25">
+              <p className="text-base font-semibold text-yellow-900">자료를 공유해주세요</p>
+              <p className="hidden text-xs font-medium text-yellow-700 md:block">
+                작은 공유가 누군가에겐 큰 도움이 돼요
+              </p>
+            </div>
           </div>
           <Image
             src={AMascot}
@@ -48,15 +50,17 @@ export function ChargeGuide({ className }: ChargeGuideProps) {
           href="/community/board"
           className="relative overflow-hidden rounded-[20px] bg-green-50 px-4 py-8.75 leading-[140%] transition-all hover:bg-green-300 hover:shadow-[0px_4px_16px_0px_#0000002E] md:px-8"
         >
-          <p className="text-xs font-medium text-black-700">
-            자유게시판에 글 작성하고 생성 횟수
-            <span className="text-sm font-semibold text-green-900"> 1회</span> 추가
-          </p>
-          <div className="pt-29.25">
-            <p className="text-base font-semibold text-green-900">함께 고민해요</p>
-            <p className="text-xs font-medium text-green-700">
-              질문하고, 경험을 나누고, 함께 해결해요
+          <div className="flex flex-col">
+            <p className="order-2 text-xs font-medium text-black-700 md:order-1">
+              자유게시판에 글 작성하고 생성 횟수
+              <span className="text-sm font-semibold text-green-900"> 1회</span> 추가
             </p>
+            <div className="order-1 md:order-2 md:pt-29.25">
+              <p className="text-base font-semibold text-green-900">함께 고민해요</p>
+              <p className="hidden text-xs font-medium text-green-700 md:block">
+                질문하고, 경험을 나누고, 함께 해결해요
+              </p>
+            </div>
           </div>
           <Image
             src={SsamMascot}

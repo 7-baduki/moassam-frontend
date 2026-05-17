@@ -4,6 +4,7 @@ import { useState } from 'react';
 import { useRouter } from 'next/navigation';
 import Link from 'next/link';
 import axios from 'axios';
+import { ChevronDownIcon } from '@/app/assets/icons';
 import Pagination from '@/components/common/pagination/Pagination';
 import { useMyObservationsQuery } from '@/hooks/queries/user/useMyObservations';
 import { useObservationDeleteMutation } from '@/hooks/queries/observations/useObservation';
@@ -38,6 +39,12 @@ export default function ObservationsSection() {
 
   return (
     <div className="flex flex-col gap-5">
+      <div className="flex items-center gap-4 bg-white px-4 py-3 md:px-9 xl:hidden">
+        <button type="button" onClick={() => router.back()} aria-label="뒤로가기">
+          <ChevronDownIcon className="h-5 w-5 rotate-90 text-black" />
+        </button>
+        <h1 className="text-base font-semibold text-black md:text-[18px]">관찰일지 내역</h1>
+      </div>
       {isEmpty ? (
         <div className="flex flex-1 items-center justify-center py-20">
           <EmptyState
@@ -49,7 +56,7 @@ export default function ObservationsSection() {
         </div>
       ) : (
         <>
-          <div className="flex flex-col gap-3">
+          <div className="flex flex-col gap-3 px-4 md:px-9 xl:px-0">
             {data?.data.map((observation) => (
               <div
                 key={observation.observationId}
@@ -57,12 +64,12 @@ export default function ObservationsSection() {
               >
                 <Link
                   href={`/observations/${observation.observationId}`}
-                  className="flex min-w-0 flex-1 items-center"
+                  className="flex min-w-0 flex-1 flex-col gap-1 md:flex-row md:items-center"
                 >
                   <span className="min-w-0 flex-1 truncate text-sm font-medium text-black-800">
                     {observation.title}
                   </span>
-                  <div className="flex items-center gap-5 pl-10 text-xs font-medium text-black-500">
+                  <div className="flex items-center gap-2 text-xs font-medium text-black-500 md:pl-10">
                     <span>
                       {AGE_OPTIONS.find((o) => o.value === observation.age)?.label ??
                         observation.age}

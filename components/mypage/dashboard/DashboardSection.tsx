@@ -5,10 +5,12 @@ import { ProfileSummary } from '@/components/mypage/dashboard/ProfileSummary';
 import { GenerationCount } from '@/components/mypage/dashboard/GenerationCount';
 import { ChargeGuide } from '@/components/mypage/dashboard/ChargeGuide';
 import { ProfileEditModal } from '@/components/mypage/dashboard/ProfileEditModal';
+import { ProfileEditBottomSheet } from '@/components/mypage/dashboard/ProfileEditBottomSheet';
 import { WithdrawModal } from '@/components/mypage/dashboard/WithdrawModal';
 import { useUser } from '@/lib/user-context';
 import { useActivitySummaryQuery } from '@/hooks/queries/user/useActivitySummary';
 import { useCreditsQuery } from '@/hooks/queries/user/useCredits';
+import { useIsMobile } from '@/hooks/useIsMobile';
 import MypageMenu from './MypageMenu';
 
 export default function DashboardSection() {
@@ -18,6 +20,7 @@ export default function DashboardSection() {
 
   const TOTAL_CREDITS = 10;
 
+  const isMobile = useIsMobile();
   const [isEditModalOpen, setIsEditModalOpen] = useState(false);
   const [isWithdrawModalOpen, setIsWithdrawModalOpen] = useState(false);
 
@@ -41,17 +44,31 @@ export default function DashboardSection() {
       <ChargeGuide className="mt-7.5 xl:mt-10" />
       <MypageMenu />
 
-      <ProfileEditModal
-        key={isEditModalOpen ? 'open' : 'closed'}
-        isOpen={isEditModalOpen}
-        onClose={() => setIsEditModalOpen(false)}
-        onWithdrawClick={() => {
-          setIsEditModalOpen(false);
-          setIsWithdrawModalOpen(true);
-        }}
-        username={user?.email ?? ''}
-        nickname={user?.nickname ?? ''}
-      />
+      {isMobile ? (
+        <ProfileEditBottomSheet
+          key={isEditModalOpen ? 'open' : 'closed'}
+          isOpen={isEditModalOpen}
+          onClose={() => setIsEditModalOpen(false)}
+          onWithdrawClick={() => {
+            setIsEditModalOpen(false);
+            setIsWithdrawModalOpen(true);
+          }}
+          username={user?.email ?? ''}
+          nickname={user?.nickname ?? ''}
+        />
+      ) : (
+        <ProfileEditModal
+          key={isEditModalOpen ? 'open' : 'closed'}
+          isOpen={isEditModalOpen}
+          onClose={() => setIsEditModalOpen(false)}
+          onWithdrawClick={() => {
+            setIsEditModalOpen(false);
+            setIsWithdrawModalOpen(true);
+          }}
+          username={user?.email ?? ''}
+          nickname={user?.nickname ?? ''}
+        />
+      )}
       <WithdrawModal isOpen={isWithdrawModalOpen} onClose={() => setIsWithdrawModalOpen(false)} />
     </div>
   );

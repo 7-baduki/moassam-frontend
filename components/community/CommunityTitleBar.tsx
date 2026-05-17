@@ -42,7 +42,7 @@ export default function CommunityTitleBar({
         <h2 className="typo-line-m2 text-lg font-semibold text-black-800">{title}</h2>
         <p className="typo-line-m4 text-sm font-medium text-black-600">
           자유게시판 글 작성 시 <span className="text-pink-500">1회</span>, 모아방 자료 업로드 시{' '}
-          <span className="text-pink-500">3회</span> AI 생성 횟수가 충전돼요
+          <span className="text-pink-500">3회</span> AI 생성 횟수가 추가돼요
         </p>
       </div>
       {actions ?? (

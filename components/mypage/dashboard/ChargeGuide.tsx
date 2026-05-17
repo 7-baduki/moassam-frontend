@@ -11,7 +11,7 @@ export function ChargeGuide({ className }: ChargeGuideProps) {
   return (
     <section
       className={cn(
-        'mx-4 flex flex-col gap-5 rounded-2xl bg-white px-4 py-8.75 md:mx-9 md:gap-8.5 md:px-15 md:pt-7.5 md:pb-15',
+        'mx-4 flex flex-col gap-5 rounded-2xl bg-white px-4 py-8.75 md:mx-9 md:gap-8.5 md:px-12.5 md:pt-7.5 md:pb-15 xl:mx-0',
         className,
       )}
     >

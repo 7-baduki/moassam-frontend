@@ -15,8 +15,6 @@ export const getActivitySummary = async (): Promise<ActivitySummary> => {
 };
 
 export const updateProfile = async (nickname: string): Promise<User> => {
-  const response = await apiClient.patch('/api/v1/users/profile', nickname, {
-    headers: { 'Content-Type': 'application/json' },
-  });
+  const response = await apiClient.patch('/api/v1/users/profile', { nickname });
   return response.data.data;
 };

@@ -54,13 +54,13 @@ export function ProfileSummary({
       </div>
 
       <div className="hidden xl:flex xl:flex-row xl:items-center xl:divide-x-[0.5px] xl:divide-black-500">
-        <div className="flex items-center gap-5 xl:pr-[clamp(1rem,5.2vw,4rem)]">
-          <div className="h-21.25 w-21.25 overflow-hidden rounded-full">
+        <div className="flex items-center gap-8 xl:pr-8">
+          <div className="h-20 w-20 overflow-hidden rounded-full">
             <Image
               src={profileImageUrl || DefaultAvatar}
               alt="프로필 아바타"
-              width={85}
-              height={85}
+              width={80}
+              height={80}
             />
           </div>
           <div className="flex flex-col gap-1">
@@ -75,10 +75,10 @@ export function ProfileSummary({
             수정
           </Button>
         </div>
-        <div className="flex flex-1 items-stretch gap-[clamp(1rem,5.2vw,4rem)] xl:pl-[clamp(1rem,5.2vw,4rem)]">
+        <div className="flex flex-1 items-stretch gap-8 xl:pl-8">
           <Link
             href="/mypage/observations"
-            className="flex flex-1 flex-col items-center justify-center gap-2 rounded-[10px] bg-white px-[clamp(0.5rem,2.7vw,3.25rem)] py-3.25 transition-shadow duration-200 hover:shadow-[2px_2px_6px_0px_#0000000F]"
+            className="flex flex-1 items-center justify-center gap-3 rounded-[10px] bg-white px-8 py-3.25 transition-shadow duration-200 hover:shadow-[2px_2px_6px_0px_#0000000F]"
           >
             <ObservationCountIcon />
             <div className="flex flex-col items-center text-black">
@@ -88,7 +88,7 @@ export function ProfileSummary({
           </Link>
           <Link
             href="/mypage/bookmarks"
-            className="flex flex-1 flex-col items-center justify-center gap-2 rounded-[10px] bg-white px-[clamp(0.5rem,2.7vw,3.25rem)] py-3.25 transition-shadow duration-200 hover:shadow-[2px_2px_6px_0px_#0000000F]"
+            className="flex flex-1 items-center justify-center gap-3 rounded-[10px] bg-white px-8 py-3.25 transition-shadow duration-200 hover:shadow-[2px_2px_6px_0px_#0000000F]"
           >
             <BookmarkCountIcon />
             <div className="flex flex-col items-center text-black">

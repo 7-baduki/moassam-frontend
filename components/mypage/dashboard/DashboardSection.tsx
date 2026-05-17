@@ -38,7 +38,7 @@ export default function DashboardSection() {
         className="mt-7.5 xl:mt-22.5"
       />
 
-      <ChargeGuide className="mt-10" />
+      <ChargeGuide className="mt-7.5 xl:mt-10" />
       <MypageMenu />
 
       <ProfileEditModal

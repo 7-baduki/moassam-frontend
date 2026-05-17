@@ -23,7 +23,7 @@ function PostGrid({ data }: { data: { data: MoabangPost[]; totalPages: number } 
       <EmptyState message="아직 등록된 게시글이 없어요" />
     </div>
   ) : (
-    <div className="grid grid-cols-3 gap-5">
+    <div className="grid grid-cols-1 gap-3 md:grid-cols-2 md:gap-4 xl:grid-cols-3 xl:gap-5">
       {data.data.map((post) => (
         <MoabangCard key={post.postId} post={post} />
       ))}

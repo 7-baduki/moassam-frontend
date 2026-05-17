@@ -60,8 +60,8 @@ export default function CommunityTitleBar({
   return (
     <>
       <div className="mb-2 flex items-center justify-between">
-        <div className="flex items-center gap-3 py-[10.5px]">
-          <h2 className="typo-line-m2 text-base font-semibold text-black-800 md:text-lg">
+        <div className="flex items-center gap-1 py-[10.5px]">
+          <h2 className="typo-line-m2 text-base !leading-none font-semibold text-black-800 md:text-lg">
             {title}
           </h2>
 
@@ -72,10 +72,10 @@ export default function CommunityTitleBar({
               onClick={() => setTooltipOpen((prev) => !prev)}
               className="flex h-4 w-4 cursor-pointer items-center justify-center text-black-500"
             >
-              <InfoIcon className="h-4 w-4" />
+              <InfoIcon className="" />
             </button>
             {tooltipOpen && (
-              <div className="absolute top-full left-0 z-[200] mt-2 w-55 rounded-lg bg-white p-3 shadow-lg ring-1 ring-black-200">
+              <div className="absolute top-full left-0 z-200 mt-2 w-55 rounded-lg bg-white p-3 shadow-lg ring-1 ring-black-200">
                 <p className="typo-line-m4 text-xs font-semibold text-black-800">
                   AI 생성횟수 추가 안내
                 </p>

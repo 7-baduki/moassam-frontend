@@ -25,6 +25,7 @@ export default function DashboardSection() {
     <div className="flex flex-col">
       <ProfileSummary
         name={user?.nickname ?? ''}
+        email={user?.email ?? ''}
         profileImageUrl={user?.profileImageUrl}
         observationCount={activitySummary?.observationCount ?? 0}
         bookmarkCount={activitySummary?.bookmarkedPostCount ?? 0}

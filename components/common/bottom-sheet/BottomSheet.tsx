@@ -27,7 +27,7 @@ export function BottomSheet({
         >
           <div
             className={cn(
-              'flex items-center justify-between px-4 py-5',
+              'flex h-15.5 items-center justify-between px-4',
               hasDivider && 'border-b border-black-200',
             )}
           >

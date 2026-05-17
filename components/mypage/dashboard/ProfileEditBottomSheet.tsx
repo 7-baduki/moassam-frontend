@@ -45,7 +45,7 @@ export function ProfileEditBottomSheet({
       title="프로필 편집"
       hasClose={false}
     >
-      <div className="flex flex-col px-4 pb-5 leading-[140%]">
+      <div className="flex h-102 flex-col px-4 pb-5 leading-[140%]">
         <div className="mx-auto my-8 h-27.5 w-27.5 overflow-hidden rounded-full">
           <Image src={DefaultAvatar} alt="프로필 아바타" width={110} height={110} />
         </div>
@@ -75,7 +75,7 @@ export function ProfileEditBottomSheet({
           다른 선생님들에게 보여지는 프로필이에요
         </p>
 
-        <div className="flex items-center justify-between">
+        <div className="mt-auto flex items-center justify-between">
           <Button variant="ghost" size="sm" className="text-xs" onClick={onWithdrawClick}>
             탈퇴하기
           </Button>

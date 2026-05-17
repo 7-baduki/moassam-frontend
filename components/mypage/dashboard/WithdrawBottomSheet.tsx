@@ -36,7 +36,7 @@ export function WithdrawBottomSheet({ isOpen, onClose }: WithdrawBottomSheetProp
 
   return (
     <BottomSheet open={isOpen} onOpenChange={(open) => !open && handleClose()} title="회원 탈퇴">
-      <div className="flex flex-col px-4 pb-5 leading-[140%]">
+      <div className="flex h-102 flex-col px-4 pb-5 leading-[140%]">
         <div className="flex justify-center py-5">
           <Image
             src={step === 'complete' ? WithdrawCompleteMascot : WithdrawMascot}
@@ -56,7 +56,7 @@ export function WithdrawBottomSheet({ isOpen, onClose }: WithdrawBottomSheetProp
             <p className="pt-5 text-center text-sm font-semibold text-black-600">
               정말로 탈퇴하시겠어요?
             </p>
-            <div className="mt-8 flex gap-6">
+            <div className="mt-auto flex gap-6">
               <Button
                 variant="outline"
                 size="full"
@@ -88,7 +88,7 @@ export function WithdrawBottomSheet({ isOpen, onClose }: WithdrawBottomSheetProp
               다음에 꼭 다시 만나요!
               <br />더 나은 모습으로 기다릴게요
             </p>
-            <div className="mt-8">
+            <div className="mt-auto">
               <Button
                 variant="primary"
                 size="full"

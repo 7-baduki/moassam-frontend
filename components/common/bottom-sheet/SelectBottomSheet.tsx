@@ -27,7 +27,13 @@ export function SelectBottomSheet(props: SelectBottomSheetProps) {
   }
 
   return (
-    <BottomSheet open={open} onOpenChange={onOpenChange} title={title} description={description}>
+    <BottomSheet
+      open={open}
+      onOpenChange={onOpenChange}
+      title={title}
+      description={description}
+      hasDivider
+    >
       <ul className="max-h-[50vh] overflow-y-auto">
         {options.map((option) => {
           const selected = isSelected(option.value);

@@ -6,6 +6,7 @@ export interface BottomSheetProps {
   title: string;
   description?: string;
   hasClose?: boolean;
+  hasDivider?: boolean;
   children: React.ReactNode;
 }
 

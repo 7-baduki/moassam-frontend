@@ -11,6 +11,7 @@ export function BottomSheet({
   title,
   description,
   hasClose = true,
+  hasDivider = false,
   children,
 }: BottomSheetProps) {
   return (
@@ -27,7 +28,7 @@ export function BottomSheet({
           <div
             className={cn(
               'flex items-center justify-between px-4 py-5',
-              hasClose && 'border-b border-black-200',
+              hasDivider && 'border-b border-black-200',
             )}
           >
             <div className="flex items-center gap-2">

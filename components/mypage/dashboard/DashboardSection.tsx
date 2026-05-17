@@ -7,6 +7,7 @@ import { ChargeGuide } from '@/components/mypage/dashboard/ChargeGuide';
 import { ProfileEditModal } from '@/components/mypage/dashboard/ProfileEditModal';
 import { ProfileEditBottomSheet } from '@/components/mypage/dashboard/ProfileEditBottomSheet';
 import { WithdrawModal } from '@/components/mypage/dashboard/WithdrawModal';
+import { WithdrawBottomSheet } from '@/components/mypage/dashboard/WithdrawBottomSheet';
 import { useUser } from '@/lib/user-context';
 import { useActivitySummaryQuery } from '@/hooks/queries/user/useActivitySummary';
 import { useCreditsQuery } from '@/hooks/queries/user/useCredits';
@@ -69,7 +70,14 @@ export default function DashboardSection() {
           nickname={user?.nickname ?? ''}
         />
       )}
-      <WithdrawModal isOpen={isWithdrawModalOpen} onClose={() => setIsWithdrawModalOpen(false)} />
+      {isMobile ? (
+        <WithdrawBottomSheet
+          isOpen={isWithdrawModalOpen}
+          onClose={() => setIsWithdrawModalOpen(false)}
+        />
+      ) : (
+        <WithdrawModal isOpen={isWithdrawModalOpen} onClose={() => setIsWithdrawModalOpen(false)} />
+      )}
     </div>
   );
 }

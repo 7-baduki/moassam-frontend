@@ -4,8 +4,13 @@ import { useState } from 'react';
 import Link from 'next/link';
 import Pagination from '@/components/common/pagination/Pagination';
 import { ViewCountIcon } from '@/app/assets/icons';
-import { useMyBookmarksQuery } from '@/hooks/queries/user/useMyBookmarks';
+import {
+  useMyBookmarksQuery,
+  useMyBookmarkDeleteMutation,
+} from '@/hooks/queries/user/useMyBookmarks';
 import { EmptyState } from '@/components/common/empty-state/EmptyState';
+import { MoreButton } from '@/components/common/more-button/MoreButton';
+import { toast } from '@/utils/toast';
 
 const CATEGORY_LABEL: Record<string, string> = {
   FREE: '자유게시판',
@@ -18,8 +23,13 @@ function formatDate(dateStr: string) {
 
 export default function BookmarksSection() {
   const [currentPage, setCurrentPage] = useState(0);
-  const { data } = useMyBookmarksQuery(currentPage);
+  const { data, refetch } = useMyBookmarksQuery(currentPage);
   const isEmpty = !data?.data || data.data.length === 0;
+
+  const { mutate: handleDelete } = useMyBookmarkDeleteMutation({
+    onSuccess: () => refetch(),
+    onError: () => toast.error({ title: '삭제 실패', description: '잠시 후 다시 시도해주세요' }),
+  });
 
   return (
     <div className="flex flex-col gap-5">
@@ -31,23 +41,28 @@ export default function BookmarksSection() {
         <>
           <div className="flex flex-col gap-3">
             {data?.data.map((bookmark) => (
-              <Link
+              <div
                 key={`${bookmark.category}-${bookmark.postId}`}
-                href={`/community/${bookmark.category === 'FREE' ? 'board' : 'moabang'}/${bookmark.postId}`}
                 className="flex items-center rounded-[10px] bg-white px-5 py-3 transition-colors hover:bg-black-200"
               >
-                <span className="min-w-0 flex-1 truncate text-sm font-medium text-black-800">
-                  {bookmark.title}
-                </span>
-                <div className="flex items-center gap-5 pl-10 text-xs font-medium text-black-500">
-                  <span>{CATEGORY_LABEL[bookmark.category] ?? bookmark.category}</span>
-                  <span>{formatDate(bookmark.createdAt)}</span>
-                  <span className="flex items-center gap-1">
-                    <ViewCountIcon />
-                    {bookmark.viewCount}
+                <Link
+                  href={`/community/${bookmark.category === 'FREE' ? 'board' : 'moabang'}/${bookmark.postId}`}
+                  className="flex min-w-0 flex-1 items-center"
+                >
+                  <span className="min-w-0 flex-1 truncate text-sm font-medium text-black-800">
+                    {bookmark.title}
                   </span>
-                </div>
-              </Link>
+                  <div className="flex items-center gap-5 pl-10 text-xs font-medium text-black-500">
+                    <span>{CATEGORY_LABEL[bookmark.category] ?? bookmark.category}</span>
+                    <span>{formatDate(bookmark.createdAt)}</span>
+                    <span className="flex items-center gap-1">
+                      <ViewCountIcon />
+                      {bookmark.viewCount}
+                    </span>
+                  </div>
+                </Link>
+                <MoreButton className="ml-5" onDelete={() => handleDelete(bookmark.postId)} />
+              </div>
             ))}
           </div>
 

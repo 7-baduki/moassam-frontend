@@ -31,6 +31,7 @@ export function GenerationCount({ used, total, className }: GenerationCountProps
             <Tooltip
               label={`${remainingCount}번 더 만들 수 있어요!`}
               className="-top-1.5"
+              labelClassName="md:text-xs text-[10px]"
               style={{ left: `${progress}%` }}
             />
           )}

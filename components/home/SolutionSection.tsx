@@ -59,7 +59,7 @@ export default function SolutionSection() {
         </div>
 
         <motion.div
-          className="relative z-10 mt-4 xl:-mt-2.5 xl:overflow-hidden xl:rounded-tr-lg xl:rounded-br-lg xl:rounded-bl-lg xl:bg-white"
+          className="relative z-10 mt-4 xl:-mt-2.5 xl:rounded-tr-lg xl:rounded-br-lg xl:rounded-bl-lg xl:bg-white"
           {...createFadeUp(root, 0.2)}
         >
           <Image

@@ -3,7 +3,6 @@
 import { useEffect, useRef, useCallback } from 'react';
 import Link from 'next/link';
 import Pagination from '@/components/common/pagination/Pagination';
-import { ViewCountIcon } from '@/app/assets/icons';
 import { useMyFreePostsQuery, useMyFreePostsInfiniteQuery } from '@/hooks/queries/user/useMyPosts';
 import { EmptyState } from '@/components/common/empty-state/EmptyState';
 import { useIsDesktop } from '@/hooks/useIsMobile';
@@ -24,10 +23,7 @@ function FreePostItem({ post }: { post: MyFreePost }) {
       </span>
       <div className="flex items-center gap-5 text-xs font-medium text-black-500 md:pl-10">
         <span>{formatDate(post.createdAt)}</span>
-        <span className="flex items-center gap-1">
-          <ViewCountIcon />
-          {post.viewCount}
-        </span>
+        <span>조회 {post.viewCount}</span>
       </div>
     </Link>
   );

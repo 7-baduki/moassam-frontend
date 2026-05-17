@@ -3,7 +3,6 @@
 import { useEffect, useRef, useCallback } from 'react';
 import Link from 'next/link';
 import Pagination from '@/components/common/pagination/Pagination';
-import { ViewCountIcon } from '@/app/assets/icons';
 import {
   useMyMoabangPostsQuery,
   useMyMoabangPostsInfiniteQuery,
@@ -27,10 +26,7 @@ function MoabangPostItem({ post }: { post: MyMoabangPost }) {
       </span>
       <div className="flex items-center gap-5 text-xs font-medium text-black-500 md:pl-10">
         <span>{formatDate(post.createdAt)}</span>
-        <span className="flex items-center gap-1">
-          <ViewCountIcon />
-          {post.viewCount}
-        </span>
+        <span>조회 {post.viewCount}</span>
       </div>
     </Link>
   );

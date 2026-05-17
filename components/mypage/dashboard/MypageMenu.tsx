@@ -2,7 +2,7 @@ import Link from 'next/link';
 import { ChevronDownIcon } from '@/app/assets/icons';
 
 const MENU_ITEMS = [
-  { label: '내 관찰일지 내역', href: '/mypage/observations' },
+  { label: '관찰일지 내역', href: '/mypage/observations' },
   { label: '게시글', href: '/mypage/posts' },
   { label: '댓글', href: '/mypage/comments' },
   { label: '북마크', href: '/mypage/bookmarks' },

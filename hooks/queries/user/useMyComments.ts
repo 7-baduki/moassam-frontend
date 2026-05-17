@@ -1,9 +1,18 @@
-import { useSuspenseQuery } from '@tanstack/react-query';
+import { useSuspenseQuery, useSuspenseInfiniteQuery } from '@tanstack/react-query';
 import { getMyComments } from '@/api/comment.api';
 
 export const useMyCommentsQuery = (page: number) => {
   return useSuspenseQuery({
     queryKey: ['myComments', page],
     queryFn: () => getMyComments(page),
+  });
+};
+
+export const useMyCommentsInfiniteQuery = () => {
+  return useSuspenseInfiniteQuery({
+    queryKey: ['myComments', 'infinite'],
+    queryFn: ({ pageParam = 0 }) => getMyComments(pageParam),
+    initialPageParam: 0,
+    getNextPageParam: (lastPage) => (lastPage.hasNext ? lastPage.page + 1 : undefined),
   });
 };

@@ -73,7 +73,7 @@ export default function ObservationDetail({ observationId }: ObservationDetailPr
             <ObservationResultCard key={item.title} title={item.title} content={item.content} />
           ))}
         </div>
-        <div className="flex justify-end pt-3.5 md:pt-15">
+        <div className="flex justify-end pt-4 md:pt-15">
           <Button
             size="sm"
             className="md:w-35 md:py-2 md:text-base"

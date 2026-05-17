@@ -1,8 +1,10 @@
 'use client';
 
+import { useTransition } from 'react';
 import { useRouter, useSearchParams, usePathname } from 'next/navigation';
 import BoardCard from './BoardCard';
 import CommunityTitleBar from '@/components/community/CommunityTitleBar';
+import CommunityFab from '@/components/community/CommunityFab';
 import CommunityFilter from '@/components/community/CommunityFilter';
 import Pagination from '@/components/common/pagination/Pagination';
 import { BOARD_CATEGORY_FILTER_TABS } from '@/constants/community/community-tabs';
@@ -87,6 +89,7 @@ export default function BoardSection() {
   const router = useRouter();
   const pathname = usePathname();
   const searchParams = useSearchParams();
+  const [, startTransition] = useTransition();
 
   const keyword = searchParams.get('keyword') ?? '';
   const category = getValidParam(searchParams.get('category'), BOARD_CATEGORY_FILTER_TABS, 'all');
@@ -97,14 +100,18 @@ export default function BoardSection() {
     const params = new URLSearchParams(searchParams.toString());
     params.set(key, value);
     if (resetPage) params.set('page', '1');
-    router.push(`${pathname}?${params.toString()}`, { scroll: false });
+    startTransition(() => {
+      router.push(`${pathname}?${params.toString()}`, { scroll: false });
+    });
   }
 
   function handleSearch(value: string) {
     const params = new URLSearchParams();
     if (value) params.set('keyword', value);
     params.set('page', '1');
-    router.push(`${pathname}?${params.toString()}`, { scroll: false });
+    startTransition(() => {
+      router.push(`${pathname}?${params.toString()}`, { scroll: false });
+    });
   }
 
   function handlePageChange(page: number) {
@@ -118,6 +125,7 @@ export default function BoardSection() {
         onWrite={() => router.push('/community/write?board=free')}
         onSearch={handleSearch}
       />
+      <CommunityFab onClick={() => router.push('/community/write?board=free')} />
       {!keyword && (
         <CommunityFilter
           categoryTabs={BOARD_CATEGORY_FILTER_TABS}

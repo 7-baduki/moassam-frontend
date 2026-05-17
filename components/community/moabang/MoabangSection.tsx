@@ -1,8 +1,10 @@
 'use client';
 
+import { useTransition } from 'react';
 import { useRouter, useSearchParams, usePathname } from 'next/navigation';
 import MoabangCard from './MoabangCard';
 import CommunityTitleBar from '@/components/community/CommunityTitleBar';
+import CommunityFab from '@/components/community/CommunityFab';
 import CommunityFilter from '@/components/community/CommunityFilter';
 import Pagination from '@/components/common/pagination/Pagination';
 import {
@@ -96,6 +98,7 @@ export default function MoabangSection() {
   const router = useRouter();
   const pathname = usePathname();
   const searchParams = useSearchParams();
+  const [, startTransition] = useTransition();
 
   const keyword = searchParams.get('keyword') ?? '';
   const age = getValidParam(searchParams.get('age'), MOABANG_AGE_FILTER_TABS, 'all');
@@ -107,14 +110,18 @@ export default function MoabangSection() {
     const params = new URLSearchParams(searchParams.toString());
     params.set(key, value);
     if (resetPage) params.set('page', '1');
-    router.push(`${pathname}?${params.toString()}`, { scroll: true });
+    startTransition(() => {
+      router.push(`${pathname}?${params.toString()}`, { scroll: true });
+    });
   }
 
   function handleSearch(value: string) {
     const params = new URLSearchParams();
     if (value) params.set('keyword', value);
     params.set('page', '1');
-    router.push(`${pathname}?${params.toString()}`, { scroll: true });
+    startTransition(() => {
+      router.push(`${pathname}?${params.toString()}`, { scroll: true });
+    });
   }
 
   function handlePageChange(page: number) {
@@ -128,6 +135,7 @@ export default function MoabangSection() {
         onWrite={() => router.push('/community/write?board=moabang')}
         onSearch={handleSearch}
       />
+      <CommunityFab onClick={() => router.push('/community/write?board=moabang')} />
       {!keyword && (
         <CommunityFilter
           ageTabs={MOABANG_AGE_FILTER_TABS}

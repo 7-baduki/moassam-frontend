@@ -4,6 +4,7 @@ import { type ReactNode, useEffect, useRef, useState } from 'react';
 import { InfoIcon, SearchIcon } from '@/app/assets/icons';
 import { Button } from '@/components/common/button/Button';
 import { Input } from '@/components/common/input/Input';
+import CommunityInfoTooltip from './CommunityInfoTooltip';
 import CommunitySearchOverlay from './CommunitySearchOverlay';
 
 interface CommunityTitleBarProps {
@@ -74,17 +75,7 @@ export default function CommunityTitleBar({
             >
               <InfoIcon className="" />
             </button>
-            {tooltipOpen && (
-              <div className="absolute top-full left-0 z-200 mt-2 w-55 rounded-lg bg-white p-3 shadow-lg ring-1 ring-black-200">
-                <p className="typo-line-m4 text-xs font-semibold text-black-800">
-                  AI 생성횟수 추가 안내
-                </p>
-                <ul className="typo-line-m4 mt-2 space-y-1 text-xs font-medium text-black-700">
-                  <li>· 자유게시판 글 작성 시 1회</li>
-                  <li>· 모아방 자료 업로드 시 3회</li>
-                </ul>
-              </div>
-            )}
+            {tooltipOpen && <CommunityInfoTooltip />}
           </div>
 
           <p className="typo-line-m4 hidden text-xs font-medium text-black-600 md:block xl:text-sm">

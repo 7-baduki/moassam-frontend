@@ -14,6 +14,7 @@ import Header from '@/components/common/header/Header';
 import Sidebar from '@/components/common/sidebar/Sidebar';
 import { LoginModal } from '@/components/common/login-modal/LoginModal';
 import { UserProvider } from '@/lib/user-context';
+import { ScrollRoot } from '@/lib/scroll-root';
 import { getProfile } from '@/api/user-server.api';
 
 const pretendard = localFont({
@@ -82,7 +83,7 @@ export default function RootLayout({
             <Header />
             <div className="flex flex-1 overflow-hidden">
               <Sidebar />
-              <main className="flex-1 overflow-y-auto bg-black-100">{children}</main>
+              <ScrollRoot className="flex-1 overflow-y-auto bg-black-100">{children}</ScrollRoot>
             </div>
           </UserProvider>
         </Providers>

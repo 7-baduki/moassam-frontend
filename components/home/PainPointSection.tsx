@@ -1,42 +1,71 @@
 'use client';
 
 import Image from 'next/image';
+import { motion } from 'framer-motion';
 import Badge from '@/components/common/badge/Badge';
 import {
   PainPoint,
-  PainPointMd,
   PainPointCard1Md,
   PainPointCard2Md,
   PainPointCard3Md,
 } from '@/app/assets/images';
-import { useUser } from '@/lib/user-context';
+import { useScrollRoot } from '@/lib/scroll-root';
+
+const CARD_IMG_CLASS = 'h-40 w-39 object-cover md:h-[285px] md:w-67.5';
+
+const PAIN_CARDS = [
+  { src: PainPointCard1Md, alt: '페인포인트 카드 1', delay: 0.1 },
+  { src: PainPointCard2Md, alt: '페인포인트 카드 2', delay: 0.22 },
+  { src: PainPointCard3Md, alt: '페인포인트 카드 3', delay: 0.34 },
+];
+
+function createFadeUp(root: ReturnType<typeof useScrollRoot>, delay = 0) {
+  return {
+    initial: { opacity: 0, y: 24 },
+    whileInView: { opacity: 1, y: 0 },
+    transition: { duration: 0.5, ease: 'easeOut' as const, delay },
+    viewport: { once: true, amount: 0.15, root: root ?? undefined },
+  };
+}
+
 export default function PainPointSection() {
-  const user = useUser();
-  const isLoggedIn = !!user;
+  const root = useScrollRoot();
+
   return (
-    <section className="w-full bg-black-100 pt-15 pb-13.5 md:py-25" aria-label="숨은 고충 섹션">
-      <div className="mx-auto flex w-full max-w-142.5 flex-col items-center gap-7.5 md:max-w-293 md:flex-row md:items-start md:gap-26">
-        <div className="flex flex-col items-center gap-4 md:shrink-0 md:items-start">
+    <section
+      className="w-full bg-black-100 pt-15 pb-13.5 md:py-15 xl:py-25"
+      aria-label="숨은 고충 섹션"
+    >
+      <div className="mx-auto flex w-full max-w-142.5 flex-col items-center gap-7.5 md:max-w-293 xl:flex-row xl:items-start xl:gap-26">
+        <motion.div
+          className="flex flex-col items-center gap-4 xl:shrink-0 xl:items-start"
+          {...createFadeUp(root, 0)}
+        >
           <Badge label="숨은고충" variant="pink-light" />
-          <p className="typo-line-m2 text-center text-xl font-semibold text-black-800 md:text-left md:text-2xl">
+          <p className="typo-line-m2 text-center text-xl font-semibold text-black-800 xl:text-left xl:text-2xl">
             이런 순간,
             <br />
             자주 있지 않나요?
           </p>
-        </div>
-        <div className="min-w-0 md:flex-1">
-          <Image src={PainPoint} alt="페인포인트 예시" className="hidden w-full md:block" />
-          {isLoggedIn ? (
-            <div className="flex flex-col items-center gap-7.5 md:hidden">
-              <div className="flex gap-7.5">
-                <Image src={PainPointCard1Md} alt="페인포인트 카드 1" className="w-67.5" />
-                <Image src={PainPointCard2Md} alt="페인포인트 카드 2" className="w-67.5" />
-              </div>
-              <Image src={PainPointCard3Md} alt="페인포인트 카드 3" className="w-67.5" />
+        </motion.div>
+        <div className="min-w-0 xl:flex-1">
+          <motion.div {...createFadeUp(root, 0.1)}>
+            <Image src={PainPoint} alt="페인포인트 예시" className="hidden w-full xl:block" />
+          </motion.div>
+          <div className="flex flex-col items-center gap-7.5 xl:hidden">
+            <div className="flex gap-7.5">
+              {PAIN_CARDS.slice(0, 2).map(({ src, alt, delay }) => (
+                <motion.div key={alt} {...createFadeUp(root, delay)}>
+                  <Image src={src} alt={alt} className={CARD_IMG_CLASS} />
+                </motion.div>
+              ))}
             </div>
-          ) : (
-            <Image src={PainPointMd} alt="페인포인트 예시" className="w-full max-w-75 md:hidden" />
-          )}
+            {PAIN_CARDS.slice(2).map(({ src, alt, delay }) => (
+              <motion.div key={alt} {...createFadeUp(root, delay)}>
+                <Image src={src} alt={alt} className={CARD_IMG_CLASS} />
+              </motion.div>
+            ))}
+          </div>
         </div>
       </div>
     </section>

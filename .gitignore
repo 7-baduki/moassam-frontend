@@ -45,8 +45,8 @@ storybook-static
 
 # Sentry Config File
 .env.sentry-build-plugin
-.mcp.json
 
 # Claude Code
 .claude/
+.mcp.json
 .playwright-mcp/

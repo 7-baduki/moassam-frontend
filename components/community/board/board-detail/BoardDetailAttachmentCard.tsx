@@ -145,7 +145,7 @@ export default function BoardDetailAttachmentCard({ file }: BoardDetailAttachmen
                 setIsActive(false);
               }}
             >
-              <XIcon />
+              <XIcon className="brightness-0 invert" />
             </button>
           </div>
         </div>

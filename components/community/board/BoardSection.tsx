@@ -71,6 +71,10 @@ function BoardSearchContent({
 
   return (
     <>
+      <p className="mb-2 text-sm font-medium text-black-700 md:mb-5">
+        <span className="font-semibold text-pink-500">&ldquo;{keyword}&rdquo;</span> 검색 결과{' '}
+        <span className="font-semibold text-pink-500">{data.totalElements}</span>건
+      </p>
       <PostList data={data} />
       {data.totalPages > 1 && (
         <div className="mt-15 flex justify-center">

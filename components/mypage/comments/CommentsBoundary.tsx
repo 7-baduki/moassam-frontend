@@ -6,7 +6,7 @@ import CommentsSection from './CommentsSection';
 export default function CommentsBoundary() {
   return (
     <div className="flex flex-col gap-5">
-      <h1 className="text-lg font-semibold text-black">댓글</h1>
+      <h1 className="hidden text-lg font-semibold text-black xl:block">댓글</h1>
       <AsyncBoundary
         pendingFallback={<LoadingSpinner className="pt-11.25" />}
         rejectedFallback={({ error, reset }) => (

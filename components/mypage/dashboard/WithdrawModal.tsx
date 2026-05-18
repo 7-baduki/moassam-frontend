@@ -61,7 +61,7 @@ export function WithdrawModal({ isOpen, onClose }: WithdrawModalProps) {
               회원 탈퇴
             </h2>
             <button type="button" onClick={handleClose} aria-label="닫기">
-              <XIcon />
+              <XIcon width={20} height={20} />
             </button>
           </div>
 

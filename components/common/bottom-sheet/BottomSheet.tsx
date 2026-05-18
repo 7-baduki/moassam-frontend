@@ -10,6 +10,8 @@ export function BottomSheet({
   onOpenChange,
   title,
   description,
+  hasClose = true,
+  hasDivider = false,
   children,
 }: BottomSheetProps) {
   return (
@@ -23,7 +25,12 @@ export function BottomSheet({
             'focus:outline-none',
           )}
         >
-          <div className="flex items-center justify-between border-b border-black-200 px-4 py-5">
+          <div
+            className={cn(
+              'flex h-15.5 items-center justify-between px-4',
+              hasDivider && 'border-b border-black-200',
+            )}
+          >
             <div className="flex items-center gap-2">
               <RadixDialog.Title className="text-[15px] font-semibold text-black-800">
                 {title}
@@ -34,9 +41,11 @@ export function BottomSheet({
                 </RadixDialog.Description>
               )}
             </div>
-            <RadixDialog.Close className="cursor-pointer text-black-500 outline-none focus-visible:ring-2 focus-visible:ring-black-400">
-              <XIcon width={20} height={20} />
-            </RadixDialog.Close>
+            {hasClose && (
+              <RadixDialog.Close className="cursor-pointer text-black-500 outline-none focus-visible:ring-2 focus-visible:ring-black-400">
+                <XIcon width={20} height={20} />
+              </RadixDialog.Close>
+            )}
           </div>
           {children}
         </RadixDialog.Content>

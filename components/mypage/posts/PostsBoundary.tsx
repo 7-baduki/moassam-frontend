@@ -1,6 +1,8 @@
 'use client';
 
 import { useState } from 'react';
+import { useRouter } from 'next/navigation';
+import { ChevronDownIcon } from '@/app/assets/icons';
 import Tabs, { TabOption } from '@/components/common/tabs/Tabs';
 import { AsyncBoundary, LoadingSpinner, ErrorFallback } from '@/lib/async-boundary';
 import MoabangPostList from './MoabangPostList';
@@ -12,14 +14,21 @@ const TAB_OPTIONS: TabOption[] = [
 ];
 
 export default function PostsBoundary() {
+  const router = useRouter();
   const [currentPage, setCurrentPage] = useState(0);
   const [activeTab, setActiveTab] = useState('moabang');
 
   return (
     <div className="flex flex-col gap-5">
-      <h1 className="text-lg font-semibold text-black">게시글</h1>
+      <div className="flex items-center gap-4 bg-white px-4 py-3 md:px-9 xl:hidden">
+        <button type="button" onClick={() => router.back()} aria-label="뒤로가기">
+          <ChevronDownIcon className="h-5 w-5 rotate-90 text-black" />
+        </button>
+        <h1 className="text-base font-semibold text-black md:text-[18px]">게시글</h1>
+      </div>
+      <h1 className="hidden text-lg font-semibold text-black xl:block">게시글</h1>
 
-      <div className="flex h-10 items-stretch rounded-lg bg-black-200 px-5">
+      <div className="mx-4 flex h-10 items-stretch rounded-lg bg-black-200 px-5 md:mx-9 xl:mx-0">
         <Tabs
           options={TAB_OPTIONS}
           value={activeTab}

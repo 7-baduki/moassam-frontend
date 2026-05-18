@@ -22,3 +22,24 @@ function getServerSnapshot() {
 export function useIsMobile(): boolean {
   return useSyncExternalStore(subscribe, getSnapshot, getServerSnapshot);
 }
+
+const DESKTOP_BREAKPOINT = 1280;
+const DESKTOP_QUERY = `(min-width: ${DESKTOP_BREAKPOINT}px)`;
+
+function subscribeDesktop(callback: () => void) {
+  const mediaQuery = window.matchMedia(DESKTOP_QUERY);
+  mediaQuery.addEventListener('change', callback);
+  return () => mediaQuery.removeEventListener('change', callback);
+}
+
+function getDesktopSnapshot() {
+  return window.matchMedia(DESKTOP_QUERY).matches;
+}
+
+function getDesktopServerSnapshot() {
+  return false;
+}
+
+export function useIsDesktop(): boolean {
+  return useSyncExternalStore(subscribeDesktop, getDesktopSnapshot, getDesktopServerSnapshot);
+}

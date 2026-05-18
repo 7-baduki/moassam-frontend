@@ -5,6 +5,8 @@ export interface BottomSheetProps {
   onOpenChange: (open: boolean) => void;
   title: string;
   description?: string;
+  hasClose?: boolean;
+  hasDivider?: boolean;
   children: React.ReactNode;
 }
 

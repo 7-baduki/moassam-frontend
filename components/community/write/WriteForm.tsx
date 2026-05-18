@@ -193,7 +193,7 @@ export default function WriteForm({
             <Button
               variant="outline"
               size="sm"
-              className="w-12.5 border-black-400 text-black-700 hover:border-black-500 hover:text-black-800 xl:w-auto"
+              className="w-12.5 border-black-400 text-black-700 hover:border-black-500 hover:text-black-800 xl:w-20"
               onClick={handleCancel}
               disabled={isPending}
             >
@@ -202,7 +202,7 @@ export default function WriteForm({
             <Button
               size="sm"
               variant="primary"
-              className="w-12.5 xl:w-auto"
+              className="w-12.5 xl:w-20"
               onClick={handleSubmit}
               disabled={isPending}
             >

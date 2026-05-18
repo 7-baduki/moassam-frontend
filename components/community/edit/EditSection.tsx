@@ -15,7 +15,7 @@ export default function EditSection({ postId }: EditSectionProps) {
   const initialBoard: BoardType = post.category === 'MOABANG' ? 'moabang' : 'free';
 
   return (
-    <div className="min-w-175">
+    <div className="w-full">
       <WriteForm
         mode="edit"
         postId={post.postId}

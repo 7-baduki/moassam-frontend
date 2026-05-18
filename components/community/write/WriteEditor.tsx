@@ -24,6 +24,7 @@ import {
 import type { BoardDetailFile } from '@/components/community/board/board-detail/board-detail.type';
 import WriteFileCard from './WriteFileCard';
 import { SelectBottomSheet } from '@/components/common/bottom-sheet/SelectBottomSheet';
+import { Select } from '@/components/common/select/Select';
 import { ChevronDownIcon } from '@/app/assets/icons';
 import StarterKit from '@tiptap/starter-kit';
 import { TextStyleKit } from '@tiptap/extension-text-style';
@@ -247,7 +248,7 @@ export default function WriteEditor({
       onDragOver={(e) => e.preventDefault()}
       onClick={handleWrapperClick}
     >
-      <div className="flex h-10.75 items-center gap-2 overflow-x-auto border-b border-black-200 bg-black-200 px-2">
+      <div className="flex h-10.75 items-center gap-2 border-b border-black-200 bg-black-200 px-2">
         {isMobile && onAddFiles && (
           <>
             <div ref={clipBtnRef}>
@@ -270,17 +271,12 @@ export default function WriteEditor({
             <ChevronDownIcon width={12} height={12} className="shrink-0" />
           </button>
         ) : (
-          <select
+          <Select
             value={currentFontFamily}
-            onChange={(e) => editor.chain().focus().setFontFamily(e.target.value).run()}
-            className="h-7 cursor-pointer rounded px-1 text-xs text-black-800 outline-none hover:bg-black-300"
-          >
-            {FONT_FAMILIES.map((f) => (
-              <option key={f.value} value={f.value}>
-                {f.label}
-              </option>
-            ))}
-          </select>
+            options={FONT_FAMILIES.map((f) => ({ label: f.label, value: f.value }))}
+            onChange={(v) => editor.chain().focus().setFontFamily(v).run()}
+            className="w-24 [&_li>button]:justify-between [&_li>button]:px-1.5 [&_li>button]:py-1.5 [&_li>button]:text-xs [&>button]:h-7 [&>button]:justify-between [&>button]:px-1.5 [&>button]:py-0 [&>button]:text-xs [&>button]:hover:bg-black-300"
+          />
         )}
 
         <Divider />
@@ -295,23 +291,18 @@ export default function WriteEditor({
             <ChevronDownIcon width={12} height={12} className="shrink-0" />
           </button>
         ) : (
-          <select
+          <Select
             value={currentFontSize}
-            onChange={(e) =>
+            options={FONT_SIZES.map((s) => ({ label: s, value: s }))}
+            onChange={(v) =>
               editor
                 .chain()
                 .focus()
-                .setFontSize(e.target.value + 'px')
+                .setFontSize(v + 'px')
                 .run()
             }
-            className="h-7 w-14 cursor-pointer rounded px-1 text-xs text-black-800 outline-none hover:bg-black-300"
-          >
-            {FONT_SIZES.map((s) => (
-              <option key={s} value={s}>
-                {s}
-              </option>
-            ))}
-          </select>
+            className="w-14 [&_li>button]:justify-between [&_li>button]:px-1.5 [&_li>button]:py-1.5 [&_li>button]:text-xs [&>button]:h-7 [&>button]:justify-between [&>button]:px-1.5 [&>button]:py-0 [&>button]:text-xs [&>button]:hover:bg-black-300"
+          />
         )}
 
         <Divider />

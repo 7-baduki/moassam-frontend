@@ -29,7 +29,7 @@ export default function CommunityFilter({
         <Tabs options={ageTabs!} value={age} onChange={onAgeChange!} className="shrink-0" />
       )}
       {showAgeTabs && showCategoryTabs && (
-        <div className="mx-7.5 h-4 w-px shrink-0 self-center bg-black-700" />
+        <div className="mx-7.5 h-4 w-px shrink-0 self-center bg-black-400" />
       )}
       {showCategoryTabs && (
         <Tabs

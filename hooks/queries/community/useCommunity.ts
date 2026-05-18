@@ -1,4 +1,9 @@
-import { useSuspenseQuery, useMutation, useQueryClient } from '@tanstack/react-query';
+import {
+  useSuspenseQuery,
+  useSuspenseInfiniteQuery,
+  useMutation,
+  useQueryClient,
+} from '@tanstack/react-query';
 import {
   getMoabangPosts,
   searchMoabangPosts,
@@ -55,6 +60,24 @@ export function useBoardSearchQuery(params: BoardSearchParams) {
   return useSuspenseQuery({
     queryKey: ['board', 'search', params],
     queryFn: () => searchBoardPosts(params),
+  });
+}
+
+export function useBoardPostsInfiniteQuery(params: Omit<BoardListParams, 'page'>) {
+  return useSuspenseInfiniteQuery({
+    queryKey: ['board', 'posts', 'infinite', params],
+    queryFn: ({ pageParam }) => getBoardPosts({ ...params, page: pageParam as number, size: 9 }),
+    initialPageParam: 0,
+    getNextPageParam: (lastPage) => (lastPage.hasNext ? lastPage.page + 1 : undefined),
+  });
+}
+
+export function useBoardSearchInfiniteQuery(params: Omit<BoardSearchParams, 'page'>) {
+  return useSuspenseInfiniteQuery({
+    queryKey: ['board', 'search', 'infinite', params],
+    queryFn: ({ pageParam }) => searchBoardPosts({ ...params, page: pageParam as number, size: 9 }),
+    initialPageParam: 0,
+    getNextPageParam: (lastPage) => (lastPage.hasNext ? lastPage.page + 1 : undefined),
   });
 }
 

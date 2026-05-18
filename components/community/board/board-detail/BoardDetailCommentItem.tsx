@@ -47,7 +47,7 @@ export default function BoardDetailCommentItem({
         onOpenChange={setDeleteDialogOpen}
         iconType="error"
         title="댓글을 삭제하시겠습니까?"
-        description="삭제된 댓글은 복구할 수 없습니다"
+        description="삭제한 게시글은 다시 복구할 수 없어요"
         buttons={[
           { children: '취소', variant: 'outline', onClick: () => setDeleteDialogOpen(false) },
           {

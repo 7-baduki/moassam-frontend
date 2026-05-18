@@ -23,6 +23,8 @@ import {
 } from '@/app/assets/icons/editor';
 import type { BoardDetailFile } from '@/components/community/board/board-detail/board-detail.type';
 import WriteFileCard from './WriteFileCard';
+import { SelectBottomSheet } from '@/components/common/bottom-sheet/SelectBottomSheet';
+import { ChevronDownIcon } from '@/app/assets/icons';
 import StarterKit from '@tiptap/starter-kit';
 import { TextStyleKit } from '@tiptap/extension-text-style';
 import TextAlign from '@tiptap/extension-text-align';
@@ -102,6 +104,8 @@ export default function WriteEditor({
   const [showColorPicker, setShowColorPicker] = useState(false);
   const [showHighlightPicker, setShowHighlightPicker] = useState(false);
   const [showClipMenu, setShowClipMenu] = useState(false);
+  const [showFontFamilySheet, setShowFontFamilySheet] = useState(false);
+  const [showFontSizeSheet, setShowFontSizeSheet] = useState(false);
   const [pickerPos, setPickerPos] = useState({ top: 0, left: 0 });
   const isMobile = useIsMobile();
 
@@ -254,37 +258,61 @@ export default function WriteEditor({
             <Divider />
           </>
         )}
-        <select
-          value={currentFontFamily}
-          onChange={(e) => editor.chain().focus().setFontFamily(e.target.value).run()}
-          className="h-7 cursor-pointer rounded px-1 text-xs text-black-800 outline-none hover:bg-black-300"
-        >
-          {FONT_FAMILIES.map((f) => (
-            <option key={f.value} value={f.value}>
-              {f.label}
-            </option>
-          ))}
-        </select>
+        {isMobile ? (
+          <button
+            type="button"
+            onClick={() => setShowFontFamilySheet(true)}
+            className="flex h-7 items-center gap-1 rounded px-1 text-xs text-black-800 hover:bg-black-300"
+          >
+            <span>
+              {FONT_FAMILIES.find((f) => f.value === currentFontFamily)?.label ?? '기본서체'}
+            </span>
+            <ChevronDownIcon width={12} height={12} className="shrink-0" />
+          </button>
+        ) : (
+          <select
+            value={currentFontFamily}
+            onChange={(e) => editor.chain().focus().setFontFamily(e.target.value).run()}
+            className="h-7 cursor-pointer rounded px-1 text-xs text-black-800 outline-none hover:bg-black-300"
+          >
+            {FONT_FAMILIES.map((f) => (
+              <option key={f.value} value={f.value}>
+                {f.label}
+              </option>
+            ))}
+          </select>
+        )}
 
         <Divider />
 
-        <select
-          value={currentFontSize}
-          onChange={(e) =>
-            editor
-              .chain()
-              .focus()
-              .setFontSize(e.target.value + 'px')
-              .run()
-          }
-          className="h-7 w-14 cursor-pointer rounded px-1 text-xs text-black-800 outline-none hover:bg-black-300"
-        >
-          {FONT_SIZES.map((s) => (
-            <option key={s} value={s}>
-              {s}
-            </option>
-          ))}
-        </select>
+        {isMobile ? (
+          <button
+            type="button"
+            onClick={() => setShowFontSizeSheet(true)}
+            className="flex h-7 w-14 items-center gap-1 rounded px-1 text-xs text-black-800 hover:bg-black-300"
+          >
+            <span>{currentFontSize}</span>
+            <ChevronDownIcon width={12} height={12} className="shrink-0" />
+          </button>
+        ) : (
+          <select
+            value={currentFontSize}
+            onChange={(e) =>
+              editor
+                .chain()
+                .focus()
+                .setFontSize(e.target.value + 'px')
+                .run()
+            }
+            className="h-7 w-14 cursor-pointer rounded px-1 text-xs text-black-800 outline-none hover:bg-black-300"
+          >
+            {FONT_SIZES.map((s) => (
+              <option key={s} value={s}>
+                {s}
+              </option>
+            ))}
+          </select>
+        )}
 
         <Divider />
 
@@ -476,6 +504,36 @@ export default function WriteEditor({
       <EditorContent
         editor={editor}
         className="prose-editor min-h-107 px-4 py-3 text-sm text-black-800"
+      />
+
+      <SelectBottomSheet
+        open={showFontFamilySheet}
+        onOpenChange={setShowFontFamilySheet}
+        title="글꼴"
+        options={FONT_FAMILIES.map((f) => ({ label: f.label, value: f.value }))}
+        value={currentFontFamily}
+        onChange={(value) => {
+          editor.chain().focus().setFontFamily(value).run();
+          setShowFontFamilySheet(false);
+        }}
+        onConfirm={() => setShowFontFamilySheet(false)}
+      />
+
+      <SelectBottomSheet
+        open={showFontSizeSheet}
+        onOpenChange={setShowFontSizeSheet}
+        title="크기"
+        options={FONT_SIZES.map((s) => ({ label: s, value: s }))}
+        value={currentFontSize}
+        onChange={(value) => {
+          editor
+            .chain()
+            .focus()
+            .setFontSize(value + 'px')
+            .run();
+          setShowFontSizeSheet(false);
+        }}
+        onConfirm={() => setShowFontSizeSheet(false)}
       />
 
       <input

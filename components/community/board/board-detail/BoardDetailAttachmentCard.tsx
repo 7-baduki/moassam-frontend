@@ -69,7 +69,7 @@ export default function BoardDetailAttachmentCard({ file }: BoardDetailAttachmen
           <div className="flex flex-1 items-center justify-center bg-white">
             <FileDefaultIcon width={48} height={48} className="text-black-300" />
           </div>
-          <div className="flex h-[50px] flex-col justify-center gap-0.5 bg-black-100 px-2.5">
+          <div className="flex h-12.5 flex-col justify-center gap-0.5 bg-black-100 px-2.5">
             <span className="typo-line-p2 text-[11px] font-medium text-black-600">
               {formatFileSize(file.size)}
             </span>

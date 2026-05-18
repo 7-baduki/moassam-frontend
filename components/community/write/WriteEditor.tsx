@@ -1,6 +1,6 @@
 'use client';
 
-import { useRef, useState, useCallback, useEffect } from 'react';
+import { useRef, useState, useCallback, useEffect, type SVGProps } from 'react';
 import { TwitterPicker } from 'react-color';
 import { toast } from '@/utils/toast';
 import { EditorContent, useEditor, useEditorState } from '@tiptap/react';
@@ -21,6 +21,8 @@ import {
   EditorImageIcon,
   EditorTrashIcon,
 } from '@/app/assets/icons/editor';
+import type { BoardDetailFile } from '@/components/community/board/board-detail/board-detail.type';
+import WriteFileCard from './WriteFileCard';
 import StarterKit from '@tiptap/starter-kit';
 import { TextStyleKit } from '@tiptap/extension-text-style';
 import TextAlign from '@tiptap/extension-text-align';
@@ -29,6 +31,7 @@ import Highlight from '@tiptap/extension-highlight';
 import Image from '@tiptap/extension-image';
 import Placeholder from '@tiptap/extension-placeholder';
 import imageCompression from 'browser-image-compression';
+import { useIsMobile } from '@/hooks/useIsMobile';
 
 async function uploadImage(file: File): Promise<string> {
   try {
@@ -74,16 +77,33 @@ const PICKER_COLORS = [
 interface WriteEditorProps {
   value: string;
   onChange: (value: string) => void;
+  onAddFiles?: (files: FileList) => void;
+  files?: File[];
+  existingFiles?: BoardDetailFile[];
+  onRemoveFile?: (index: number) => void;
+  onDeleteExistingFile?: (fileId: number) => void;
 }
 
-export default function WriteEditor({ value, onChange }: WriteEditorProps) {
+export default function WriteEditor({
+  value,
+  onChange,
+  onAddFiles,
+  files = [],
+  existingFiles = [],
+  onRemoveFile,
+  onDeleteExistingFile,
+}: WriteEditorProps) {
   const initialValueRef = useRef(value);
   const imageInputRef = useRef<HTMLInputElement>(null);
+  const mobileFileInputRef = useRef<HTMLInputElement>(null);
   const colorBtnRef = useRef<HTMLDivElement>(null);
   const highlightBtnRef = useRef<HTMLDivElement>(null);
+  const clipBtnRef = useRef<HTMLDivElement>(null);
   const [showColorPicker, setShowColorPicker] = useState(false);
   const [showHighlightPicker, setShowHighlightPicker] = useState(false);
+  const [showClipMenu, setShowClipMenu] = useState(false);
   const [pickerPos, setPickerPos] = useState({ top: 0, left: 0 });
+  const isMobile = useIsMobile();
 
   const openPicker = useCallback(
     (
@@ -224,6 +244,16 @@ export default function WriteEditor({ value, onChange }: WriteEditorProps) {
       onClick={handleWrapperClick}
     >
       <div className="flex h-10.75 items-center gap-2 overflow-x-auto border-b border-black-200 bg-black-200 px-2">
+        {isMobile && onAddFiles && (
+          <>
+            <div ref={clipBtnRef}>
+              <ToolbarButton onClick={() => openPicker(clipBtnRef, setShowClipMenu)} title="첨부">
+                <PaperclipIcon />
+              </ToolbarButton>
+            </div>
+            <Divider />
+          </>
+        )}
         <select
           value={currentFontFamily}
           onChange={(e) => editor.chain().focus().setFontFamily(e.target.value).run()}
@@ -351,18 +381,29 @@ export default function WriteEditor({ value, onChange }: WriteEditorProps) {
 
         <Divider />
 
-        <ToolbarButton onClick={() => imageInputRef.current?.click()} title="이미지 삽입">
-          <span className="relative">
-            <EditorImageIcon />
-            <input
-              ref={imageInputRef}
-              type="file"
-              accept="image/*"
-              className="hidden"
-              onChange={handleImageUpload}
-            />
-          </span>
-        </ToolbarButton>
+        {!isMobile && (
+          <ToolbarButton onClick={() => imageInputRef.current?.click()} title="이미지 삽입">
+            <span className="relative">
+              <EditorImageIcon />
+              <input
+                ref={imageInputRef}
+                type="file"
+                accept="image/*"
+                className="hidden"
+                onChange={handleImageUpload}
+              />
+            </span>
+          </ToolbarButton>
+        )}
+        {isMobile && (
+          <input
+            ref={imageInputRef}
+            type="file"
+            accept="image/*"
+            className="hidden"
+            onChange={handleImageUpload}
+          />
+        )}
 
         <ToolbarButton
           onClick={() =>
@@ -411,10 +452,72 @@ export default function WriteEditor({ value, onChange }: WriteEditorProps) {
         </div>
       </BubbleMenu>
 
+      {isMobile && (files.length > 0 || existingFiles.length > 0) && (
+        <div className="grid grid-cols-2 gap-2 p-3">
+          {existingFiles.map((file) => (
+            <WriteFileCard
+              key={`existing-${file.fileId}`}
+              fileName={file.originalName}
+              size={file.size}
+              onRemove={() => onDeleteExistingFile?.(file.fileId)}
+            />
+          ))}
+          {files.map((file, index) => (
+            <WriteFileCard
+              key={`new-${index}`}
+              fileName={file.name}
+              size={file.size}
+              onRemove={() => onRemoveFile?.(index)}
+            />
+          ))}
+        </div>
+      )}
+
       <EditorContent
         editor={editor}
         className="prose-editor min-h-107 px-4 py-3 text-sm text-black-800"
       />
+
+      <input
+        ref={mobileFileInputRef}
+        type="file"
+        multiple
+        className="hidden"
+        onChange={(e) => {
+          if (e.target.files) onAddFiles?.(e.target.files);
+          e.target.value = '';
+        }}
+      />
+
+      {showClipMenu && (
+        <>
+          <div className="fixed inset-0 z-99" onClick={() => setShowClipMenu(false)} />
+          <div className="fixed z-100" style={{ top: pickerPos.top, left: pickerPos.left }}>
+            <div className="overflow-hidden rounded-lg border border-black-200 bg-white shadow-md">
+              <button
+                type="button"
+                onClick={() => {
+                  setShowClipMenu(false);
+                  mobileFileInputRef.current?.click();
+                }}
+                className="flex w-full items-center px-4 py-3 text-sm text-black-700 hover:bg-black-100"
+              >
+                파일 첨부
+              </button>
+              <button
+                type="button"
+                onClick={() => {
+                  setShowClipMenu(false);
+                  imageInputRef.current?.click();
+                }}
+                className="flex w-full items-center px-4 py-3 text-sm text-black-700 hover:bg-black-100"
+              >
+                본문에 사진 첨부
+              </button>
+            </div>
+          </div>
+        </>
+      )}
 
       {showColorPicker && (
         <>
@@ -480,6 +583,27 @@ function TableBubbleButton({
 
 function Divider() {
   return <div className="-mx-1.5 h-4 w-px bg-black-300" />;
+}
+
+function PaperclipIcon(props: SVGProps<SVGSVGElement>) {
+  return (
+    <svg
+      width="16"
+      height="16"
+      viewBox="0 0 16 16"
+      fill="none"
+      xmlns="http://www.w3.org/2000/svg"
+      {...props}
+    >
+      <path
+        d="M13.5 7.5L7.5 13.5C6.12 14.88 3.88 14.88 2.5 13.5C1.12 12.12 1.12 9.88 2.5 8.5L9 2C9.93 1.07 11.43 1.07 12.36 2C13.29 2.93 13.29 4.43 12.36 5.36L6.35 11.37C5.88 11.84 5.12 11.84 4.65 11.37C4.18 10.9 4.18 10.14 4.65 9.67L10 4.32"
+        stroke="currentColor"
+        strokeWidth="1.5"
+        strokeLinecap="round"
+        strokeLinejoin="round"
+      />
+    </svg>
+  );
 }
 
 interface ToolbarButtonProps {

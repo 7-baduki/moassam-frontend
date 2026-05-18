@@ -66,7 +66,7 @@ export default function BoardDetailSection({ postId, title }: BoardDetailSection
                     <Button
                       variant="outline"
                       size="sm"
-                      className="w-[50px] border-black-400 text-black-700 hover:border-black-500 hover:text-black-800 xl:w-20"
+                      className="w-12.5 border-black-400 text-black-700 hover:border-black-500 hover:text-black-800 xl:w-20"
                       onClick={handleEdit}
                     >
                       수정
@@ -74,7 +74,7 @@ export default function BoardDetailSection({ postId, title }: BoardDetailSection
                     <Button
                       variant="outline"
                       size="sm"
-                      className="w-[50px] xl:w-20"
+                      className="w-12.5 xl:w-20"
                       onClick={handleDelete}
                       disabled={isDeleting}
                     >

@@ -1,6 +1,7 @@
 'use client';
 
 import { useState } from 'react';
+import Image from 'next/image';
 import { MoreButton } from '@/components/common/more-button/MoreButton';
 import { Textarea } from '@/components/common/textarea/Textarea';
 import { Button } from '@/components/common/button/Button';
@@ -60,7 +61,19 @@ export default function BoardDetailCommentItem({
           },
         ]}
       />
-      <div aria-hidden="true" className="h-9 w-9 shrink-0 rounded-full bg-black-200" />
+      <div className="relative h-9 w-9 shrink-0 overflow-hidden rounded-full bg-black-200">
+        {comment.profileImageUrl && (
+          <Image
+            src={comment.profileImageUrl}
+            alt={comment.authorNickname}
+            fill
+            className="object-cover"
+            onError={(e) => {
+              (e.currentTarget as HTMLImageElement).style.display = 'none';
+            }}
+          />
+        )}
+      </div>
 
       <div className="flex min-w-0 flex-1 flex-col gap-1">
         <div className="flex items-center gap-1">

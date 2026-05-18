@@ -11,6 +11,12 @@ import {
   FilePngIcon,
   FilePptIcon,
   FileJpgIcon,
+  DefaultPdfIcon,
+  DefaultPngIcon,
+  DefaultJpgIcon,
+  DefaultJpegIcon,
+  DefaultPptIcon,
+  DefaultSvgIcon,
 } from '@/app/assets/icons/editor';
 
 const FILE_ICON_MAP: Record<string, React.FC<React.SVGProps<SVGSVGElement>>> = {
@@ -22,6 +28,16 @@ const FILE_ICON_MAP: Record<string, React.FC<React.SVGProps<SVGSVGElement>>> = {
   pptx: FilePptIcon,
   doc: FileDocIcon,
   docx: FileDocIcon,
+};
+
+const DEFAULT_THUMBNAIL_MAP: Record<string, React.FC<React.SVGProps<SVGSVGElement>>> = {
+  pdf: DefaultPdfIcon,
+  png: DefaultPngIcon,
+  jpg: DefaultJpgIcon,
+  jpeg: DefaultJpegIcon,
+  ppt: DefaultPptIcon,
+  pptx: DefaultPptIcon,
+  svg: DefaultSvgIcon,
 };
 import { formatFileSize } from '@/utils/formatFileSize';
 import type { BoardDetailFile } from './board-detail.type';
@@ -60,6 +76,7 @@ export default function BoardDetailAttachmentCard({ file }: BoardDetailAttachmen
   const ext = getExtension(file.originalName);
   const isImage = IMAGE_EXTS.includes(ext);
   const FileIcon = FILE_ICON_MAP[ext] ?? FileDefaultIcon;
+  const ThumbnailIcon = DEFAULT_THUMBNAIL_MAP[ext] ?? FileDefaultIcon;
   const [isActive, setIsActive] = useState(false);
 
   const overlayVisible = isActive
@@ -99,7 +116,7 @@ export default function BoardDetailAttachmentCard({ file }: BoardDetailAttachmen
           className={`flex h-full flex-col transition-opacity group-hover:opacity-0 ${isActive ? 'opacity-0' : ''}`}
         >
           <div className="flex flex-1 items-center justify-center bg-white">
-            <FileDefaultIcon width={48} height={48} className="text-black-300" />
+            <ThumbnailIcon width={48} height={48} />
           </div>
           <div className="flex h-12.5 flex-col justify-center gap-0.5 bg-black-100 px-2.5">
             <span className="typo-line-p2 text-[11px] font-medium text-black-600">

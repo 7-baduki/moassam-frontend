@@ -76,6 +76,9 @@ export default function BoardDetailSideActions({
               : '[&_path]:fill-transparent [&_path]:stroke-black-600'
           }
         />
+        <span aria-hidden="true" className="typo-line-p2 text-xs font-medium text-black-600">
+          {optimisticBookmarkCount}
+        </span>
       </button>
       <button
         type="button"

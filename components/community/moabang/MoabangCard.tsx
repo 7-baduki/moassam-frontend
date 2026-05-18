@@ -4,7 +4,16 @@ import { ViewCountIcon, LikeCountIcon, CommentCountIcon } from '@/app/assets/ico
 import { Badge } from '@/components/common/badge';
 import type { MoabangPost, ResourceType } from './moabang.type';
 import { formatRelativeTime } from '@/utils/formatRelativeTime';
-import { RESOURCE_TYPE_VARIANT } from '@/constants/community/badge-variants';
+import { RESOURCE_TYPE_VARIANT, POST_AGE_VARIANT } from '@/constants/community/badge-variants';
+import type { PostAge } from './moabang.type';
+
+const POST_AGE_LABEL: Record<PostAge, string> = {
+  ALL: '공통',
+  INFANT: '영아',
+  AGE_3: '만 3세',
+  AGE_4: '만 4세',
+  AGE_5: '만 5세',
+};
 
 const RESOURCE_TYPE_LABEL: Record<ResourceType, string> = {
   ACTIVITY: '활동자료',
@@ -32,6 +41,7 @@ export default function MoabangCard({ post }: MoabangCardProps) {
         )}
         <div className="flex flex-col px-5 py-6">
           <div className="flex gap-2">
+            <Badge label={POST_AGE_LABEL[post.postAge]} variant={POST_AGE_VARIANT[post.postAge]} />
             <Badge
               label={RESOURCE_TYPE_LABEL[post.resourceType]}
               variant={RESOURCE_TYPE_VARIANT[post.resourceType]}

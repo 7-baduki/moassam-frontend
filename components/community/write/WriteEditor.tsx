@@ -243,12 +243,12 @@ export default function WriteEditor({
 
   return (
     <div
-      className="rounded-lg border border-black-200 bg-white"
+      className="min-w-0 rounded-lg border border-black-200 bg-white"
       onDrop={handleWrapperDrop}
       onDragOver={(e) => e.preventDefault()}
       onClick={handleWrapperClick}
     >
-      <div className="flex h-10.75 items-center gap-2 border-b border-black-200 bg-black-200 px-2">
+      <div className="flex h-10.75 w-full min-w-0 items-center gap-2 overflow-x-auto overflow-y-hidden border-b border-black-200 bg-black-200 px-2 [scrollbar-width:none] [&::-webkit-scrollbar]:hidden">
         {isMobile && onAddFiles && (
           <>
             <div ref={clipBtnRef}>
@@ -263,7 +263,7 @@ export default function WriteEditor({
           <button
             type="button"
             onClick={() => setShowFontFamilySheet(true)}
-            className="flex h-7 items-center gap-1 rounded px-1 text-xs text-black-800 hover:bg-black-300"
+            className="flex h-7 shrink-0 items-center gap-1 rounded px-1 text-xs whitespace-nowrap text-black-800 hover:bg-black-300"
           >
             <span>
               {FONT_FAMILIES.find((f) => f.value === currentFontFamily)?.label ?? '기본서체'}
@@ -275,7 +275,7 @@ export default function WriteEditor({
             value={currentFontFamily}
             options={FONT_FAMILIES.map((f) => ({ label: f.label, value: f.value }))}
             onChange={(v) => editor.chain().focus().setFontFamily(v).run()}
-            className="w-24 [&_li>button]:justify-between [&_li>button]:px-1.5 [&_li>button]:py-1.5 [&_li>button]:text-xs [&>button]:h-7 [&>button]:justify-between [&>button]:px-1.5 [&>button]:py-0 [&>button]:text-xs [&>button]:hover:bg-black-300"
+            className="w-24 shrink-0 [&_li>button]:justify-between [&_li>button]:px-1.5 [&_li>button]:py-1.5 [&_li>button]:text-xs [&>button]:h-7 [&>button]:justify-between [&>button]:px-1.5 [&>button]:py-0 [&>button]:text-xs [&>button]:hover:bg-black-300"
           />
         )}
 
@@ -285,7 +285,7 @@ export default function WriteEditor({
           <button
             type="button"
             onClick={() => setShowFontSizeSheet(true)}
-            className="flex h-7 w-14 items-center gap-1 rounded px-1 text-xs text-black-800 hover:bg-black-300"
+            className="flex h-7 w-14 shrink-0 items-center gap-1 rounded px-1 text-xs text-black-800 hover:bg-black-300"
           >
             <span>{currentFontSize}</span>
             <ChevronDownIcon width={12} height={12} className="shrink-0" />
@@ -301,7 +301,7 @@ export default function WriteEditor({
                 .setFontSize(v + 'px')
                 .run()
             }
-            className="w-14 [&_li>button]:justify-between [&_li>button]:px-1.5 [&_li>button]:py-1.5 [&_li>button]:text-xs [&>button]:h-7 [&>button]:justify-between [&>button]:px-1.5 [&>button]:py-0 [&>button]:text-xs [&>button]:hover:bg-black-300"
+            className="w-14 shrink-0 [&_li>button]:justify-between [&_li>button]:px-1.5 [&_li>button]:py-1.5 [&_li>button]:text-xs [&>button]:h-7 [&>button]:justify-between [&>button]:px-1.5 [&>button]:py-0 [&>button]:text-xs [&>button]:hover:bg-black-300"
           />
         )}
 
@@ -631,7 +631,7 @@ function TableBubbleButton({
 }
 
 function Divider() {
-  return <div className="-mx-1.5 h-4 w-px bg-black-300" />;
+  return <div className="-mx-1.5 h-4 w-px shrink-0 bg-black-300" />;
 }
 
 function PaperclipIcon(props: SVGProps<SVGSVGElement>) {
@@ -668,7 +668,7 @@ function ToolbarButton({ children, onClick, active, title }: ToolbarButtonProps)
       type="button"
       onClick={onClick}
       title={title}
-      className={`flex h-7 min-w-7 items-center justify-center rounded px-1 text-sm transition-colors ${
+      className={`flex h-7 min-w-7 shrink-0 items-center justify-center rounded px-1 text-sm transition-colors ${
         active ? 'bg-black-400 text-black-800' : 'text-black-700 hover:bg-black-300'
       }`}
     >

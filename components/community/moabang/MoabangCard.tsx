@@ -4,6 +4,7 @@ import { ViewCountIcon, LikeCountIcon, CommentCountIcon } from '@/app/assets/ico
 import { Badge } from '@/components/common/badge';
 import type { MoabangPost, ResourceType } from './moabang.type';
 import { formatRelativeTime } from '@/utils/formatRelativeTime';
+import { RESOURCE_TYPE_VARIANT } from '@/constants/community/badge-variants';
 
 const RESOURCE_TYPE_LABEL: Record<ResourceType, string> = {
   ACTIVITY: '활동자료',
@@ -31,7 +32,10 @@ export default function MoabangCard({ post }: MoabangCardProps) {
         )}
         <div className="flex flex-col px-5 py-6">
           <div className="flex gap-2">
-            <Badge label={RESOURCE_TYPE_LABEL[post.resourceType]} variant="pink-light" />
+            <Badge
+              label={RESOURCE_TYPE_LABEL[post.resourceType]}
+              variant={RESOURCE_TYPE_VARIANT[post.resourceType]}
+            />
           </div>
           <h3 className="typo-line-m4 mt-2.5 line-clamp-1 text-base font-semibold text-black-800">
             {post.title}

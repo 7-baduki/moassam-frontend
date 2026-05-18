@@ -63,6 +63,25 @@ export function useBoardSearchQuery(params: BoardSearchParams) {
   });
 }
 
+export function useMoabangPostsInfiniteQuery(params: Omit<MoabangListParams, 'page'>) {
+  return useSuspenseInfiniteQuery({
+    queryKey: ['moabang', 'posts', 'infinite', params],
+    queryFn: ({ pageParam }) => getMoabangPosts({ ...params, page: pageParam as number, size: 9 }),
+    initialPageParam: 0,
+    getNextPageParam: (lastPage) => (lastPage.hasNext ? lastPage.page + 1 : undefined),
+  });
+}
+
+export function useMoabangSearchInfiniteQuery(params: Omit<MoabangSearchParams, 'page'>) {
+  return useSuspenseInfiniteQuery({
+    queryKey: ['moabang', 'search', 'infinite', params],
+    queryFn: ({ pageParam }) =>
+      searchMoabangPosts({ ...params, page: pageParam as number, size: 9 }),
+    initialPageParam: 0,
+    getNextPageParam: (lastPage) => (lastPage.hasNext ? lastPage.page + 1 : undefined),
+  });
+}
+
 export function useBoardPostsInfiniteQuery(params: Omit<BoardListParams, 'page'>) {
   return useSuspenseInfiniteQuery({
     queryKey: ['board', 'posts', 'infinite', params],

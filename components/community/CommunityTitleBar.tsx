@@ -15,6 +15,7 @@ interface CommunityTitleBarProps {
   writeDisabled?: boolean;
   actions?: ReactNode;
   onSearch?: (keyword: string) => void;
+  renderSearchResults?: (keyword: string) => ReactNode;
 }
 
 export default function CommunityTitleBar({
@@ -25,6 +26,7 @@ export default function CommunityTitleBar({
   writeDisabled = false,
   actions,
   onSearch,
+  renderSearchResults,
 }: CommunityTitleBarProps) {
   const [searchValue, setSearchValue] = useState('');
   const [tooltipOpen, setTooltipOpen] = useState(false);
@@ -123,6 +125,7 @@ export default function CommunityTitleBar({
         <CommunitySearchOverlay
           onClose={() => setOverlayOpen(false)}
           onSearch={handleOverlaySearch}
+          renderResults={renderSearchResults}
         />
       )}
     </>

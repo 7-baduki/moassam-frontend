@@ -166,8 +166,8 @@ function MoabangSearchInfinite({ keyword }: { keyword: string }) {
     keyword,
   });
 
-  const allPosts = data.pages.flatMap((page) => page.data);
-  const totalElements = data.pages[0]?.totalElements ?? 0;
+  const allPosts = data?.pages.flatMap((page) => page.data) ?? [];
+  const totalElements = data?.pages[0]?.totalElements ?? 0;
 
   return (
     <>
@@ -227,6 +227,7 @@ export default function MoabangSection() {
         title="모아방"
         onWrite={() => router.push('/community/write?board=moabang')}
         onSearch={handleSearch}
+        renderSearchResults={(kw) => <MoabangSearchInfinite keyword={kw} />}
       />
       <CommunityFab onClick={() => router.push('/community/write?board=moabang')} />
       {!keyword && (

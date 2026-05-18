@@ -159,8 +159,8 @@ function BoardSearchInfinite({ keyword }: { keyword: string }) {
     keyword,
   });
 
-  const allPosts = data.pages.flatMap((page) => page.data);
-  const totalElements = data.pages[0]?.totalElements ?? 0;
+  const allPosts = data?.pages.flatMap((page) => page.data) ?? [];
+  const totalElements = data?.pages[0]?.totalElements ?? 0;
 
   return (
     <>
@@ -219,6 +219,7 @@ export default function BoardSection() {
         title="자유게시판"
         onWrite={() => router.push('/community/write?board=free')}
         onSearch={handleSearch}
+        renderSearchResults={(kw) => <BoardSearchInfinite keyword={kw} />}
       />
       <CommunityFab onClick={() => router.push('/community/write?board=free')} />
       {!keyword && (

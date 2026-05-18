@@ -62,16 +62,35 @@ export default function BoardDetailAttachmentCard({ file }: BoardDetailAttachmen
   const FileIcon = FILE_ICON_MAP[ext] ?? FileDefaultIcon;
   const [isActive, setIsActive] = useState(false);
 
-  const overlayVisible = isActive ? 'opacity-100' : 'opacity-0 group-hover:opacity-100';
+  const overlayVisible = isActive
+    ? 'visible pointer-events-auto opacity-100'
+    : 'invisible pointer-events-none opacity-0 group-hover:visible group-hover:pointer-events-auto group-hover:opacity-100';
 
   function handleCardClick() {
     setIsActive((v) => !v);
   }
 
+  function handleCardKeyDown(e: React.KeyboardEvent<HTMLDivElement>) {
+    if (e.key === 'Enter' || e.key === ' ') {
+      e.preventDefault();
+      setIsActive((v) => !v);
+      return;
+    }
+
+    if (e.key === 'Escape') {
+      setIsActive(false);
+    }
+  }
+
   return (
     <div
+      role="button"
+      tabIndex={0}
+      aria-pressed={isActive}
+      aria-label={`${file.originalName} 첨부파일 메뉴 ${isActive ? '닫기' : '열기'}`}
       className="group relative h-30 w-45 shrink-0 cursor-pointer overflow-hidden rounded-xl border border-black-300 bg-black-200"
       onClick={handleCardClick}
+      onKeyDown={handleCardKeyDown}
     >
       {isImage ? (
         <Image src={file.url} alt={file.originalName} fill className="object-cover" sizes="180px" />

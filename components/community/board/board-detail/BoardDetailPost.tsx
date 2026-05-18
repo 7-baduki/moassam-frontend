@@ -53,7 +53,7 @@ export default function BoardDetailPost({ post }: BoardDetailPostProps) {
   return (
     <article
       aria-labelledby="post-title"
-      className="rounded-2xl border border-black-200 bg-white p-7.5"
+      className="rounded-2xl border border-black-200 bg-white p-4 xl:p-7.5"
     >
       <div>
         {isMoabang ? (

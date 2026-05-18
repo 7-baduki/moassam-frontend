@@ -21,7 +21,7 @@ export default function MoabangCard({ post }: MoabangCardProps) {
     <Link
       href={`/community/moabang/${post.postId}`}
       aria-label={`${post.title} 모아방 게시글 상세로 이동`}
-      className="block cursor-pointer rounded-2xl focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-pink-500"
+      className="animate-lift block cursor-pointer rounded-2xl focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-pink-500"
     >
       <article className="flex h-99.5 w-full flex-col overflow-hidden rounded-2xl bg-white shadow-sm">
         {post.thumbnailUrl && (

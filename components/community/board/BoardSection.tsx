@@ -45,7 +45,7 @@ function BoardListContent({
   return (
     <>
       <PostList data={data} />
-      {data.totalPages > 1 && (
+      {data.totalPages > 0 && (
         <div className="mt-15 flex justify-center">
           <Pagination
             currentPage={currentPage}
@@ -76,7 +76,7 @@ function BoardSearchContent({
         <span className="font-semibold text-pink-500">{data.totalElements}</span>건
       </p>
       <PostList data={data} />
-      {data.totalPages > 1 && (
+      {data.totalPages > 0 && (
         <div className="mt-15 flex justify-center">
           <Pagination
             currentPage={currentPage}

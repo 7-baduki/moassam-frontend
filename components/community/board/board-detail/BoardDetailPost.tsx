@@ -5,6 +5,7 @@ import type { BadgeVariant } from '@/components/common/badge/badge.type';
 import { AGE_OPTIONS, MATERIAL_TYPE_OPTIONS } from '@/components/community/write/write-selects';
 import type { PostAge, ResourceType } from '@/components/community/moabang/moabang.type';
 import BoardDetailAttachments from './BoardDetailAttachments';
+import BoardDetailInlineActions from './BoardDetailInlineActions';
 import type { BoardDetail } from './board-detail.type';
 import { formatRelativeTime } from '@/utils/formatRelativeTime';
 
@@ -80,31 +81,39 @@ export default function BoardDetailPost({ post }: BoardDetailPostProps) {
           {post.title}
         </h1>
 
-        <div className="mt-4.5 flex flex-wrap items-center gap-2.5">
-          <span
-            aria-label={`작성자 ${post.authorNickName}`}
-            className="typo-line-m2 text-xs font-semibold text-black-600"
-          >
-            {post.authorNickName}
-          </span>
-          <span
-            aria-label={`조회수 ${post.viewCount}`}
-            className="text-xs font-medium text-black-500"
-          >
-            조회 {post.viewCount}
-          </span>
-          <span
-            aria-label={`댓글 수 ${post.commentCount}`}
-            className="text-xs font-medium text-black-500"
-          >
-            댓글 {post.commentCount}
-          </span>
-          <span
-            aria-label={`작성 시간 ${formatRelativeTime(post.createdAt)}`}
-            className="text-xs font-medium text-black-500"
-          >
-            {formatRelativeTime(post.createdAt)}
-          </span>
+        <div className="mt-4.5 flex items-center justify-between gap-2.5">
+          <div className="flex flex-wrap items-center gap-2.5">
+            <span
+              aria-label={`작성자 ${post.authorNickName}`}
+              className="typo-line-m2 text-xs font-semibold text-black-600"
+            >
+              {post.authorNickName}
+            </span>
+            <span
+              aria-label={`조회수 ${post.viewCount}`}
+              className="text-xs font-medium text-black-500"
+            >
+              조회 {post.viewCount}
+            </span>
+            <span
+              aria-label={`댓글 수 ${post.commentCount}`}
+              className="text-xs font-medium text-black-500"
+            >
+              댓글 {post.commentCount}
+            </span>
+            <span
+              aria-label={`작성 시간 ${formatRelativeTime(post.createdAt)}`}
+              className="text-xs font-medium text-black-500"
+            >
+              {formatRelativeTime(post.createdAt)}
+            </span>
+          </div>
+          <BoardDetailInlineActions
+            postId={post.postId}
+            liked={post.isLiked}
+            bookmarked={post.bookmarked}
+            className="shrink-0 xl:hidden"
+          />
         </div>
       </div>
 

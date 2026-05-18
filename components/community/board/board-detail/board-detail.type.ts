@@ -26,6 +26,7 @@ export interface BoardDetail {
   viewCount: number;
   commentCount: number;
   likeCount: number;
+  bookmarkCount: number;
   bookmarked: boolean;
   isLiked: boolean;
   isMine: boolean;

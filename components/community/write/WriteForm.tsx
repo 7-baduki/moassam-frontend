@@ -180,13 +180,19 @@ export default function WriteForm({
             <Button
               variant="outline"
               size="sm"
-              className="border-black-400 text-black-700 hover:border-black-500 hover:text-black-800"
+              className="w-[50px] border-black-400 text-black-700 hover:border-black-500 hover:text-black-800 xl:w-auto"
               onClick={handleCancel}
               disabled={isPending}
             >
               취소
             </Button>
-            <Button size="sm" variant="primary" onClick={handleSubmit} disabled={isPending}>
+            <Button
+              size="sm"
+              variant="primary"
+              className="w-[50px] xl:w-auto"
+              onClick={handleSubmit}
+              disabled={isPending}
+            >
               {isEdit ? '수정' : '등록'}
             </Button>
           </div>

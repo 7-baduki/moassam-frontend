@@ -10,7 +10,7 @@ export default async function WritePage({ searchParams }: WritePageProps) {
   const initialBoard: BoardType = board === 'free' ? 'free' : 'moabang';
 
   return (
-    <div className="min-w-175">
+    <div className="w-full">
       <WriteForm initialBoard={initialBoard} />
     </div>
   );

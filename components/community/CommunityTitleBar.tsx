@@ -62,7 +62,7 @@ export default function CommunityTitleBar({
     <>
       <div className="mb-2 flex items-center justify-between">
         <div className="flex items-center gap-1 py-[10.5px]">
-          <h2 className="typo-line-m2 text-base !leading-none font-semibold text-black-800 md:text-lg">
+          <h2 className="typo-line-m2 text-base leading-none! font-semibold text-black-800 md:text-lg">
             {title}
           </h2>
 

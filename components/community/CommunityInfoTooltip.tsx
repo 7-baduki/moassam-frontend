@@ -6,7 +6,7 @@ export default function CommunityInfoTooltip({ className }: CommunityInfoTooltip
   return (
     <div className={`absolute top-full left-1/2 z-200 mt-2 -translate-x-1/2 ${className ?? ''}`}>
       <div
-        className="absolute left-1/2 h-3 w-3 -translate-x-1/2 rotate-45 rounded-tl-[2px] bg-black-800"
+        className="absolute left-1/2 h-3 w-3 -translate-x-1/2 rotate-45 rounded-tl-xs bg-black-800"
         style={{ top: '-2px' }}
       />
       <div className="rounded-lg bg-black-800 px-2.5 py-2 font-medium whitespace-nowrap">

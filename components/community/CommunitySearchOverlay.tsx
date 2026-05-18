@@ -19,7 +19,7 @@ export default function CommunitySearchOverlay({ onClose, onSearch }: CommunityS
   }
 
   return (
-    <div className="fixed inset-0 z-1000 flex flex-col bg-white md:hidden">
+    <div className="fixed inset-0 z-1000 flex flex-col bg-white pt-16 md:hidden">
       <div className="flex items-center gap-2 px-4 py-3">
         <button
           type="button"

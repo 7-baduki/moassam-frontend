@@ -47,7 +47,7 @@ export default function BoardDetailSection({ postId, title }: BoardDetailSection
       <Dialog
         open={deleteDialogOpen}
         onOpenChange={setDeleteDialogOpen}
-        iconType="error"
+        iconType="trash"
         title="게시글을 삭제하시겠습니까?"
         description="삭제한 게시글은 다시 복구할 수 없어요"
         buttons={[

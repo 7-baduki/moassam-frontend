@@ -3,9 +3,9 @@
 import * as RadixDialog from '@radix-ui/react-dialog';
 import { Button, ButtonProps } from '@/components/common/button/Button';
 import { cn } from '@/utils/cn';
-import { SuccessIcon, ErrorIcon, LockIcon } from '@/app/assets/icons';
+import { SuccessIcon, ErrorIcon, LockIcon, TrashIcon } from '@/app/assets/icons';
 
-type IconType = 'loading' | 'success' | 'error' | 'lock';
+type IconType = 'loading' | 'success' | 'error' | 'lock' | 'trash';
 
 interface DialogProps {
   open: boolean;
@@ -28,6 +28,7 @@ function DialogIcon({ iconType }: { iconType: IconType }) {
     success: <SuccessIcon />,
     error: <ErrorIcon />,
     lock: <LockIcon />,
+    trash: <TrashIcon />,
   };
 
   return ICONS[iconType];

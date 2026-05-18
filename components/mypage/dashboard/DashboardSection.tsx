@@ -19,8 +19,6 @@ export default function DashboardSection() {
   const { data: activitySummary } = useActivitySummaryQuery();
   const { data: credits } = useCreditsQuery();
 
-  const TOTAL_CREDITS = 10;
-
   const isMobile = useIsMobile();
   const [isEditModalOpen, setIsEditModalOpen] = useState(false);
   const [isWithdrawModalOpen, setIsWithdrawModalOpen] = useState(false);
@@ -37,8 +35,8 @@ export default function DashboardSection() {
       />
 
       <GenerationCount
-        used={TOTAL_CREDITS - (credits?.balance ?? TOTAL_CREDITS)}
-        total={TOTAL_CREDITS}
+        balance={credits?.balance ?? 0}
+        total={credits?.total ?? 0}
         className="mt-7.5 xl:mt-22.5"
       />
 

@@ -4,14 +4,14 @@ import { Tooltip } from '@/components/common/tooltip/Tooltip';
 import { cn } from '@/utils/cn';
 
 interface GenerationCountProps {
-  used: number;
+  balance: number;
   total: number;
   className?: string;
 }
 
-export function GenerationCount({ used, total, className }: GenerationCountProps) {
-  const remainingCount = total - used;
-  const progress = (used / total) * 100;
+export function GenerationCount({ balance, total, className }: GenerationCountProps) {
+  const remainingCount = balance;
+  const progress = total > 0 ? ((total - balance) / total) * 100 : 0;
 
   return (
     <section className={cn('flex flex-col gap-3 px-4 md:px-9 xl:px-0', className)}>

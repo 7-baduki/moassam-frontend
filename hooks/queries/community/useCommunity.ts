@@ -1,4 +1,11 @@
-import { useSuspenseQuery, useMutation, useQueryClient } from '@tanstack/react-query';
+import {
+  useSuspenseQuery,
+  useSuspenseInfiniteQuery,
+  useInfiniteQuery,
+  keepPreviousData,
+  useMutation,
+  useQueryClient,
+} from '@tanstack/react-query';
 import {
   getMoabangPosts,
   searchMoabangPosts,
@@ -55,6 +62,45 @@ export function useBoardSearchQuery(params: BoardSearchParams) {
   return useSuspenseQuery({
     queryKey: ['board', 'search', params],
     queryFn: () => searchBoardPosts(params),
+  });
+}
+
+export function useMoabangPostsInfiniteQuery(params: Omit<MoabangListParams, 'page'>) {
+  return useSuspenseInfiniteQuery({
+    queryKey: ['moabang', 'posts', 'infinite', params],
+    queryFn: ({ pageParam }) => getMoabangPosts({ ...params, page: pageParam as number, size: 9 }),
+    initialPageParam: 0,
+    getNextPageParam: (lastPage) => (lastPage.hasNext ? lastPage.page + 1 : undefined),
+  });
+}
+
+export function useMoabangSearchInfiniteQuery(params: Omit<MoabangSearchParams, 'page'>) {
+  return useInfiniteQuery({
+    queryKey: ['moabang', 'search', 'infinite', params],
+    queryFn: ({ pageParam }) =>
+      searchMoabangPosts({ ...params, page: pageParam as number, size: 9 }),
+    initialPageParam: 0,
+    getNextPageParam: (lastPage) => (lastPage.hasNext ? lastPage.page + 1 : undefined),
+    placeholderData: keepPreviousData,
+  });
+}
+
+export function useBoardPostsInfiniteQuery(params: Omit<BoardListParams, 'page'>) {
+  return useSuspenseInfiniteQuery({
+    queryKey: ['board', 'posts', 'infinite', params],
+    queryFn: ({ pageParam }) => getBoardPosts({ ...params, page: pageParam as number, size: 9 }),
+    initialPageParam: 0,
+    getNextPageParam: (lastPage) => (lastPage.hasNext ? lastPage.page + 1 : undefined),
+  });
+}
+
+export function useBoardSearchInfiniteQuery(params: Omit<BoardSearchParams, 'page'>) {
+  return useInfiniteQuery({
+    queryKey: ['board', 'search', 'infinite', params],
+    queryFn: ({ pageParam }) => searchBoardPosts({ ...params, page: pageParam as number, size: 9 }),
+    initialPageParam: 0,
+    getNextPageParam: (lastPage) => (lastPage.hasNext ? lastPage.page + 1 : undefined),
+    placeholderData: keepPreviousData,
   });
 }
 

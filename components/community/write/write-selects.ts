@@ -6,7 +6,6 @@ export const BOARD_OPTIONS: SelectOption[] = [
 ];
 
 export const AGE_OPTIONS: SelectOption[] = [
-  { label: '공통', value: 'ALL' },
   { label: '영아', value: 'INFANT' },
   { label: '만 3세', value: 'AGE_3' },
   { label: '만 4세', value: 'AGE_4' },

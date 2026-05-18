@@ -47,9 +47,9 @@ export default function BoardDetailSection({ postId, title }: BoardDetailSection
       <Dialog
         open={deleteDialogOpen}
         onOpenChange={setDeleteDialogOpen}
-        iconType="error"
+        iconType="trash"
         title="게시글을 삭제하시겠습니까?"
-        description="삭제된 게시글은 복구할 수 없습니다"
+        description="삭제한 게시글은 다시 복구할 수 없어요"
         buttons={[
           { children: '취소', variant: 'outline', onClick: () => setDeleteDialogOpen(false) },
           { children: '삭제', variant: 'primary', onClick: confirmDelete, disabled: isDeleting },
@@ -66,7 +66,7 @@ export default function BoardDetailSection({ postId, title }: BoardDetailSection
                     <Button
                       variant="outline"
                       size="sm"
-                      className="border-black-400 text-black-700 hover:border-black-500 hover:text-black-800"
+                      className="w-12.5 border-black-400 text-black-700 hover:border-black-500 hover:text-black-800 xl:w-20"
                       onClick={handleEdit}
                     >
                       수정
@@ -74,6 +74,7 @@ export default function BoardDetailSection({ postId, title }: BoardDetailSection
                     <Button
                       variant="outline"
                       size="sm"
+                      className="w-12.5 xl:w-20"
                       onClick={handleDelete}
                       disabled={isDeleting}
                     >
@@ -89,7 +90,7 @@ export default function BoardDetailSection({ postId, title }: BoardDetailSection
             <BoardDetailComments postId={postId} comments={post.comments} isLoggedIn={isLoggedIn} />
           </div>
         </div>
-        <div className="sticky top-[263.2px] shrink-0">
+        <div className="sticky top-[263.2px] hidden shrink-0 xl:block">
           <BoardDetailSideActions
             postId={postId}
             likeCount={post.likeCount}
@@ -99,7 +100,7 @@ export default function BoardDetailSection({ postId, title }: BoardDetailSection
         </div>
       </div>
 
-      <div className="fixed right-20 bottom-17.5">
+      <div className="fixed right-20 bottom-17.5 hidden xl:block">
         <ScrollToTopButton />
       </div>
     </div>

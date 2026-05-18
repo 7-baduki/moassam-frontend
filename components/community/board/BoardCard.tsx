@@ -4,6 +4,7 @@ import { Badge } from '@/components/common/badge';
 import type { BoardPost, HeadTag } from './board.type';
 import { formatRelativeTime } from '@/utils/formatRelativeTime';
 import { stripHtml } from '@/utils/stripHtml';
+import { HEAD_TAG_VARIANT } from '@/constants/community/badge-variants';
 
 const HEAD_TAG_LABEL: Record<HeadTag, string> = {
   WORRY: '고민',
@@ -20,11 +21,11 @@ export default function BoardCard({ post }: BoardCardProps) {
     <Link
       href={`/community/board/${post.postId}`}
       aria-label={`${post.title} 게시글 상세로 이동`}
-      className="block cursor-pointer rounded-2xl focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-pink-500"
+      className="animate-lift block cursor-pointer rounded-2xl focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-pink-500"
     >
       <article className="flex flex-col rounded-2xl border border-black-200 bg-white px-7.5 pt-7.5 pb-6">
         <div className="flex gap-2">
-          <Badge label={HEAD_TAG_LABEL[post.headTag]} variant="pink-light" />
+          <Badge label={HEAD_TAG_LABEL[post.headTag]} variant={HEAD_TAG_VARIANT[post.headTag]} />
         </div>
         <h3 className="typo-line-m4 mt-2 line-clamp-1 text-base font-semibold text-black-800">
           {post.title}

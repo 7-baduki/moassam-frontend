@@ -30,3 +30,6 @@ export { default as DownloadIcon } from './DownloadIcon.svg';
 export { default as TopIcon } from './TopIcon.svg';
 export { default as HamburgerIcon } from './HamburgerIcon.svg';
 export { default as SettingIcon } from './SettingIcon.svg';
+export { default as BackArrowIcon } from './BackArrowIcon.svg';
+export { default as InfoIcon } from './InfoIcon.svg';
+export { default as TrashIcon } from './TrashIcon.svg';

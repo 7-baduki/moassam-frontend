@@ -17,6 +17,7 @@ import type { BoardType, WriteFormValues } from './write.type';
 import type { BoardDetailFile } from '@/components/community/board/board-detail/board-detail.type';
 
 const MAX_FILES_BYTES = 10 * 1024 * 1024;
+const MAX_FILES = 5;
 
 const WriteEditor = dynamic(() => import('./WriteEditor'), {
   ssr: false,
@@ -161,6 +162,18 @@ export default function WriteForm({
     }
   }
 
+  function handleAddFiles(incoming: FileList) {
+    const totalCount = existingFiles.length + values.files.length + incoming.length;
+    if (totalCount > MAX_FILES) {
+      toast.warning({
+        title: '업로드 제한',
+        description: `파일은 최대 ${MAX_FILES}개까지만 첨부할 수 있습니다`,
+      });
+      return;
+    }
+    handleChange('files', [...values.files, ...Array.from(incoming)]);
+  }
+
   function handleCancel() {
     const path = values.boardType === 'moabang' ? 'moabang' : 'board';
     if (isEdit && postId != null) {
@@ -180,13 +193,19 @@ export default function WriteForm({
             <Button
               variant="outline"
               size="sm"
-              className="border-black-400 text-black-700 hover:border-black-500 hover:text-black-800"
+              className="w-12.5 border-black-400 text-black-700 hover:border-black-500 hover:text-black-800 xl:w-20"
               onClick={handleCancel}
               disabled={isPending}
             >
               취소
             </Button>
-            <Button size="sm" variant="primary" onClick={handleSubmit} disabled={isPending}>
+            <Button
+              size="sm"
+              variant="primary"
+              className="w-12.5 xl:w-20"
+              onClick={handleSubmit}
+              disabled={isPending}
+            >
               {isEdit ? '수정' : '등록'}
             </Button>
           </div>
@@ -198,7 +217,7 @@ export default function WriteForm({
       <div className="mt-2">
         <WriteTitleInput value={values.title} onChange={(value) => handleChange('title', value)} />
       </div>
-      <div className="mt-7.5">
+      <div className="mt-7.5 hidden md:block">
         <WriteFileUpload
           files={values.files}
           onChange={(files) => handleChange('files', files)}
@@ -206,8 +225,21 @@ export default function WriteForm({
           onDeleteExistingFile={handleDeleteExistingFile}
         />
       </div>
-      <div className="mt-7.5">
-        <WriteEditor value={values.content} onChange={(value) => handleChange('content', value)} />
+      <div className="mt-4 md:mt-7.5">
+        <WriteEditor
+          value={values.content}
+          onChange={(value) => handleChange('content', value)}
+          onAddFiles={handleAddFiles}
+          files={values.files}
+          existingFiles={existingFiles}
+          onRemoveFile={(index) =>
+            handleChange(
+              'files',
+              values.files.filter((_, i) => i !== index),
+            )
+          }
+          onDeleteExistingFile={handleDeleteExistingFile}
+        />
       </div>
     </div>
   );

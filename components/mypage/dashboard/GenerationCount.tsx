@@ -11,7 +11,7 @@ interface GenerationCountProps {
 
 export function GenerationCount({ balance, total, className }: GenerationCountProps) {
   const remainingCount = balance;
-  const progress = total > 0 ? ((total - balance) / total) * 100 : 0;
+  const progress = total > 0 ? Math.min(100, Math.max(0, ((total - balance) / total) * 100)) : 0;
 
   return (
     <section className={cn('flex flex-col gap-3 px-4 md:px-9 xl:px-0', className)}>

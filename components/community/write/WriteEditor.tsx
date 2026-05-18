@@ -540,8 +540,8 @@ export default function WriteEditor({
 
       {showClipMenu && (
         <>
-          <div className="fixed inset-0 z-99" onClick={() => setShowClipMenu(false)} />
-          <div className="fixed z-100" style={{ top: pickerPos.top, left: pickerPos.left }}>
+          <div className="fixed inset-0 z-900" onClick={() => setShowClipMenu(false)} />
+          <div className="fixed z-1100" style={{ top: pickerPos.top, left: pickerPos.left }}>
             <div className="overflow-hidden rounded-lg border border-black-200 bg-white shadow-md">
               <button
                 type="button"
@@ -570,8 +570,8 @@ export default function WriteEditor({
 
       {showColorPicker && (
         <>
-          <div className="fixed inset-0 z-99" onClick={() => setShowColorPicker(false)} />
-          <div className="fixed z-100" style={{ top: pickerPos.top, left: pickerPos.left }}>
+          <div className="fixed inset-0 z-900" onClick={() => setShowColorPicker(false)} />
+          <div className="fixed z-1100" style={{ top: pickerPos.top, left: pickerPos.left }}>
             <TwitterPicker
               colors={PICKER_COLORS}
               color={currentColor}
@@ -590,8 +590,8 @@ export default function WriteEditor({
 
       {showHighlightPicker && (
         <>
-          <div className="fixed inset-0 z-99" onClick={() => setShowHighlightPicker(false)} />
-          <div className="fixed z-100" style={{ top: pickerPos.top, left: pickerPos.left }}>
+          <div className="fixed inset-0 z-900" onClick={() => setShowHighlightPicker(false)} />
+          <div className="fixed z-1100" style={{ top: pickerPos.top, left: pickerPos.left }}>
             <TwitterPicker
               colors={PICKER_COLORS}
               onChangeComplete={(color) => {

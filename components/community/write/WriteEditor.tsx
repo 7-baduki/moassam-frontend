@@ -248,7 +248,7 @@ export default function WriteEditor({
       onDragOver={(e) => e.preventDefault()}
       onClick={handleWrapperClick}
     >
-      <div className="flex h-10.75 w-full min-w-0 items-center gap-2 overflow-x-auto overflow-y-hidden border-b border-black-200 bg-black-200 px-2 [scrollbar-width:none] [&::-webkit-scrollbar]:hidden">
+      <div className="flex w-full min-w-0 items-center gap-2 border-b border-black-200 bg-black-200 px-2 max-md:h-10.75 max-md:flex-nowrap max-md:overflow-x-auto max-md:overflow-y-hidden max-md:[scrollbar-width:none] md:flex-wrap md:py-1.5 max-md:[&::-webkit-scrollbar]:hidden">
         {isMobile && onAddFiles && (
           <>
             <div ref={clipBtnRef}>

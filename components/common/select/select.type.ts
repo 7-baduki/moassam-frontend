@@ -10,6 +10,7 @@ interface SelectSharedProps {
   options: SelectOption[];
   triggerLabel?: string;
   className?: string;
+  fixedMenu?: boolean;
 }
 
 interface SingleSelectProps extends SelectSharedProps {

@@ -19,6 +19,8 @@ import {
 import { useObservationMutation } from '@/hooks/queries/observations/useObservation';
 import { useIsMobile } from '@/hooks/useIsMobile';
 import { toast } from '@/utils/toast';
+import { useLoginModalStore } from '@/stores/loginModalStore';
+import { useUserStore } from '@/stores/userStore';
 
 export default function ObservationCreateForm() {
   const router = useRouter();
@@ -33,6 +35,8 @@ export default function ObservationCreateForm() {
   const [areaBottomSheetOpen, setAreaBottomSheetOpen] = useState(false);
 
   const isMobile = useIsMobile();
+  const user = useUserStore((state) => state.user);
+  const openLoginModal = useLoginModalStore((state) => state.open);
 
   const { mutate: createObservation, isPending: isMutating } = useObservationMutation({
     onSuccess: ({ observationId }) => {
@@ -75,6 +79,10 @@ export default function ObservationCreateForm() {
   ];
 
   const handleSubmit = () => {
+    if (!user) {
+      openLoginModal('로그인이 필요해요!', '로그인 후 관찰일지를 생성할 수 있어요');
+      return;
+    }
     createObservation({ age, sectionTypes: areas, situation: content });
   };
 

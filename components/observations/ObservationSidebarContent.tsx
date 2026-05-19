@@ -13,6 +13,7 @@ import {
   useObservationListQuery,
 } from '@/hooks/queries/observations/useObservation';
 import { toast } from '@/utils/toast';
+import { useUserStore } from '@/stores/userStore';
 
 function ObservationSidebarItem({
   log,
@@ -68,10 +69,11 @@ export default function ObservationSidebarContent() {
   const pathname = usePathname();
   const router = useRouter();
   const queryClient = useQueryClient();
+  const user = useUserStore((state) => state.user);
   const isCreatePage = pathname === '/observations';
   const bottomRef = useRef<HTMLDivElement>(null);
 
-  const { data, fetchNextPage, hasNextPage, isFetchingNextPage } = useObservationListQuery();
+  const { data, fetchNextPage, hasNextPage, isFetchingNextPage } = useObservationListQuery(!!user);
   const { mutate: deleteObservation } = useObservationDeleteMutation({
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ['observations'] });

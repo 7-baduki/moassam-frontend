@@ -12,17 +12,75 @@ import ScrollToTopButton from '@/components/common/scroll-top/ScrollToTopButton'
 import { usePostDetailQuery, useDeletePostMutation } from '@/hooks/queries/community/useCommunity';
 import { useUserStore } from '@/stores/userStore';
 import { toast } from '@/utils/toast';
+import { AsyncBoundary, LoadingSpinner, ErrorFallback } from '@/lib/async-boundary';
 
 interface BoardDetailSectionProps {
   postId: number;
   title: string;
 }
 
+function BoardDetailHeaderActions({
+  postId,
+  onEdit,
+  onDelete,
+  isDeleting,
+}: {
+  postId: number;
+  onEdit: () => void;
+  onDelete: () => void;
+  isDeleting: boolean;
+}) {
+  const { data: post } = usePostDetailQuery(postId);
+  if (!post.isMine) return null;
+  return (
+    <div className="flex gap-2.5">
+      <Button
+        variant="outline"
+        size="sm"
+        className="w-12.5 border-black-400 text-black-700 hover:border-black-500 hover:text-black-800 xl:w-20"
+        onClick={onEdit}
+      >
+        수정
+      </Button>
+      <Button
+        variant="outline"
+        size="sm"
+        className="w-12.5 xl:w-20"
+        onClick={onDelete}
+        disabled={isDeleting}
+      >
+        삭제
+      </Button>
+    </div>
+  );
+}
+
+function BoardDetailContent({ postId, isLoggedIn }: { postId: number; isLoggedIn: boolean }) {
+  const { data: post } = usePostDetailQuery(postId);
+  return (
+    <div className="flex items-start gap-4">
+      <div className="min-w-0 flex-1">
+        <BoardDetailPost post={post} />
+        <div className="mt-7.5">
+          <BoardDetailComments postId={postId} comments={post.comments} isLoggedIn={isLoggedIn} />
+        </div>
+      </div>
+      <div className="sticky top-[263.2px] hidden shrink-0 xl:block">
+        <BoardDetailSideActions
+          postId={postId}
+          likeCount={post.likeCount}
+          bookmarked={post.bookmarked}
+          liked={post.isLiked}
+        />
+      </div>
+    </div>
+  );
+}
+
 export default function BoardDetailSection({ postId, title }: BoardDetailSectionProps) {
   const router = useRouter();
   const user = useUserStore((state) => state.user);
   const isLoggedIn = user !== null;
-  const { data: post } = usePostDetailQuery(postId);
   const { mutate: deletePost, isPending: isDeleting } = useDeletePostMutation();
   const [deleteDialogOpen, setDeleteDialogOpen] = useState(false);
 
@@ -55,51 +113,32 @@ export default function BoardDetailSection({ postId, title }: BoardDetailSection
           { children: '삭제', variant: 'primary', onClick: confirmDelete, disabled: isDeleting },
         ]}
       />
-      <div className="flex items-start gap-4">
-        <div className="min-w-0 flex-1">
-          <CommunityTitleBar
-            title={title}
-            actions={
-              <div className="flex gap-2.5">
-                {post.isMine && (
-                  <>
-                    <Button
-                      variant="outline"
-                      size="sm"
-                      className="w-12.5 border-black-400 text-black-700 hover:border-black-500 hover:text-black-800 xl:w-20"
-                      onClick={handleEdit}
-                    >
-                      수정
-                    </Button>
-                    <Button
-                      variant="outline"
-                      size="sm"
-                      className="w-12.5 xl:w-20"
-                      onClick={handleDelete}
-                      disabled={isDeleting}
-                    >
-                      삭제
-                    </Button>
-                  </>
-                )}
-              </div>
-            }
+      <CommunityTitleBar
+        title={title}
+        actions={
+          <AsyncBoundary pendingFallback={null} rejectedFallback={() => null}>
+            <BoardDetailHeaderActions
+              postId={postId}
+              onEdit={handleEdit}
+              onDelete={handleDelete}
+              isDeleting={isDeleting}
+            />
+          </AsyncBoundary>
+        }
+      />
+      <AsyncBoundary
+        pendingFallback={<LoadingSpinner className="mt-[20vh]" />}
+        rejectedFallback={({ error, reset }) => (
+          <ErrorFallback
+            error={error}
+            actionLabel="다시 시도"
+            onAction={reset}
+            className="pt-7.5"
           />
-          <BoardDetailPost post={post} />
-          <div className="mt-7.5">
-            <BoardDetailComments postId={postId} comments={post.comments} isLoggedIn={isLoggedIn} />
-          </div>
-        </div>
-        <div className="sticky top-[263.2px] hidden shrink-0 xl:block">
-          <BoardDetailSideActions
-            postId={postId}
-            likeCount={post.likeCount}
-            bookmarked={post.bookmarked}
-            liked={post.isLiked}
-          />
-        </div>
-      </div>
-
+        )}
+      >
+        <BoardDetailContent postId={postId} isLoggedIn={isLoggedIn} />
+      </AsyncBoundary>
       <div className="fixed right-20 bottom-17.5 hidden xl:block">
         <ScrollToTopButton />
       </div>

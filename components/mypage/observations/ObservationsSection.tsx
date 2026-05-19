@@ -15,6 +15,7 @@ import { MoreButton } from '@/components/common/more-button/MoreButton';
 import { EmptyState } from '@/components/common/empty-state/EmptyState';
 import { Dialog } from '@/components/common/dialog/Dialog';
 import { useQueryClient } from '@tanstack/react-query';
+
 import { useIsDesktop } from '@/hooks/useIsMobile';
 import { toast } from '@/utils/toast';
 import { MyObservationListItem } from '@/types/observation.type';
@@ -94,6 +95,7 @@ function ObservationsPaginated() {
     onSuccess: () => {
       refetch();
       queryClient.invalidateQueries({ queryKey: ['observations'] });
+      queryClient.invalidateQueries({ queryKey: ['activitySummary'] });
       toast.success({
         title: '관찰일지 삭제가 완료되었어요',
         description: '삭제된 관찰일지는 복구할 수 없어요',
@@ -152,6 +154,7 @@ function ObservationsInfinite() {
     onSuccess: () => {
       refetch();
       queryClient.invalidateQueries({ queryKey: ['observations'] });
+      queryClient.invalidateQueries({ queryKey: ['activitySummary'] });
       toast.success({
         title: '관찰일지 삭제가 완료되었어요',
         description: '삭제된 관찰일지는 복구할 수 없어요',

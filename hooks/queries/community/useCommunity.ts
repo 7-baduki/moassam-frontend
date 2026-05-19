@@ -163,6 +163,7 @@ export function useBookmarkMutation(postId: number) {
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ['post', 'detail', postId] });
       queryClient.invalidateQueries({ queryKey: ['myBookmarks'] });
+      queryClient.invalidateQueries({ queryKey: ['activitySummary'] });
     },
   });
 }

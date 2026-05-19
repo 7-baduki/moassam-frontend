@@ -38,6 +38,7 @@ export default function ObservationCreateForm() {
     onSuccess: ({ observationId }) => {
       queryClient.invalidateQueries({ queryKey: ['observations'] });
       queryClient.invalidateQueries({ queryKey: ['myObservations'] });
+      queryClient.invalidateQueries({ queryKey: ['activitySummary'] });
       startTransition(() => {
         router.push(`/observations/${observationId}`);
       });

@@ -76,6 +76,7 @@ export default function ObservationSidebarContent() {
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ['observations'] });
       queryClient.invalidateQueries({ queryKey: ['myObservations'] });
+      queryClient.invalidateQueries({ queryKey: ['activitySummary'] });
       toast.success({
         title: '관찰일지 삭제가 완료되었어요',
         description: '삭제된 관찰일지는 복구할 수 없어요',

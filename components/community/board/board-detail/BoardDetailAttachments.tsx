@@ -41,7 +41,7 @@ export default function BoardDetailAttachments({ files }: BoardDetailAttachments
           <button
             type="button"
             aria-label="전체 다운로드"
-            className="flex cursor-pointer items-center text-black-600 hover:text-black-800"
+            className="flex items-center text-black-600 hover:text-black-800"
           >
             <DownloadIcon />
           </button>

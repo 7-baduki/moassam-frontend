@@ -18,6 +18,7 @@ export default function LegalTabs() {
         <Link
           key={tab.href}
           href={tab.href}
+          aria-current={pathname === tab.href ? 'page' : undefined}
           className={cn(
             'flex h-full items-center border-b-2 text-[13px] whitespace-nowrap transition-colors md:text-sm',
             pathname === tab.href

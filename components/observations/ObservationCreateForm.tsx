@@ -115,7 +115,7 @@ export default function ObservationCreateForm() {
         </h2>
 
         <div
-          className={`w-full max-w-350 rounded-[20px] bg-white px-12.5 pt-11.75 ${selectedTags.length > 0 ? 'pb-5' : 'pb-11.75'}`}
+          className={`w-full max-w-350 rounded-[20px] bg-white px-5 pt-8.75 md:px-12.5 md:pt-11.75 ${selectedTags.length > 0 ? 'pb-8.75' : 'pb-8.75 md:pb-11.75'}`}
         >
           <section className="mb-12.5 xl:mb-5">
             <h2 className="mb-1.5 text-base font-semibold text-black-800 md:mb-5 md:text-lg">

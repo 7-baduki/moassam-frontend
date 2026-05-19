@@ -74,7 +74,10 @@ export default function SolutionSection() {
           />
         </motion.div>
 
-        <motion.div className="mt-4 flex justify-center xl:mt-15" {...createFadeUp(root, 0.3)}>
+        <motion.div
+          className="mt-6 flex justify-center md:mt-7.5 xl:mt-15"
+          {...createFadeUp(root, 0.3)}
+        >
           <Button
             variant="primary"
             size="md"

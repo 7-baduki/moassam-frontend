@@ -37,6 +37,7 @@ export default function ObservationCreateForm() {
   const { mutate: createObservation, isPending: isMutating } = useObservationMutation({
     onSuccess: ({ observationId }) => {
       queryClient.invalidateQueries({ queryKey: ['observations'] });
+      queryClient.invalidateQueries({ queryKey: ['myObservations'] });
       startTransition(() => {
         router.push(`/observations/${observationId}`);
       });

@@ -13,6 +13,7 @@ import { useObservationDeleteMutation } from '@/hooks/queries/observations/useOb
 import { AGE_OPTIONS } from '@/constants/observations/observation';
 import { MoreButton } from '@/components/common/more-button/MoreButton';
 import { EmptyState } from '@/components/common/empty-state/EmptyState';
+import { Dialog } from '@/components/common/dialog/Dialog';
 import { useIsDesktop } from '@/hooks/useIsMobile';
 import { toast } from '@/utils/toast';
 import { MyObservationListItem } from '@/types/observation.type';
@@ -33,27 +34,52 @@ function ObservationItem({
   observation: MyObservationListItem;
   onDelete: (id: number) => void;
 }) {
+  const [showDeleteDialog, setShowDeleteDialog] = useState(false);
+
   return (
-    <div className="flex items-center rounded-[10px] bg-white px-5 py-3 transition-colors hover:bg-black-200">
-      <Link
-        href={`/observations/${observation.observationId}`}
-        className="flex min-w-0 flex-1 flex-col gap-1 md:flex-row md:items-center"
-      >
-        <span className="min-w-0 flex-1 truncate text-sm font-medium text-black-800">
-          {observation.title}
-        </span>
-        <div className="flex items-center gap-2 text-xs font-medium text-black-500 md:pl-10">
-          <span>
-            {AGE_OPTIONS.find((o) => o.value === observation.age)?.label ?? observation.age}
+    <>
+      <div className="flex items-center rounded-[10px] bg-white px-5 py-3 transition-colors hover:bg-black-200">
+        <Link
+          href={`/observations/${observation.observationId}`}
+          className="flex min-w-0 flex-1 flex-col gap-1 md:flex-row md:items-center"
+        >
+          <span className="min-w-0 flex-1 truncate text-sm font-medium text-black-800">
+            {observation.title}
           </span>
-          <span className="w-21.75">
-            {CURRICULUM_LABEL[observation.curriculumType] ?? observation.curriculumType}
-          </span>
-          <span>{formatDate(observation.createdAt)}</span>
-        </div>
-      </Link>
-      <MoreButton className="ml-5" onDelete={() => onDelete(observation.observationId)} />
-    </div>
+          <div className="flex items-center gap-2 text-xs font-medium text-black-500 md:pl-10">
+            <span>
+              {AGE_OPTIONS.find((o) => o.value === observation.age)?.label ?? observation.age}
+            </span>
+            <span className="w-21.75">
+              {CURRICULUM_LABEL[observation.curriculumType] ?? observation.curriculumType}
+            </span>
+            <span>{formatDate(observation.createdAt)}</span>
+          </div>
+        </Link>
+        <MoreButton className="ml-5" onDelete={() => setShowDeleteDialog(true)} />
+      </div>
+      <Dialog
+        open={showDeleteDialog}
+        onOpenChange={setShowDeleteDialog}
+        iconType="trash"
+        title="관찰일지를 삭제할까요?"
+        description="삭제한 관찰일지는 다시 복구할 수 없어요"
+        buttons={[
+          {
+            children: '취소',
+            variant: 'outline',
+            onClick: () => setShowDeleteDialog(false),
+          },
+          {
+            children: '삭제',
+            onClick: () => {
+              setShowDeleteDialog(false);
+              onDelete(observation.observationId);
+            },
+          },
+        ]}
+      />
+    </>
   );
 }
 
@@ -63,7 +89,13 @@ function ObservationsPaginated() {
   const { data, refetch } = useMyObservationsQuery(currentPage);
 
   const { mutate: handleDelete } = useObservationDeleteMutation({
-    onSuccess: () => refetch(),
+    onSuccess: () => {
+      refetch();
+      toast.success({
+        title: '관찰일지 삭제가 완료되었어요',
+        description: '삭제된 관찰일지는 복구할 수 없어요',
+      });
+    },
     onError: (error) => {
       if (axios.isAxiosError(error) && error.isHandled) return;
       toast.error({ title: '삭제 실패', description: '잠시 후 다시 시도해주세요' });
@@ -113,7 +145,13 @@ function ObservationsInfinite() {
     useMyObservationsInfiniteQuery();
 
   const { mutate: handleDelete } = useObservationDeleteMutation({
-    onSuccess: () => refetch(),
+    onSuccess: () => {
+      refetch();
+      toast.success({
+        title: '관찰일지 삭제가 완료되었어요',
+        description: '삭제된 관찰일지는 복구할 수 없어요',
+      });
+    },
     onError: (error) => {
       if (axios.isAxiosError(error) && error.isHandled) return;
       toast.error({ title: '삭제 실패', description: '잠시 후 다시 시도해주세요' });

@@ -14,6 +14,7 @@ import { AGE_OPTIONS } from '@/constants/observations/observation';
 import { MoreButton } from '@/components/common/more-button/MoreButton';
 import { EmptyState } from '@/components/common/empty-state/EmptyState';
 import { Dialog } from '@/components/common/dialog/Dialog';
+import { useQueryClient } from '@tanstack/react-query';
 import { useIsDesktop } from '@/hooks/useIsMobile';
 import { toast } from '@/utils/toast';
 import { MyObservationListItem } from '@/types/observation.type';
@@ -85,12 +86,14 @@ function ObservationItem({
 
 function ObservationsPaginated() {
   const router = useRouter();
+  const queryClient = useQueryClient();
   const [currentPage, setCurrentPage] = useState(0);
   const { data, refetch } = useMyObservationsQuery(currentPage);
 
   const { mutate: handleDelete } = useObservationDeleteMutation({
     onSuccess: () => {
       refetch();
+      queryClient.invalidateQueries({ queryKey: ['observations'] });
       toast.success({
         title: '관찰일지 삭제가 완료되었어요',
         description: '삭제된 관찰일지는 복구할 수 없어요',
@@ -141,12 +144,14 @@ function ObservationsPaginated() {
 
 function ObservationsInfinite() {
   const router = useRouter();
+  const queryClient = useQueryClient();
   const { data, fetchNextPage, hasNextPage, isFetchingNextPage, refetch } =
     useMyObservationsInfiniteQuery();
 
   const { mutate: handleDelete } = useObservationDeleteMutation({
     onSuccess: () => {
       refetch();
+      queryClient.invalidateQueries({ queryKey: ['observations'] });
       toast.success({
         title: '관찰일지 삭제가 완료되었어요',
         description: '삭제된 관찰일지는 복구할 수 없어요',

@@ -11,7 +11,12 @@ const apiClient = axios.create({
 });
 
 let isRefreshing = false;
+let isLoggingOut = false;
 let pendingQueue: Array<{ resolve: () => void; reject: (error: unknown) => void }> = [];
+
+export const setLoggingOut = (value: boolean) => {
+  isLoggingOut = value;
+};
 
 const processPendingQueue = (error: unknown) => {
   pendingQueue.forEach(({ resolve, reject }) => {
@@ -31,6 +36,11 @@ apiClient.interceptors.response.use(
     const originalRequest = error.config;
 
     if (error.response?.status !== 401 || originalRequest._retry) {
+      return Promise.reject(error);
+    }
+
+    if (isLoggingOut) {
+      error.isHandled = true;
       return Promise.reject(error);
     }
 

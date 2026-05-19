@@ -111,6 +111,7 @@ export function useCreateCommentMutation(postId: number) {
     mutationFn: (content: string) => createComment(postId, { content }),
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ['post', 'detail', postId] });
+      queryClient.invalidateQueries({ queryKey: ['myComments'] });
     },
   });
 }
@@ -123,6 +124,7 @@ export function useUpdateCommentMutation(postId: number) {
       updateComment(postId, commentId, { content }),
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ['post', 'detail', postId] });
+      queryClient.invalidateQueries({ queryKey: ['myComments'] });
     },
   });
 }
@@ -134,6 +136,7 @@ export function useDeleteCommentMutation(postId: number) {
     mutationFn: (commentId: number) => deleteComment(postId, commentId),
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ['post', 'detail', postId] });
+      queryClient.invalidateQueries({ queryKey: ['myComments'] });
     },
   });
 }
@@ -159,6 +162,7 @@ export function useBookmarkMutation(postId: number) {
       isBookmarked ? unbookmarkPost(postId) : bookmarkPost(postId),
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ['post', 'detail', postId] });
+      queryClient.invalidateQueries({ queryKey: ['myBookmarks'] });
     },
   });
 }
@@ -185,6 +189,8 @@ export function useDeletePostMutation() {
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ['moabang', 'posts'] });
       queryClient.invalidateQueries({ queryKey: ['board', 'posts'] });
+      queryClient.invalidateQueries({ queryKey: ['myMoabangPosts'] });
+      queryClient.invalidateQueries({ queryKey: ['myFreePosts'] });
     },
   });
 }
@@ -198,6 +204,8 @@ export function useCreatePostMutation() {
     onSuccess: (_, { request }) => {
       const queryKey = request.category === 'MOABANG' ? 'moabang' : 'board';
       queryClient.invalidateQueries({ queryKey: [queryKey, 'posts'] });
+      const myQueryKey = request.category === 'MOABANG' ? 'myMoabangPosts' : 'myFreePosts';
+      queryClient.invalidateQueries({ queryKey: [myQueryKey] });
     },
   });
 }

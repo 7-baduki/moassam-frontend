@@ -1,10 +1,8 @@
 'use client';
 
 import { useState, useEffect, useRef, useCallback } from 'react';
-import { useRouter } from 'next/navigation';
 import Link from 'next/link';
 import Pagination from '@/components/common/pagination/Pagination';
-import { ChevronDownIcon } from '@/app/assets/icons';
 import {
   useMyBookmarksQuery,
   useMyBookmarksInfiniteQuery,
@@ -55,7 +53,6 @@ function BookmarkItem({
 }
 
 function BookmarksPaginated() {
-  const router = useRouter();
   const [currentPage, setCurrentPage] = useState(0);
   const { data, refetch } = useMyBookmarksQuery(currentPage);
   const isEmpty = !data?.data || data.data.length === 0;
@@ -67,12 +64,6 @@ function BookmarksPaginated() {
 
   return (
     <div className="flex flex-col gap-5">
-      <div className="flex items-center gap-4 bg-white px-4 py-3 md:px-9 xl:hidden">
-        <button type="button" onClick={() => router.back()} aria-label="뒤로가기">
-          <ChevronDownIcon className="h-5 w-5 rotate-90 text-black" />
-        </button>
-        <h1 className="text-base font-semibold text-black md:text-[18px]">북마크</h1>
-      </div>
       {isEmpty ? (
         <div className="flex flex-1 items-center justify-center py-20">
           <EmptyState message="아직 북마크한 게시글이 없어요" />
@@ -102,7 +93,6 @@ function BookmarksPaginated() {
 }
 
 function BookmarksInfinite() {
-  const router = useRouter();
   const { data, fetchNextPage, hasNextPage, isFetchingNextPage, refetch } =
     useMyBookmarksInfiniteQuery();
 
@@ -136,12 +126,6 @@ function BookmarksInfinite() {
 
   return (
     <div className="flex flex-col gap-5">
-      <div className="flex items-center gap-4 bg-white px-4 py-3 md:px-9 xl:hidden">
-        <button type="button" onClick={() => router.back()} aria-label="뒤로가기">
-          <ChevronDownIcon className="h-5 w-5 rotate-90 text-black" />
-        </button>
-        <h1 className="text-base font-semibold text-black md:text-[18px]">북마크</h1>
-      </div>
       {isEmpty ? (
         <div className="flex flex-1 items-center justify-center py-20">
           <EmptyState message="아직 북마크한 게시글이 없어요" />

@@ -126,7 +126,7 @@ export default function PrivacyPage() {
               <p className="mb-1 text-sm font-medium text-black-600">{section.description}</p>
             )}
             {Array.isArray(section.content) ? (
-              <ul className="flex flex-col gap-1 pl-1 text-sm text-black-600">
+              <ul className="flex flex-col gap-1 pl-1 text-sm font-medium text-black-600">
                 {section.content.map((item, i) => (
                   <li key={i} className="flex items-center gap-2">
                     <div className="h-1 w-1 shrink-0 rounded-full bg-black-600" />

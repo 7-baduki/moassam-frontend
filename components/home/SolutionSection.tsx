@@ -14,6 +14,8 @@ import {
 import { useUser } from '@/lib/user-context';
 import { useScrollRoot } from '@/lib/scroll-root';
 import { ChevronRightIcon } from '@/app/assets/icons';
+import { useLoginModalStore } from '@/stores/loginModalStore';
+import { useRouter } from 'next/navigation';
 
 const PROCESS_IMG_CLASS =
   'rounded-tr-lg rounded-br-lg rounded-bl-lg shadow-[2px_2px_40px_0px_#00000014]';
@@ -33,6 +35,8 @@ export default function SolutionSection() {
   const user = useUser();
   const isLoggedIn = !!user;
   const root = useScrollRoot();
+  const openLoginModal = useLoginModalStore((state) => state.open);
+  const router = useRouter();
 
   return (
     <section className="w-full bg-black-50 py-15 xl:py-25" aria-label="해결방법 섹션">
@@ -82,6 +86,7 @@ export default function SolutionSection() {
             variant="primary"
             size="md"
             className="inline-flex h-8 w-30 items-center justify-center gap-1 py-[7.5px] text-xs whitespace-nowrap md:h-13 md:w-57.5 md:gap-2 md:pt-3.5 md:pb-2.5 md:text-xl"
+            onClick={() => (isLoggedIn ? router.push('/community/board') : openLoginModal())}
           >
             {isLoggedIn ? '커뮤니티 시작하기' : '3초 간편 로그인 시작'}
             <span className="inline-flex h-1.75 w-1.75 items-center justify-center md:h-3.5 md:w-3.5">

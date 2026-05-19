@@ -68,9 +68,16 @@ export default function ServiceSection() {
         <motion.div className="shrink-0 xl:mt-7.5" custom={0} {...motionProps}>
           <Badge label="주요 서비스" variant="pink-light" />
         </motion.div>
-        <div className="flex flex-col gap-4 xl:flex-row">
+        <div className="grid grid-cols-1 gap-4 md:grid-cols-2 xl:flex xl:flex-row">
           {SERVICE_CARDS.map((card, i) => (
-            <motion.div key={card.label} custom={i * 0.12} {...motionProps}>
+            <motion.div
+              key={card.label}
+              custom={i * 0.12}
+              {...motionProps}
+              className={
+                i === SERVICE_CARDS.length - 1 ? 'md:col-span-2 md:justify-self-center' : ''
+              }
+            >
               <ServiceCard {...card} />
             </motion.div>
           ))}

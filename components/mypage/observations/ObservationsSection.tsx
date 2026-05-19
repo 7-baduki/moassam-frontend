@@ -4,7 +4,6 @@ import { useState, useEffect, useRef, useCallback } from 'react';
 import { useRouter } from 'next/navigation';
 import Link from 'next/link';
 import axios from 'axios';
-import { ChevronDownIcon } from '@/app/assets/icons';
 import Pagination from '@/components/common/pagination/Pagination';
 import {
   useMyObservationsQuery,
@@ -75,12 +74,6 @@ function ObservationsPaginated() {
 
   return (
     <div className="flex flex-col gap-5">
-      <div className="flex items-center gap-4 bg-white px-4 py-3 md:px-9 xl:hidden">
-        <button type="button" onClick={() => router.back()} aria-label="뒤로가기">
-          <ChevronDownIcon className="h-5 w-5 rotate-90 text-black" />
-        </button>
-        <h1 className="text-base font-semibold text-black md:text-[18px]">관찰일지 내역</h1>
-      </div>
       {isEmpty ? (
         <div className="flex flex-1 items-center justify-center py-20">
           <EmptyState
@@ -152,12 +145,6 @@ function ObservationsInfinite() {
 
   return (
     <div className="flex flex-col gap-5">
-      <div className="flex items-center gap-4 bg-white px-4 py-3 md:px-9 xl:hidden">
-        <button type="button" onClick={() => router.back()} aria-label="뒤로가기">
-          <ChevronDownIcon className="h-5 w-5 rotate-90 text-black" />
-        </button>
-        <h1 className="text-base font-semibold text-black md:text-[18px]">관찰일지 내역</h1>
-      </div>
       {isEmpty ? (
         <div className="flex flex-1 items-center justify-center py-20">
           <EmptyState

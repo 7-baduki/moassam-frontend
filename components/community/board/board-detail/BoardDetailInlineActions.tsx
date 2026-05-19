@@ -3,6 +3,7 @@
 import { useState } from 'react';
 import { DetailBookmarkIcon, DetailHeartIcon } from '@/app/assets/icons';
 import { useLikeMutation, useBookmarkMutation } from '@/hooks/queries/community/useCommunity';
+import { toast } from '@/utils/toast';
 
 interface BoardDetailInlineActionsProps {
   postId: number;
@@ -34,7 +35,17 @@ export default function BoardDetailInlineActions({
     if (isBookmarkPending) return;
     const prev = isBookmarked;
     setIsBookmarked(!prev);
-    toggleBookmark(prev, { onError: () => setIsBookmarked(prev) });
+    toggleBookmark(prev, {
+      onSuccess: () => {
+        if (!prev) {
+          toast.success({
+            title: '북마크 저장 완료',
+            description: '마이페이지 > 북마크에서 확인할 수 있어요',
+          });
+        }
+      },
+      onError: () => setIsBookmarked(prev),
+    });
   }
 
   return (

@@ -40,7 +40,7 @@ function LoggedInHero({ userName = '' }: { userName: string }) {
         transition={{ duration: 0.5, ease: 'easeOut', delay: 0.05 }}
         className="typo-line-m2 mt-9 text-base font-semibold text-black-800 md:mt-0 md:text-xl"
       >
-        안녕하세요, {userName}선생님 👋
+        안녕하세요, {userName} 선생님 👋
       </motion.h1>
 
       <motion.div

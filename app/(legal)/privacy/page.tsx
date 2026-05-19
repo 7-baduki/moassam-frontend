@@ -115,7 +115,7 @@ export default function PrivacyPage() {
         title="개인정보처리방침"
         effectiveDate="2026.5.30"
         bannerText="안전한 개인정보 이용을 위해"
-        bannerDescription="모아쌤 운영팀은 서비스를 제공함에 있어 이용자의 개인정보를 안전하게 처리하기위해 다음과 같이 개인정보처리방침을 안내합니다."
+        bannerDescription="모아쌤 운영팀은 서비스를 제공함에 있어 이용자의 개인정보를 안전하게 처리하기 위해 다음과 같이 개인정보처리방침을 안내합니다."
       />
 
       <div className="flex flex-col gap-6 md:gap-8 xl:gap-10">

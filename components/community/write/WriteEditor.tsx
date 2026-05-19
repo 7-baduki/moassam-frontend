@@ -108,16 +108,23 @@ export default function WriteEditor({
   const [showFontFamilySheet, setShowFontFamilySheet] = useState(false);
   const [showFontSizeSheet, setShowFontSizeSheet] = useState(false);
   const [pickerPos, setPickerPos] = useState({ top: 0, left: 0 });
+  const [activeColor, setActiveColor] = useState('#343434');
+  const [activeHighlightColor, setActiveHighlightColor] = useState('#FCB900');
   const isMobile = useIsMobile();
 
   const openPicker = useCallback(
     (
       ref: React.RefObject<HTMLDivElement | null>,
       setter: React.Dispatch<React.SetStateAction<boolean>>,
+      initialColor?: string,
+      colorSetter?: React.Dispatch<React.SetStateAction<string>>,
     ) => {
       const rect = ref.current?.getBoundingClientRect();
       if (rect) setPickerPos({ top: rect.bottom + 4, left: rect.left });
-      setter((v) => !v);
+      setter((v) => {
+        if (!v && initialColor !== undefined) colorSetter?.(initialColor);
+        return !v;
+      });
     },
     [],
   );
@@ -340,14 +347,26 @@ export default function WriteEditor({
         </ToolbarButton>
 
         <div ref={colorBtnRef}>
-          <ToolbarButton onClick={() => openPicker(colorBtnRef, setShowColorPicker)} title="글자색">
+          <ToolbarButton
+            onClick={() =>
+              openPicker(colorBtnRef, setShowColorPicker, currentColor, setActiveColor)
+            }
+            title="글자색"
+          >
             <EditorTextColorIcon style={{ color: currentColor }} />
           </ToolbarButton>
         </div>
 
         <div ref={highlightBtnRef}>
           <ToolbarButton
-            onClick={() => openPicker(highlightBtnRef, setShowHighlightPicker)}
+            onClick={() =>
+              openPicker(
+                highlightBtnRef,
+                setShowHighlightPicker,
+                currentHighlightColor,
+                setActiveHighlightColor,
+              )
+            }
             title="형광펜"
           >
             <EditorTextfillIcon style={{ color: currentHighlightColor }} />
@@ -574,14 +593,10 @@ export default function WriteEditor({
           <div className="fixed z-1100" style={{ top: pickerPos.top, left: pickerPos.left }}>
             <TwitterPicker
               colors={PICKER_COLORS}
-              color={currentColor}
+              color={activeColor}
               onChangeComplete={(color) => {
-                editor
-                  .chain()
-                  .focus(undefined, { scrollIntoView: false })
-                  .setColor(color.hex)
-                  .run();
-                setShowColorPicker(false);
+                setActiveColor(color.hex);
+                editor.chain().setColor(color.hex).run();
               }}
             />
           </div>
@@ -594,13 +609,10 @@ export default function WriteEditor({
           <div className="fixed z-1100" style={{ top: pickerPos.top, left: pickerPos.left }}>
             <TwitterPicker
               colors={PICKER_COLORS}
+              color={activeHighlightColor}
               onChangeComplete={(color) => {
-                editor
-                  .chain()
-                  .focus(undefined, { scrollIntoView: false })
-                  .setHighlight({ color: color.hex })
-                  .run();
-                setShowHighlightPicker(false);
+                setActiveHighlightColor(color.hex);
+                editor.chain().setHighlight({ color: color.hex }).run();
               }}
             />
           </div>

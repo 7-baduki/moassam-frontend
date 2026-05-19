@@ -67,6 +67,7 @@ function BoardDetailContent({ postId, isLoggedIn }: { postId: number; isLoggedIn
       </div>
       <div className="sticky top-[263.2px] hidden shrink-0 xl:block">
         <BoardDetailSideActions
+          key={`${postId}-${post.bookmarked}`}
           postId={postId}
           likeCount={post.likeCount}
           bookmarkCount={post.bookmarkCount}

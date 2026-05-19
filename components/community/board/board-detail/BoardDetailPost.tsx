@@ -109,6 +109,7 @@ export default function BoardDetailPost({ post }: BoardDetailPostProps) {
             </span>
           </div>
           <BoardDetailInlineActions
+            key={`${post.postId}-${post.bookmarked}`}
             postId={post.postId}
             liked={post.isLiked}
             bookmarked={post.bookmarked}

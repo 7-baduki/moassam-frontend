@@ -37,6 +37,7 @@ export interface Comment {
   commentId: number;
   postId: number;
   authorNickname: string;
+  profileImageUrl: string | null;
   content: string;
   isMine: boolean;
   createdAt: string;

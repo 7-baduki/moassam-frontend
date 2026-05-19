@@ -53,6 +53,7 @@ export default function NavMenu({ isOpen, onClose, onLogout }: NavMenuProps) {
   const { mutate: deleteObservation } = useObservationDeleteMutation({
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ['observations', 'recent'] });
+      queryClient.invalidateQueries({ queryKey: ['myObservations'] });
     },
   });
 

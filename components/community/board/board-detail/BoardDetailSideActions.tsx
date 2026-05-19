@@ -7,6 +7,7 @@ import { useLikeMutation, useBookmarkMutation } from '@/hooks/queries/community/
 interface BoardDetailSideActionsProps {
   postId: number;
   likeCount: number;
+  bookmarkCount: number;
   bookmarked: boolean;
   liked: boolean;
 }
@@ -14,12 +15,14 @@ interface BoardDetailSideActionsProps {
 export default function BoardDetailSideActions({
   postId,
   likeCount,
+  bookmarkCount,
   bookmarked: initialBookmarked,
   liked: initialLiked,
 }: BoardDetailSideActionsProps) {
   const [isBookmarked, setIsBookmarked] = useState(initialBookmarked);
   const [isLiked, setIsLiked] = useState(initialLiked);
   const [optimisticLikeCount, setOptimisticLikeCount] = useState(likeCount);
+  const [optimisticBookmarkCount, setOptimisticBookmarkCount] = useState(bookmarkCount);
 
   const { mutate: toggleLike, isPending: isLikePending } = useLikeMutation(postId);
   const { mutate: toggleBookmark, isPending: isBookmarkPending } = useBookmarkMutation(postId);
@@ -41,10 +44,13 @@ export default function BoardDetailSideActions({
   function handleBookmarkToggle() {
     if (isBookmarkPending) return;
     const prevBookmarked = isBookmarked;
+    const prevCount = optimisticBookmarkCount;
     setIsBookmarked(!prevBookmarked);
+    setOptimisticBookmarkCount((prev) => (!prevBookmarked ? prev + 1 : prev - 1));
     toggleBookmark(prevBookmarked, {
       onError: () => {
         setIsBookmarked(prevBookmarked);
+        setOptimisticBookmarkCount(prevCount);
       },
     });
   }
@@ -70,6 +76,9 @@ export default function BoardDetailSideActions({
               : '[&_path]:fill-transparent [&_path]:stroke-black-600'
           }
         />
+        <span aria-hidden="true" className="typo-line-p2 text-xs font-medium text-black-600">
+          {optimisticBookmarkCount}
+        </span>
       </button>
       <button
         type="button"

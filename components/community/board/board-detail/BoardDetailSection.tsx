@@ -94,6 +94,7 @@ export default function BoardDetailSection({ postId, title }: BoardDetailSection
           <BoardDetailSideActions
             postId={postId}
             likeCount={post.likeCount}
+            bookmarkCount={post.bookmarkCount}
             bookmarked={post.bookmarked}
             liked={post.isLiked}
           />

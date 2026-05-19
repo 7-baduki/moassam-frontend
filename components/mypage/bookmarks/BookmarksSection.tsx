@@ -36,7 +36,7 @@ function BookmarkItem({
 
   return (
     <>
-      <div className="flex items-center rounded-[10px] bg-white px-5 py-3 transition-colors hover:bg-black-200">
+      <div className="animate-lift flex items-center rounded-[10px] bg-white px-5 py-3">
         <Link
           href={`/community/${bookmark.category === 'FREE' ? 'board' : 'moabang'}/${bookmark.postId}`}
           className="flex min-w-0 flex-1 flex-col gap-1 md:flex-row md:items-center"

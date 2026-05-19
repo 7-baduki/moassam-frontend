@@ -19,7 +19,7 @@ function MoabangPostItem({ post }: { post: MyMoabangPost }) {
   return (
     <Link
       href={`/community/moabang/${post.postId}`}
-      className="flex min-w-0 flex-1 flex-col gap-1 rounded-[10px] bg-white px-5 py-3 transition-colors hover:bg-black-200 md:flex-row md:items-center"
+      className="animate-lift flex min-w-0 flex-1 flex-col gap-1 rounded-[10px] bg-white px-5 py-3 md:flex-row md:items-center"
     >
       <span className="min-w-0 flex-1 truncate text-sm font-medium text-black-800">
         {post.title}

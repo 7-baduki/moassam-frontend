@@ -40,7 +40,7 @@ function ObservationItem({
 
   return (
     <>
-      <div className="flex items-center rounded-[10px] bg-white px-5 py-3 transition-colors hover:bg-black-200">
+      <div className="animate-lift flex items-center rounded-[10px] bg-white px-5 py-3">
         <Link
           href={`/observations/${observation.observationId}`}
           className="flex min-w-0 flex-1 flex-col gap-1 md:flex-row md:items-center"

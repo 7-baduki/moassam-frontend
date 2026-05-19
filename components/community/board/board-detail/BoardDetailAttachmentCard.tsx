@@ -2,7 +2,7 @@
 
 import { useState } from 'react';
 import Image from 'next/image';
-import { DownloadIcon, XIcon } from '@/app/assets/icons';
+import { DownloadIcon } from '@/app/assets/icons';
 import { toast } from '@/utils/toast';
 import {
   FileDefaultIcon,
@@ -152,17 +152,6 @@ export default function BoardDetailAttachmentCard({ file }: BoardDetailAttachmen
               }}
             >
               <DownloadIcon className="h-5 w-5 brightness-0 invert" />
-            </button>
-            <button
-              type="button"
-              aria-label="닫기"
-              className="flex h-5 w-5 cursor-pointer items-center justify-center overflow-hidden text-white hover:opacity-80 focus-visible:rounded focus-visible:ring-2 focus-visible:ring-white"
-              onClick={(e) => {
-                e.stopPropagation();
-                setIsActive(false);
-              }}
-            >
-              <XIcon className="brightness-0 invert" />
             </button>
           </div>
         </div>

@@ -24,6 +24,7 @@ export default function ObservationSidebarContent() {
   const { mutate: deleteObservation } = useObservationDeleteMutation({
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ['observations'] });
+      queryClient.invalidateQueries({ queryKey: ['myObservations'] });
       toast.success({
         title: '관찰일지 삭제가 완료되었어요',
         description: '삭제된 관찰일지는 복구할 수 없어요',

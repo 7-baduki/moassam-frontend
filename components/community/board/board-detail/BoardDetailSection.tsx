@@ -69,6 +69,7 @@ function BoardDetailContent({ postId, isLoggedIn }: { postId: number; isLoggedIn
         <BoardDetailSideActions
           postId={postId}
           likeCount={post.likeCount}
+          bookmarkCount={post.bookmarkCount}
           bookmarked={post.bookmarked}
           liked={post.isLiked}
         />

@@ -20,18 +20,18 @@ export default function ObservationResultCard({ title, content }: ObservationRes
   };
 
   return (
-    <div className="flex flex-col rounded-2xl bg-white px-15 pt-[25.5px] pb-[15.5px]">
-      <p className="border-b-[0.5px] border-b-black-400 pb-5 text-base font-semibold text-pink-500">
+    <div className="animate-lift flex flex-col rounded-2xl bg-white px-5 py-2.25 md:px-7.5 md:py-2.5 xl:px-15 xl:pt-[25.5px] xl:pb-[15.5px]">
+      <p className="border-b-[0.5px] border-b-black-400 pb-5 text-sm font-semibold text-pink-500 md:text-base">
         {title}
       </p>
       <p className="mt-5 text-sm font-medium text-black">{content}</p>
-      <div className="mt-7.5 flex justify-end">
+      <div className="mt-2.5 flex justify-end md:mt-7.5">
         <Button
           variant="ghost"
           size="sm"
           onClick={handleCopy}
           aria-label="복사"
-          className="flex w-auto items-center gap-1"
+          className="flex w-auto items-center gap-1 text-xs md:text-sm"
         >
           <CopyIcon />
           복사

@@ -1,56 +1,213 @@
 'use client';
 
+import { useTransition, useEffect, useRef, useCallback } from 'react';
 import { useRouter, useSearchParams, usePathname } from 'next/navigation';
 import BoardCard from './BoardCard';
 import CommunityTitleBar from '@/components/community/CommunityTitleBar';
+import CommunityFab from '@/components/community/CommunityFab';
 import CommunityFilter from '@/components/community/CommunityFilter';
 import Pagination from '@/components/common/pagination/Pagination';
-import type { BoardPost } from './board.type';
 import { BOARD_CATEGORY_FILTER_TABS } from '@/constants/community/community-tabs';
+import {
+  useBoardPostsQuery,
+  useBoardSearchQuery,
+  useBoardPostsInfiniteQuery,
+  useBoardSearchInfiniteQuery,
+} from '@/hooks/queries/community/useCommunity';
+import { EmptyState } from '@/components/common/empty-state/EmptyState';
+import { useIsDesktop } from '@/hooks/useIsMobile';
+import { getValidParam } from '@/utils/getValidParam';
+import type { BoardPost, HeadTag } from './board.type';
+import { AsyncBoundary, LoadingSpinner, ErrorFallback } from '@/lib/async-boundary';
 
-const PAGE_SIZE = 8;
-
-function getValidParam<T extends { value: string }>(
-  raw: string | null,
-  options: T[],
-  fallback: string,
-): string {
-  if (raw && options.some((o) => o.value === raw)) return raw;
-  return fallback;
+function PostList({ posts }: { posts: BoardPost[] }) {
+  return posts.length === 0 ? (
+    <div className="mt-[20vh] flex justify-center">
+      <EmptyState message="아직 등록된 게시글이 없어요" />
+    </div>
+  ) : (
+    <div className="grid grid-cols-1 gap-4 xl:grid-cols-2 xl:gap-5">
+      {posts.map((post) => (
+        <BoardCard key={post.postId} post={post} />
+      ))}
+    </div>
+  );
 }
 
-const MOCK_POSTS: BoardPost[] = Array.from({ length: 80 }, (_, i) => ({
-  postId: i + 1,
-  categoryName: '고민',
-  title: '자유놀이 시간마다 자꾸 같은 놀잇감만 찾는 아이들, 어떻게 도와주시나요?',
-  contentPreview:
-    '한 가지 놀잇감에만 입몰하는 건 좋은데 다른 활동으로는 잘 확장이 안 돼서요. 억지로 바꾸게 하기보다 자연스럽게 관심을 넓혀주고 싶은데 비슷한 경우 어떻게 하시는지 궁금합니다.',
-  authorName: '햇살선생님',
-  likeCount: 46,
-  commentCount: 119,
-  viewCount: 1230,
-  createdAt: '3시간 전',
-}));
+function InfiniteScrollSentinel({
+  onIntersect,
+  isFetching,
+}: {
+  onIntersect: () => void;
+  isFetching: boolean;
+}) {
+  const observerRef = useRef<HTMLDivElement>(null);
+
+  const handleObserver = useCallback(
+    (entries: IntersectionObserverEntry[]) => {
+      const [entry] = entries;
+      if (entry.isIntersecting && !isFetching) {
+        onIntersect();
+      }
+    },
+    [onIntersect, isFetching],
+  );
+
+  useEffect(() => {
+    const element = observerRef.current;
+    if (!element) return;
+    const observer = new IntersectionObserver(handleObserver, { threshold: 0.1 });
+    observer.observe(element);
+    return () => observer.disconnect();
+  }, [handleObserver]);
+
+  return (
+    <>
+      <div ref={observerRef} className="h-1" />
+      {isFetching && (
+        <div className="flex justify-center py-4">
+          <div className="h-5 w-5 animate-spin rounded-full border-2 border-black-300 border-t-black-800" />
+        </div>
+      )}
+    </>
+  );
+}
+
+function BoardListContent({
+  category,
+  currentPage,
+  onPageChange,
+}: {
+  category: string;
+  currentPage: number;
+  onPageChange: (page: number) => void;
+}) {
+  const { data } = useBoardPostsQuery({
+    headTag: category !== 'all' ? (category as HeadTag) : undefined,
+    page: currentPage - 1,
+    size: 9,
+  });
+
+  return (
+    <>
+      <PostList posts={data.data} />
+      {data.totalPages > 0 && (
+        <div className="mt-15 flex justify-center">
+          <Pagination
+            currentPage={currentPage}
+            totalPages={Math.max(1, data.totalPages)}
+            onChange={onPageChange}
+          />
+        </div>
+      )}
+    </>
+  );
+}
+
+function BoardListInfinite({ category }: { category: string }) {
+  const { data, fetchNextPage, hasNextPage, isFetchingNextPage } = useBoardPostsInfiniteQuery({
+    headTag: category !== 'all' ? (category as HeadTag) : undefined,
+  });
+
+  const allPosts = data.pages.flatMap((page) => page.data);
+
+  return (
+    <>
+      <PostList posts={allPosts} />
+      {allPosts.length > 0 && (
+        <InfiniteScrollSentinel
+          onIntersect={() => hasNextPage && fetchNextPage()}
+          isFetching={isFetchingNextPage}
+        />
+      )}
+    </>
+  );
+}
+
+function BoardSearchContent({
+  keyword,
+  currentPage,
+  onPageChange,
+}: {
+  keyword: string;
+  currentPage: number;
+  onPageChange: (page: number) => void;
+}) {
+  const { data } = useBoardSearchQuery({ keyword, page: currentPage - 1, size: 9 });
+
+  return (
+    <>
+      <p className="mb-2 text-sm font-medium text-black-700 md:mb-5">
+        <span className="font-semibold text-pink-500">&ldquo;{keyword}&rdquo;</span> 검색 결과{' '}
+        <span className="font-semibold text-pink-500">{data.totalElements}</span>건
+      </p>
+      <PostList posts={data.data} />
+      {data.totalPages > 0 && (
+        <div className="mt-15 flex justify-center">
+          <Pagination
+            currentPage={currentPage}
+            totalPages={Math.max(1, data.totalPages)}
+            onChange={onPageChange}
+          />
+        </div>
+      )}
+    </>
+  );
+}
+
+function BoardSearchInfinite({ keyword }: { keyword: string }) {
+  const { data, fetchNextPage, hasNextPage, isFetchingNextPage } = useBoardSearchInfiniteQuery({
+    keyword,
+  });
+
+  const allPosts = data?.pages.flatMap((page) => page.data) ?? [];
+  const totalElements = data?.pages[0]?.totalElements ?? 0;
+
+  return (
+    <>
+      <p className="mb-2 text-sm font-medium text-black-700 md:mb-5">
+        <span className="font-semibold text-pink-500">&ldquo;{keyword}&rdquo;</span> 검색 결과{' '}
+        <span className="font-semibold text-pink-500">{totalElements}</span>건
+      </p>
+      <PostList posts={allPosts} />
+      {allPosts.length > 0 && (
+        <InfiniteScrollSentinel
+          onIntersect={() => hasNextPage && fetchNextPage()}
+          isFetching={isFetchingNextPage}
+        />
+      )}
+    </>
+  );
+}
 
 export default function BoardSection() {
   const router = useRouter();
   const pathname = usePathname();
   const searchParams = useSearchParams();
+  const [, startTransition] = useTransition();
+  const isDesktop = useIsDesktop();
 
+  const keyword = searchParams.get('keyword') ?? '';
   const category = getValidParam(searchParams.get('category'), BOARD_CATEGORY_FILTER_TABS, 'all');
-
-  const totalPages = Math.max(1, Math.ceil(MOCK_POSTS.length / PAGE_SIZE));
   const rawPage = Number(searchParams.get('page'));
-  const currentPage = Number.isInteger(rawPage) && rawPage >= 1 ? Math.min(rawPage, totalPages) : 1;
-
-  const startIndex = (currentPage - 1) * PAGE_SIZE;
-  const visiblePosts = MOCK_POSTS.slice(startIndex, startIndex + PAGE_SIZE);
+  const currentPage = Number.isInteger(rawPage) && rawPage >= 1 ? rawPage : 1;
 
   function updateParam(key: string, value: string, resetPage = false) {
     const params = new URLSearchParams(searchParams.toString());
     params.set(key, value);
     if (resetPage) params.set('page', '1');
-    router.push(`${pathname}?${params.toString()}`, { scroll: false });
+    startTransition(() => {
+      router.push(`${pathname}?${params.toString()}`, { scroll: false });
+    });
+  }
+
+  function handleSearch(value: string) {
+    const params = new URLSearchParams();
+    if (value) params.set('keyword', value);
+    params.set('page', '1');
+    startTransition(() => {
+      router.push(`${pathname}?${params.toString()}`, { scroll: false });
+    });
   }
 
   function handlePageChange(page: number) {
@@ -62,20 +219,48 @@ export default function BoardSection() {
       <CommunityTitleBar
         title="자유게시판"
         onWrite={() => router.push('/community/write?board=free')}
+        onSearch={handleSearch}
+        renderSearchResults={(kw) => <BoardSearchInfinite keyword={kw} />}
       />
-      <CommunityFilter
-        categoryTabs={BOARD_CATEGORY_FILTER_TABS}
-        category={category}
-        onCategoryChange={(value) => updateParam('category', value, true)}
-      />
-      <div className="grid grid-cols-2 gap-5">
-        {visiblePosts.map((post) => (
-          <BoardCard key={post.postId} post={post} />
-        ))}
-      </div>
-      <div className="mt-15 flex justify-center">
-        <Pagination currentPage={currentPage} totalPages={totalPages} onChange={handlePageChange} />
-      </div>
+      <CommunityFab onClick={() => router.push('/community/write?board=free')} />
+      {!keyword && (
+        <CommunityFilter
+          categoryTabs={BOARD_CATEGORY_FILTER_TABS}
+          category={category}
+          onCategoryChange={(value) => updateParam('category', value, true)}
+        />
+      )}
+      <AsyncBoundary
+        pendingFallback={<LoadingSpinner className="mt-[20vh]" />}
+        rejectedFallback={({ error, reset }) => (
+          <ErrorFallback
+            error={error}
+            actionLabel="다시 시도"
+            onAction={reset}
+            className="pt-7.5"
+          />
+        )}
+      >
+        {keyword ? (
+          isDesktop ? (
+            <BoardSearchContent
+              keyword={keyword}
+              currentPage={currentPage}
+              onPageChange={handlePageChange}
+            />
+          ) : (
+            <BoardSearchInfinite keyword={keyword} />
+          )
+        ) : isDesktop ? (
+          <BoardListContent
+            category={category}
+            currentPage={currentPage}
+            onPageChange={handlePageChange}
+          />
+        ) : (
+          <BoardListInfinite category={category} />
+        )}
+      </AsyncBoundary>
     </section>
   );
 }

@@ -4,8 +4,8 @@ import Spinner from '@/components/common/spinner/Spinner';
 
 export default function ObservationLoading() {
   return (
-    <div className="flex h-full flex-col items-center justify-center gap-5">
-      <Image src={observationMascot} alt="관찰일지 로딩 캐릭터" width={121} height={130} />
+    <div className="flex h-full flex-col items-center justify-center gap-5 bg-black-100">
+      <Image src={observationMascot} alt="관찰일지 로딩 캐릭터" width={206} height={227} />
       <div className="flex flex-col items-center gap-0.5 text-center text-black">
         <p className="text-xl font-semibold">관찰일지를 준비하고 있어요</p>
         <p className="text-sm font-medium">

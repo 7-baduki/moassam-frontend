@@ -2,20 +2,67 @@
 
 import { useState } from 'react';
 import { DetailBookmarkIcon, DetailHeartIcon } from '@/app/assets/icons';
+import { useLikeMutation, useBookmarkMutation } from '@/hooks/queries/community/useCommunity';
+import { toast } from '@/utils/toast';
 
 interface BoardDetailSideActionsProps {
+  postId: number;
   likeCount: number;
+  bookmarkCount: number;
   bookmarked: boolean;
   liked: boolean;
 }
 
 export default function BoardDetailSideActions({
+  postId,
   likeCount,
+  bookmarkCount,
   bookmarked: initialBookmarked,
   liked: initialLiked,
 }: BoardDetailSideActionsProps) {
   const [isBookmarked, setIsBookmarked] = useState(initialBookmarked);
   const [isLiked, setIsLiked] = useState(initialLiked);
+  const [optimisticLikeCount, setOptimisticLikeCount] = useState(likeCount);
+  const [optimisticBookmarkCount, setOptimisticBookmarkCount] = useState(bookmarkCount);
+
+  const { mutate: toggleLike, isPending: isLikePending } = useLikeMutation(postId);
+  const { mutate: toggleBookmark, isPending: isBookmarkPending } = useBookmarkMutation(postId);
+
+  function handleLikeToggle() {
+    if (isLikePending) return;
+    const prevLiked = isLiked;
+    const prevCount = optimisticLikeCount;
+    setIsLiked(!prevLiked);
+    setOptimisticLikeCount((prev) => (!prevLiked ? prev + 1 : prev - 1));
+    toggleLike(prevLiked, {
+      onError: () => {
+        setIsLiked(prevLiked);
+        setOptimisticLikeCount(prevCount);
+      },
+    });
+  }
+
+  function handleBookmarkToggle() {
+    if (isBookmarkPending) return;
+    const prevBookmarked = isBookmarked;
+    const prevCount = optimisticBookmarkCount;
+    setIsBookmarked(!prevBookmarked);
+    setOptimisticBookmarkCount((prev) => (!prevBookmarked ? prev + 1 : prev - 1));
+    toggleBookmark(prevBookmarked, {
+      onSuccess: () => {
+        if (!prevBookmarked) {
+          toast.success({
+            title: '북마크 저장 완료',
+            description: '마이페이지 > 북마크에서 확인할 수 있어요',
+          });
+        }
+      },
+      onError: () => {
+        setIsBookmarked(prevBookmarked);
+        setOptimisticBookmarkCount(prevCount);
+      },
+    });
+  }
 
   return (
     <div
@@ -25,10 +72,11 @@ export default function BoardDetailSideActions({
     >
       <button
         type="button"
-        onClick={() => setIsBookmarked((prev) => !prev)}
+        onClick={handleBookmarkToggle}
         aria-label={isBookmarked ? '북마크 취소' : '북마크'}
         aria-pressed={isBookmarked}
-        className="flex cursor-pointer flex-col items-center gap-1.5"
+        disabled={isBookmarkPending}
+        className="flex cursor-pointer flex-col items-center gap-1.5 disabled:opacity-50"
       >
         <DetailBookmarkIcon
           className={
@@ -38,15 +86,16 @@ export default function BoardDetailSideActions({
           }
         />
         <span aria-hidden="true" className="typo-line-p2 text-xs font-medium text-black-600">
-          {likeCount}
+          {optimisticBookmarkCount}
         </span>
       </button>
       <button
         type="button"
-        onClick={() => setIsLiked((prev) => !prev)}
+        onClick={handleLikeToggle}
         aria-label={isLiked ? '좋아요 취소' : '좋아요'}
         aria-pressed={isLiked}
-        className="flex cursor-pointer flex-col items-center gap-1.5"
+        disabled={isLikePending}
+        className="flex cursor-pointer flex-col items-center gap-1.5 disabled:opacity-50"
       >
         <DetailHeartIcon
           className={
@@ -56,7 +105,7 @@ export default function BoardDetailSideActions({
           }
         />
         <span aria-hidden="true" className="typo-line-p2 text-xs font-medium text-black-600">
-          {likeCount}
+          {optimisticLikeCount}
         </span>
       </button>
     </div>

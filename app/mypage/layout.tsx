@@ -1,3 +1,9 @@
-export default function MyPageLayout({ children }: { children: React.ReactNode }) {
-  return <div className="px-[clamp(1.5rem,11.7vw,14.0625rem)] py-20">{children}</div>;
+import { redirect } from 'next/navigation';
+import { getProfile } from '@/api/user-server.api';
+
+export default async function MyPageLayout({ children }: { children: React.ReactNode }) {
+  const user = await getProfile();
+  if (!user) redirect('/?login=required');
+
+  return <div className="xl:px-20 xl:py-20">{children}</div>;
 }

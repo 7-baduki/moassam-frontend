@@ -1,6 +1,7 @@
 'use client';
 
 import { useEffect, useRef, useState } from 'react';
+import { createPortal } from 'react-dom';
 import { CheckIcon, ChevronDownIcon } from '@/app/assets/icons';
 import { cn } from '@/utils/cn';
 import type { SelectProps, SelectSize } from './select.type';
@@ -21,9 +22,14 @@ const ICON_SIZE: Record<SelectSize, number> = {
 };
 
 export function Select(props: SelectProps) {
-  const { size = 'sm', options, triggerLabel = '', className } = props;
+  const { size = 'sm', options, triggerLabel = '', className, fixedMenu = false } = props;
   const [isOpen, setIsOpen] = useState(false);
   const containerRef = useRef<HTMLDivElement>(null);
+  const [menuStyle, setMenuStyle] = useState<{ top: number; left: number; width: number }>({
+    top: 0,
+    left: 0,
+    width: 0,
+  });
   const iconSize = ICON_SIZE[size];
 
   useEffect(() => {
@@ -35,6 +41,13 @@ export function Select(props: SelectProps) {
     document.addEventListener('mousedown', handleOutsideClick);
     return () => document.removeEventListener('mousedown', handleOutsideClick);
   }, []);
+
+  useEffect(() => {
+    if (fixedMenu && isOpen && containerRef.current) {
+      const rect = containerRef.current.getBoundingClientRect();
+      setMenuStyle({ top: rect.bottom, left: rect.left, width: rect.width });
+    }
+  }, [fixedMenu, isOpen]);
 
   function isSelected(optionValue: string): boolean {
     if (props.multiple) return (props.value ?? []).includes(optionValue);
@@ -79,44 +92,54 @@ export function Select(props: SelectProps) {
         />
       </button>
 
-      {isOpen && (
-        <ul
-          className={cn(
-            'absolute top-full z-100 w-full bg-white',
-            size === 'md'
-              ? 'border-x border-b border-black-300 py-2.5'
-              : 'rounded-b-lg [box-shadow:0_1px_8px_0_rgba(0,0,0,0.04)]',
-          )}
-        >
-          {options.map((option, index) => {
-            const selected = isSelected(option.value);
-            const isLast = index === options.length - 1;
-            return (
-              <li key={option.value}>
-                <button
-                  type="button"
-                  onClick={() => handleOptionClick(option.value)}
-                  className={cn(
-                    'flex w-full cursor-pointer items-center gap-1 p-2.5 text-sm font-medium text-black-700 transition-colors hover:bg-black-100',
-                    selected ? 'bg-black-200' : 'bg-white',
-                    size === 'sm'
-                      ? selected
-                        ? 'justify-end'
-                        : 'justify-center'
-                      : 'justify-between',
-                    size === 'sm' && isLast && 'rounded-b-lg',
-                  )}
-                >
-                  <span>{option.label}</span>
-                  {selected && (
-                    <CheckIcon width={iconSize} height={iconSize} className="shrink-0" />
-                  )}
-                </button>
-              </li>
-            );
-          })}
-        </ul>
-      )}
+      {isOpen &&
+        (() => {
+          const menuItems = (
+            <ul
+              className={cn(
+                'z-100 w-full bg-white',
+                fixedMenu ? 'fixed' : 'absolute top-full',
+                size === 'md'
+                  ? 'border-x border-b border-black-300 py-2.5'
+                  : 'rounded-b-lg [box-shadow:0_1px_8px_0_rgba(0,0,0,0.04)]',
+              )}
+              style={
+                fixedMenu
+                  ? { top: menuStyle.top, left: menuStyle.left, width: menuStyle.width }
+                  : undefined
+              }
+            >
+              {options.map((option, index) => {
+                const selected = isSelected(option.value);
+                const isLast = index === options.length - 1;
+                return (
+                  <li key={option.value}>
+                    <button
+                      type="button"
+                      onClick={() => handleOptionClick(option.value)}
+                      className={cn(
+                        'flex w-full cursor-pointer items-center gap-1 p-2.5 text-sm font-medium text-black-700 transition-colors hover:bg-black-100',
+                        selected ? 'bg-black-200' : 'bg-white',
+                        size === 'sm'
+                          ? selected
+                            ? 'justify-end'
+                            : 'justify-center'
+                          : 'justify-between',
+                        size === 'sm' && isLast && 'rounded-b-lg',
+                      )}
+                    >
+                      <span>{option.label}</span>
+                      {selected && (
+                        <CheckIcon width={iconSize} height={iconSize} className="shrink-0" />
+                      )}
+                    </button>
+                  </li>
+                );
+              })}
+            </ul>
+          );
+          return fixedMenu ? createPortal(menuItems, document.body) : menuItems;
+        })()}
     </div>
   );
 }

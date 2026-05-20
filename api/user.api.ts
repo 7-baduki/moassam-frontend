@@ -1,27 +1,20 @@
-import { cache } from 'react';
-import { cookies } from 'next/headers';
-import { User } from '@/types/user.type';
+import apiClient from './axios';
+import { User, ActivitySummary } from '@/types/user.type';
+import { MyObservationListResponse } from '@/types/observation.type';
 
-export const getProfile = cache(async (): Promise<User | null> => {
-  const cookieStore = await cookies();
-  const accessToken = cookieStore.get('accessToken')?.value;
-  if (!accessToken) return null;
+export const getMyObservations = async (page: number): Promise<MyObservationListResponse> => {
+  const response = await apiClient.get('/api/v1/users/observations', {
+    params: { page, size: 10 },
+  });
+  return response.data.data;
+};
 
-  try {
-    const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/v1/users/profile`, {
-      headers: { Authorization: `Bearer ${accessToken}` },
-    });
+export const getActivitySummary = async (): Promise<ActivitySummary> => {
+  const response = await apiClient.get('/api/v1/users/activity-summary');
+  return response.data.data;
+};
 
-    if (response.status === 401) {
-      cookieStore.delete('accessToken');
-      return null;
-    }
-
-    if (!response.ok) return null;
-
-    const data = await response.json();
-    return data.data;
-  } catch {
-    return null;
-  }
-});
+export const updateProfile = async (nickname: string): Promise<User> => {
+  const response = await apiClient.patch('/api/v1/users/profile', { nickname });
+  return response.data.data;
+};

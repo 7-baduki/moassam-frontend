@@ -1,4 +1,5 @@
 export { default as ChevronDoubleLeftIcon } from './ChevronDoubleLeftIcon.svg';
+export { default as ChevronRightIcon } from './ChevronRightIcon.svg';
 export { default as CheckIcon } from './CheckIcon.svg';
 export { default as CopyIcon } from './CopyIcon.svg';
 export { default as ChevronDownIcon } from './ChevronDownIcon.svg';
@@ -27,3 +28,8 @@ export { default as DetailBookmarkIcon } from './DetailBookmarkIcon.svg';
 export { default as DetailHeartIcon } from './DetailHeartIcon.svg';
 export { default as DownloadIcon } from './DownloadIcon.svg';
 export { default as TopIcon } from './TopIcon.svg';
+export { default as HamburgerIcon } from './HamburgerIcon.svg';
+export { default as SettingIcon } from './SettingIcon.svg';
+export { default as BackArrowIcon } from './BackArrowIcon.svg';
+export { default as InfoIcon } from './InfoIcon.svg';
+export { default as TrashIcon } from './TrashIcon.svg';

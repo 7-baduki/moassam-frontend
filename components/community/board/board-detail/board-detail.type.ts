@@ -1,3 +1,5 @@
+import type { PostAge, ResourceType } from '@/components/community/moabang/moabang.type';
+
 export type BoardFileType = 'FILE' | 'IMAGE';
 
 export interface BoardDetailFile {
@@ -14,24 +16,37 @@ export interface BoardDetail {
   authorNickName: string;
   title: string;
   category: string;
-  age: string | null;
-  resourceType: string | null;
-  headTag: string;
+  postAge: PostAge | null;
+  resourceType: ResourceType | null;
+  headTag: string | null;
   content: string;
   files: BoardDetailFile[];
   editorFiles: BoardDetailFile[];
+  comments: Comment[];
   viewCount: number;
   commentCount: number;
   likeCount: number;
+  bookmarkCount: number;
   bookmarked: boolean;
-  liked: boolean;
+  isLiked: boolean;
+  isMine: boolean;
   createdAt: string;
 }
 
 export interface Comment {
   commentId: number;
-  authorId: number;
-  authorNickName: string;
+  postId: number;
+  authorNickname: string;
+  profileImageUrl: string | null;
   content: string;
+  isMine: boolean;
   createdAt: string;
+}
+
+export interface CommentRequest {
+  content: string;
+}
+
+export interface CommentIdResponse {
+  commentId: number;
 }

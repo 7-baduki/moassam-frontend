@@ -7,7 +7,7 @@ const meta: Meta<typeof Dialog> = {
   argTypes: {
     iconType: {
       control: 'select',
-      options: ['loading', 'success', 'error', 'lock'],
+      options: ['loading', 'success', 'error', 'lock', 'trash'],
     },
   },
 };
@@ -44,6 +44,19 @@ export const Error: Story = {
     buttons: [
       { children: '재생성하기', variant: 'outline' },
       { children: '메인으로', variant: 'primary' },
+    ],
+  },
+};
+
+export const Trash: Story = {
+  args: {
+    open: true,
+    iconType: 'trash',
+    title: '정말 삭제하시겠어요?',
+    description: '삭제된 게시글은 복구할 수 없어요',
+    buttons: [
+      { children: '취소', variant: 'outline' },
+      { children: '삭제', variant: 'primary' },
     ],
   },
 };

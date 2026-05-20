@@ -30,3 +30,20 @@ export interface ObservationListResponse {
   nextCursor: number | null;
   hasNext: boolean;
 }
+
+export interface MyObservationListItem {
+  observationId: number;
+  title: string;
+  age: string;
+  curriculumType: string;
+  createdAt: string;
+}
+
+export interface MyObservationListResponse {
+  data: MyObservationListItem[];
+  page: number;
+  size: number;
+  totalElements: number;
+  totalPages: number;
+  hasNext: boolean;
+}

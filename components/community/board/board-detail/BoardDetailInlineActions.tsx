@@ -1,0 +1,91 @@
+'use client';
+
+import { useState } from 'react';
+import { DetailBookmarkIcon, DetailHeartIcon } from '@/app/assets/icons';
+import { useLikeMutation, useBookmarkMutation } from '@/hooks/queries/community/useCommunity';
+import { toast } from '@/utils/toast';
+
+interface BoardDetailInlineActionsProps {
+  postId: number;
+  bookmarked: boolean;
+  liked: boolean;
+  className?: string;
+}
+
+export default function BoardDetailInlineActions({
+  postId,
+  bookmarked: initialBookmarked,
+  liked: initialLiked,
+  className,
+}: BoardDetailInlineActionsProps) {
+  const [isBookmarked, setIsBookmarked] = useState(initialBookmarked);
+  const [isLiked, setIsLiked] = useState(initialLiked);
+
+  const { mutate: toggleLike, isPending: isLikePending } = useLikeMutation(postId);
+  const { mutate: toggleBookmark, isPending: isBookmarkPending } = useBookmarkMutation(postId);
+
+  function handleLikeToggle() {
+    if (isLikePending) return;
+    const prev = isLiked;
+    setIsLiked(!prev);
+    toggleLike(prev, { onError: () => setIsLiked(prev) });
+  }
+
+  function handleBookmarkToggle() {
+    if (isBookmarkPending) return;
+    const prev = isBookmarked;
+    setIsBookmarked(!prev);
+    toggleBookmark(prev, {
+      onSuccess: () => {
+        if (!prev) {
+          toast.success({
+            title: '북마크 저장 완료',
+            description: '마이페이지 > 북마크에서 확인할 수 있어요',
+          });
+        }
+      },
+      onError: () => setIsBookmarked(prev),
+    });
+  }
+
+  return (
+    <div
+      role="group"
+      aria-label="게시글 액션"
+      className={`flex items-center gap-2 ${className ?? ''}`}
+    >
+      <button
+        type="button"
+        onClick={handleLikeToggle}
+        aria-label={isLiked ? '좋아요 취소' : '좋아요'}
+        aria-pressed={isLiked}
+        disabled={isLikePending}
+        className="flex cursor-pointer items-center disabled:opacity-50"
+      >
+        <DetailHeartIcon
+          className={
+            isLiked
+              ? '[&_path]:fill-black-700 [&_path]:stroke-black-700'
+              : '[&_path]:fill-transparent [&_path]:stroke-black-700'
+          }
+        />
+      </button>
+      <button
+        type="button"
+        onClick={handleBookmarkToggle}
+        aria-label={isBookmarked ? '북마크 취소' : '북마크'}
+        aria-pressed={isBookmarked}
+        disabled={isBookmarkPending}
+        className="flex cursor-pointer items-center disabled:opacity-50"
+      >
+        <DetailBookmarkIcon
+          className={
+            isBookmarked
+              ? '[&_path]:fill-black-700 [&_path]:stroke-black-700'
+              : '[&_path]:fill-transparent [&_path]:stroke-black-700'
+          }
+        />
+      </button>
+    </div>
+  );
+}

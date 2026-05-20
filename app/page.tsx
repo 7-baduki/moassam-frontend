@@ -1,18 +1,22 @@
-import { getProfile } from '@/api/user.api';
+import { Suspense } from 'react';
 import HeroSection from '@/components/home/HeroSection';
 import ServiceSection from '@/components/home/ServiceSection';
 import PainPointSection from '@/components/home/PainPointSection';
 import SolutionSection from '@/components/home/SolutionSection';
+import Footer from '@/components/common/footer/Footer';
+import LoginRedirectHandler from '@/components/home/LoginRedirectHandler';
 
-export default async function Home() {
-  const user = await getProfile();
-
+export default function Home() {
   return (
-    <div className="min-w-150 bg-black-100">
-      <HeroSection user={user} />
+    <div className="bg-black-100 md:min-w-150">
+      <Suspense>
+        <LoginRedirectHandler />
+      </Suspense>
+      <HeroSection />
       <ServiceSection />
-      <PainPointSection isLoggedIn={!!user} />
-      <SolutionSection isLoggedIn={!!user} />
+      <PainPointSection />
+      <SolutionSection />
+      <Footer />
     </div>
   );
 }

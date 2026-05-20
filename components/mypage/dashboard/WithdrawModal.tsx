@@ -8,6 +8,7 @@ import { XIcon } from '@/app/assets/icons';
 import { WithdrawMascot, WithdrawCompleteMascot } from '@/app/assets/images';
 import { Button } from '@/components/common/button/Button';
 import { toast } from '@/utils/toast';
+import { useWithdrawMutation } from '@/hooks/queries/auth/useAuth';
 
 type WithdrawStep = 'confirm' | 'complete';
 
@@ -19,6 +20,15 @@ interface WithdrawModalProps {
 export function WithdrawModal({ isOpen, onClose }: WithdrawModalProps) {
   const [step, setStep] = useState<WithdrawStep>('confirm');
   const router = useRouter();
+
+  const { mutate: handleWithdraw, isPending } = useWithdrawMutation({
+    onSuccess: () => {
+      setStep('complete');
+    },
+    onError: () => {
+      toast.error({ title: '탈퇴 실패', description: '잠시 후 다시 시도해주세요' });
+    },
+  });
 
   const handleClose = useCallback(() => {
     onClose();
@@ -51,7 +61,7 @@ export function WithdrawModal({ isOpen, onClose }: WithdrawModalProps) {
               회원 탈퇴
             </h2>
             <button type="button" onClick={handleClose} aria-label="닫기">
-              <XIcon />
+              <XIcon width={20} height={20} />
             </button>
           </div>
 
@@ -88,7 +98,12 @@ export function WithdrawModal({ isOpen, onClose }: WithdrawModalProps) {
                 >
                   더 써볼래요
                 </Button>
-                <Button variant="primary" size="full" onClick={() => setStep('complete')}>
+                <Button
+                  variant="primary"
+                  size="full"
+                  disabled={isPending}
+                  onClick={() => handleWithdraw()}
+                >
                   떠날래요
                 </Button>
               </div>
@@ -106,11 +121,12 @@ export function WithdrawModal({ isOpen, onClose }: WithdrawModalProps) {
                   variant="primary"
                   size="full"
                   onClick={() => {
+                    router.push('/');
+                    router.refresh();
                     toast.success({
                       title: '회원 탈퇴가 완료되었어요',
                       description: '그동안 모아쌤을 이용해주셔서 감사합니다',
                     });
-                    router.push('/');
                   }}
                 >
                   메인으로

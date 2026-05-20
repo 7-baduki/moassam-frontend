@@ -1,5 +1,6 @@
 import {
   useInfiniteQuery,
+  useQuery,
   useMutation,
   UseMutationOptions,
   useSuspenseQuery,
@@ -17,44 +18,54 @@ import {
   ObservationDetailResponse,
 } from '@/types/observation.type';
 
-export const useObservationListQuery = () => {
+export function useObservationRecentQuery(enabled = true) {
+  return useQuery({
+    queryKey: ['observations', 'recent'],
+    queryFn: () => getObservations(),
+    select: (data) => data.items.slice(0, 4),
+    enabled,
+  });
+}
+
+export function useObservationListQuery(enabled = true) {
   return useInfiniteQuery({
     queryKey: ['observations'],
     queryFn: ({ pageParam }) => getObservations(pageParam),
     initialPageParam: undefined as number | undefined,
     getNextPageParam: (lastPage) =>
       lastPage.hasNext ? (lastPage.nextCursor ?? undefined) : undefined,
+    enabled,
   });
-};
+}
 
-export const useObservationItemQuery = (id: number) => {
+export function useObservationItemQuery(id: number) {
   return useSuspenseQuery({
     queryKey: ['observation', id],
     queryFn: () => getObservation(id),
   });
-};
+}
 
-export const useObservationMutation = (
+export function useObservationMutation(
   options?: UseMutationOptions<ObservationCreateResponse, Error, ObservationCreateRequest>,
-) => {
+) {
   return useMutation({
     mutationFn: createObservation,
     ...options,
   });
-};
+}
 
-export const useObservationRegenerateMutation = (
+export function useObservationRegenerateMutation(
   options?: UseMutationOptions<ObservationDetailResponse, Error, number>,
-) => {
+) {
   return useMutation({
     mutationFn: regenerateObservation,
     ...options,
   });
-};
+}
 
-export const useObservationDeleteMutation = (options?: UseMutationOptions<void, Error, number>) => {
+export function useObservationDeleteMutation(options?: UseMutationOptions<void, Error, number>) {
   return useMutation({
     mutationFn: deleteObservation,
     ...options,
   });
-};
+}

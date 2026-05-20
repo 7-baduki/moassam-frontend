@@ -2,10 +2,12 @@ import { withSentryConfig } from '@sentry/nextjs';
 import type { NextConfig } from 'next';
 
 const nextConfig: NextConfig = {
+  devIndicators: false,
   images: {
     remotePatterns: [
       { protocol: 'https', hostname: 'picsum.photos' },
       { protocol: 'https', hostname: 'kr.object.ncloudstorage.com' },
+      { protocol: 'https', hostname: 'moassam-storage.kr.object.ncloudstorage.com' },
       { protocol: 'https', hostname: 'k.kakaocdn.net' },
     ],
   },

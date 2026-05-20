@@ -66,7 +66,7 @@ export default function CommunitySearchOverlay({
             onChange={handleChange}
             onClear={handleClear}
             onKeyDown={handleKeyDown}
-            className="h-9 text-sm"
+            className="h-9 text-base"
           />
         </div>
       </div>

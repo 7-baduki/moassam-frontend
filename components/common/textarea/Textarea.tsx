@@ -16,7 +16,7 @@ export function Textarea({ action, maxLength, className, onChange, ...props }: T
       <textarea
         maxLength={maxLength}
         onChange={onChange}
-        className="w-full resize-none bg-transparent p-4 text-sm font-medium text-black-800 placeholder:text-black-600 focus:outline-none"
+        className="w-full resize-none bg-transparent p-4 text-base font-medium text-black-800 placeholder:text-black-600 focus:outline-none"
         {...props}
       />
       <div className="flex items-center justify-end gap-3 p-4">

@@ -4,7 +4,6 @@ import { BottomSheet } from '@/components/common/bottom-sheet/BottomSheet';
 import { LoginButton } from './LoginButton';
 import { Tooltip } from '@/components/common/tooltip/Tooltip';
 import { MainLogoIcon, LoginKakaoIcon, LoginNaverIcon } from '@/app/assets/icons';
-import { KAKAO_AUTH_URL, NAVER_AUTH_URL } from '@/constants/auth';
 
 interface LoginBottomSheetProps {
   isOpen: boolean;

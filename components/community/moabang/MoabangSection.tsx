@@ -21,6 +21,7 @@ import { EmptyState } from '@/components/common/empty-state/EmptyState';
 import { useIsDesktop } from '@/hooks/useIsMobile';
 import { getValidParam } from '@/utils/getValidParam';
 import type { PostAge, ResourceType, MoabangPost } from './moabang.type';
+import { AsyncBoundary, LoadingSpinner, ErrorFallback } from '@/lib/async-boundary';
 
 function PostGrid({ posts }: { posts: MoabangPost[] }) {
   return posts.length === 0 ? (
@@ -240,26 +241,38 @@ export default function MoabangSection() {
           onCategoryChange={(value) => updateParam('category', value, true)}
         />
       )}
-      {keyword ? (
-        isDesktop ? (
-          <MoabangSearchContent
-            keyword={keyword}
+      <AsyncBoundary
+        pendingFallback={<LoadingSpinner className="mt-[20vh]" />}
+        rejectedFallback={({ error, reset }) => (
+          <ErrorFallback
+            error={error}
+            actionLabel="다시 시도"
+            onAction={reset}
+            className="pt-7.5"
+          />
+        )}
+      >
+        {keyword ? (
+          isDesktop ? (
+            <MoabangSearchContent
+              keyword={keyword}
+              currentPage={currentPage}
+              onPageChange={handlePageChange}
+            />
+          ) : (
+            <MoabangSearchInfinite keyword={keyword} />
+          )
+        ) : isDesktop ? (
+          <MoabangListContent
+            age={age}
+            category={category}
             currentPage={currentPage}
             onPageChange={handlePageChange}
           />
         ) : (
-          <MoabangSearchInfinite keyword={keyword} />
-        )
-      ) : isDesktop ? (
-        <MoabangListContent
-          age={age}
-          category={category}
-          currentPage={currentPage}
-          onPageChange={handlePageChange}
-        />
-      ) : (
-        <MoabangListInfinite age={age} category={category} />
-      )}
+          <MoabangListInfinite age={age} category={category} />
+        )}
+      </AsyncBoundary>
     </section>
   );
 }

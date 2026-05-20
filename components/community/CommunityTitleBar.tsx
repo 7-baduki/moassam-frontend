@@ -1,7 +1,8 @@
 'use client';
 
 import { type ReactNode, useEffect, useRef, useState } from 'react';
-import { InfoIcon, SearchIcon } from '@/app/assets/icons';
+import { useRouter } from 'next/navigation';
+import { ChevronDownIcon, InfoIcon, SearchIcon } from '@/app/assets/icons';
 import { Button } from '@/components/common/button/Button';
 import { Input } from '@/components/common/input/Input';
 import CommunityInfoTooltip from './CommunityInfoTooltip';
@@ -16,6 +17,7 @@ interface CommunityTitleBarProps {
   actions?: ReactNode;
   onSearch?: (keyword: string) => void;
   renderSearchResults?: (keyword: string) => ReactNode;
+  showBackButton?: boolean;
 }
 
 export default function CommunityTitleBar({
@@ -27,7 +29,9 @@ export default function CommunityTitleBar({
   actions,
   onSearch,
   renderSearchResults,
+  showBackButton = false,
 }: CommunityTitleBarProps) {
+  const router = useRouter();
   const [searchValue, setSearchValue] = useState('');
   const [tooltipOpen, setTooltipOpen] = useState(false);
   const [overlayOpen, setOverlayOpen] = useState(false);
@@ -64,6 +68,16 @@ export default function CommunityTitleBar({
     <>
       <div className="mb-2 flex items-center justify-between">
         <div className="flex items-center gap-1 py-[10.5px]">
+          {showBackButton && (
+            <button
+              type="button"
+              onClick={() => router.back()}
+              aria-label="뒤로가기"
+              className="mr-3 xl:hidden"
+            >
+              <ChevronDownIcon className="h-5 w-5 rotate-90 text-black" />
+            </button>
+          )}
           <h2 className="typo-line-m2 text-base leading-none! font-semibold text-black-800 md:text-lg">
             {title}
           </h2>

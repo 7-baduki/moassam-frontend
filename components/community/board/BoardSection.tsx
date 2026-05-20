@@ -18,6 +18,7 @@ import { EmptyState } from '@/components/common/empty-state/EmptyState';
 import { useIsDesktop } from '@/hooks/useIsMobile';
 import { getValidParam } from '@/utils/getValidParam';
 import type { BoardPost, HeadTag } from './board.type';
+import { AsyncBoundary, LoadingSpinner, ErrorFallback } from '@/lib/async-boundary';
 
 function PostList({ posts }: { posts: BoardPost[] }) {
   return posts.length === 0 ? (
@@ -229,25 +230,37 @@ export default function BoardSection() {
           onCategoryChange={(value) => updateParam('category', value, true)}
         />
       )}
-      {keyword ? (
-        isDesktop ? (
-          <BoardSearchContent
-            keyword={keyword}
+      <AsyncBoundary
+        pendingFallback={<LoadingSpinner className="mt-[20vh]" />}
+        rejectedFallback={({ error, reset }) => (
+          <ErrorFallback
+            error={error}
+            actionLabel="다시 시도"
+            onAction={reset}
+            className="pt-7.5"
+          />
+        )}
+      >
+        {keyword ? (
+          isDesktop ? (
+            <BoardSearchContent
+              keyword={keyword}
+              currentPage={currentPage}
+              onPageChange={handlePageChange}
+            />
+          ) : (
+            <BoardSearchInfinite keyword={keyword} />
+          )
+        ) : isDesktop ? (
+          <BoardListContent
+            category={category}
             currentPage={currentPage}
             onPageChange={handlePageChange}
           />
         ) : (
-          <BoardSearchInfinite keyword={keyword} />
-        )
-      ) : isDesktop ? (
-        <BoardListContent
-          category={category}
-          currentPage={currentPage}
-          onPageChange={handlePageChange}
-        />
-      ) : (
-        <BoardListInfinite category={category} />
-      )}
+          <BoardListInfinite category={category} />
+        )}
+      </AsyncBoundary>
     </section>
   );
 }

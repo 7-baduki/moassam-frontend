@@ -3,6 +3,7 @@
 import { useState } from 'react';
 import { DetailBookmarkIcon, DetailHeartIcon } from '@/app/assets/icons';
 import { useLikeMutation, useBookmarkMutation } from '@/hooks/queries/community/useCommunity';
+import { toast } from '@/utils/toast';
 
 interface BoardDetailSideActionsProps {
   postId: number;
@@ -48,6 +49,14 @@ export default function BoardDetailSideActions({
     setIsBookmarked(!prevBookmarked);
     setOptimisticBookmarkCount((prev) => (!prevBookmarked ? prev + 1 : prev - 1));
     toggleBookmark(prevBookmarked, {
+      onSuccess: () => {
+        if (!prevBookmarked) {
+          toast.success({
+            title: '북마크 저장 완료',
+            description: '마이페이지 > 북마크에서 확인할 수 있어요',
+          });
+        }
+      },
       onError: () => {
         setIsBookmarked(prevBookmarked);
         setOptimisticBookmarkCount(prevCount);

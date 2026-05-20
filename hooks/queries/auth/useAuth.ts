@@ -16,8 +16,9 @@ export const useLogoutMutation = (options?: UseMutationOptions) => {
       queryClient.clear();
       options?.onSuccess?.(...args);
     },
-    onSettled: () => {
+    onSettled: (...args) => {
       setLoggingOut(false);
+      options?.onSettled?.(...args);
     },
   });
 };

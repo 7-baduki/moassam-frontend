@@ -239,7 +239,10 @@ export default function NavMenu({ isOpen, onClose, onLogout }: NavMenuProps) {
                 variant="primary"
                 size="full"
                 className="py-4"
-                onClick={() => openLoginModal()}
+                onClick={() => {
+                  onClose();
+                  openLoginModal();
+                }}
               >
                 로그인
               </Button>

@@ -31,7 +31,7 @@ export function GenerationCount({ balance, total, className }: GenerationCountPr
             label={remainingCount > 0 ? `${remainingCount}번 더 만들 수 있어요!` : '0개 남았어요!'}
             className="-top-1.5"
             labelClassName="md:text-xs text-[10px]"
-            style={{ left: `${progress}%` }}
+            style={{ left: `${Math.min(Math.max(progress, 5), 95)}%` }}
           />
           <ProgressBar progress={progress} />
         </div>

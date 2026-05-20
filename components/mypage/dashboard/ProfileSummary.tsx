@@ -2,11 +2,19 @@ import Image from 'next/image';
 import Link from 'next/link';
 import { DefaultAvatar } from '@/app/assets/images';
 import { Button } from '@/components/common/button/Button';
-import { ObservationCountIcon, BookmarkCountIcon, SettingIcon } from '@/app/assets/icons';
+import {
+  ObservationCountIcon,
+  BookmarkCountIcon,
+  SettingIcon,
+  ProviderKakaoIcon,
+  ProviderNaverIcon,
+} from '@/app/assets/icons';
+import type { Provider } from '@/types/user.type';
 
 interface ProfileSummaryProps {
   name: string;
   email: string;
+  provider: Provider;
   profileImageUrl?: string;
   observationCount: number;
   bookmarkCount: number;
@@ -16,6 +24,7 @@ interface ProfileSummaryProps {
 export function ProfileSummary({
   name,
   email,
+  provider,
   profileImageUrl,
   observationCount,
   bookmarkCount,
@@ -37,7 +46,14 @@ export function ProfileSummary({
             <p className="text-[18px] font-semibold text-black md:text-[20px]">
               {name} 선생님, <span className="text-pink-500">반가워요</span>
             </p>
-            <p className="text-[14px] font-medium text-black-600 md:text-base">{email}</p>
+            <div className="flex items-center gap-1">
+              {provider === 'KAKAO' ? (
+                <ProviderKakaoIcon className="h-4 w-4 shrink-0 md:h-5 md:w-5" />
+              ) : (
+                <ProviderNaverIcon className="h-4 w-4 shrink-0 md:h-5 md:w-5" />
+              )}
+              <p className="text-[14px] font-medium text-black-600 md:text-base">{email}</p>
+            </div>
           </div>
           <button type="button" onClick={onEditClick} aria-label="프로필 수정">
             <SettingIcon className="h-5 w-5 md:h-7.5 md:w-7.5" />

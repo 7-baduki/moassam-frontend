@@ -28,6 +28,7 @@ export default function DashboardSection() {
       <ProfileSummary
         name={user?.nickname ?? ''}
         email={user?.email ?? ''}
+        provider={user?.provider ?? 'KAKAO'}
         profileImageUrl={user?.profileImageUrl}
         observationCount={activitySummary?.observationCount ?? 0}
         bookmarkCount={activitySummary?.bookmarkedPostCount ?? 0}

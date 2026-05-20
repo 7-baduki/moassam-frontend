@@ -112,7 +112,7 @@ function ObservationsPaginated() {
   return (
     <div className="flex flex-col gap-5">
       {isEmpty ? (
-        <div className="flex flex-1 items-center justify-center py-20">
+        <div className="flex justify-center pt-11.25">
           <EmptyState
             message="아직 생성한 관찰일지가 없어요"
             description="첫 관찰일지를 만들어보세요"
@@ -192,7 +192,7 @@ function ObservationsInfinite() {
   return (
     <div className="flex flex-col gap-5">
       {isEmpty ? (
-        <div className="flex flex-1 items-center justify-center py-20">
+        <div className="flex justify-center pt-11.25">
           <EmptyState
             message="아직 생성한 관찰일지가 없어요"
             description="첫 관찰일지를 만들어보세요"

@@ -43,7 +43,7 @@ function MoabangPostPaginated({ currentPage, onPageChange }: MoabangPostListProp
 
   if (isEmpty) {
     return (
-      <div className="flex flex-1 items-center justify-center py-20">
+      <div className="flex justify-center pt-11.25">
         <EmptyState message="아직 작성한 게시글이 없어요" />
       </div>
     );
@@ -94,7 +94,7 @@ function MoabangPostInfinite() {
 
   if (isEmpty) {
     return (
-      <div className="flex flex-1 items-center justify-center py-20">
+      <div className="flex justify-center pt-11.25">
         <EmptyState message="아직 작성한 게시글이 없어요" />
       </div>
     );

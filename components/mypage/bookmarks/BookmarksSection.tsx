@@ -101,7 +101,7 @@ function BookmarksPaginated() {
   return (
     <div className="flex flex-col gap-5">
       {isEmpty ? (
-        <div className="flex flex-1 items-center justify-center py-20">
+        <div className="flex justify-center pt-11.25">
           <EmptyState message="아직 북마크한 게시글이 없어요" />
         </div>
       ) : (
@@ -172,7 +172,7 @@ function BookmarksInfinite() {
   return (
     <div className="flex flex-col gap-5">
       {isEmpty ? (
-        <div className="flex flex-1 items-center justify-center py-20">
+        <div className="flex justify-center pt-11.25">
           <EmptyState message="아직 북마크한 게시글이 없어요" />
         </div>
       ) : (

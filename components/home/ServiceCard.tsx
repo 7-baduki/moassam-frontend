@@ -24,30 +24,30 @@ export default function ServiceCard({
   lowerBg,
 }: ServiceCardProps) {
   return (
-    <Link href={href} className="group relative isolate block w-81 pt-8.5 max-md:w-58 max-md:pt-3">
+    <Link href={href} className="group relative isolate block w-58 pt-3 md:w-81 md:pt-8.5">
       <Image
         src={characterSrc}
         alt=""
         width={150}
         height={141}
-        className="absolute top-0 right-3.75 z-5 transition-opacity group-hover:opacity-0 max-md:h-23.5 max-md:w-25 md:right-0"
+        className="absolute top-0 right-3.75 z-5 h-23.5 w-25 transition-opacity group-hover:opacity-0 md:right-0 md:h-auto md:w-auto"
       />
       <Image
         src={characterHoverSrc}
         alt=""
         width={130}
         height={145}
-        className="absolute top-0 right-3.75 z-5 opacity-0 transition-opacity group-hover:z-10 group-hover:opacity-100 max-md:h-23.5 max-md:w-25 md:right-2"
+        className="absolute top-0 right-3.75 z-5 h-23.5 w-25 opacity-0 transition-opacity group-hover:z-10 group-hover:opacity-100 md:right-2 md:h-auto md:w-auto"
       />
 
-      <div className="relative flex h-49.75 w-full flex-col max-md:h-28.25">
+      <div className="relative flex h-28.25 w-full flex-col md:h-49.75">
         {/* 상단 */}
         <div
-          className="flex h-17.75 shrink-0 items-end rounded-tl-2xl rounded-tr-2xl max-md:mt-5 max-md:h-7"
+          className="mt-5 flex h-7 shrink-0 items-end rounded-tl-2xl rounded-tr-2xl md:mt-0 md:h-17.75"
           style={{ background: upperBg }}
         >
           <div
-            className="inline-flex w-fit items-center rounded-tl-lg rounded-tr-[30px] py-1 pr-6.5 pl-5 text-xs font-semibold text-white max-md:py-0.5 max-md:pr-10 max-md:pl-5 max-md:text-[11px]"
+            className="inline-flex w-fit items-center rounded-tl-lg rounded-tr-[30px] py-0.5 pr-10 pl-5 text-[11px] font-semibold text-white md:py-1 md:pr-6.5 md:text-xs"
             style={{ background: mainColor }}
           >
             {label}
@@ -56,22 +56,22 @@ export default function ServiceCard({
 
         {/* 하단 */}
         <div
-          className="relative z-10 flex flex-1 flex-col justify-between rounded-br-2xl rounded-bl-2xl p-5 max-md:h-16.25 max-md:flex-none max-md:flex-row max-md:items-center max-md:py-3"
+          className="relative z-10 flex h-16.25 flex-none flex-row items-center justify-between rounded-br-2xl rounded-bl-2xl px-5 py-3 md:h-auto md:flex-1 md:flex-col md:items-stretch md:p-5"
           style={{ background: lowerBg, backdropFilter: 'blur(4px)' }}
         >
           <p
-            className="typo-line-m2 text-xl font-semibold whitespace-pre-line max-md:text-sm"
+            className="typo-line-m2 text-sm font-semibold whitespace-pre-line md:text-xl"
             style={{ color: mainColor }}
           >
             {description}
           </p>
           <div className="flex items-center gap-2 self-end">
-            <span className="text-sm font-medium text-black-700 max-md:hidden">바로가기</span>
+            <span className="hidden text-sm font-medium text-black-700 md:inline">바로가기</span>
             <div
-              className="flex h-5 w-5 shrink-0 items-center justify-center rounded-sm max-md:h-3 max-md:w-3"
+              className="flex h-3 w-3 shrink-0 items-center justify-center rounded-sm md:h-5 md:w-5"
               style={{ background: mainColor }}
             >
-              <ChevronRightIcon className="h-2 w-1 max-md:h-[4.8px] max-md:w-[2.4px]" />
+              <ChevronRightIcon className="h-[4.8px] w-[2.4px] md:h-2 md:w-1" />
             </div>
           </div>
         </div>

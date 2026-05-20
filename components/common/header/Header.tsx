@@ -31,7 +31,7 @@ export default function Header() {
   });
 
   return (
-    <header className="relative z-300 flex h-12 items-center justify-between border-b border-black-200 bg-white px-4 md:px-9 xl:h-16 xl:px-20">
+    <header className="relative z-300 flex h-12 items-center justify-between border-b border-black-200 bg-white px-4 pt-[env(safe-area-inset-top)] md:px-9 xl:h-16 xl:px-20">
       <div className="flex items-center gap-8.5">
         <Link href="/" aria-label="모아쌤 홈으로 이동" onClick={() => setIsNavMenuOpen(false)}>
           <MainLogoIcon className="h-7 w-7 xl:h-10 xl:w-10" aria-hidden="true" />

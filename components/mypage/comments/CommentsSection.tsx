@@ -1,9 +1,7 @@
 'use client';
 
 import { useState, useEffect, useRef, useCallback } from 'react';
-import { useRouter } from 'next/navigation';
 import Link from 'next/link';
-import { ChevronDownIcon } from '@/app/assets/icons';
 import Pagination from '@/components/common/pagination/Pagination';
 import { useMyCommentsQuery, useMyCommentsInfiniteQuery } from '@/hooks/queries/user/useMyComments';
 import { EmptyState } from '@/components/common/empty-state/EmptyState';
@@ -18,7 +16,7 @@ function CommentItem({ comment }: { comment: MyComment }) {
   return (
     <Link
       href={`/community/${comment.category === 'MOABANG' ? 'moabang' : 'board'}/${comment.postId}`}
-      className="flex min-w-0 flex-1 flex-col gap-1 rounded-[10px] bg-white px-5 py-3 transition-colors hover:bg-black-200 md:flex-row md:items-center"
+      className="animate-lift flex min-w-0 flex-1 flex-col gap-1 rounded-[10px] bg-white px-5 py-3 md:flex-row md:items-center"
     >
       <span className="min-w-0 flex-1 truncate text-sm font-medium text-black-800">
         {comment.content}
@@ -32,21 +30,14 @@ function CommentItem({ comment }: { comment: MyComment }) {
 }
 
 function CommentsPaginated() {
-  const router = useRouter();
   const [currentPage, setCurrentPage] = useState(0);
   const { data } = useMyCommentsQuery(currentPage);
   const isEmpty = !data?.data || data.data.length === 0;
 
   return (
     <div className="flex flex-col gap-5">
-      <div className="flex items-center gap-4 bg-white px-4 py-3 md:px-9 xl:hidden">
-        <button type="button" onClick={() => router.back()} aria-label="뒤로가기">
-          <ChevronDownIcon className="h-5 w-5 rotate-90 text-black" />
-        </button>
-        <h1 className="text-base font-semibold text-black md:text-[18px]">댓글</h1>
-      </div>
       {isEmpty ? (
-        <div className="flex flex-1 items-center justify-center py-20">
+        <div className="flex justify-center pt-11.25">
           <EmptyState message="아직 작성한 댓글이 없어요" />
         </div>
       ) : (
@@ -70,7 +61,6 @@ function CommentsPaginated() {
 }
 
 function CommentsInfinite() {
-  const router = useRouter();
   const { data, fetchNextPage, hasNextPage, isFetchingNextPage } = useMyCommentsInfiniteQuery();
 
   const observerRef = useRef<HTMLDivElement>(null);
@@ -98,14 +88,8 @@ function CommentsInfinite() {
 
   return (
     <div className="flex flex-col gap-5">
-      <div className="flex items-center gap-4 bg-white px-4 py-3 md:px-9 xl:hidden">
-        <button type="button" onClick={() => router.back()} aria-label="뒤로가기">
-          <ChevronDownIcon className="h-5 w-5 rotate-90 text-black" />
-        </button>
-        <h1 className="text-base font-semibold text-black md:text-[18px]">댓글</h1>
-      </div>
       {isEmpty ? (
-        <div className="flex flex-1 items-center justify-center py-20">
+        <div className="flex justify-center pt-11.25">
           <EmptyState message="아직 작성한 댓글이 없어요" />
         </div>
       ) : (

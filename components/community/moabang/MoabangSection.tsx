@@ -25,7 +25,7 @@ import { AsyncBoundary, LoadingSpinner, ErrorFallback } from '@/lib/async-bounda
 
 function PostGrid({ posts }: { posts: MoabangPost[] }) {
   return posts.length === 0 ? (
-    <div className="flex flex-1 items-center justify-center pt-20">
+    <div className="mt-[20vh] flex justify-center">
       <EmptyState message="아직 등록된 게시글이 없어요" />
     </div>
   ) : (

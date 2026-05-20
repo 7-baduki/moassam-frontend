@@ -27,13 +27,14 @@ export function useObservationRecentQuery(enabled = true) {
   });
 }
 
-export function useObservationListQuery() {
+export function useObservationListQuery(enabled = true) {
   return useInfiniteQuery({
     queryKey: ['observations'],
     queryFn: ({ pageParam }) => getObservations(pageParam),
     initialPageParam: undefined as number | undefined,
     getNextPageParam: (lastPage) =>
       lastPage.hasNext ? (lastPage.nextCursor ?? undefined) : undefined,
+    enabled,
   });
 }
 

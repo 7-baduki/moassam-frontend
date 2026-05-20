@@ -19,7 +19,7 @@ export function useMyBookmarksInfiniteQuery() {
 }
 
 export function useMyBookmarkDeleteMutation(callbacks: {
-  onSuccess?: () => void;
+  onSuccess?: (data: void, postId: number) => void;
   onError?: () => void;
 }) {
   return useMutation({

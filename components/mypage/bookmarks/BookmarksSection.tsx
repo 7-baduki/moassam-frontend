@@ -1,10 +1,9 @@
 'use client';
 
 import { useState, useEffect, useRef, useCallback } from 'react';
-import { useRouter } from 'next/navigation';
 import Link from 'next/link';
+import { useQueryClient } from '@tanstack/react-query';
 import Pagination from '@/components/common/pagination/Pagination';
-import { ChevronDownIcon } from '@/app/assets/icons';
 import {
   useMyBookmarksQuery,
   useMyBookmarksInfiniteQuery,
@@ -12,6 +11,7 @@ import {
 } from '@/hooks/queries/user/useMyBookmarks';
 import { EmptyState } from '@/components/common/empty-state/EmptyState';
 import { MoreButton } from '@/components/common/more-button/MoreButton';
+import { Dialog } from '@/components/common/dialog/Dialog';
 import { useIsDesktop } from '@/hooks/useIsMobile';
 import { toast } from '@/utils/toast';
 import { MyBookmark } from './bookmark.type';
@@ -32,49 +32,76 @@ function BookmarkItem({
   bookmark: MyBookmark;
   onDelete: (postId: number) => void;
 }) {
+  const [showDeleteDialog, setShowDeleteDialog] = useState(false);
+
   return (
-    <div className="flex items-center rounded-[10px] bg-white px-5 py-3 transition-colors hover:bg-black-200">
-      <Link
-        href={`/community/${bookmark.category === 'FREE' ? 'board' : 'moabang'}/${bookmark.postId}`}
-        className="flex min-w-0 flex-1 flex-col gap-1 md:flex-row md:items-center"
-      >
-        <span className="min-w-0 flex-1 truncate text-sm font-medium text-black-800">
-          {bookmark.title}
-        </span>
-        <div className="flex items-center gap-5 text-xs font-medium text-black-500 md:pl-10">
-          <span className="w-14 shrink-0 md:w-auto">
-            {CATEGORY_LABEL[bookmark.category] ?? bookmark.category}
+    <>
+      <div className="animate-lift flex items-center rounded-[10px] bg-white px-5 py-3">
+        <Link
+          href={`/community/${bookmark.category === 'FREE' ? 'board' : 'moabang'}/${bookmark.postId}`}
+          className="flex min-w-0 flex-1 flex-col gap-1 md:flex-row md:items-center"
+        >
+          <span className="min-w-0 flex-1 truncate text-sm font-medium text-black-800">
+            {bookmark.title}
           </span>
-          <span>{formatDate(bookmark.createdAt)}</span>
-          <span>조회 {bookmark.viewCount}</span>
-        </div>
-      </Link>
-      <MoreButton className="ml-5" onDelete={() => onDelete(bookmark.postId)} />
-    </div>
+          <div className="flex items-center gap-5 text-xs font-medium text-black-500 md:pl-10">
+            <span className="w-14 shrink-0 md:w-auto">
+              {CATEGORY_LABEL[bookmark.category] ?? bookmark.category}
+            </span>
+            <span>{formatDate(bookmark.createdAt)}</span>
+            <span>조회 {bookmark.viewCount}</span>
+          </div>
+        </Link>
+        <MoreButton className="ml-5" onDelete={() => setShowDeleteDialog(true)} />
+      </div>
+      <Dialog
+        open={showDeleteDialog}
+        onOpenChange={setShowDeleteDialog}
+        iconType="trash"
+        title="북마크를 삭제할까요?"
+        description="삭제해도 언제든 다시 북마크할 수 있어요"
+        buttons={[
+          {
+            children: '취소',
+            variant: 'outline',
+            onClick: () => setShowDeleteDialog(false),
+          },
+          {
+            children: '삭제',
+            onClick: () => {
+              setShowDeleteDialog(false);
+              onDelete(bookmark.postId);
+            },
+          },
+        ]}
+      />
+    </>
   );
 }
 
 function BookmarksPaginated() {
-  const router = useRouter();
+  const queryClient = useQueryClient();
   const [currentPage, setCurrentPage] = useState(0);
   const { data, refetch } = useMyBookmarksQuery(currentPage);
   const isEmpty = !data?.data || data.data.length === 0;
 
   const { mutate: handleDelete } = useMyBookmarkDeleteMutation({
-    onSuccess: () => refetch(),
+    onSuccess: (_, postId) => {
+      refetch();
+      queryClient.invalidateQueries({ queryKey: ['post', 'detail', postId] });
+      queryClient.invalidateQueries({ queryKey: ['activitySummary'] });
+      toast.success({
+        title: '북마크가 삭제되었어요',
+        description: '삭제해도 언제든 다시 북마크할 수 있어요',
+      });
+    },
     onError: () => toast.error({ title: '삭제 실패', description: '잠시 후 다시 시도해주세요' }),
   });
 
   return (
     <div className="flex flex-col gap-5">
-      <div className="flex items-center gap-4 bg-white px-4 py-3 md:px-9 xl:hidden">
-        <button type="button" onClick={() => router.back()} aria-label="뒤로가기">
-          <ChevronDownIcon className="h-5 w-5 rotate-90 text-black" />
-        </button>
-        <h1 className="text-base font-semibold text-black md:text-[18px]">북마크</h1>
-      </div>
       {isEmpty ? (
-        <div className="flex flex-1 items-center justify-center py-20">
+        <div className="flex justify-center pt-11.25">
           <EmptyState message="아직 북마크한 게시글이 없어요" />
         </div>
       ) : (
@@ -102,12 +129,20 @@ function BookmarksPaginated() {
 }
 
 function BookmarksInfinite() {
-  const router = useRouter();
+  const queryClient = useQueryClient();
   const { data, fetchNextPage, hasNextPage, isFetchingNextPage, refetch } =
     useMyBookmarksInfiniteQuery();
 
   const { mutate: handleDelete } = useMyBookmarkDeleteMutation({
-    onSuccess: () => refetch(),
+    onSuccess: (_, postId) => {
+      refetch();
+      queryClient.invalidateQueries({ queryKey: ['post', 'detail', postId] });
+      queryClient.invalidateQueries({ queryKey: ['activitySummary'] });
+      toast.success({
+        title: '북마크가 삭제되었어요',
+        description: '삭제해도 언제든 다시 북마크할 수 있어요',
+      });
+    },
     onError: () => toast.error({ title: '삭제 실패', description: '잠시 후 다시 시도해주세요' }),
   });
 
@@ -136,14 +171,8 @@ function BookmarksInfinite() {
 
   return (
     <div className="flex flex-col gap-5">
-      <div className="flex items-center gap-4 bg-white px-4 py-3 md:px-9 xl:hidden">
-        <button type="button" onClick={() => router.back()} aria-label="뒤로가기">
-          <ChevronDownIcon className="h-5 w-5 rotate-90 text-black" />
-        </button>
-        <h1 className="text-base font-semibold text-black md:text-[18px]">북마크</h1>
-      </div>
       {isEmpty ? (
-        <div className="flex flex-1 items-center justify-center py-20">
+        <div className="flex justify-center pt-11.25">
           <EmptyState message="아직 북마크한 게시글이 없어요" />
         </div>
       ) : (

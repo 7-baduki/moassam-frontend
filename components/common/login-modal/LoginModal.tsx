@@ -5,11 +5,14 @@ import { FocusTrap } from 'focus-trap-react';
 import { MainLogoIcon, LoginKakaoIcon, LoginNaverIcon } from '@/app/assets/icons';
 import { useLoginModalStore } from '@/stores/loginModalStore';
 import { LoginButton } from './LoginButton';
+import { LoginBottomSheet } from './LoginBottomSheet';
 import { Tooltip } from '@/components/common/tooltip/Tooltip';
 import { KAKAO_AUTH_URL, NAVER_AUTH_URL } from '@/constants/auth';
+import { useIsMobile } from '@/hooks/useIsMobile';
 
 export function LoginModal() {
   const { isOpen, title, description, close, lastProvider, setLastProvider } = useLoginModalStore();
+  const isMobile = useIsMobile();
 
   const handleKakaoLogin = () => {
     setLastProvider('kakao');
@@ -31,6 +34,20 @@ export function LoginModal() {
   }, [isOpen, close]);
 
   if (!isOpen) return null;
+
+  if (isMobile) {
+    return (
+      <LoginBottomSheet
+        isOpen={isOpen}
+        onClose={close}
+        title={title}
+        description={description}
+        lastProvider={lastProvider}
+        onKakaoLogin={handleKakaoLogin}
+        onNaverLogin={handleNaverLogin}
+      />
+    );
+  }
 
   return (
     <FocusTrap focusTrapOptions={{ escapeDeactivates: false, returnFocusOnDeactivate: true }}>

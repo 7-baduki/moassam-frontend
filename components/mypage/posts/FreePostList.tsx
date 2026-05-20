@@ -16,7 +16,7 @@ function FreePostItem({ post }: { post: MyFreePost }) {
   return (
     <Link
       href={`/community/board/${post.postId}`}
-      className="flex min-w-0 flex-1 flex-col gap-1 rounded-[10px] bg-white px-5 py-3 transition-colors hover:bg-black-200 md:flex-row md:items-center"
+      className="animate-lift flex min-w-0 flex-1 flex-col gap-1 rounded-[10px] bg-white px-5 py-3 md:flex-row md:items-center"
     >
       <span className="min-w-0 flex-1 truncate text-sm font-medium text-black-800">
         {post.title}
@@ -40,7 +40,7 @@ function FreePostPaginated({ currentPage, onPageChange }: FreePostListProps) {
 
   if (isEmpty) {
     return (
-      <div className="flex flex-1 items-center justify-center py-20">
+      <div className="flex justify-center pt-11.25">
         <EmptyState message="아직 작성한 게시글이 없어요" />
       </div>
     );
@@ -91,7 +91,7 @@ function FreePostInfinite() {
 
   if (isEmpty) {
     return (
-      <div className="flex flex-1 items-center justify-center py-20">
+      <div className="flex justify-center pt-11.25">
         <EmptyState message="아직 작성한 게시글이 없어요" />
       </div>
     );

@@ -105,6 +105,8 @@ export default function Header() {
               {isPopoverOpen && (
                 <ProfilePopover
                   name={user.nickname}
+                  email={user.email}
+                  provider={user.provider}
                   avatarSrc={user.profileImageUrl || DefaultAvatar}
                   onClose={() => setIsPopoverOpen(false)}
                   onLogout={handleLogout}

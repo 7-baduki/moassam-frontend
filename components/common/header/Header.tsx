@@ -27,10 +27,10 @@ export default function Header() {
     const header = headerRef.current;
     if (!header) return;
 
-    const observer = new ResizeObserver(([entry]) => {
+    const observer = new ResizeObserver(() => {
       document.documentElement.style.setProperty(
         '--header-height',
-        `${entry.contentRect.height}px`,
+        `${header.getBoundingClientRect().height}px`,
       );
     });
 

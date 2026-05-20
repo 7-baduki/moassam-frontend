@@ -42,7 +42,7 @@ export function ErrorFallback({ error, actionLabel, onAction, className }: Error
       />
       <div className="flex w-52.5 flex-col items-center gap-4.5">
         <div className="flex flex-col items-center gap-2 px-2 text-center">
-          <p className="text-base font-semibold text-black md:text-xl">페이지를 찾을 수 없어요</p>
+          <p className="text-base font-semibold text-black md:text-xl">문제가 발생했어요</p>
           <p className="text-xs text-black-500 md:text-sm">{errorMessage}</p>
         </div>
         <Button size="full" className="bg-green-500 hover:bg-green-700" onClick={onAction}>

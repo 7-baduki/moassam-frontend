@@ -5,7 +5,7 @@ import BoardSection from './BoardSection';
 
 export default function BoardBoundary() {
   return (
-    <Suspense>
+    <Suspense fallback={null}>
       <BoardSection />
     </Suspense>
   );

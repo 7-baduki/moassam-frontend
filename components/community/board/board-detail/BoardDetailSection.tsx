@@ -115,6 +115,7 @@ export default function BoardDetailSection({ postId, title }: BoardDetailSection
       />
       <CommunityTitleBar
         title={title}
+        showBackButton
         actions={
           <AsyncBoundary pendingFallback={null} rejectedFallback={() => null}>
             <BoardDetailHeaderActions

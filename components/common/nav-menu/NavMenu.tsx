@@ -5,7 +5,12 @@ import Link from 'next/link';
 import Image from 'next/image';
 import { usePathname } from 'next/navigation';
 import { cn } from '@/utils/cn';
-import { ChevronDownIcon, PlusIcon } from '@/app/assets/icons';
+import {
+  ChevronDownIcon,
+  PlusIcon,
+  ProviderKakaoIcon,
+  ProviderNaverIcon,
+} from '@/app/assets/icons';
 import { DefaultAvatar } from '@/app/assets/images';
 import { useUser } from '@/lib/user-context';
 import { useLoginModalStore } from '@/stores/loginModalStore';
@@ -223,7 +228,16 @@ export default function NavMenu({ isOpen, onClose, onLogout }: NavMenuProps) {
                 </div>
                 <div className="flex min-w-0 flex-1 flex-col gap-1">
                   <span className="text-sm font-semibold text-black">{user.nickname} 선생님</span>
-                  <span className="truncate text-xs font-medium text-black-600">{user.email}</span>
+                  <div className="flex min-w-0 items-center gap-1">
+                    {user.provider === 'KAKAO' ? (
+                      <ProviderKakaoIcon className="h-4 w-4 shrink-0 md:h-5 md:w-5" />
+                    ) : (
+                      <ProviderNaverIcon className="h-4 w-4 shrink-0 md:h-5 md:w-5" />
+                    )}
+                    <span className="truncate text-xs font-medium text-black-600">
+                      {user.email}
+                    </span>
+                  </div>
                 </div>
                 <ChevronDownIcon className="h-4 w-4 shrink-0 -rotate-90 text-black" />
               </Link>

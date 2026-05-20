@@ -12,10 +12,12 @@ interface EmptyStateProps {
 export function EmptyState({ message, description, actionLabel, onAction }: EmptyStateProps) {
   return (
     <div className="flex flex-col items-center gap-5">
-      <Image src={EmptyMascot} alt="" width={206} height={227} />
+      <Image src={EmptyMascot} alt="" width={206} height={227} className="h-auto w-32 md:w-51.5" />
       <div className="flex flex-col items-center gap-2">
-        <p className="text-[20px] font-semibold text-black-600">{message}</p>
-        {description && <p className="text-base font-medium text-black-400">{description}</p>}
+        <p className="text-base font-semibold text-black-600 md:text-[20px]">{message}</p>
+        {description && (
+          <p className="text-sm font-medium text-black-400 md:text-base">{description}</p>
+        )}
       </div>
       {actionLabel && onAction && (
         <Button size="lg" className="py-4" onClick={onAction}>

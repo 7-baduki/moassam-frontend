@@ -33,3 +33,5 @@ export { default as SettingIcon } from './SettingIcon.svg';
 export { default as BackArrowIcon } from './BackArrowIcon.svg';
 export { default as InfoIcon } from './InfoIcon.svg';
 export { default as TrashIcon } from './TrashIcon.svg';
+export { default as ProviderKakaoIcon } from './ProviderKakaoIcon.svg';
+export { default as ProviderNaverIcon } from './ProviderNaverIcon.svg';

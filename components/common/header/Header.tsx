@@ -1,6 +1,6 @@
 'use client';
 
-import { useState } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import Link from 'next/link';
 import Image from 'next/image';
 import { usePathname, useRouter } from 'next/navigation';
@@ -21,6 +21,22 @@ export default function Header() {
   const router = useRouter();
   const [isPopoverOpen, setIsPopoverOpen] = useState(false);
   const [isNavMenuOpen, setIsNavMenuOpen] = useState(false);
+  const headerRef = useRef<HTMLElement>(null);
+
+  useEffect(() => {
+    const header = headerRef.current;
+    if (!header) return;
+
+    const observer = new ResizeObserver(([entry]) => {
+      document.documentElement.style.setProperty(
+        '--header-height',
+        `${entry.contentRect.height}px`,
+      );
+    });
+
+    observer.observe(header);
+    return () => observer.disconnect();
+  }, []);
 
   const { mutate: handleLogout } = useLogoutMutation({
     onSuccess: () => {
@@ -31,7 +47,10 @@ export default function Header() {
   });
 
   return (
-    <header className="relative z-300 flex h-12 items-center justify-between border-b border-black-200 bg-white px-4 pt-[env(safe-area-inset-top)] md:px-9 xl:h-16 xl:px-20">
+    <header
+      ref={headerRef}
+      className="relative z-300 flex h-12 items-center justify-between border-b border-black-200 bg-white px-4 pt-[env(safe-area-inset-top)] md:px-9 xl:h-16 xl:px-20"
+    >
       <div className="flex items-center gap-8.5">
         <Link href="/" aria-label="모아쌤 홈으로 이동" onClick={() => setIsNavMenuOpen(false)}>
           <MainLogoIcon className="h-7 w-7 xl:h-10 xl:w-10" aria-hidden="true" />

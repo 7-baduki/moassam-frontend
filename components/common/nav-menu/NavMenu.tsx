@@ -125,12 +125,12 @@ export default function NavMenu({ isOpen, onClose, onLogout }: NavMenuProps) {
   return (
     <div
       className={cn(
-        'absolute top-12 left-0 z-400 w-full overflow-hidden bg-white shadow-md transition-all duration-300 xl:hidden',
-        isOpen ? 'max-h-[calc(100vh-3rem)]' : 'max-h-0',
+        'fixed top-[var(--header-height,3rem)] left-0 z-400 w-full overflow-hidden bg-white shadow-md transition-all duration-300 xl:hidden',
+        isOpen ? 'max-h-[calc(100dvh-var(--header-height,3rem))]' : 'max-h-0',
       )}
       aria-hidden={!isOpen}
     >
-      <nav className="flex min-h-[calc(100vh-3rem)] flex-col justify-between">
+      <nav className="flex min-h-[calc(100dvh-var(--header-height,3rem))] flex-col justify-between pb-[env(safe-area-inset-bottom)]">
         <div>
           {NAV_SECTIONS.map((section) => {
             const isSectionOpen = openSections[section.href];

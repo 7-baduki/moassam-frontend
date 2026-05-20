@@ -1,4 +1,4 @@
-import type { Metadata } from 'next';
+import type { Metadata, Viewport } from 'next';
 import localFont from 'next/font/local';
 import {
   Noto_Sans_KR,
@@ -59,6 +59,10 @@ export const metadata: Metadata = {
   description: '유치원·어린이집 교사를 위한 AI 관찰일지 작성 및 수업자료 공유 커뮤니티 플랫폼',
 };
 
+export const viewport: Viewport = {
+  viewportFit: 'cover',
+};
+
 export default function RootLayout({
   children,
 }: Readonly<{
@@ -77,7 +81,7 @@ export default function RootLayout({
 
   return (
     <html lang="ko" className={`${fontVariables} h-full antialiased`}>
-      <body className={`${pretendard.className} flex h-screen flex-col overflow-hidden`}>
+      <body className={`${pretendard.className} flex h-dvh flex-col overflow-hidden`}>
         <Providers>
           <UserProvider userPromise={userPromise}>
             <Header />

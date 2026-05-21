@@ -63,7 +63,7 @@ export function Select(props: SelectProps) {
       props.onChange?.(next);
     } else {
       props.onChange?.(optionValue);
-      if (size === 'sm') setIsOpen(false);
+      setIsOpen(false);
     }
   }
 

@@ -15,6 +15,7 @@ interface ProfileEditBottomSheetProps {
   onWithdrawClick: () => void;
   username: string;
   nickname: string;
+  profileImageUrl?: string | null;
 }
 
 export function ProfileEditBottomSheet({
@@ -23,6 +24,7 @@ export function ProfileEditBottomSheet({
   onWithdrawClick,
   username,
   nickname,
+  profileImageUrl,
 }: ProfileEditBottomSheetProps) {
   const [displayName, setDisplayName] = useState(nickname);
   const router = useRouter();
@@ -47,14 +49,19 @@ export function ProfileEditBottomSheet({
     >
       <div className="flex h-102 flex-col px-4 pb-5 leading-[140%]">
         <div className="mx-auto my-8 h-27.5 w-27.5 overflow-hidden rounded-full">
-          <Image src={DefaultAvatar} alt="프로필 아바타" width={110} height={110} />
+          <Image
+            src={profileImageUrl || DefaultAvatar}
+            alt="프로필 아바타"
+            width={110}
+            height={110}
+          />
         </div>
 
         <div className="flex flex-col gap-2.5">
           <div className="flex flex-col rounded-[10px] border-[0.5px] border-black-400 px-3 py-2 focus-within:border-pink-500">
             <span className="mb-0.5 text-xs font-medium text-black-500">표시 이름</span>
             <input
-              className="text-sm font-medium text-black outline-none placeholder:text-black-600"
+              className="text-base font-medium text-black outline-none placeholder:text-black-600"
               placeholder="김모아"
               maxLength={15}
               value={displayName}
@@ -64,7 +71,7 @@ export function ProfileEditBottomSheet({
           <div className="flex flex-col rounded-[10px] border-[0.5px] border-black-400 px-3 py-2">
             <span className="mb-0.5 text-xs font-medium text-black-500">사용자 이름</span>
             <input
-              className="text-sm font-medium text-black-500 outline-none"
+              className="text-base font-medium text-black-500 outline-none"
               value={username}
               readOnly
             />

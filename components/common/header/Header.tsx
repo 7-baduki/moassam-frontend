@@ -1,6 +1,6 @@
 'use client';
 
-import { useState } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import Link from 'next/link';
 import Image from 'next/image';
 import { usePathname, useRouter } from 'next/navigation';
@@ -13,6 +13,7 @@ import NAV_ITEMS from '@/constants/common/nav-items';
 import { useLogoutMutation } from '@/hooks/queries/auth/useAuth';
 import { useUser } from '@/lib/user-context';
 import NavMenu from '@/components/common/nav-menu/NavMenu';
+import { toast } from '@/utils/toast';
 
 export default function Header() {
   const openLoginModal = useLoginModalStore((state) => state.open);
@@ -21,17 +22,40 @@ export default function Header() {
   const router = useRouter();
   const [isPopoverOpen, setIsPopoverOpen] = useState(false);
   const [isNavMenuOpen, setIsNavMenuOpen] = useState(false);
+  const headerRef = useRef<HTMLElement>(null);
+
+  useEffect(() => {
+    const header = headerRef.current;
+    if (!header) return;
+
+    const observer = new ResizeObserver(() => {
+      document.documentElement.style.setProperty(
+        '--header-height',
+        `${header.getBoundingClientRect().height}px`,
+      );
+    });
+
+    observer.observe(header);
+    return () => observer.disconnect();
+  }, []);
 
   const { mutate: handleLogout } = useLogoutMutation({
     onSuccess: () => {
       setIsPopoverOpen(false);
+      toast.success({ title: '로그아웃 완료', description: '안전하게 로그아웃되었어요.' });
       router.push('/');
       router.refresh();
+    },
+    onError: () => {
+      toast.error({ title: '로그아웃에 실패했어요. 다시 시도해주세요.' });
     },
   });
 
   return (
-    <header className="relative z-300 flex h-12 items-center justify-between border-b border-black-200 bg-white px-4 md:px-9 xl:h-16 xl:px-20">
+    <header
+      ref={headerRef}
+      className="relative flex h-12 items-center justify-between border-b border-black-200 bg-white px-4 pt-[env(safe-area-inset-top)] md:px-9 xl:h-16 xl:px-20"
+    >
       <div className="flex items-center gap-8.5">
         <Link href="/" aria-label="모아쌤 홈으로 이동" onClick={() => setIsNavMenuOpen(false)}>
           <MainLogoIcon className="h-7 w-7 xl:h-10 xl:w-10" aria-hidden="true" />
@@ -86,6 +110,8 @@ export default function Header() {
               {isPopoverOpen && (
                 <ProfilePopover
                   name={user.nickname}
+                  email={user.email}
+                  provider={user.provider}
                   avatarSrc={user.profileImageUrl || DefaultAvatar}
                   onClose={() => setIsPopoverOpen(false)}
                   onLogout={handleLogout}

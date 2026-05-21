@@ -38,13 +38,9 @@ export default function BoardDetailAttachments({ files }: BoardDetailAttachments
           <span className="typo-line-p2 text-xs font-medium text-black-600">
             {formatFileSize(getTotalSize(files))}
           </span>
-          <button
-            type="button"
-            aria-label="전체 다운로드"
-            className="flex items-center text-black-600 hover:text-black-800"
-          >
+          <span aria-hidden="true" className="flex cursor-default items-center text-black-400">
             <DownloadIcon />
-          </button>
+          </span>
         </div>
       </div>
 

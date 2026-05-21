@@ -8,6 +8,7 @@ import HeroImage from '@/app/assets/images/home/hero/hero-section.png';
 import HeroImageMd from '@/app/assets/images/home/hero/hero-section-md.png';
 import { useUser } from '@/lib/user-context';
 import { useCreditsQuery } from '@/hooks/queries/user/useCredits';
+import { ChevronRightIcon } from '@/app/assets/icons';
 import { AsyncBoundary } from '@/lib/async-boundary';
 import { ObservationCreditBadge } from '@/components/common/observation-credit-badge/ObservationCreditBadge';
 
@@ -60,7 +61,8 @@ function LoggedInHero({ userName = '' }: { userName: string }) {
             href="/observations"
             className="flex h-8 w-30 cursor-pointer items-center justify-center rounded-lg bg-pink-500 text-xs font-medium text-white transition-colors hover:bg-pink-600 md:h-13 md:w-57.5 md:text-xl"
           >
-            관찰일지 시작하기 &gt;
+            관찰일지 시작하기{' '}
+            <ChevronRightIcon className="ml-1 h-2 w-1 overflow-visible md:ml-2.5 md:h-5 md:w-1.5" />
           </Link>
         </div>
       </motion.div>

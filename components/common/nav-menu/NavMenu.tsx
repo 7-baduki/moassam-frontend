@@ -5,7 +5,12 @@ import Link from 'next/link';
 import Image from 'next/image';
 import { usePathname } from 'next/navigation';
 import { cn } from '@/utils/cn';
-import { ChevronDownIcon, PlusIcon } from '@/app/assets/icons';
+import {
+  ChevronDownIcon,
+  PlusIcon,
+  ProviderKakaoIcon,
+  ProviderNaverIcon,
+} from '@/app/assets/icons';
 import { DefaultAvatar } from '@/app/assets/images';
 import { useUser } from '@/lib/user-context';
 import { useLoginModalStore } from '@/stores/loginModalStore';
@@ -125,12 +130,12 @@ export default function NavMenu({ isOpen, onClose, onLogout }: NavMenuProps) {
   return (
     <div
       className={cn(
-        'absolute top-12 left-0 z-400 w-full overflow-hidden bg-white shadow-md transition-all duration-300 xl:hidden',
-        isOpen ? 'max-h-[calc(100vh-3rem)]' : 'max-h-0',
+        'fixed top-[var(--header-height,3rem)] left-0 z-400 w-full overflow-hidden bg-white shadow-md transition-all duration-300 xl:hidden',
+        isOpen ? 'max-h-[calc(100dvh-var(--header-height,3rem))]' : 'max-h-0',
       )}
       aria-hidden={!isOpen}
     >
-      <nav className="flex min-h-[calc(100vh-3rem)] flex-col justify-between">
+      <nav className="flex min-h-[calc(100dvh-var(--header-height,3rem))] flex-col justify-between pb-[env(safe-area-inset-bottom)]">
         <div>
           {NAV_SECTIONS.map((section) => {
             const isSectionOpen = openSections[section.href];
@@ -168,6 +173,18 @@ export default function NavMenu({ isOpen, onClose, onLogout }: NavMenuProps) {
                           className="mt-2 flex items-center gap-2 rounded-lg px-6 py-3.5 text-xs font-semibold text-black hover:bg-black-200 md:px-9"
                         >
                           최근 관찰일지
+                          {recentObservations && (
+                            <span
+                              className={cn(
+                                'text-xs font-semibold',
+                                recentObservations.length === 0
+                                  ? 'text-black-500'
+                                  : 'text-pink-500',
+                              )}
+                            >
+                              {recentObservations.length}
+                            </span>
+                          )}
                           <ChevronDownIcon className="h-3 w-3 -rotate-90 text-black" />
                         </Link>
                         {recentObservations && recentObservations.length > 0 && (
@@ -223,12 +240,27 @@ export default function NavMenu({ isOpen, onClose, onLogout }: NavMenuProps) {
                 </div>
                 <div className="flex min-w-0 flex-1 flex-col gap-1">
                   <span className="text-sm font-semibold text-black">{user.nickname} 선생님</span>
-                  <span className="truncate text-xs font-medium text-black-600">{user.email}</span>
+                  <div className="flex min-w-0 items-center gap-1">
+                    {user.provider === 'KAKAO' ? (
+                      <ProviderKakaoIcon className="h-4 w-4 shrink-0 md:h-5 md:w-5" />
+                    ) : (
+                      <ProviderNaverIcon className="h-4 w-4 shrink-0 md:h-5 md:w-5" />
+                    )}
+                    <span className="truncate text-xs font-medium text-black-600">
+                      {user.email}
+                    </span>
+                  </div>
                 </div>
                 <ChevronDownIcon className="h-4 w-4 shrink-0 -rotate-90 text-black" />
               </Link>
               <div className="flex justify-end bg-black-100 py-4 pr-4 md:pr-9">
-                <button onClick={onLogout} className="text-xs text-black-500">
+                <button
+                  onClick={() => {
+                    onClose();
+                    onLogout();
+                  }}
+                  className="text-xs text-black-500"
+                >
                   로그아웃
                 </button>
               </div>

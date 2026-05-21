@@ -85,7 +85,7 @@ export default function SolutionSection() {
           <Button
             variant="primary"
             size="md"
-            className="inline-flex h-8 w-30 items-center justify-center gap-1 py-[7.5px] text-xs whitespace-nowrap md:h-13 md:w-57.5 md:gap-2 md:pt-3.5 md:pb-2.5 md:text-xl"
+            className="inline-flex h-8 w-30 items-center justify-center gap-1 py-[7.5px] text-xs whitespace-nowrap md:h-13 md:w-57.5 md:gap-2 md:py-3 md:text-xl"
             onClick={() => (isLoggedIn ? router.push('/community/board') : openLoginModal())}
           >
             {isLoggedIn ? '커뮤니티 시작하기' : '3초 간편 로그인 시작'}

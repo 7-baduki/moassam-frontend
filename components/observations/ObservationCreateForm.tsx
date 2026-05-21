@@ -1,6 +1,6 @@
 'use client';
 
-import { useState, useTransition } from 'react';
+import { useState, useTransition, useEffect } from 'react';
 import { useRouter } from 'next/navigation';
 import { useQueryClient } from '@tanstack/react-query';
 import axios from 'axios';
@@ -21,6 +21,7 @@ import { useIsMobile } from '@/hooks/useIsMobile';
 import { toast } from '@/utils/toast';
 import { useLoginModalStore } from '@/stores/loginModalStore';
 import { useUserStore } from '@/stores/userStore';
+import { useObservationStore } from '@/stores/observationStore';
 
 export default function ObservationCreateForm() {
   const router = useRouter();
@@ -37,6 +38,11 @@ export default function ObservationCreateForm() {
   const isMobile = useIsMobile();
   const user = useUserStore((state) => state.user);
   const openLoginModal = useLoginModalStore((state) => state.open);
+  const setIsGenerating = useObservationStore((state) => state.setIsGenerating);
+
+  useEffect(() => {
+    return () => setIsGenerating(false);
+  }, [setIsGenerating]);
 
   const { mutate: createObservation, isPending: isMutating } = useObservationMutation({
     onSuccess: ({ observationId }) => {
@@ -48,6 +54,7 @@ export default function ObservationCreateForm() {
       });
     },
     onError: (error) => {
+      setIsGenerating(false);
       if (axios.isAxiosError(error) && error.response?.data?.code === 'CREDIT_NOT_ENOUGH') {
         setShowCreditDialog(true);
       } else if (!(error as { isHandled?: boolean }).isHandled) {
@@ -83,6 +90,7 @@ export default function ObservationCreateForm() {
       openLoginModal('로그인이 필요해요!', '로그인 후 관찰일지를 생성할 수 있어요');
       return;
     }
+    setIsGenerating(true);
     createObservation({ age, sectionTypes: areas, situation: content });
   };
 
@@ -109,7 +117,7 @@ export default function ObservationCreateForm() {
         ]}
       />
       <div className="flex flex-col items-center">
-        <div className="mb-5 text-center md:mb-12.5">
+        <div className="mt-15 mb-5 text-center md:mt-6 md:mb-12.5 xl:mt-0">
           <h1 className="text-base font-semibold text-black md:text-xl">
             관찰일지를
             <br className="md:hidden" />
@@ -147,7 +155,10 @@ export default function ObservationCreateForm() {
                     onClick={() => setAreaBottomSheetOpen(true)}
                     className="flex w-full items-center justify-between rounded-lg border border-black-300 p-2.5 text-sm font-medium text-black-800"
                   >
-                    <span>5개 영역</span>
+                    <span className="flex items-center gap-1">
+                      5개 영역
+                      <span className="text-xs font-medium text-black-500">중복선택 가능</span>
+                    </span>
                     <ChevronDownIcon width={20} height={20} className="shrink-0" />
                   </button>
                   <SelectBottomSheet
@@ -186,6 +197,7 @@ export default function ObservationCreateForm() {
                     size="md"
                     options={AREA_OPTIONS}
                     triggerLabel="5개 영역"
+                    triggerDescription="중복선택 가능"
                     value={areas}
                     onChange={setAreas}
                     className="w-full md:w-90"

@@ -22,7 +22,14 @@ const ICON_SIZE: Record<SelectSize, number> = {
 };
 
 export function Select(props: SelectProps) {
-  const { size = 'sm', options, triggerLabel = '', className, fixedMenu = false } = props;
+  const {
+    size = 'sm',
+    options,
+    triggerLabel = '',
+    triggerDescription,
+    className,
+    fixedMenu = false,
+  } = props;
   const [isOpen, setIsOpen] = useState(false);
   const containerRef = useRef<HTMLDivElement>(null);
   const [menuStyle, setMenuStyle] = useState<{ top: number; left: number; width: number }>({
@@ -63,7 +70,7 @@ export function Select(props: SelectProps) {
       props.onChange?.(next);
     } else {
       props.onChange?.(optionValue);
-      if (size === 'sm') setIsOpen(false);
+      setIsOpen(false);
     }
   }
 
@@ -84,7 +91,12 @@ export function Select(props: SelectProps) {
           isOpen && size === 'md' && 'rounded-b-none',
         )}
       >
-        <span>{getTriggerLabel()}</span>
+        <span className="flex items-center gap-1">
+          {getTriggerLabel()}
+          {triggerDescription && (
+            <span className="text-xs font-medium text-black-500">{triggerDescription}</span>
+          )}
+        </span>
         <ChevronDownIcon
           width={iconSize}
           height={iconSize}

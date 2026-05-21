@@ -66,7 +66,7 @@ export default function CommunitySearchOverlay({
             onChange={handleChange}
             onClear={handleClear}
             onKeyDown={handleKeyDown}
-            className="h-9 text-sm"
+            className="h-9 text-base"
           />
         </div>
       </div>
@@ -76,7 +76,7 @@ export default function CommunitySearchOverlay({
         {showResults ? (
           <div style={{ opacity: isPending ? 0.5 : 1 }}>{renderResults(resultsKeyword)}</div>
         ) : (
-          <div className="flex h-full items-center justify-center text-sm text-black-500">
+          <div className="flex h-full items-center justify-center text-center text-sm text-black-500">
             궁금한 키워드를
             <br />
             입력해보세요

@@ -33,7 +33,7 @@ const PRIVACY_SECTIONS: PrivacySection[] = [
       '이메일',
       '닉네임',
       '게시글, 댓글, 첨부파일 정보',
-      '관찰일지 생성을 위해 입력한 연령, 관찰 상황, 5개 영역',
+      '관찰일지 생성을 위해 입력한 연령, 교육·보육과정, 관찰 상황, 5개 영역',
       'AI 생성 결과',
       '좋아요, 북마크, 조회 기록',
       'AI 생성횟수 정보',
@@ -141,7 +141,7 @@ export default function PrivacyPage() {
               <ul className="mt-1 flex flex-col gap-1 pl-0.5 text-sm font-medium text-black-600">
                 {section.xList.map((item, i) => (
                   <li key={i} className="flex items-center gap-1">
-                    <XIcon className="h-2.5 w-2.5 shrink-0 text-pink-500" />
+                    <XIcon className="h-2.5 w-2.5 shrink-0 text-[#ff3b30]" />
                     {item}
                   </li>
                 ))}

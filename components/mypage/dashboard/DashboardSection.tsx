@@ -28,6 +28,7 @@ export default function DashboardSection() {
       <ProfileSummary
         name={user?.nickname ?? ''}
         email={user?.email ?? ''}
+        provider={user?.provider ?? 'KAKAO'}
         profileImageUrl={user?.profileImageUrl}
         observationCount={activitySummary?.observationCount ?? 0}
         bookmarkCount={activitySummary?.bookmarkedPostCount ?? 0}
@@ -54,6 +55,7 @@ export default function DashboardSection() {
           }}
           username={user?.email ?? ''}
           nickname={user?.nickname ?? ''}
+          profileImageUrl={user?.profileImageUrl}
         />
       ) : (
         <ProfileEditModal
@@ -66,6 +68,7 @@ export default function DashboardSection() {
           }}
           username={user?.email ?? ''}
           nickname={user?.nickname ?? ''}
+          profileImageUrl={user?.profileImageUrl}
         />
       )}
       {isMobile ? (

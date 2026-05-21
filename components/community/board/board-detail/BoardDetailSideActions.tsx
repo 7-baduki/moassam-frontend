@@ -35,6 +35,19 @@ export default function BoardDetailSideActions({
     setIsLiked(!prevLiked);
     setOptimisticLikeCount((prev) => (!prevLiked ? prev + 1 : prev - 1));
     toggleLike(prevLiked, {
+      onSuccess: () => {
+        if (!prevLiked) {
+          toast.success({
+            title: '좋아요를 눌렀어요',
+            description: '이 게시글에 좋아요를 표시했어요',
+          });
+        } else {
+          toast.success({
+            title: '좋아요를 취소했어요',
+            description: '언제든 다시 좋아요를 누를 수 있어요',
+          });
+        }
+      },
       onError: () => {
         setIsLiked(prevLiked);
         setOptimisticLikeCount(prevCount);
@@ -54,6 +67,11 @@ export default function BoardDetailSideActions({
           toast.success({
             title: '북마크 저장 완료',
             description: '마이페이지 > 북마크에서 확인할 수 있어요',
+          });
+        } else {
+          toast.success({
+            title: '북마크가 삭제되었어요',
+            description: '삭제해도 언제든 다시 북마크할 수 있어요',
           });
         }
       },

@@ -7,6 +7,7 @@ import ObservationResultCard from '@/components/observations/ObservationResultCa
 import ObservationLoading from '@/components/observations/ObservationLoading';
 import { Button } from '@/components/common/button/Button';
 import { Dialog } from '@/components/common/dialog/Dialog';
+import { ChevronDownIcon } from '@/app/assets/icons';
 import { SECTION_TYPE_LABEL } from '@/constants/observations/observation';
 import { toast } from '@/utils/toast';
 import {
@@ -68,6 +69,14 @@ export default function ObservationDetail({ observationId }: ObservationDetailPr
         ]}
       />
       <div>
+        <div className="mb-2 flex items-center gap-4 xl:hidden">
+          <button type="button" onClick={() => router.back()} aria-label="뒤로가기">
+            <ChevronDownIcon className="h-5 w-5 rotate-90 text-black" />
+          </button>
+          <h1 className="py-2 text-base font-semibold text-black md:text-[18px]">
+            {observation.title}
+          </h1>
+        </div>
         <div className="flex flex-col gap-5">
           {items.map((item) => (
             <ObservationResultCard key={item.title} title={item.title} content={item.content} />

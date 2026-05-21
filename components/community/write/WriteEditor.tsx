@@ -109,7 +109,7 @@ export default function WriteEditor({
   const [showFontSizeSheet, setShowFontSizeSheet] = useState(false);
   const [pickerPos, setPickerPos] = useState({ top: 0, left: 0 });
   const [activeColor, setActiveColor] = useState('#343434');
-  const [activeHighlightColor, setActiveHighlightColor] = useState('#FCB900');
+  const [activeHighlightColor, setActiveHighlightColor] = useState('#343434');
   const isMobile = useIsMobile();
 
   const openPicker = useCallback(
@@ -119,14 +119,16 @@ export default function WriteEditor({
       initialColor?: string,
       colorSetter?: React.Dispatch<React.SetStateAction<string>>,
     ) => {
-      const rect = ref.current?.getBoundingClientRect();
-      if (rect) setPickerPos({ top: rect.bottom + 4, left: rect.left });
+      if (!isMobile) {
+        const rect = ref.current?.getBoundingClientRect();
+        if (rect) setPickerPos({ top: rect.bottom + 4, left: rect.left });
+      }
       setter((v) => {
         if (!v && initialColor !== undefined) colorSetter?.(initialColor);
         return !v;
       });
     },
-    [],
+    [isMobile],
   );
 
   async function handleImageUpload(e: React.ChangeEvent<HTMLInputElement>) {
@@ -235,18 +237,18 @@ export default function WriteEditor({
       isAlignJustify: ctx.editor?.isActive({ textAlign: 'justify' }),
       isBulletList: ctx.editor?.isActive('bulletList'),
       fontFamily: ctx.editor?.getAttributes('textStyle').fontFamily ?? 'Pretendard',
-      fontSize: ctx.editor?.getAttributes('textStyle').fontSize?.replace('px', '') ?? '14',
+      fontSize: ctx.editor?.getAttributes('textStyle').fontSize?.replace('px', '') ?? '16',
       color: ctx.editor?.getAttributes('textStyle').color ?? '#343434',
-      highlightColor: ctx.editor?.getAttributes('highlight').color ?? '#343434',
+      highlightColor: ctx.editor?.getAttributes('highlight').color ?? '#FCB900',
     }),
   });
 
   if (!editor) return null;
 
   const currentFontFamily = editorState?.fontFamily ?? 'Pretendard';
-  const currentFontSize = editorState?.fontSize ?? '14';
+  const currentFontSize = editorState?.fontSize ?? '16';
   const currentColor = editorState?.color ?? '#343434';
-  const currentHighlightColor = editorState?.highlightColor ?? '#FCB900';
+  const currentHighlightColor = editorState?.highlightColor ?? '#343434';
 
   return (
     <div
@@ -348,9 +350,10 @@ export default function WriteEditor({
 
         <div ref={colorBtnRef}>
           <ToolbarButton
-            onClick={() =>
-              openPicker(colorBtnRef, setShowColorPicker, currentColor, setActiveColor)
-            }
+            onClick={() => {
+              if (isMobile) setShowHighlightPicker(false);
+              openPicker(colorBtnRef, setShowColorPicker, currentColor, setActiveColor);
+            }}
             title="글자색"
           >
             <EditorTextColorIcon style={{ color: currentColor }} />
@@ -359,14 +362,15 @@ export default function WriteEditor({
 
         <div ref={highlightBtnRef}>
           <ToolbarButton
-            onClick={() =>
+            onClick={() => {
+              if (isMobile) setShowColorPicker(false);
               openPicker(
                 highlightBtnRef,
                 setShowHighlightPicker,
                 currentHighlightColor,
                 setActiveHighlightColor,
-              )
-            }
+              );
+            }}
             title="형광펜"
           >
             <EditorTextfillIcon style={{ color: currentHighlightColor }} />
@@ -490,6 +494,24 @@ export default function WriteEditor({
         </div>
       </BubbleMenu>
 
+      {isMobile && (showColorPicker || showHighlightPicker) && (
+        <MobileColorPalette
+          colors={PICKER_COLORS}
+          activeColor={showColorPicker ? activeColor : activeHighlightColor}
+          onSelect={(color) => {
+            if (showColorPicker) {
+              setActiveColor(color);
+              editor.chain().setColor(color).run();
+              setShowColorPicker(false);
+            } else {
+              setActiveHighlightColor(color);
+              editor.chain().setHighlight({ color }).run();
+              setShowHighlightPicker(false);
+            }
+          }}
+        />
+      )}
+
       {isMobile && (files.length > 0 || existingFiles.length > 0) && (
         <div className="grid grid-cols-2 gap-2 p-3">
           {existingFiles.map((file) => (
@@ -513,7 +535,7 @@ export default function WriteEditor({
 
       <EditorContent
         editor={editor}
-        className="prose-editor min-h-107 px-4 py-3 text-sm text-black-800"
+        className="prose-editor min-h-107 px-4 py-3 text-base text-black-800"
       />
 
       <SelectBottomSheet
@@ -587,7 +609,7 @@ export default function WriteEditor({
         </>
       )}
 
-      {showColorPicker && (
+      {!isMobile && showColorPicker && (
         <>
           <div className="fixed inset-0 z-900" onClick={() => setShowColorPicker(false)} />
           <div className="fixed z-1100" style={{ top: pickerPos.top, left: pickerPos.left }}>
@@ -603,7 +625,7 @@ export default function WriteEditor({
         </>
       )}
 
-      {showHighlightPicker && (
+      {!isMobile && showHighlightPicker && (
         <>
           <div className="fixed inset-0 z-900" onClick={() => setShowHighlightPicker(false)} />
           <div className="fixed z-1100" style={{ top: pickerPos.top, left: pickerPos.left }}>
@@ -618,6 +640,75 @@ export default function WriteEditor({
           </div>
         </>
       )}
+    </div>
+  );
+}
+
+function MobileColorPalette({
+  colors,
+  activeColor,
+  onSelect,
+}: {
+  colors: string[];
+  activeColor: string;
+  onSelect: (color: string) => void;
+}) {
+  const [hexInput, setHexInput] = useState(activeColor.replace('#', ''));
+
+  function handleHexChange(e: React.ChangeEvent<HTMLInputElement>) {
+    setHexInput(e.target.value);
+  }
+
+  const isValidHex = /^[0-9a-fA-F]{6}$/.test(hexInput);
+  const previewColor = isValidHex ? `#${hexInput}` : activeColor;
+
+  return (
+    <div className="flex flex-col gap-2 border-b border-black-200 bg-black-100 px-3 py-2">
+      <div className="flex items-center gap-1.5">
+        {colors.map((color) => (
+          <button
+            key={color}
+            type="button"
+            onClick={() => onSelect(color)}
+            className="h-6 w-6 shrink-0 rounded-full border-2 border-white shadow-sm transition-transform active:scale-90"
+            style={{ backgroundColor: color }}
+          />
+        ))}
+      </div>
+      <div className="flex items-center justify-center gap-1">
+        <div
+          className="h-6 w-6 shrink-0 rounded border border-black-200 shadow-sm"
+          style={{ backgroundColor: previewColor }}
+        />
+        <div className="flex h-6 items-center rounded border border-black-200 bg-white px-1.5 focus-within:border-black-400">
+          <span className={`text-xs ${hexInput.length > 0 ? 'text-black-800' : 'text-black-300'}`}>
+            #
+          </span>
+          <input
+            type="text"
+            inputMode="text"
+            value={hexInput}
+            onChange={handleHexChange}
+            onKeyDown={(e) => e.stopPropagation()}
+            maxLength={6}
+            onBlur={() => {
+              if (!isValidHex) setHexInput(activeColor.replace('#', ''));
+            }}
+            placeholder="000000"
+            className="w-14 bg-transparent text-xs text-black-800 outline-none placeholder:text-black-300"
+          />
+        </div>
+        <button
+          type="button"
+          onClick={() => {
+            if (isValidHex) onSelect(`#${hexInput}`);
+          }}
+          disabled={!isValidHex}
+          className="h-6 rounded border border-black-200 px-2 text-xs text-black-700 transition-colors hover:bg-black-200 disabled:opacity-40"
+        >
+          확인
+        </button>
+      </div>
     </div>
   );
 }

@@ -55,6 +55,11 @@ export default function BoardDetailSideActions({
             title: '북마크 저장 완료',
             description: '마이페이지 > 북마크에서 확인할 수 있어요',
           });
+        } else {
+          toast.success({
+            title: '북마크가 삭제되었어요',
+            description: '삭제해도 언제든 다시 북마크할 수 있어요',
+          });
         }
       },
       onError: () => {

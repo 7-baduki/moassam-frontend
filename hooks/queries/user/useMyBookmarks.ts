@@ -1,17 +1,18 @@
 import { useSuspenseQuery, useSuspenseInfiniteQuery, useMutation } from '@tanstack/react-query';
 import { getMyBookmarks } from '@/api/bookmark.api';
 import { unbookmarkPost } from '@/api/community.api';
+import { userKeys } from '@/hooks/queries/user/queryKeys';
 
 export function useMyBookmarksQuery(page: number) {
   return useSuspenseQuery({
-    queryKey: ['myBookmarks', page],
+    queryKey: userKeys.myBookmarks.page(page),
     queryFn: () => getMyBookmarks(page),
   });
 }
 
 export function useMyBookmarksInfiniteQuery() {
   return useSuspenseInfiniteQuery({
-    queryKey: ['myBookmarks', 'infinite'],
+    queryKey: userKeys.myBookmarks.infinite(),
     queryFn: ({ pageParam = 0 }) => getMyBookmarks(pageParam),
     initialPageParam: 0,
     getNextPageParam: (lastPage) => (lastPage.hasNext ? lastPage.page + 1 : undefined),

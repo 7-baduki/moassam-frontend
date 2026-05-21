@@ -28,7 +28,22 @@ export default function BoardDetailInlineActions({
     if (isLikePending) return;
     const prev = isLiked;
     setIsLiked(!prev);
-    toggleLike(prev, { onError: () => setIsLiked(prev) });
+    toggleLike(prev, {
+      onSuccess: () => {
+        if (!prev) {
+          toast.success({
+            title: '좋아요를 눌렀어요',
+            description: '이 게시글에 좋아요를 표시했어요',
+          });
+        } else {
+          toast.success({
+            title: '좋아요를 취소했어요',
+            description: '언제든 다시 좋아요를 누를 수 있어요',
+          });
+        }
+      },
+      onError: () => setIsLiked(prev),
+    });
   }
 
   function handleBookmarkToggle() {

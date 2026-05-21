@@ -88,7 +88,7 @@ export function useMoabangSearchInfiniteQuery(params: Omit<MoabangSearchParams, 
 export function useBoardPostsInfiniteQuery(params: Omit<BoardListParams, 'page'>) {
   return useSuspenseInfiniteQuery({
     queryKey: ['board', 'posts', 'infinite', params],
-    queryFn: ({ pageParam }) => getBoardPosts({ ...params, page: pageParam as number, size: 9 }),
+    queryFn: ({ pageParam }) => getBoardPosts({ ...params, page: pageParam as number, size: 8 }),
     initialPageParam: 0,
     getNextPageParam: (lastPage) => (lastPage.hasNext ? lastPage.page + 1 : undefined),
   });
@@ -97,7 +97,7 @@ export function useBoardPostsInfiniteQuery(params: Omit<BoardListParams, 'page'>
 export function useBoardSearchInfiniteQuery(params: Omit<BoardSearchParams, 'page'>) {
   return useInfiniteQuery({
     queryKey: ['board', 'search', 'infinite', params],
-    queryFn: ({ pageParam }) => searchBoardPosts({ ...params, page: pageParam as number, size: 9 }),
+    queryFn: ({ pageParam }) => searchBoardPosts({ ...params, page: pageParam as number, size: 8 }),
     initialPageParam: 0,
     getNextPageParam: (lastPage) => (lastPage.hasNext ? lastPage.page + 1 : undefined),
     placeholderData: keepPreviousData,

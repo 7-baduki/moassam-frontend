@@ -88,7 +88,7 @@ function BoardListContent({
   const { data } = useBoardPostsQuery({
     headTag: category !== 'all' ? (category as HeadTag) : undefined,
     page: currentPage - 1,
-    size: 9,
+    size: 8,
   });
 
   return (
@@ -136,7 +136,7 @@ function BoardSearchContent({
   currentPage: number;
   onPageChange: (page: number) => void;
 }) {
-  const { data } = useBoardSearchQuery({ keyword, page: currentPage - 1, size: 9 });
+  const { data } = useBoardSearchQuery({ keyword, page: currentPage - 1, size: 8 });
 
   return (
     <>

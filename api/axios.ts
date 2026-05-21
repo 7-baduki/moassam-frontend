@@ -70,11 +70,14 @@ apiClient.interceptors.response.use(
       if (!res.ok) throw new Error('refresh failed');
 
       const { data } = await res.json();
-      await fetch('/api/auth/set-token', {
+      if (!data?.accessToken) throw new Error('refresh failed');
+
+      const setTokenRes = await fetch('/api/auth/set-token', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ accessToken: data.accessToken }),
       });
+      if (!setTokenRes.ok) throw new Error('set-token failed');
 
       processPendingQueue(null);
       return apiClient(originalRequest);

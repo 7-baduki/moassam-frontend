@@ -35,9 +35,9 @@ export default function ServiceCard({
       <Image
         src={characterHoverSrc}
         alt=""
-        width={130}
-        height={145}
-        className="absolute top-0 right-3.75 z-5 opacity-0 transition-opacity group-hover:z-11 group-hover:opacity-100 max-md:h-23.5 max-md:w-25 md:right-2"
+        width={110}
+        height={118}
+        className="absolute top-1.5 right-7 z-5 opacity-0 transition-opacity group-hover:z-11 group-hover:opacity-100 max-md:h-19.5 max-md:w-18 md:right-5"
       />
 
       <div className="relative flex h-28.25 w-full flex-col md:h-49.75">

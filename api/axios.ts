@@ -66,6 +66,7 @@ apiClient.interceptors.response.use(
       const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/v1/auth/refresh`, {
         method: 'POST',
         credentials: 'include',
+        signal: AbortSignal.timeout(10000),
       });
       if (!res.ok) throw new Error('refresh failed');
 
@@ -76,6 +77,7 @@ apiClient.interceptors.response.use(
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ accessToken: data.accessToken }),
+        signal: AbortSignal.timeout(10000),
       });
       if (!setTokenRes.ok) throw new Error('set-token failed');
 

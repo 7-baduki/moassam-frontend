@@ -2,7 +2,7 @@ type BoardType = 'moabang' | 'board';
 
 export const communityKeys = {
   postDetail: (postId: number) => ['post', 'detail', postId] as const,
-  posts: (board: BoardType) => [board, 'posts'] as const,
+  board: (board: BoardType) => [board] as const,
   postsList: (board: BoardType, params: unknown) => [board, 'posts', params] as const,
   postsInfinite: (board: BoardType, params: unknown) =>
     [board, 'posts', 'infinite', params] as const,

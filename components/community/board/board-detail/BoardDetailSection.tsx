@@ -94,7 +94,7 @@ export default function BoardDetailSection({ postId, title }: BoardDetailSection
   useEffect(() => {
     const listKey = title === '모아방' ? 'moabang' : 'board';
     return () => {
-      queryClient.invalidateQueries({ queryKey: communityKeys.posts(listKey) });
+      queryClient.invalidateQueries({ queryKey: communityKeys.board(listKey) });
     };
   }, [queryClient, title]);
   const isLoggedIn = user !== null;

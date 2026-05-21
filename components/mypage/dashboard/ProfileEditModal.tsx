@@ -16,6 +16,7 @@ interface ProfileEditModalProps {
   onWithdrawClick: () => void;
   username: string;
   nickname: string;
+  profileImageUrl?: string | null;
 }
 
 export function ProfileEditModal({
@@ -24,6 +25,7 @@ export function ProfileEditModal({
   onWithdrawClick,
   username,
   nickname,
+  profileImageUrl,
 }: ProfileEditModalProps) {
   const [displayName, setDisplayName] = useState(nickname);
   const router = useRouter();
@@ -65,7 +67,12 @@ export function ProfileEditModal({
           </h2>
 
           <div className="mx-auto my-8 h-27.5 w-27.5 overflow-hidden rounded-full">
-            <Image src={DefaultAvatar} alt="프로필 아바타" width={110} height={110} />
+            <Image
+              src={profileImageUrl || DefaultAvatar}
+              alt="프로필 아바타"
+              width={110}
+              height={110}
+            />
           </div>
 
           <div className="flex flex-col gap-2.5">

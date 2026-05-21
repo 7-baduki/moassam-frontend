@@ -9,6 +9,7 @@ interface SelectSharedProps {
   size?: SelectSize;
   options: SelectOption[];
   triggerLabel?: string;
+  triggerDescription?: string;
   className?: string;
   fixedMenu?: boolean;
 }

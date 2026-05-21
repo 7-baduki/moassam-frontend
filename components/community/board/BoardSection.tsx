@@ -88,7 +88,7 @@ function BoardListContent({
   const { data } = useBoardPostsQuery({
     headTag: category !== 'all' ? (category as HeadTag) : undefined,
     page: currentPage - 1,
-    size: 9,
+    size: 8,
   });
 
   return (
@@ -136,7 +136,7 @@ function BoardSearchContent({
   currentPage: number;
   onPageChange: (page: number) => void;
 }) {
-  const { data } = useBoardSearchQuery({ keyword, page: currentPage - 1, size: 9 });
+  const { data } = useBoardSearchQuery({ keyword, page: currentPage - 1, size: 8 });
 
   return (
     <>
@@ -235,9 +235,9 @@ export default function BoardSection() {
         onSearch={handleSearch}
         renderSearchResults={(kw) => <BoardSearchInfinite keyword={kw} />}
       />
-      <CommunityFab onClick={handleWrite} positionClassName="fixed right-9 bottom-24 z-300" />
-      <div className="fixed right-9 bottom-9 z-300 xl:hidden">
+      <div className="fixed right-9 bottom-9 z-300 flex flex-col-reverse items-center gap-3 xl:hidden">
         <ScrollToTopButton showAfter={300} />
+        <CommunityFab onClick={handleWrite} positionClassName="" />
       </div>
       {!keyword && (
         <CommunityFilter

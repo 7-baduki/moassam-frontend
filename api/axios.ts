@@ -85,7 +85,11 @@ apiClient.interceptors.response.use(
       return apiClient(originalRequest);
     } catch (refreshError) {
       processPendingQueue(refreshError);
-      await fetch('/api/auth/logout', { method: 'POST' });
+      try {
+        await fetch('/api/auth/logout', { method: 'POST' });
+      } catch {
+        // 로그아웃 요청이 실패해도 로컬 상태는 정리한다
+      }
       useUserStore.getState().setUser(null);
       useLoginModalStore.getState().open('세션이 만료되었어요!', '다시 로그인해 주세요');
       if (axios.isAxiosError(refreshError)) refreshError.isHandled = true;

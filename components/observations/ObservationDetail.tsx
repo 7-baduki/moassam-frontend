@@ -2,6 +2,7 @@
 
 import { useState } from 'react';
 import { useRouter } from 'next/navigation';
+import { useQueryClient } from '@tanstack/react-query';
 import axios from 'axios';
 import ObservationResultCard from '@/components/observations/ObservationResultCard';
 import ObservationLoading from '@/components/observations/ObservationLoading';
@@ -21,11 +22,15 @@ interface ObservationDetailProps {
 
 export default function ObservationDetail({ observationId }: ObservationDetailProps) {
   const router = useRouter();
+  const queryClient = useQueryClient();
   const [showCreditDialog, setShowCreditDialog] = useState(false);
 
   const { data: observation, refetch } = useObservationItemQuery(observationId);
   const { mutate: regenerate, isPending } = useObservationRegenerateMutation({
-    onSuccess: () => refetch(),
+    onSuccess: () => {
+      refetch();
+      queryClient.invalidateQueries({ queryKey: ['credits'] });
+    },
     onError: (error) => {
       if (axios.isAxiosError(error) && error.response?.data?.code === 'CREDIT_NOT_ENOUGH') {
         setShowCreditDialog(true);

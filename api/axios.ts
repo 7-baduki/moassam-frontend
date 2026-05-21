@@ -43,7 +43,7 @@ apiClient.interceptors.response.use(
       return Promise.reject(error);
     }
 
-    if (!document.cookie.includes('isLoggedIn=true')) {
+    if (!document.cookie.split(';').some((c) => c.trim() === 'isLoggedIn=true')) {
       error.isHandled = true;
       return Promise.reject(error);
     }

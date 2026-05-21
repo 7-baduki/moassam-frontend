@@ -45,6 +45,7 @@ apiClient.interceptors.response.use(
 
     if (!document.cookie.split(';').some((c) => c.trim() === 'isLoggedIn=true')) {
       error.isHandled = true;
+      useLoginModalStore.getState().open();
       return Promise.reject(error);
     }
 

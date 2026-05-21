@@ -42,6 +42,7 @@ export default function Header() {
   const { mutate: handleLogout } = useLogoutMutation({
     onSuccess: () => {
       setIsPopoverOpen(false);
+      toast.success({ title: '로그아웃 완료', description: '안전하게 로그아웃되었어요.' });
       router.push('/');
       router.refresh();
     },

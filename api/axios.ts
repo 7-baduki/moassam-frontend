@@ -39,10 +39,6 @@ apiClient.interceptors.response.use(
       return Promise.reject(error);
     }
 
-    if (originalRequest.url?.includes('/api/v1/auth/refresh')) {
-      return Promise.reject(error);
-    }
-
     if (isLoggingOut) {
       error.isHandled = true;
       return Promise.reject(error);
@@ -67,7 +63,19 @@ apiClient.interceptors.response.use(
     isRefreshing = true;
 
     try {
-      await apiClient.post('/api/v1/auth/refresh');
+      const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/v1/auth/refresh`, {
+        method: 'POST',
+        credentials: 'include',
+      });
+      if (!res.ok) throw new Error('refresh failed');
+
+      const { data } = await res.json();
+      await fetch('/api/auth/set-token', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ accessToken: data.accessToken }),
+      });
+
       processPendingQueue(null);
       return apiClient(originalRequest);
     } catch (refreshError) {

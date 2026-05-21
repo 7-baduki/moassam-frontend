@@ -37,7 +37,7 @@ export default function ServiceCard({
         alt=""
         width={130}
         height={145}
-        className="absolute top-0 right-3.75 z-5 opacity-0 transition-opacity group-hover:z-10 group-hover:opacity-100 max-md:h-23.5 max-md:w-25 md:right-2"
+        className="absolute top-0 right-3.75 z-5 opacity-0 transition-opacity group-hover:z-11 group-hover:opacity-100 max-md:h-23.5 max-md:w-25 md:right-2"
       />
 
       <div className="relative flex h-28.25 w-full flex-col md:h-49.75">

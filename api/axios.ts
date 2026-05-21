@@ -1,5 +1,6 @@
 import axios from 'axios';
 import { useLoginModalStore } from '@/stores/loginModalStore';
+import { useUserStore } from '@/stores/userStore';
 
 const apiClient = axios.create({
   baseURL: '/api/proxy',
@@ -38,6 +39,10 @@ apiClient.interceptors.response.use(
       return Promise.reject(error);
     }
 
+    if (originalRequest.url?.includes('/api/v1/auth/refresh')) {
+      return Promise.reject(error);
+    }
+
     if (isLoggingOut) {
       error.isHandled = true;
       return Promise.reject(error);
@@ -68,6 +73,7 @@ apiClient.interceptors.response.use(
     } catch (refreshError) {
       processPendingQueue(refreshError);
       await fetch('/api/auth/logout', { method: 'POST' });
+      useUserStore.getState().setUser(null);
       useLoginModalStore.getState().open('세션이 만료되었어요!', '다시 로그인해 주세요');
       if (axios.isAxiosError(refreshError)) refreshError.isHandled = true;
       return Promise.reject(refreshError);

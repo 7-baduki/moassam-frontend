@@ -5,6 +5,7 @@ import PainPointSection from '@/components/home/PainPointSection';
 import SolutionSection from '@/components/home/SolutionSection';
 import Footer from '@/components/common/footer/Footer';
 import LoginRedirectHandler from '@/components/home/LoginRedirectHandler';
+import ScrollToTopButton from '@/components/common/scroll-top/ScrollToTopButton';
 
 export default function Home() {
   return (
@@ -17,6 +18,9 @@ export default function Home() {
       <PainPointSection />
       <SolutionSection />
       <Footer />
+      <div className="fixed right-5 bottom-17.5 md:right-20">
+        <ScrollToTopButton showAfter={300} />
+      </div>
     </div>
   );
 }

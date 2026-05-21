@@ -96,6 +96,7 @@ function ObservationsPaginated() {
     onSuccess: () => {
       refetch();
       queryClient.invalidateQueries({ queryKey: observationKeys.all });
+      queryClient.invalidateQueries({ queryKey: userKeys.myObservations.all });
       queryClient.invalidateQueries({ queryKey: userKeys.activitySummary() });
       toast.success({
         title: '관찰일지 삭제가 완료되었어요',
@@ -155,6 +156,7 @@ function ObservationsInfinite() {
     onSuccess: () => {
       refetch();
       queryClient.invalidateQueries({ queryKey: observationKeys.all });
+      queryClient.invalidateQueries({ queryKey: userKeys.myObservations.all });
       queryClient.invalidateQueries({ queryKey: userKeys.activitySummary() });
       toast.success({
         title: '관찰일지 삭제가 완료되었어요',

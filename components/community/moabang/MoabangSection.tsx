@@ -24,6 +24,7 @@ import type { PostAge, ResourceType, MoabangPost } from './moabang.type';
 import { AsyncBoundary, LoadingSpinner, ErrorFallback } from '@/lib/async-boundary';
 import { useUserStore } from '@/stores/userStore';
 import { useLoginModalStore } from '@/stores/loginModalStore';
+import ScrollToTopButton from '@/components/common/scroll-top/ScrollToTopButton';
 
 function PostGrid({ posts }: { posts: MoabangPost[] }) {
   return posts.length === 0 ? (
@@ -242,7 +243,10 @@ export default function MoabangSection() {
         onSearch={handleSearch}
         renderSearchResults={(kw) => <MoabangSearchInfinite keyword={kw} />}
       />
-      <CommunityFab onClick={handleWrite} />
+      <CommunityFab onClick={handleWrite} className="fixed right-9 bottom-24 z-300" />
+      <div className="fixed right-9 bottom-9 z-300 xl:hidden">
+        <ScrollToTopButton showAfter={300} />
+      </div>
       {!keyword && (
         <CommunityFilter
           ageTabs={MOABANG_AGE_FILTER_TABS}

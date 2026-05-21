@@ -21,6 +21,7 @@ import type { BoardPost, HeadTag } from './board.type';
 import { AsyncBoundary, LoadingSpinner, ErrorFallback } from '@/lib/async-boundary';
 import { useUserStore } from '@/stores/userStore';
 import { useLoginModalStore } from '@/stores/loginModalStore';
+import ScrollToTopButton from '@/components/common/scroll-top/ScrollToTopButton';
 
 function PostList({ posts }: { posts: BoardPost[] }) {
   return posts.length === 0 ? (
@@ -234,7 +235,10 @@ export default function BoardSection() {
         onSearch={handleSearch}
         renderSearchResults={(kw) => <BoardSearchInfinite keyword={kw} />}
       />
-      <CommunityFab onClick={handleWrite} />
+      <CommunityFab onClick={handleWrite} className="fixed right-9 bottom-24 z-300" />
+      <div className="fixed right-9 bottom-9 z-300 xl:hidden">
+        <ScrollToTopButton showAfter={300} />
+      </div>
       {!keyword && (
         <CommunityFilter
           categoryTabs={BOARD_CATEGORY_FILTER_TABS}

@@ -207,6 +207,7 @@ export function useCreatePostMutation() {
       queryClient.invalidateQueries({ queryKey: [queryKey, 'posts'] });
       const myQueryKey = request.category === 'MOABANG' ? 'myMoabangPosts' : 'myFreePosts';
       queryClient.invalidateQueries({ queryKey: [myQueryKey] });
+      queryClient.invalidateQueries({ queryKey: ['credits'] });
     },
   });
 }

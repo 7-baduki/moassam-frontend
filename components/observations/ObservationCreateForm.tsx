@@ -46,6 +46,7 @@ export default function ObservationCreateForm() {
 
   const { mutate: createObservation, isPending: isMutating } = useObservationMutation({
     onSuccess: ({ observationId }) => {
+      queryClient.invalidateQueries({ queryKey: ['credits'] });
       queryClient.invalidateQueries({ queryKey: ['observations'] });
       queryClient.invalidateQueries({ queryKey: ['myObservations'] });
       queryClient.invalidateQueries({ queryKey: ['activitySummary'] });

@@ -242,7 +242,13 @@ export default function NavMenu({ isOpen, onClose, onLogout }: NavMenuProps) {
                 <ChevronDownIcon className="h-4 w-4 shrink-0 -rotate-90 text-black" />
               </Link>
               <div className="flex justify-end bg-black-100 py-4 pr-4 md:pr-9">
-                <button onClick={onLogout} className="text-xs text-black-500">
+                <button
+                  onClick={() => {
+                    onClose();
+                    onLogout();
+                  }}
+                  className="text-xs text-black-500"
+                >
                   로그아웃
                 </button>
               </div>

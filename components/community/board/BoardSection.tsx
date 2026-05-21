@@ -235,7 +235,7 @@ export default function BoardSection() {
         onSearch={handleSearch}
         renderSearchResults={(kw) => <BoardSearchInfinite keyword={kw} />}
       />
-      <CommunityFab onClick={handleWrite} className="fixed right-9 bottom-24 z-300" />
+      <CommunityFab onClick={handleWrite} positionClassName="fixed right-9 bottom-24 z-300" />
       <div className="fixed right-9 bottom-9 z-300 xl:hidden">
         <ScrollToTopButton showAfter={300} />
       </div>

@@ -13,6 +13,7 @@ import NAV_ITEMS from '@/constants/common/nav-items';
 import { useLogoutMutation } from '@/hooks/queries/auth/useAuth';
 import { useUser } from '@/lib/user-context';
 import NavMenu from '@/components/common/nav-menu/NavMenu';
+import { toast } from '@/utils/toast';
 
 export default function Header() {
   const openLoginModal = useLoginModalStore((state) => state.open);
@@ -43,6 +44,9 @@ export default function Header() {
       setIsPopoverOpen(false);
       router.push('/');
       router.refresh();
+    },
+    onError: () => {
+      toast.error({ title: '로그아웃에 실패했어요. 다시 시도해주세요.' });
     },
   });
 

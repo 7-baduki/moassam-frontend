@@ -5,5 +5,5 @@ export default async function MyPageLayout({ children }: { children: React.React
   const user = await getProfile();
   if (!user) redirect('/?login=required');
 
-  return <div className="xl:px-20 xl:py-20">{children}</div>;
+  return <div className="xl:px-20 xl:py-15">{children}</div>;
 }

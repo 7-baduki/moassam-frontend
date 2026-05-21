@@ -29,6 +29,7 @@ import type {
 } from '@/components/community/moabang/moabang.type';
 import type { BoardListParams, BoardSearchParams } from '@/components/community/board/board.type';
 import type { CreatePostRequest, UpdatePostRequest } from '@/components/community/write/write.type';
+import { userKeys } from '@/hooks/queries/user';
 
 export function usePostDetailQuery(postId: number) {
   return useSuspenseQuery({
@@ -163,7 +164,7 @@ export function useBookmarkMutation(postId: number) {
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ['post', 'detail', postId] });
       queryClient.invalidateQueries({ queryKey: ['myBookmarks'] });
-      queryClient.invalidateQueries({ queryKey: ['activitySummary'] });
+      queryClient.invalidateQueries({ queryKey: userKeys.activitySummary() });
     },
   });
 }
@@ -207,7 +208,8 @@ export function useCreatePostMutation() {
       queryClient.invalidateQueries({ queryKey: [queryKey, 'posts'] });
       const myQueryKey = request.category === 'MOABANG' ? 'myMoabangPosts' : 'myFreePosts';
       queryClient.invalidateQueries({ queryKey: [myQueryKey] });
-      queryClient.invalidateQueries({ queryKey: ['credits'] });
+      queryClient.invalidateQueries({ queryKey: userKeys.credits() });
+      queryClient.invalidateQueries({ queryKey: userKeys.activitySummary() });
     },
   });
 }

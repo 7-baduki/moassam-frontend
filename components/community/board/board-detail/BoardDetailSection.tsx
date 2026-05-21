@@ -1,7 +1,8 @@
 'use client';
 
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { useRouter } from 'next/navigation';
+import { useQueryClient } from '@tanstack/react-query';
 import { Button } from '@/components/common/button/Button';
 import { Dialog } from '@/components/common/dialog/Dialog';
 import CommunityTitleBar from '@/components/community/CommunityTitleBar';
@@ -83,7 +84,15 @@ function BoardDetailContent({ postId, isLoggedIn }: { postId: number; isLoggedIn
 
 export default function BoardDetailSection({ postId, title }: BoardDetailSectionProps) {
   const router = useRouter();
+  const queryClient = useQueryClient();
   const user = useUserStore((state) => state.user);
+
+  useEffect(() => {
+    const listKey = title === '모아방' ? 'moabang' : 'board';
+    return () => {
+      queryClient.invalidateQueries({ queryKey: [listKey, 'posts'] });
+    };
+  }, [queryClient, title]);
   const isLoggedIn = user !== null;
   const { mutate: deletePost, isPending: isDeleting } = useDeletePostMutation();
   const [deleteDialogOpen, setDeleteDialogOpen] = useState(false);

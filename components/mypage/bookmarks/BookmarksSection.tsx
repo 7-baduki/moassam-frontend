@@ -8,7 +8,8 @@ import {
   useMyBookmarksQuery,
   useMyBookmarksInfiniteQuery,
   useMyBookmarkDeleteMutation,
-} from '@/hooks/queries/user/useMyBookmarks';
+  userKeys,
+} from '@/hooks/queries/user';
 import { EmptyState } from '@/components/common/empty-state/EmptyState';
 import { MoreButton } from '@/components/common/more-button/MoreButton';
 import { Dialog } from '@/components/common/dialog/Dialog';
@@ -89,7 +90,7 @@ function BookmarksPaginated() {
     onSuccess: (_, postId) => {
       refetch();
       queryClient.invalidateQueries({ queryKey: ['post', 'detail', postId] });
-      queryClient.invalidateQueries({ queryKey: ['activitySummary'] });
+      queryClient.invalidateQueries({ queryKey: userKeys.activitySummary() });
       toast.success({
         title: '북마크가 삭제되었어요',
         description: '삭제해도 언제든 다시 북마크할 수 있어요',
@@ -137,7 +138,7 @@ function BookmarksInfinite() {
     onSuccess: (_, postId) => {
       refetch();
       queryClient.invalidateQueries({ queryKey: ['post', 'detail', postId] });
-      queryClient.invalidateQueries({ queryKey: ['activitySummary'] });
+      queryClient.invalidateQueries({ queryKey: userKeys.activitySummary() });
       toast.success({
         title: '북마크가 삭제되었어요',
         description: '삭제해도 언제든 다시 북마크할 수 있어요',

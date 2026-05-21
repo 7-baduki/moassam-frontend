@@ -7,7 +7,7 @@ import { DefaultAvatar } from '@/app/assets/images';
 import { Button } from '@/components/common/button/Button';
 import { BottomSheet } from '@/components/common/bottom-sheet/BottomSheet';
 import { toast } from '@/utils/toast';
-import { useProfileMutation } from '@/hooks/queries/user/useProfile';
+import { useProfileMutation } from '@/hooks/queries/user';
 
 interface ProfileEditBottomSheetProps {
   isOpen: boolean;

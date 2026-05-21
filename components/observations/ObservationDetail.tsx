@@ -14,7 +14,7 @@ import { toast } from '@/utils/toast';
 import {
   useObservationItemQuery,
   useObservationRegenerateMutation,
-} from '@/hooks/queries/observations/useObservation';
+} from '@/hooks/queries/observations';
 
 interface ObservationDetailProps {
   observationId: number;

@@ -7,7 +7,7 @@ import Badge from '@/components/common/badge/Badge';
 import HeroImage from '@/app/assets/images/home/hero/hero-section.png';
 import HeroImageMd from '@/app/assets/images/home/hero/hero-section-md.png';
 import { useUser } from '@/lib/user-context';
-import { useCreditsQuery } from '@/hooks/queries/user/useCredits';
+import { useCreditsQuery } from '@/hooks/queries/user';
 import { ChevronRightIcon } from '@/app/assets/icons';
 import { AsyncBoundary } from '@/lib/async-boundary';
 import { ObservationCreditBadge } from '@/components/common/observation-credit-badge/ObservationCreditBadge';

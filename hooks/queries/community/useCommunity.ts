@@ -29,45 +29,47 @@ import type {
 } from '@/components/community/moabang/moabang.type';
 import type { BoardListParams, BoardSearchParams } from '@/components/community/board/board.type';
 import type { CreatePostRequest, UpdatePostRequest } from '@/components/community/write/write.type';
+import { userKeys } from '@/hooks/queries/user';
+import { communityKeys } from '@/hooks/queries/community/queryKeys';
 
 export function usePostDetailQuery(postId: number) {
   return useSuspenseQuery({
-    queryKey: ['post', 'detail', postId],
+    queryKey: communityKeys.postDetail(postId),
     queryFn: () => getPostDetail(postId),
   });
 }
 
 export function useMoabangPostsQuery(params: MoabangListParams) {
   return useSuspenseQuery({
-    queryKey: ['moabang', 'posts', params],
+    queryKey: communityKeys.postsList('moabang', params),
     queryFn: () => getMoabangPosts(params),
   });
 }
 
 export function useMoabangSearchQuery(params: MoabangSearchParams) {
   return useSuspenseQuery({
-    queryKey: ['moabang', 'search', params],
+    queryKey: communityKeys.searchList('moabang', params),
     queryFn: () => searchMoabangPosts(params),
   });
 }
 
 export function useBoardPostsQuery(params: BoardListParams) {
   return useSuspenseQuery({
-    queryKey: ['board', 'posts', params],
+    queryKey: communityKeys.postsList('board', params),
     queryFn: () => getBoardPosts(params),
   });
 }
 
 export function useBoardSearchQuery(params: BoardSearchParams) {
   return useSuspenseQuery({
-    queryKey: ['board', 'search', params],
+    queryKey: communityKeys.searchList('board', params),
     queryFn: () => searchBoardPosts(params),
   });
 }
 
 export function useMoabangPostsInfiniteQuery(params: Omit<MoabangListParams, 'page'>) {
   return useSuspenseInfiniteQuery({
-    queryKey: ['moabang', 'posts', 'infinite', params],
+    queryKey: communityKeys.postsInfinite('moabang', params),
     queryFn: ({ pageParam }) => getMoabangPosts({ ...params, page: pageParam as number, size: 9 }),
     initialPageParam: 0,
     getNextPageParam: (lastPage) => (lastPage.hasNext ? lastPage.page + 1 : undefined),
@@ -76,7 +78,7 @@ export function useMoabangPostsInfiniteQuery(params: Omit<MoabangListParams, 'pa
 
 export function useMoabangSearchInfiniteQuery(params: Omit<MoabangSearchParams, 'page'>) {
   return useInfiniteQuery({
-    queryKey: ['moabang', 'search', 'infinite', params],
+    queryKey: communityKeys.searchInfinite('moabang', params),
     queryFn: ({ pageParam }) =>
       searchMoabangPosts({ ...params, page: pageParam as number, size: 9 }),
     initialPageParam: 0,
@@ -87,7 +89,7 @@ export function useMoabangSearchInfiniteQuery(params: Omit<MoabangSearchParams, 
 
 export function useBoardPostsInfiniteQuery(params: Omit<BoardListParams, 'page'>) {
   return useSuspenseInfiniteQuery({
-    queryKey: ['board', 'posts', 'infinite', params],
+    queryKey: communityKeys.postsInfinite('board', params),
     queryFn: ({ pageParam }) => getBoardPosts({ ...params, page: pageParam as number, size: 8 }),
     initialPageParam: 0,
     getNextPageParam: (lastPage) => (lastPage.hasNext ? lastPage.page + 1 : undefined),
@@ -96,7 +98,7 @@ export function useBoardPostsInfiniteQuery(params: Omit<BoardListParams, 'page'>
 
 export function useBoardSearchInfiniteQuery(params: Omit<BoardSearchParams, 'page'>) {
   return useInfiniteQuery({
-    queryKey: ['board', 'search', 'infinite', params],
+    queryKey: communityKeys.searchInfinite('board', params),
     queryFn: ({ pageParam }) => searchBoardPosts({ ...params, page: pageParam as number, size: 8 }),
     initialPageParam: 0,
     getNextPageParam: (lastPage) => (lastPage.hasNext ? lastPage.page + 1 : undefined),
@@ -110,8 +112,8 @@ export function useCreateCommentMutation(postId: number) {
   return useMutation({
     mutationFn: (content: string) => createComment(postId, { content }),
     onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: ['post', 'detail', postId] });
-      queryClient.invalidateQueries({ queryKey: ['myComments'] });
+      queryClient.invalidateQueries({ queryKey: communityKeys.postDetail(postId) });
+      queryClient.invalidateQueries({ queryKey: userKeys.myComments.all });
     },
   });
 }
@@ -123,8 +125,8 @@ export function useUpdateCommentMutation(postId: number) {
     mutationFn: ({ commentId, content }: { commentId: number; content: string }) =>
       updateComment(postId, commentId, { content }),
     onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: ['post', 'detail', postId] });
-      queryClient.invalidateQueries({ queryKey: ['myComments'] });
+      queryClient.invalidateQueries({ queryKey: communityKeys.postDetail(postId) });
+      queryClient.invalidateQueries({ queryKey: userKeys.myComments.all });
     },
   });
 }
@@ -135,8 +137,8 @@ export function useDeleteCommentMutation(postId: number) {
   return useMutation({
     mutationFn: (commentId: number) => deleteComment(postId, commentId),
     onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: ['post', 'detail', postId] });
-      queryClient.invalidateQueries({ queryKey: ['myComments'] });
+      queryClient.invalidateQueries({ queryKey: communityKeys.postDetail(postId) });
+      queryClient.invalidateQueries({ queryKey: userKeys.myComments.all });
     },
   });
 }
@@ -147,9 +149,9 @@ export function useLikeMutation(postId: number) {
   return useMutation({
     mutationFn: (isLiked: boolean) => (isLiked ? unlikePost(postId) : likePost(postId)),
     onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: ['post', 'detail', postId] });
-      queryClient.invalidateQueries({ queryKey: ['moabang', 'posts'] });
-      queryClient.invalidateQueries({ queryKey: ['board', 'posts'] });
+      queryClient.invalidateQueries({ queryKey: communityKeys.postDetail(postId) });
+      queryClient.invalidateQueries({ queryKey: communityKeys.posts('moabang') });
+      queryClient.invalidateQueries({ queryKey: communityKeys.posts('board') });
     },
   });
 }
@@ -161,9 +163,9 @@ export function useBookmarkMutation(postId: number) {
     mutationFn: (isBookmarked: boolean) =>
       isBookmarked ? unbookmarkPost(postId) : bookmarkPost(postId),
     onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: ['post', 'detail', postId] });
-      queryClient.invalidateQueries({ queryKey: ['myBookmarks'] });
-      queryClient.invalidateQueries({ queryKey: ['activitySummary'] });
+      queryClient.invalidateQueries({ queryKey: communityKeys.postDetail(postId) });
+      queryClient.invalidateQueries({ queryKey: userKeys.myBookmarks.all });
+      queryClient.invalidateQueries({ queryKey: userKeys.activitySummary() });
     },
   });
 }
@@ -175,9 +177,9 @@ export function useUpdatePostMutation(postId: number) {
     mutationFn: ({ request, files }: { request: UpdatePostRequest; files: File[] }) =>
       updatePost(postId, request, files),
     onSuccess: (_, { request }) => {
-      queryClient.removeQueries({ queryKey: ['post', 'detail', postId] });
+      queryClient.removeQueries({ queryKey: communityKeys.postDetail(postId) });
       const listKey = request.category === 'MOABANG' ? 'moabang' : 'board';
-      queryClient.invalidateQueries({ queryKey: [listKey, 'posts'] });
+      queryClient.invalidateQueries({ queryKey: communityKeys.posts(listKey) });
     },
   });
 }
@@ -188,10 +190,10 @@ export function useDeletePostMutation() {
   return useMutation({
     mutationFn: (postId: number) => deletePost(postId),
     onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: ['moabang', 'posts'] });
-      queryClient.invalidateQueries({ queryKey: ['board', 'posts'] });
-      queryClient.invalidateQueries({ queryKey: ['myMoabangPosts'] });
-      queryClient.invalidateQueries({ queryKey: ['myFreePosts'] });
+      queryClient.invalidateQueries({ queryKey: communityKeys.posts('moabang') });
+      queryClient.invalidateQueries({ queryKey: communityKeys.posts('board') });
+      queryClient.invalidateQueries({ queryKey: userKeys.myMoabangPosts.all });
+      queryClient.invalidateQueries({ queryKey: userKeys.myFreePosts.all });
     },
   });
 }
@@ -203,11 +205,15 @@ export function useCreatePostMutation() {
     mutationFn: ({ request, files }: { request: CreatePostRequest; files: File[] }) =>
       createPost(request, files),
     onSuccess: (_, { request }) => {
-      const queryKey = request.category === 'MOABANG' ? 'moabang' : 'board';
-      queryClient.invalidateQueries({ queryKey: [queryKey, 'posts'] });
-      const myQueryKey = request.category === 'MOABANG' ? 'myMoabangPosts' : 'myFreePosts';
-      queryClient.invalidateQueries({ queryKey: [myQueryKey] });
-      queryClient.invalidateQueries({ queryKey: ['credits'] });
+      const isMoabang = request.category === 'MOABANG';
+      queryClient.invalidateQueries({
+        queryKey: communityKeys.posts(isMoabang ? 'moabang' : 'board'),
+      });
+      queryClient.invalidateQueries({
+        queryKey: isMoabang ? userKeys.myMoabangPosts.all : userKeys.myFreePosts.all,
+      });
+      queryClient.invalidateQueries({ queryKey: userKeys.credits() });
+      queryClient.invalidateQueries({ queryKey: userKeys.activitySummary() });
     },
   });
 }

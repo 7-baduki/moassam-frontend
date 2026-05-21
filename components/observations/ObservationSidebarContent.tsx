@@ -11,7 +11,9 @@ import { Dialog } from '@/components/common/dialog/Dialog';
 import {
   useObservationDeleteMutation,
   useObservationListQuery,
-} from '@/hooks/queries/observations/useObservation';
+  observationKeys,
+} from '@/hooks/queries/observations';
+import { userKeys } from '@/hooks/queries/user';
 import { toast } from '@/utils/toast';
 import { useUserStore } from '@/stores/userStore';
 
@@ -76,9 +78,9 @@ export default function ObservationSidebarContent() {
   const { data, fetchNextPage, hasNextPage, isFetchingNextPage } = useObservationListQuery(!!user);
   const { mutate: deleteObservation } = useObservationDeleteMutation({
     onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: ['observations'] });
-      queryClient.invalidateQueries({ queryKey: ['myObservations'] });
-      queryClient.invalidateQueries({ queryKey: ['activitySummary'] });
+      queryClient.invalidateQueries({ queryKey: observationKeys.all });
+      queryClient.invalidateQueries({ queryKey: userKeys.myObservations.all });
+      queryClient.invalidateQueries({ queryKey: userKeys.activitySummary() });
       toast.success({
         title: '관찰일지 삭제가 완료되었어요',
         description: '삭제된 관찰일지는 복구할 수 없어요',

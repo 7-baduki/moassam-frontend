@@ -8,7 +8,7 @@ import { FocusTrap } from 'focus-trap-react';
 import { DefaultAvatar } from '@/app/assets/images';
 import { Button } from '@/components/common/button/Button';
 import { toast } from '@/utils/toast';
-import { useProfileMutation } from '@/hooks/queries/user/useProfile';
+import { useProfileMutation } from '@/hooks/queries/user';
 
 interface ProfileEditModalProps {
   isOpen: boolean;

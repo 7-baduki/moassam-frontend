@@ -16,7 +16,7 @@ import {
   useMoabangSearchQuery,
   useMoabangPostsInfiniteQuery,
   useMoabangSearchInfiniteQuery,
-} from '@/hooks/queries/community/useCommunity';
+} from '@/hooks/queries/community';
 import { EmptyState } from '@/components/common/empty-state/EmptyState';
 import { useIsDesktop } from '@/hooks/useIsMobile';
 import { getValidParam } from '@/utils/getValidParam';

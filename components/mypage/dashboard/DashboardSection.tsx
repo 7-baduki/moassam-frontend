@@ -9,8 +9,8 @@ import { ProfileEditBottomSheet } from '@/components/mypage/dashboard/ProfileEdi
 import { WithdrawModal } from '@/components/mypage/dashboard/WithdrawModal';
 import { WithdrawBottomSheet } from '@/components/mypage/dashboard/WithdrawBottomSheet';
 import { useUser } from '@/lib/user-context';
-import { useActivitySummaryQuery } from '@/hooks/queries/user/useActivitySummary';
-import { useCreditsQuery } from '@/hooks/queries/user/useCredits';
+import { useActivitySummaryQuery } from '@/hooks/queries/user';
+import { useCreditsQuery } from '@/hooks/queries/user';
 import { useIsMobile } from '@/hooks/useIsMobile';
 import MypageMenu from './MypageMenu';
 

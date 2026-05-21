@@ -9,7 +9,7 @@ import {
   useCreateCommentMutation,
   useDeleteCommentMutation,
   useUpdateCommentMutation,
-} from '@/hooks/queries/community/useCommunity';
+} from '@/hooks/queries/community';
 
 interface BoardDetailCommentsProps {
   postId: number;

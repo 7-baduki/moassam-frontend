@@ -1,6 +1,6 @@
 'use client';
 
-import { usePostDetailQuery } from '@/hooks/queries/community/useCommunity';
+import { usePostDetailQuery } from '@/hooks/queries/community';
 import WriteForm from '@/components/community/write/WriteForm';
 import type { BoardType } from '@/components/community/write/write.type';
 import type { HeadTag } from '@/components/community/board/board.type';

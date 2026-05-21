@@ -17,6 +17,7 @@ export default function ScrollToTopButton({ showAfter }: ScrollToTopButtonProps)
     const el = scrollRef?.current;
     if (!el) return;
     const onScroll = () => setVisible(el.scrollTop > showAfter);
+    setVisible(el.scrollTop > showAfter);
     el.addEventListener('scroll', onScroll, { passive: true });
     return () => el.removeEventListener('scroll', onScroll);
   }, [scrollRef, showAfter]);

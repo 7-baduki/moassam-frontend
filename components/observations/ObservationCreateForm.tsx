@@ -1,6 +1,6 @@
 'use client';
 
-import { useState, useTransition } from 'react';
+import { useState, useTransition, useEffect } from 'react';
 import { useRouter } from 'next/navigation';
 import { useQueryClient } from '@tanstack/react-query';
 import axios from 'axios';
@@ -21,6 +21,7 @@ import { useIsMobile } from '@/hooks/useIsMobile';
 import { toast } from '@/utils/toast';
 import { useLoginModalStore } from '@/stores/loginModalStore';
 import { useUserStore } from '@/stores/userStore';
+import { useObservationStore } from '@/stores/observationStore';
 
 export default function ObservationCreateForm() {
   const router = useRouter();
@@ -37,6 +38,11 @@ export default function ObservationCreateForm() {
   const isMobile = useIsMobile();
   const user = useUserStore((state) => state.user);
   const openLoginModal = useLoginModalStore((state) => state.open);
+  const setIsGenerating = useObservationStore((state) => state.setIsGenerating);
+
+  useEffect(() => {
+    return () => setIsGenerating(false);
+  }, [setIsGenerating]);
 
   const { mutate: createObservation, isPending: isMutating } = useObservationMutation({
     onSuccess: ({ observationId }) => {
@@ -48,6 +54,7 @@ export default function ObservationCreateForm() {
       });
     },
     onError: (error) => {
+      setIsGenerating(false);
       if (axios.isAxiosError(error) && error.response?.data?.code === 'CREDIT_NOT_ENOUGH') {
         setShowCreditDialog(true);
       } else if (!(error as { isHandled?: boolean }).isHandled) {
@@ -83,6 +90,7 @@ export default function ObservationCreateForm() {
       openLoginModal('로그인이 필요해요!', '로그인 후 관찰일지를 생성할 수 있어요');
       return;
     }
+    setIsGenerating(true);
     createObservation({ age, sectionTypes: areas, situation: content });
   };
 

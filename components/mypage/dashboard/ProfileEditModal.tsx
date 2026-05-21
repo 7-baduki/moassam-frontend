@@ -72,7 +72,7 @@ export function ProfileEditModal({
             <div className="flex flex-col rounded-[10px] border-[0.5px] border-black-400 px-3 py-2 focus-within:border-pink-500">
               <span className="mb-0.5 text-xs font-medium text-black-500">표시 이름</span>
               <input
-                className="text-sm font-medium text-black outline-none placeholder:text-black-600"
+                className="text-base font-medium text-black outline-none placeholder:text-black-600"
                 placeholder="김모아"
                 maxLength={15}
                 value={displayName}
@@ -82,7 +82,7 @@ export function ProfileEditModal({
             <div className="flex flex-col rounded-[10px] border-[0.5px] border-black-400 px-3 py-2">
               <span className="mb-0.5 text-xs font-medium text-black-500">사용자 이름</span>
               <input
-                className="text-sm font-medium text-black-500 outline-none"
+                className="text-base font-medium text-black-500 outline-none"
                 value={username}
                 readOnly
               />

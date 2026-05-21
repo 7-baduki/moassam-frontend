@@ -4,16 +4,26 @@ import { useEffect, useRef } from 'react';
 import Image, { StaticImageData } from 'next/image';
 import Link from 'next/link';
 import { Button } from '@/components/common/button/Button';
-import { XIcon } from '@/app/assets/icons';
+import { XIcon, ProviderKakaoIcon, ProviderNaverIcon } from '@/app/assets/icons';
+import type { Provider } from '@/types/user.type';
 
 type ProfilePopoverProps = {
   name: string;
-  avatarSrc: StaticImageData | string; // TODO: API 연동 후 변경
+  email: string;
+  provider: Provider;
+  avatarSrc: StaticImageData | string;
   onClose: () => void;
   onLogout: () => void;
 };
 
-export function ProfilePopover({ name, avatarSrc, onClose, onLogout }: ProfilePopoverProps) {
+export function ProfilePopover({
+  name,
+  email,
+  provider,
+  avatarSrc,
+  onClose,
+  onLogout,
+}: ProfilePopoverProps) {
   const popoverRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
@@ -43,20 +53,26 @@ export function ProfilePopover({ name, avatarSrc, onClose, onLogout }: ProfilePo
         onClick={onClose}
         aria-label="닫기"
       >
-        <XIcon />
+        <XIcon width={20} height={20} />
       </button>
       <div className="flex flex-col items-center">
         <div className="h-34.5 w-34.5 overflow-hidden rounded-full">
           <Image src={avatarSrc} alt="프로필 아바타" width={138} height={138} />
         </div>
-        <p className="pt-3 pb-5.75 text-sm font-medium whitespace-nowrap text-black">
-          안녕하세요, {name} 선생님
-        </p>
+        <p className="pt-5 text-sm font-semibold whitespace-nowrap text-black">{name} 선생님</p>
+        <div className="flex items-center gap-1 pb-3">
+          {provider === 'KAKAO' ? (
+            <ProviderKakaoIcon width={20} height={20} />
+          ) : (
+            <ProviderNaverIcon width={20} height={20} />
+          )}
+          <span className="text-xs font-medium text-black-600">{email}</span>
+        </div>
       </div>
 
       <Link
         href="/mypage/dashboard"
-        className="block w-full rounded-lg bg-pink-500 py-2.25 text-center text-base font-medium text-white hover:bg-pink-600"
+        className="block w-full rounded-lg bg-pink-500 py-2 text-center text-base font-medium text-white hover:bg-pink-600"
         onClick={onClose}
       >
         마이페이지
@@ -65,7 +81,7 @@ export function ProfilePopover({ name, avatarSrc, onClose, onLogout }: ProfilePo
       <Button
         variant="ghost"
         size="full"
-        className="mt-11.5 mb-5 text-xs text-black-500"
+        className="mt-7.5 mb-5 text-xs text-black-500"
         onClick={onLogout}
       >
         로그아웃

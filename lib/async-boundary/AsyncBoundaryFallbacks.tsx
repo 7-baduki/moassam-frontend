@@ -8,8 +8,14 @@ import LoadingMascot from '@/app/assets/images/loading-mascot.png';
 export function LoadingSpinner({ className }: { className?: string }) {
   return (
     <div className={`flex flex-col items-center ${className ?? ''}`}>
-      <Image src={LoadingMascot} alt="로딩 마스코트" className="mb-3" width={206} height={227} />
-      <p className="mb-7.75 text-xl font-semibold text-black">잠시만 기다려 주세요</p>
+      <Image
+        src={LoadingMascot}
+        alt="로딩 마스코트"
+        className="mb-3 h-auto w-32 md:w-51.5"
+        width={206}
+        height={227}
+      />
+      <p className="mb-7.75 text-base font-semibold text-black md:text-xl">잠시만 기다려 주세요</p>
       <Spinner />
     </div>
   );
@@ -27,11 +33,17 @@ export function ErrorFallback({ error, actionLabel, onAction, className }: Error
 
   return (
     <div className={`flex flex-col items-center gap-4.5 ${className ?? ''}`}>
-      <Image src={ErrorMascot} alt="에러 마스코트" width={206} height={227} />
+      <Image
+        src={ErrorMascot}
+        alt="에러 마스코트"
+        width={206}
+        height={227}
+        className="h-auto w-32 md:w-51.5"
+      />
       <div className="flex w-52.5 flex-col items-center gap-4.5">
         <div className="flex flex-col items-center gap-2 px-2 text-center">
-          <p className="text-xl font-semibold text-black">페이지를 찾을 수 없어요</p>
-          <p className="text-sm text-black-500">{errorMessage}</p>
+          <p className="text-base font-semibold text-black md:text-xl">문제가 발생했어요</p>
+          <p className="text-xs text-black-500 md:text-sm">{errorMessage}</p>
         </div>
         <Button size="full" className="bg-green-500 hover:bg-green-700" onClick={onAction}>
           {actionLabel}

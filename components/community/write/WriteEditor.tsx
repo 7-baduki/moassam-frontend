@@ -235,7 +235,7 @@ export default function WriteEditor({
       isAlignJustify: ctx.editor?.isActive({ textAlign: 'justify' }),
       isBulletList: ctx.editor?.isActive('bulletList'),
       fontFamily: ctx.editor?.getAttributes('textStyle').fontFamily ?? 'Pretendard',
-      fontSize: ctx.editor?.getAttributes('textStyle').fontSize?.replace('px', '') ?? '14',
+      fontSize: ctx.editor?.getAttributes('textStyle').fontSize?.replace('px', '') ?? '16',
       color: ctx.editor?.getAttributes('textStyle').color ?? '#343434',
       highlightColor: ctx.editor?.getAttributes('highlight').color ?? '#343434',
     }),
@@ -244,7 +244,7 @@ export default function WriteEditor({
   if (!editor) return null;
 
   const currentFontFamily = editorState?.fontFamily ?? 'Pretendard';
-  const currentFontSize = editorState?.fontSize ?? '14';
+  const currentFontSize = editorState?.fontSize ?? '16';
   const currentColor = editorState?.color ?? '#343434';
   const currentHighlightColor = editorState?.highlightColor ?? '#FCB900';
 
@@ -513,7 +513,7 @@ export default function WriteEditor({
 
       <EditorContent
         editor={editor}
-        className="prose-editor min-h-107 px-4 py-3 text-sm text-black-800"
+        className="prose-editor min-h-107 px-4 py-3 text-base text-black-800"
       />
 
       <SelectBottomSheet

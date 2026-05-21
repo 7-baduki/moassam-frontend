@@ -31,7 +31,7 @@ function CreditBadge() {
 function LoggedInHero({ userName = '' }: { userName: string }) {
   return (
     <div className="relative flex w-full flex-col items-center px-4 pt-10 pb-5.75 md:px-8 md:py-15 xl:px-0">
-      <AsyncBoundary pendingFallback={null} rejectedFallback={() => null}>
+      <AsyncBoundary pendingFallback={null} rejectedFallback={() => null} authErrorFallback={false}>
         <CreditBadge />
       </AsyncBoundary>
 

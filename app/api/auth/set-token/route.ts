@@ -1,7 +1,16 @@
 import { NextRequest, NextResponse } from 'next/server';
 
 export async function POST(req: NextRequest) {
-  const { accessToken } = await req.json();
+  if (req.headers.get('origin') !== req.nextUrl.origin) {
+    return NextResponse.json({ success: false }, { status: 403 });
+  }
+
+  let accessToken: unknown;
+  try {
+    ({ accessToken } = await req.json());
+  } catch {
+    return NextResponse.json({ success: false }, { status: 400 });
+  }
 
   if (!accessToken || typeof accessToken !== 'string') {
     return NextResponse.json({ success: false }, { status: 400 });

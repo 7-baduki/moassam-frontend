@@ -132,7 +132,11 @@ export default function BoardDetailSection({ postId, title }: BoardDetailSection
             title={title}
             showBackButton
             actions={
-              <AsyncBoundary pendingFallback={null} rejectedFallback={() => null}>
+              <AsyncBoundary
+                pendingFallback={null}
+                rejectedFallback={() => null}
+                authErrorFallback={false}
+              >
                 <BoardDetailHeaderActions
                   postId={postId}
                   onEdit={handleEdit}
@@ -157,7 +161,11 @@ export default function BoardDetailSection({ postId, title }: BoardDetailSection
           </AsyncBoundary>
         </div>
         <div className="sticky top-[263.2px] hidden shrink-0 xl:block">
-          <AsyncBoundary pendingFallback={null} rejectedFallback={() => null}>
+          <AsyncBoundary
+            pendingFallback={null}
+            rejectedFallback={() => null}
+            authErrorFallback={false}
+          >
             <BoardDetailSideActionsLoader postId={postId} />
           </AsyncBoundary>
         </div>

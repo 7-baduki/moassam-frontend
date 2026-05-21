@@ -55,6 +55,7 @@ export default function DashboardSection() {
           }}
           username={user?.email ?? ''}
           nickname={user?.nickname ?? ''}
+          profileImageUrl={user?.profileImageUrl}
         />
       ) : (
         <ProfileEditModal
@@ -67,6 +68,7 @@ export default function DashboardSection() {
           }}
           username={user?.email ?? ''}
           nickname={user?.nickname ?? ''}
+          profileImageUrl={user?.profileImageUrl}
         />
       )}
       {isMobile ? (

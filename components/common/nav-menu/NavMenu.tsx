@@ -173,6 +173,18 @@ export default function NavMenu({ isOpen, onClose, onLogout }: NavMenuProps) {
                           className="mt-2 flex items-center gap-2 rounded-lg px-6 py-3.5 text-xs font-semibold text-black hover:bg-black-200 md:px-9"
                         >
                           최근 관찰일지
+                          {recentObservations && (
+                            <span
+                              className={cn(
+                                'text-xs font-semibold',
+                                recentObservations.length === 0
+                                  ? 'text-black-500'
+                                  : 'text-pink-500',
+                              )}
+                            >
+                              {recentObservations.length}
+                            </span>
+                          )}
                           <ChevronDownIcon className="h-3 w-3 -rotate-90 text-black" />
                         </Link>
                         {recentObservations && recentObservations.length > 0 && (

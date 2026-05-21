@@ -147,7 +147,10 @@ export default function ObservationCreateForm() {
                     onClick={() => setAreaBottomSheetOpen(true)}
                     className="flex w-full items-center justify-between rounded-lg border border-black-300 p-2.5 text-sm font-medium text-black-800"
                   >
-                    <span>5개 영역</span>
+                    <span className="flex items-center gap-1">
+                      5개 영역
+                      <span className="text-xs font-medium text-black-500">중복선택 가능</span>
+                    </span>
                     <ChevronDownIcon width={20} height={20} className="shrink-0" />
                   </button>
                   <SelectBottomSheet
@@ -186,6 +189,7 @@ export default function ObservationCreateForm() {
                     size="md"
                     options={AREA_OPTIONS}
                     triggerLabel="5개 영역"
+                    triggerDescription="중복선택 가능"
                     value={areas}
                     onChange={setAreas}
                     className="w-full md:w-90"

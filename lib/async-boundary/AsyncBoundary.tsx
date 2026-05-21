@@ -35,8 +35,8 @@ export function AsyncBoundary({
                   error={error}
                   title="로그인이 필요해요"
                   description="로그인 후 이용할 수 있어요"
-                  actionLabel="돌아가기"
-                  onAction={() => router.back()}
+                  actionLabel="홈으로"
+                  onAction={() => router.push('/')}
                   className="mt-[15vh]"
                 />
               );

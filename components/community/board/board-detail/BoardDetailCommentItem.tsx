@@ -14,12 +14,7 @@ interface BoardDetailCommentItemProps {
   onDelete: (commentId: number) => void;
 }
 
-function formatCommentTime(isoString: string): string {
-  const date = new Date(isoString);
-  const hours = date.getHours().toString().padStart(2, '0');
-  const minutes = date.getMinutes().toString().padStart(2, '0');
-  return `${hours}:${minutes}`;
-}
+import { formatDateTime } from '@/utils/formatDateTime';
 
 export default function BoardDetailCommentItem({
   comment,
@@ -79,10 +74,10 @@ export default function BoardDetailCommentItem({
         <div className="flex items-center gap-1">
           <span className="text-sm font-semibold text-black-700">{comment.authorNickname}</span>
           <span
-            aria-label={`작성 시간 ${formatCommentTime(comment.createdAt)}`}
+            aria-label={`작성 시간 ${formatDateTime(comment.createdAt)}`}
             className="text-xs font-medium text-black-500"
           >
-            {formatCommentTime(comment.createdAt)}
+            {formatDateTime(comment.createdAt)}
           </span>
         </div>
 

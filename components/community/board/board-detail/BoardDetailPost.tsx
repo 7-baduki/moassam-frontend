@@ -7,7 +7,7 @@ import type { PostAge, ResourceType } from '@/components/community/moabang/moaba
 import BoardDetailAttachments from './BoardDetailAttachments';
 import BoardDetailInlineActions from './BoardDetailInlineActions';
 import type { BoardDetail } from './board-detail.type';
-import { formatRelativeTime } from '@/utils/formatRelativeTime';
+import { formatDateTime } from '@/utils/formatDateTime';
 
 const HEAD_TAG_LABELS: Record<string, string> = {
   QUESTION: '질문',
@@ -102,10 +102,10 @@ export default function BoardDetailPost({ post }: BoardDetailPostProps) {
               댓글 {post.commentCount}
             </span>
             <span
-              aria-label={`작성 시간 ${formatRelativeTime(post.createdAt)}`}
+              aria-label={`작성 시간 ${formatDateTime(post.createdAt)}`}
               className="text-xs font-medium text-black-500"
             >
-              {formatRelativeTime(post.createdAt)}
+              {formatDateTime(post.createdAt)}
             </span>
           </div>
           <BoardDetailInlineActions

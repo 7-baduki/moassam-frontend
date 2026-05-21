@@ -10,7 +10,7 @@ export default function CommentsBoundary() {
 
   return (
     <div className="flex flex-col gap-2 xl:gap-3">
-      <div className="md:9 flex items-center gap-4 px-4 pt-4 md:px-9 md:pt-9 xl:hidden">
+      <div className="flex items-center gap-4 px-4 pt-4 md:px-9 md:pt-9 xl:hidden">
         <button type="button" onClick={() => router.back()} aria-label="뒤로가기">
           <ChevronDownIcon className="h-5 w-5 rotate-90 text-black" />
         </button>

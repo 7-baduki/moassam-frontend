@@ -3,6 +3,7 @@ import type { TabOption } from '@/components/common/tabs/Tabs';
 const ALL_TAB: TabOption = { label: '전체', value: 'all' };
 
 export const MOABANG_AGES: TabOption[] = [
+  { label: '전체 연령', value: 'ALL' },
   { label: '영아', value: 'INFANT' },
   { label: '만 3세', value: 'AGE_3' },
   { label: '만 4세', value: 'AGE_4' },

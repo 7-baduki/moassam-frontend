@@ -19,6 +19,8 @@ import { useIsDesktop } from '@/hooks/useIsMobile';
 import { getValidParam } from '@/utils/getValidParam';
 import type { BoardPost, HeadTag } from './board.type';
 import { AsyncBoundary, LoadingSpinner, ErrorFallback } from '@/lib/async-boundary';
+import { useUserStore } from '@/stores/userStore';
+import { useLoginModalStore } from '@/stores/loginModalStore';
 
 function PostList({ posts }: { posts: BoardPost[] }) {
   return posts.length === 0 ? (
@@ -186,11 +188,21 @@ export default function BoardSection() {
   const searchParams = useSearchParams();
   const [, startTransition] = useTransition();
   const isDesktop = useIsDesktop();
+  const user = useUserStore((state) => state.user);
+  const openLoginModal = useLoginModalStore((state) => state.open);
 
   const keyword = searchParams.get('keyword') ?? '';
   const category = getValidParam(searchParams.get('category'), BOARD_CATEGORY_FILTER_TABS, 'all');
   const rawPage = Number(searchParams.get('page'));
   const currentPage = Number.isInteger(rawPage) && rawPage >= 1 ? rawPage : 1;
+
+  function handleWrite() {
+    if (!user) {
+      openLoginModal();
+      return;
+    }
+    router.push('/community/write?board=free');
+  }
 
   function updateParam(key: string, value: string, resetPage = false) {
     const params = new URLSearchParams(searchParams.toString());
@@ -218,11 +230,11 @@ export default function BoardSection() {
     <section className="flex flex-col" aria-label="게시글 목록">
       <CommunityTitleBar
         title="자유게시판"
-        onWrite={() => router.push('/community/write?board=free')}
+        onWrite={handleWrite}
         onSearch={handleSearch}
         renderSearchResults={(kw) => <BoardSearchInfinite keyword={kw} />}
       />
-      <CommunityFab onClick={() => router.push('/community/write?board=free')} />
+      <CommunityFab onClick={handleWrite} />
       {!keyword && (
         <CommunityFilter
           categoryTabs={BOARD_CATEGORY_FILTER_TABS}

@@ -60,6 +60,7 @@ function BoardDetailSideActionsLoader({ postId }: { postId: number }) {
   const { data: post } = usePostDetailQuery(postId);
   return (
     <BoardDetailSideActions
+      key={`${postId}-${post.bookmarked}-${post.isLiked}`}
       postId={postId}
       likeCount={post.likeCount}
       bookmarkCount={post.bookmarkCount}

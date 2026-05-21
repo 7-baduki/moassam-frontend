@@ -7,14 +7,13 @@ import { Textarea } from '@/components/common/textarea/Textarea';
 import { Button } from '@/components/common/button/Button';
 import { Dialog } from '@/components/common/dialog/Dialog';
 import type { Comment } from './board-detail.type';
+import { formatDateTime } from '@/utils/formatDateTime';
 
 interface BoardDetailCommentItemProps {
   comment: Comment;
   onUpdate: (commentId: number, content: string) => void;
   onDelete: (commentId: number) => void;
 }
-
-import { formatDateTime } from '@/utils/formatDateTime';
 
 export default function BoardDetailCommentItem({
   comment,

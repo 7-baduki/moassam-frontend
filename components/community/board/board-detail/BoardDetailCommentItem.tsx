@@ -7,18 +7,12 @@ import { Textarea } from '@/components/common/textarea/Textarea';
 import { Button } from '@/components/common/button/Button';
 import { Dialog } from '@/components/common/dialog/Dialog';
 import type { Comment } from './board-detail.type';
+import { formatDateTime } from '@/utils/formatDateTime';
 
 interface BoardDetailCommentItemProps {
   comment: Comment;
   onUpdate: (commentId: number, content: string) => void;
   onDelete: (commentId: number) => void;
-}
-
-function formatCommentTime(isoString: string): string {
-  const date = new Date(isoString);
-  const hours = date.getHours().toString().padStart(2, '0');
-  const minutes = date.getMinutes().toString().padStart(2, '0');
-  return `${hours}:${minutes}`;
 }
 
 export default function BoardDetailCommentItem({
@@ -79,10 +73,10 @@ export default function BoardDetailCommentItem({
         <div className="flex items-center gap-1">
           <span className="text-sm font-semibold text-black-700">{comment.authorNickname}</span>
           <span
-            aria-label={`작성 시간 ${formatCommentTime(comment.createdAt)}`}
+            aria-label={`작성 시간 ${formatDateTime(comment.createdAt)}`}
             className="text-xs font-medium text-black-500"
           >
-            {formatCommentTime(comment.createdAt)}
+            {formatDateTime(comment.createdAt)}
           </span>
         </div>
 

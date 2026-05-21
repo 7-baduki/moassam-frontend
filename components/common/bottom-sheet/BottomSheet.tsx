@@ -24,6 +24,7 @@ export function BottomSheet({
             'flex flex-col rounded-t-[20px] bg-white',
             'focus:outline-none',
           )}
+          onOpenAutoFocus={(e) => e.preventDefault()}
         >
           <div
             className={cn(

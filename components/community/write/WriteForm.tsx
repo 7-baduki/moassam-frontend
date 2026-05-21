@@ -131,7 +131,7 @@ export default function WriteForm({
         { request, files: values.files },
         {
           onSuccess: ({ postId: updatedPostId }) => {
-            router.push(`/community/${path}/${updatedPostId}`);
+            router.replace(`/community/${path}/${updatedPostId}`);
           },
           onError: () => {
             toast.error({ title: '게시글 수정 실패', description: '잠시 후 다시 시도해주세요' });
@@ -152,7 +152,7 @@ export default function WriteForm({
         { request, files: values.files },
         {
           onSuccess: ({ postId: createdPostId }) => {
-            router.push(`/community/${path}/${createdPostId}`);
+            router.replace(`/community/${path}/${createdPostId}`);
           },
           onError: () => {
             toast.error({ title: '게시글 등록 실패', description: '잠시 후 다시 시도해주세요' });

@@ -12,20 +12,30 @@ function formatDate(dateStr: string) {
   return dateStr.slice(0, 10).replace(/-/g, '.');
 }
 
+const CATEGORY_LABEL: Record<string, string> = {
+  MOABANG: '모아방',
+  FREE: '자유게시판',
+};
+
 function CommentItem({ comment }: { comment: MyComment }) {
   return (
-    <Link
-      href={`/community/${comment.category === 'MOABANG' ? 'moabang' : 'board'}/${comment.postId}`}
-      className="animate-lift flex min-w-0 flex-1 flex-col gap-1 rounded-[10px] bg-white px-5 py-3 md:flex-row md:items-center"
-    >
-      <span className="min-w-0 flex-1 truncate text-sm font-medium text-black-800">
-        {comment.content}
-      </span>
-      <div className="flex items-center gap-5 text-xs font-medium text-black-500 md:pl-10">
-        <span className="w-40 truncate md:w-auto">{comment.postTitle}</span>
-        <span>{formatDate(comment.createdAt)}</span>
-      </div>
-    </Link>
+    <div className="animate-lift flex items-center rounded-[10px] bg-white px-5 py-3">
+      <Link
+        href={`/community/${comment.category === 'MOABANG' ? 'moabang' : 'board'}/${comment.postId}`}
+        className="flex min-w-0 flex-1 flex-col gap-1 md:flex-row md:items-center"
+      >
+        <span className="min-w-0 flex-1 truncate text-sm font-medium text-black-800">
+          {comment.content}
+        </span>
+        <div className="flex items-center gap-5 text-xs font-medium text-black-500 md:pl-10">
+          <span className="w-14 shrink-0 md:w-auto">
+            {CATEGORY_LABEL[comment.category] ?? comment.category}
+          </span>
+          <span className="w-21.75 truncate">{comment.postTitle}</span>
+          <span className="shrink-0">{formatDate(comment.createdAt)}</span>
+        </div>
+      </Link>
+    </div>
   );
 }
 

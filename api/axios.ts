@@ -1,6 +1,5 @@
 import axios from 'axios';
 import { useLoginModalStore } from '@/stores/loginModalStore';
-import { useUserStore } from '@/stores/userStore';
 
 const apiClient = axios.create({
   baseURL: '/api/proxy',
@@ -44,9 +43,7 @@ apiClient.interceptors.response.use(
       return Promise.reject(error);
     }
 
-    const user = useUserStore.getState().user;
-    if (!user) {
-      useLoginModalStore.getState().open('로그인이 필요해요!', '로그인 후 이용할 수 있어요');
+    if (!document.cookie.split(';').some((c) => c.trim() === 'isLoggedIn=true')) {
       error.isHandled = true;
       return Promise.reject(error);
     }

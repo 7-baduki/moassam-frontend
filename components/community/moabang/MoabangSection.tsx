@@ -22,6 +22,9 @@ import { useIsDesktop } from '@/hooks/useIsMobile';
 import { getValidParam } from '@/utils/getValidParam';
 import type { PostAge, ResourceType, MoabangPost } from './moabang.type';
 import { AsyncBoundary, LoadingSpinner, ErrorFallback } from '@/lib/async-boundary';
+import { useUserStore } from '@/stores/userStore';
+import { useLoginModalStore } from '@/stores/loginModalStore';
+import ScrollToTopButton from '@/components/common/scroll-top/ScrollToTopButton';
 
 function PostGrid({ posts }: { posts: MoabangPost[] }) {
   return posts.length === 0 ? (
@@ -193,6 +196,8 @@ export default function MoabangSection() {
   const searchParams = useSearchParams();
   const [, startTransition] = useTransition();
   const isDesktop = useIsDesktop();
+  const user = useUserStore((state) => state.user);
+  const openLoginModal = useLoginModalStore((state) => state.open);
 
   const keyword = searchParams.get('keyword') ?? '';
   const age = getValidParam(searchParams.get('age'), MOABANG_AGE_FILTER_TABS, 'all');
@@ -222,15 +227,26 @@ export default function MoabangSection() {
     updateParam('page', String(page));
   }
 
+  function handleWrite() {
+    if (!user) {
+      openLoginModal();
+      return;
+    }
+    router.push('/community/write?board=moabang');
+  }
+
   return (
     <section className="flex flex-col" aria-label="게시글 목록">
       <CommunityTitleBar
         title="모아방"
-        onWrite={() => router.push('/community/write?board=moabang')}
+        onWrite={handleWrite}
         onSearch={handleSearch}
         renderSearchResults={(kw) => <MoabangSearchInfinite keyword={kw} />}
       />
-      <CommunityFab onClick={() => router.push('/community/write?board=moabang')} />
+      <CommunityFab onClick={handleWrite} positionClassName="fixed right-9 bottom-24 z-300" />
+      <div className="fixed right-9 bottom-9 z-300 xl:hidden">
+        <ScrollToTopButton showAfter={300} />
+      </div>
       {!keyword && (
         <CommunityFilter
           ageTabs={MOABANG_AGE_FILTER_TABS}

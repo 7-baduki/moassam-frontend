@@ -3,7 +3,7 @@
 import { useEffect, useRef, useCallback } from 'react';
 import Link from 'next/link';
 import Pagination from '@/components/common/pagination/Pagination';
-import { useMyFreePostsQuery, useMyFreePostsInfiniteQuery } from '@/hooks/queries/user/useMyPosts';
+import { useMyFreePostsQuery, useMyFreePostsInfiniteQuery } from '@/hooks/queries/user';
 import { EmptyState } from '@/components/common/empty-state/EmptyState';
 import { useIsDesktop } from '@/hooks/useIsMobile';
 import { MyFreePost } from './post.type';

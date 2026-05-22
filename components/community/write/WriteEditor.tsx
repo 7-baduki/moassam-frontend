@@ -680,8 +680,10 @@ function MobileColorPalette({
           className="h-6 w-6 shrink-0 rounded border border-black-200 shadow-sm"
           style={{ backgroundColor: previewColor }}
         />
-        <div className="flex h-6 items-center rounded border border-black-200 bg-white px-1.5 focus-within:border-black-400">
-          <span className={`text-xs ${hexInput.length > 0 ? 'text-black-800' : 'text-black-300'}`}>
+        <div className="flex h-8 items-center rounded border border-black-200 bg-white px-1.5 focus-within:border-black-400">
+          <span
+            className={`text-base ${hexInput.length > 0 ? 'text-black-800' : 'text-black-300'}`}
+          >
             #
           </span>
           <input
@@ -695,7 +697,7 @@ function MobileColorPalette({
               if (!isValidHex) setHexInput(activeColor.replace('#', ''));
             }}
             placeholder="000000"
-            className="w-14 bg-transparent text-xs text-black-800 outline-none placeholder:text-black-300"
+            className="w-16 bg-transparent text-base text-black-800 outline-none placeholder:text-black-300"
           />
         </div>
         <button

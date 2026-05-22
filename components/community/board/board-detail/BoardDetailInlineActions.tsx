@@ -2,7 +2,7 @@
 
 import { useState } from 'react';
 import { DetailBookmarkIcon, DetailHeartIcon } from '@/app/assets/icons';
-import { useLikeMutation, useBookmarkMutation } from '@/hooks/queries/community/useCommunity';
+import { useLikeMutation, useBookmarkMutation } from '@/hooks/queries/community';
 import { toast } from '@/utils/toast';
 
 interface BoardDetailInlineActionsProps {

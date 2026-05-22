@@ -2,7 +2,6 @@
 
 import { useState, useTransition, useEffect } from 'react';
 import { useRouter } from 'next/navigation';
-import { useQueryClient } from '@tanstack/react-query';
 import axios from 'axios';
 import { XIcon, ChevronDownIcon } from '@/app/assets/icons';
 import { Select } from '@/components/common/select/Select';
@@ -16,7 +15,7 @@ import {
   AREA_OPTIONS,
   SECTION_TYPE_LABEL,
 } from '@/constants/observations/observation';
-import { useObservationMutation } from '@/hooks/queries/observations/useObservation';
+import { useObservationMutation } from '@/hooks/queries/observations';
 import { useIsMobile } from '@/hooks/useIsMobile';
 import { toast } from '@/utils/toast';
 import { useLoginModalStore } from '@/stores/loginModalStore';
@@ -25,7 +24,6 @@ import { useObservationStore } from '@/stores/observationStore';
 
 export default function ObservationCreateForm() {
   const router = useRouter();
-  const queryClient = useQueryClient();
   const [age, setAge] = useState('');
   const [areas, setAreas] = useState<string[]>([]);
   const [content, setContent] = useState('');
@@ -46,9 +44,6 @@ export default function ObservationCreateForm() {
 
   const { mutate: createObservation, isPending: isMutating } = useObservationMutation({
     onSuccess: ({ observationId }) => {
-      queryClient.invalidateQueries({ queryKey: ['observations'] });
-      queryClient.invalidateQueries({ queryKey: ['myObservations'] });
-      queryClient.invalidateQueries({ queryKey: ['activitySummary'] });
       startTransition(() => {
         router.push(`/observations/${observationId}`);
       });

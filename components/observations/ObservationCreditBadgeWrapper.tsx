@@ -2,7 +2,7 @@
 
 import { usePathname } from 'next/navigation';
 import { ObservationCreditBadge } from '@/components/common/observation-credit-badge/ObservationCreditBadge';
-import { useCreditsQuery } from '@/hooks/queries/user/useCredits';
+import { useCreditsQuery } from '@/hooks/queries/user';
 import { useUserStore } from '@/stores/userStore';
 import { useObservationStore } from '@/stores/observationStore';
 

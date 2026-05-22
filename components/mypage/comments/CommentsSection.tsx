@@ -3,7 +3,7 @@
 import { useState, useEffect, useRef, useCallback } from 'react';
 import Link from 'next/link';
 import Pagination from '@/components/common/pagination/Pagination';
-import { useMyCommentsQuery, useMyCommentsInfiniteQuery } from '@/hooks/queries/user/useMyComments';
+import { useMyCommentsQuery, useMyCommentsInfiniteQuery } from '@/hooks/queries/user';
 import { EmptyState } from '@/components/common/empty-state/EmptyState';
 import { useIsDesktop } from '@/hooks/useIsMobile';
 import { MyComment } from './comment.type';

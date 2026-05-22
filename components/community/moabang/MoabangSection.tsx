@@ -16,7 +16,7 @@ import {
   useMoabangSearchQuery,
   useMoabangPostsInfiniteQuery,
   useMoabangSearchInfiniteQuery,
-} from '@/hooks/queries/community/useCommunity';
+} from '@/hooks/queries/community';
 import { EmptyState } from '@/components/common/empty-state/EmptyState';
 import { useIsDesktop } from '@/hooks/useIsMobile';
 import { getValidParam } from '@/utils/getValidParam';
@@ -243,9 +243,9 @@ export default function MoabangSection() {
         onSearch={handleSearch}
         renderSearchResults={(kw) => <MoabangSearchInfinite keyword={kw} />}
       />
-      <CommunityFab onClick={handleWrite} positionClassName="fixed right-9 bottom-24 z-300" />
-      <div className="fixed right-9 bottom-9 z-300 xl:hidden">
+      <div className="fixed right-9 bottom-9 z-300 flex flex-col-reverse items-center gap-3 xl:hidden">
         <ScrollToTopButton showAfter={300} />
+        <CommunityFab onClick={handleWrite} positionClassName="" />
       </div>
       {!keyword && (
         <CommunityFilter

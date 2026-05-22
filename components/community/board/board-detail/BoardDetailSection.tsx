@@ -10,7 +10,11 @@ import BoardDetailComments from './BoardDetailComments';
 import BoardDetailPost from './BoardDetailPost';
 import BoardDetailSideActions from './BoardDetailSideActions';
 import ScrollToTopButton from '@/components/common/scroll-top/ScrollToTopButton';
-import { usePostDetailQuery, useDeletePostMutation } from '@/hooks/queries/community/useCommunity';
+import {
+  usePostDetailQuery,
+  useDeletePostMutation,
+  communityKeys,
+} from '@/hooks/queries/community';
 import { useUserStore } from '@/stores/userStore';
 import { toast } from '@/utils/toast';
 import { AsyncBoundary, LoadingSpinner, ErrorFallback } from '@/lib/async-boundary';
@@ -90,7 +94,7 @@ export default function BoardDetailSection({ postId, title }: BoardDetailSection
   useEffect(() => {
     const listKey = title === '모아방' ? 'moabang' : 'board';
     return () => {
-      queryClient.invalidateQueries({ queryKey: [listKey, 'posts'] });
+      queryClient.invalidateQueries({ queryKey: communityKeys.board(listKey) });
     };
   }, [queryClient, title]);
   const isLoggedIn = user !== null;
@@ -132,7 +136,11 @@ export default function BoardDetailSection({ postId, title }: BoardDetailSection
             title={title}
             showBackButton
             actions={
-              <AsyncBoundary pendingFallback={null} rejectedFallback={() => null}>
+              <AsyncBoundary
+                pendingFallback={null}
+                rejectedFallback={() => null}
+                authErrorFallback={false}
+              >
                 <BoardDetailHeaderActions
                   postId={postId}
                   onEdit={handleEdit}
@@ -157,7 +165,11 @@ export default function BoardDetailSection({ postId, title }: BoardDetailSection
           </AsyncBoundary>
         </div>
         <div className="sticky top-[263.2px] hidden shrink-0 xl:block">
-          <AsyncBoundary pendingFallback={null} rejectedFallback={() => null}>
+          <AsyncBoundary
+            pendingFallback={null}
+            rejectedFallback={() => null}
+            authErrorFallback={false}
+          >
             <BoardDetailSideActionsLoader postId={postId} />
           </AsyncBoundary>
         </div>

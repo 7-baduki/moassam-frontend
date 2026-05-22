@@ -7,7 +7,7 @@ import Badge from '@/components/common/badge/Badge';
 import HeroImage from '@/app/assets/images/home/hero/hero-section.png';
 import HeroImageMd from '@/app/assets/images/home/hero/hero-section-md.png';
 import { useUser } from '@/lib/user-context';
-import { useCreditsQuery } from '@/hooks/queries/user/useCredits';
+import { useCreditsQuery } from '@/hooks/queries/user';
 import { ChevronRightIcon } from '@/app/assets/icons';
 import { AsyncBoundary } from '@/lib/async-boundary';
 import { ObservationCreditBadge } from '@/components/common/observation-credit-badge/ObservationCreditBadge';
@@ -31,7 +31,7 @@ function CreditBadge() {
 function LoggedInHero({ userName = '' }: { userName: string }) {
   return (
     <div className="relative flex w-full flex-col items-center px-4 pt-10 pb-5.75 md:px-8 md:py-15 xl:px-0">
-      <AsyncBoundary pendingFallback={null} rejectedFallback={() => null}>
+      <AsyncBoundary pendingFallback={null} rejectedFallback={() => null} authErrorFallback={false}>
         <CreditBadge />
       </AsyncBoundary>
 

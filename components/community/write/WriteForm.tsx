@@ -9,10 +9,7 @@ import CommunityTitleBar from '@/components/community/CommunityTitleBar';
 import WriteCategorySelect from './WriteCategorySelect';
 import WriteTitleInput from './WriteTitleInput';
 import WriteFileUpload from './WriteFileUpload';
-import {
-  useCreatePostMutation,
-  useUpdatePostMutation,
-} from '@/hooks/queries/community/useCommunity';
+import { useCreatePostMutation, useUpdatePostMutation } from '@/hooks/queries/community';
 import type { BoardType, WriteFormValues } from './write.type';
 import type { BoardDetailFile } from '@/components/community/board/board-detail/board-detail.type';
 

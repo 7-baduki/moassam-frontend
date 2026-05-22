@@ -110,8 +110,8 @@ export default function WriteFileUpload({
         </Button>
         <div className="flex items-center gap-2">
           <span className="text-xs text-black-500">
-            현재 {totalBytes === 0 ? '0' : (totalBytes / (1024 * 1024)).toFixed(1)}MB / 전체{' '}
-            {MAX_SIZE_MB}MB
+            현재 {totalBytes < 1024 * 1024 * 0.1 ? '0' : (totalBytes / (1024 * 1024)).toFixed(1)}MB
+            / 전체 {MAX_SIZE_MB}MB
           </span>
         </div>
         <input

@@ -8,8 +8,9 @@ import Pagination from '@/components/common/pagination/Pagination';
 import {
   useMyObservationsQuery,
   useMyObservationsInfiniteQuery,
-} from '@/hooks/queries/user/useMyObservations';
-import { useObservationDeleteMutation } from '@/hooks/queries/observations/useObservation';
+  userKeys,
+} from '@/hooks/queries/user';
+import { useObservationDeleteMutation, observationKeys } from '@/hooks/queries/observations';
 import { AGE_OPTIONS } from '@/constants/observations/observation';
 import { MoreButton } from '@/components/common/more-button/MoreButton';
 import { EmptyState } from '@/components/common/empty-state/EmptyState';
@@ -94,8 +95,9 @@ function ObservationsPaginated() {
   const { mutate: handleDelete } = useObservationDeleteMutation({
     onSuccess: () => {
       refetch();
-      queryClient.invalidateQueries({ queryKey: ['observations'] });
-      queryClient.invalidateQueries({ queryKey: ['activitySummary'] });
+      queryClient.invalidateQueries({ queryKey: observationKeys.all });
+      queryClient.invalidateQueries({ queryKey: userKeys.myObservations.all });
+      queryClient.invalidateQueries({ queryKey: userKeys.activitySummary() });
       toast.success({
         title: '관찰일지 삭제가 완료되었어요',
         description: '삭제된 관찰일지는 복구할 수 없어요',
@@ -153,8 +155,9 @@ function ObservationsInfinite() {
   const { mutate: handleDelete } = useObservationDeleteMutation({
     onSuccess: () => {
       refetch();
-      queryClient.invalidateQueries({ queryKey: ['observations'] });
-      queryClient.invalidateQueries({ queryKey: ['activitySummary'] });
+      queryClient.invalidateQueries({ queryKey: observationKeys.all });
+      queryClient.invalidateQueries({ queryKey: userKeys.myObservations.all });
+      queryClient.invalidateQueries({ queryKey: userKeys.activitySummary() });
       toast.success({
         title: '관찰일지 삭제가 완료되었어요',
         description: '삭제된 관찰일지는 복구할 수 없어요',

@@ -19,7 +19,9 @@ import { Button } from '@/components/common/button/Button';
 import {
   useObservationRecentQuery,
   useObservationDeleteMutation,
-} from '@/hooks/queries/observations/useObservation';
+  observationKeys,
+} from '@/hooks/queries/observations';
+import { userKeys } from '@/hooks/queries/user';
 import { useQueryClient } from '@tanstack/react-query';
 import { MoreButton } from '@/components/common/more-button/MoreButton';
 import { Dialog } from '@/components/common/dialog/Dialog';
@@ -115,9 +117,9 @@ export default function NavMenu({ isOpen, onClose, onLogout }: NavMenuProps) {
 
   const { mutate: deleteObservation } = useObservationDeleteMutation({
     onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: ['observations', 'recent'] });
-      queryClient.invalidateQueries({ queryKey: ['myObservations'] });
-      queryClient.invalidateQueries({ queryKey: ['activitySummary'] });
+      queryClient.invalidateQueries({ queryKey: observationKeys.all });
+      queryClient.invalidateQueries({ queryKey: userKeys.myObservations.all });
+      queryClient.invalidateQueries({ queryKey: userKeys.activitySummary() });
       toast.success({
         title: '관찰일지 삭제가 완료되었어요',
         description: '삭제된 관찰일지는 복구할 수 없어요',

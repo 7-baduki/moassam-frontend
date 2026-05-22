@@ -113,6 +113,8 @@ export function useCreateCommentMutation(postId: number) {
     mutationFn: (content: string) => createComment(postId, { content }),
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: communityKeys.postDetail(postId) });
+      queryClient.invalidateQueries({ queryKey: communityKeys.board('moabang') });
+      queryClient.invalidateQueries({ queryKey: communityKeys.board('board') });
       queryClient.invalidateQueries({ queryKey: userKeys.myComments.all });
     },
   });
@@ -126,6 +128,8 @@ export function useUpdateCommentMutation(postId: number) {
       updateComment(postId, commentId, { content }),
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: communityKeys.postDetail(postId) });
+      queryClient.invalidateQueries({ queryKey: communityKeys.board('moabang') });
+      queryClient.invalidateQueries({ queryKey: communityKeys.board('board') });
       queryClient.invalidateQueries({ queryKey: userKeys.myComments.all });
     },
   });
@@ -138,6 +142,8 @@ export function useDeleteCommentMutation(postId: number) {
     mutationFn: (commentId: number) => deleteComment(postId, commentId),
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: communityKeys.postDetail(postId) });
+      queryClient.invalidateQueries({ queryKey: communityKeys.board('moabang') });
+      queryClient.invalidateQueries({ queryKey: communityKeys.board('board') });
       queryClient.invalidateQueries({ queryKey: userKeys.myComments.all });
     },
   });
@@ -150,8 +156,8 @@ export function useLikeMutation(postId: number) {
     mutationFn: (isLiked: boolean) => (isLiked ? unlikePost(postId) : likePost(postId)),
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: communityKeys.postDetail(postId) });
-      queryClient.invalidateQueries({ queryKey: communityKeys.posts('moabang') });
-      queryClient.invalidateQueries({ queryKey: communityKeys.posts('board') });
+      queryClient.invalidateQueries({ queryKey: communityKeys.board('moabang') });
+      queryClient.invalidateQueries({ queryKey: communityKeys.board('board') });
     },
   });
 }
@@ -164,6 +170,8 @@ export function useBookmarkMutation(postId: number) {
       isBookmarked ? unbookmarkPost(postId) : bookmarkPost(postId),
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: communityKeys.postDetail(postId) });
+      queryClient.invalidateQueries({ queryKey: communityKeys.board('moabang') });
+      queryClient.invalidateQueries({ queryKey: communityKeys.board('board') });
       queryClient.invalidateQueries({ queryKey: userKeys.myBookmarks.all });
       queryClient.invalidateQueries({ queryKey: userKeys.activitySummary() });
     },
@@ -179,7 +187,7 @@ export function useUpdatePostMutation(postId: number) {
     onSuccess: (_, { request }) => {
       queryClient.removeQueries({ queryKey: communityKeys.postDetail(postId) });
       const listKey = request.category === 'MOABANG' ? 'moabang' : 'board';
-      queryClient.invalidateQueries({ queryKey: communityKeys.posts(listKey) });
+      queryClient.invalidateQueries({ queryKey: communityKeys.board(listKey) });
     },
   });
 }
@@ -190,8 +198,8 @@ export function useDeletePostMutation() {
   return useMutation({
     mutationFn: (postId: number) => deletePost(postId),
     onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: communityKeys.posts('moabang') });
-      queryClient.invalidateQueries({ queryKey: communityKeys.posts('board') });
+      queryClient.invalidateQueries({ queryKey: communityKeys.board('moabang') });
+      queryClient.invalidateQueries({ queryKey: communityKeys.board('board') });
       queryClient.invalidateQueries({ queryKey: userKeys.myMoabangPosts.all });
       queryClient.invalidateQueries({ queryKey: userKeys.myFreePosts.all });
     },
@@ -207,7 +215,7 @@ export function useCreatePostMutation() {
     onSuccess: (_, { request }) => {
       const isMoabang = request.category === 'MOABANG';
       queryClient.invalidateQueries({
-        queryKey: communityKeys.posts(isMoabang ? 'moabang' : 'board'),
+        queryKey: communityKeys.board(isMoabang ? 'moabang' : 'board'),
       });
       queryClient.invalidateQueries({
         queryKey: isMoabang ? userKeys.myMoabangPosts.all : userKeys.myFreePosts.all,

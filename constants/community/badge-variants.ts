@@ -15,7 +15,7 @@ export const RESOURCE_TYPE_VARIANT: Record<ResourceType, BadgeVariant> = {
   JOURNAL: 'outline-pink',
   PLAN: 'outline-green',
   NOTICE: 'outline-gray',
-  ENVIRONMENT: 'outline-yellow',
+  ENVIRONMENT: 'outline-orange',
 };
 
 export const HEAD_TAG_VARIANT: Record<HeadTag, BadgeVariant> = {

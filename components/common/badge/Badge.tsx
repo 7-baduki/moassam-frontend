@@ -15,6 +15,7 @@ const VARIANT_STYLES: Record<BadgeVariant, string> = {
   'outline-pink': 'border border-pink-700 text-pink-700',
   'outline-green': 'border border-green-700 text-green-800',
   'outline-gray': 'border border-black-560 text-black-560',
+  'outline-orange': 'border border-orange-700 text-orange-700',
 };
 
 export default function Badge({ label, variant }: BadgeProps) {

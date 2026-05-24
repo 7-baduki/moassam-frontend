@@ -1,4 +1,5 @@
-import apiClient from './axios';
+import axios from 'axios';
+import apiClient, { refreshAccessToken } from './axios';
 import type {
   MoabangListParams,
   MoabangListResponse,
@@ -68,6 +69,47 @@ export async function deleteComment(postId: number, commentId: number): Promise<
   await apiClient.delete(`/api/v1/posts/${postId}/comments/${commentId}`);
 }
 
+async function fetchAccessToken(): Promise<string> {
+  try {
+    const res = await fetch('/api/auth/token');
+    if (res.ok) {
+      const { accessToken } = await res.json();
+      if (accessToken) return accessToken;
+    }
+  } catch {
+    // fall through to refresh
+  }
+  return refreshAccessToken();
+}
+
+async function uploadPostFormData<T>(
+  method: 'post' | 'patch',
+  path: string,
+  formData: FormData,
+): Promise<T> {
+  const send = (token: string) =>
+    axios.request<{ data: T }>({
+      method,
+      url: `${process.env.NEXT_PUBLIC_API_URL}${path}`,
+      data: formData,
+      headers: { Authorization: `Bearer ${token}` },
+      timeout: 60_000,
+    });
+
+  try {
+    const token = await fetchAccessToken();
+    const { data } = await send(token);
+    return data.data;
+  } catch (error) {
+    if (axios.isAxiosError(error) && error.response?.status === 401) {
+      const token = await refreshAccessToken();
+      const { data } = await send(token);
+      return data.data;
+    }
+    throw error;
+  }
+}
+
 export async function updatePost(
   postId: number,
   request: UpdatePostRequest,
@@ -77,10 +119,7 @@ export async function updatePost(
   formData.append('request', new Blob([JSON.stringify(request)], { type: 'application/json' }));
   files.forEach((file) => formData.append('files', file));
 
-  const { data } = await apiClient.patch(`/api/v1/posts/${postId}`, formData, {
-    headers: { 'Content-Type': 'multipart/form-data' },
-  });
-  return data.data;
+  return uploadPostFormData<CreatePostResponse>('patch', `/api/v1/posts/${postId}`, formData);
 }
 
 export async function deletePost(postId: number): Promise<void> {
@@ -111,8 +150,5 @@ export async function createPost(
   formData.append('request', new Blob([JSON.stringify(request)], { type: 'application/json' }));
   files.forEach((file) => formData.append('files', file));
 
-  const { data } = await apiClient.post('/api/v1/posts', formData, {
-    headers: { 'Content-Type': 'multipart/form-data' },
-  });
-  return data.data;
+  return uploadPostFormData<CreatePostResponse>('post', '/api/v1/posts', formData);
 }

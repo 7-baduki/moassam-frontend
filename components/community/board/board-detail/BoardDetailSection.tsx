@@ -1,6 +1,6 @@
 'use client';
 
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import { useRouter } from 'next/navigation';
 import { useQueryClient } from '@tanstack/react-query';
 import { Button } from '@/components/common/button/Button';
@@ -93,13 +93,23 @@ export default function BoardDetailSection({ postId, title }: BoardDetailSection
   const user = useUserStore((state) => state.user);
   const openLoginModal = useLoginModalStore((state) => state.open);
 
+  const [authReady] = useState(() => {
+    if (typeof document === 'undefined') return false;
+    return document.cookie.split(';').some((c) => c.trim() === 'isLoggedIn=true');
+  });
+  const redirectingRef = useRef(false);
+
   useEffect(() => {
-    const isLoggedIn = document.cookie.split(';').some((c) => c.trim() === 'isLoggedIn=true');
-    if (!isLoggedIn) {
-      openLoginModal('로그인이 필요해요!', '로그인 후 게시글을 확인할 수 있어요');
+    if (authReady || redirectingRef.current) return;
+    redirectingRef.current = true;
+    openLoginModal('로그인이 필요해요!', '로그인 후 게시글을 확인할 수 있어요');
+    if (window.history.length > 1) {
       router.back();
+    } else {
+      router.push(title === '모아방' ? '/community/moabang' : '/community/board');
     }
-  }, [openLoginModal, router]);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   useEffect(() => {
     const listKey = title === '모아방' ? 'moabang' : 'board';
@@ -126,6 +136,8 @@ export default function BoardDetailSection({ postId, title }: BoardDetailSection
       onError: () => toast.error({ title: '삭제 실패', description: '잠시 후 다시 시도해주세요' }),
     });
   }
+
+  if (!authReady) return <LoadingSpinner className="mt-[20vh]" />;
 
   return (
     <div>

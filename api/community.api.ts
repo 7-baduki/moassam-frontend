@@ -89,6 +89,7 @@ async function uploadPostFormData<T>(
       url: `${process.env.NEXT_PUBLIC_API_URL}${path}`,
       data: formData,
       headers: { Authorization: `Bearer ${token}` },
+      timeout: 60_000,
     });
 
   try {

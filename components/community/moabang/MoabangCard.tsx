@@ -21,6 +21,7 @@ const RESOURCE_TYPE_LABEL: Record<ResourceType, string> = {
   PLAN: '계획안',
   JOURNAL: '일지',
   NOTICE: '안내문',
+  ENVIRONMENT: '환경구성',
 };
 
 interface MoabangCardProps {

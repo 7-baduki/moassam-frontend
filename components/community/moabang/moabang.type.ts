@@ -1,5 +1,5 @@
 export type PostAge = 'ALL' | 'INFANT' | 'AGE_3' | 'AGE_4' | 'AGE_5';
-export type ResourceType = 'ACTIVITY' | 'PLAN' | 'JOURNAL' | 'NOTICE';
+export type ResourceType = 'ACTIVITY' | 'PLAN' | 'JOURNAL' | 'NOTICE' | 'ENVIRONMENT';
 
 export interface MoabangPost {
   postId: number;

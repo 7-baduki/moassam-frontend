@@ -15,6 +15,7 @@ export const MOABANG_CATEGORIES: TabOption[] = [
   { label: '계획안', value: 'PLAN' },
   { label: '일지', value: 'JOURNAL' },
   { label: '안내문', value: 'NOTICE' },
+  { label: '환경구성', value: 'ENVIRONMENT' },
 ];
 
 export const MOABANG_AGE_FILTER_TABS: TabOption[] = [ALL_TAB, ...MOABANG_AGES];

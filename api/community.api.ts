@@ -70,10 +70,14 @@ export async function deleteComment(postId: number, commentId: number): Promise<
 }
 
 async function fetchAccessToken(): Promise<string> {
-  const res = await fetch('/api/auth/token');
-  if (res.ok) {
-    const { accessToken } = await res.json();
-    if (accessToken) return accessToken;
+  try {
+    const res = await fetch('/api/auth/token');
+    if (res.ok) {
+      const { accessToken } = await res.json();
+      if (accessToken) return accessToken;
+    }
+  } catch {
+    // fall through to refresh
   }
   return refreshAccessToken();
 }

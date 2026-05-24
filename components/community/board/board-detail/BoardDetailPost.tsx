@@ -41,6 +41,7 @@ const RESOURCE_TYPE_VARIANT: Record<ResourceType, BadgeVariant> = {
   PLAN: 'outline-green',
   JOURNAL: 'outline-pink',
   NOTICE: 'outline-gray',
+  ENVIRONMENT: 'outline-orange',
 };
 
 interface BoardDetailPostProps {

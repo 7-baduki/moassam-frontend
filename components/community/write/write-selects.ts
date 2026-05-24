@@ -18,6 +18,7 @@ export const MATERIAL_TYPE_OPTIONS: SelectOption[] = [
   { label: '계획안', value: 'PLAN' },
   { label: '일지', value: 'JOURNAL' },
   { label: '안내문', value: 'NOTICE' },
+  { label: '환경구성', value: 'ENVIRONMENT' },
 ];
 
 export const TOPIC_OPTIONS: SelectOption[] = [

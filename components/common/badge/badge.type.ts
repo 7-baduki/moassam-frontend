@@ -7,4 +7,5 @@ export type BadgeVariant =
   | 'outline-yellow'
   | 'outline-pink'
   | 'outline-green'
-  | 'outline-gray';
+  | 'outline-gray'
+  | 'outline-orange';

@@ -16,6 +16,7 @@ import {
   communityKeys,
 } from '@/hooks/queries/community';
 import { useUserStore } from '@/stores/userStore';
+import { useLoginModalStore } from '@/stores/loginModalStore';
 import { toast } from '@/utils/toast';
 import { AsyncBoundary, LoadingSpinner, ErrorFallback } from '@/lib/async-boundary';
 
@@ -90,6 +91,15 @@ export default function BoardDetailSection({ postId, title }: BoardDetailSection
   const router = useRouter();
   const queryClient = useQueryClient();
   const user = useUserStore((state) => state.user);
+  const openLoginModal = useLoginModalStore((state) => state.open);
+
+  useEffect(() => {
+    const isLoggedIn = document.cookie.split(';').some((c) => c.trim() === 'isLoggedIn=true');
+    if (!isLoggedIn) {
+      openLoginModal('로그인이 필요해요!', '로그인 후 게시글을 확인할 수 있어요');
+      router.back();
+    }
+  }, [openLoginModal, router]);
 
   useEffect(() => {
     const listKey = title === '모아방' ? 'moabang' : 'board';

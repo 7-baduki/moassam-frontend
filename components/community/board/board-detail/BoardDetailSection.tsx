@@ -103,7 +103,7 @@ export default function BoardDetailSection({ postId, title }: BoardDetailSection
     if (authReady || redirectingRef.current) return;
     redirectingRef.current = true;
     openLoginModal('로그인이 필요해요!', '로그인 후 게시글을 확인할 수 있어요');
-    router.push(title === '모아방' ? '/community/moabang' : '/community/board');
+    router.replace(title === '모아방' ? '/community/moabang' : '/community/board');
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 

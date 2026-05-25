@@ -23,6 +23,7 @@ import { AsyncBoundary, LoadingSpinner, ErrorFallback } from '@/lib/async-bounda
 interface BoardDetailSectionProps {
   postId: number;
   title: string;
+  initialAuth: boolean;
 }
 
 function BoardDetailHeaderActions({
@@ -87,20 +88,20 @@ function BoardDetailContent({ postId, isLoggedIn }: { postId: number; isLoggedIn
   );
 }
 
-export default function BoardDetailSection({ postId, title }: BoardDetailSectionProps) {
+export default function BoardDetailSection({
+  postId,
+  title,
+  initialAuth,
+}: BoardDetailSectionProps) {
   const router = useRouter();
   const queryClient = useQueryClient();
   const user = useUserStore((state) => state.user);
   const openLoginModal = useLoginModalStore((state) => state.open);
 
-  const [authReady] = useState(() => {
-    if (typeof document === 'undefined') return false;
-    return document.cookie.split(';').some((c) => c.trim() === 'isLoggedIn=true');
-  });
   const redirectingRef = useRef(false);
 
   useEffect(() => {
-    if (authReady || redirectingRef.current) return;
+    if (initialAuth || redirectingRef.current) return;
     redirectingRef.current = true;
     openLoginModal('로그인이 필요해요!', '로그인 후 게시글을 확인할 수 있어요');
     router.replace(title === '모아방' ? '/community/moabang' : '/community/board');
@@ -133,7 +134,7 @@ export default function BoardDetailSection({ postId, title }: BoardDetailSection
     });
   }
 
-  if (!authReady) return <LoadingSpinner className="mt-[20vh]" />;
+  if (!initialAuth) return <LoadingSpinner className="mt-[20vh]" />;
 
   return (
     <div>

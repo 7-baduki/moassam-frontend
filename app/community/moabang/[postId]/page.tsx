@@ -1,3 +1,4 @@
+import { cookies } from 'next/headers';
 import { notFound } from 'next/navigation';
 import BoardDetailBoundary from '@/components/community/board/board-detail/BoardDetailBoundary';
 
@@ -13,5 +14,7 @@ export default async function MoabangDetailPage({ params }: MoabangDetailPagePro
 
   if (!Number.isInteger(id) || id <= 0) notFound();
 
-  return <BoardDetailBoundary postId={id} title="모아방" />;
+  const initialAuth = (await cookies()).get('isLoggedIn')?.value === 'true';
+
+  return <BoardDetailBoundary postId={id} title="모아방" initialAuth={initialAuth} />;
 }

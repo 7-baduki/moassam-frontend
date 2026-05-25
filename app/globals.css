@@ -171,7 +171,8 @@ html {
   display: none;
 }
 
-.prose-editor .ProseMirror p {
+.prose-editor .ProseMirror p,
+.rich-content p {
   margin: 0.25rem 0;
 }
 
@@ -183,44 +184,51 @@ html {
   height: 0;
 }
 
-.prose-editor .ProseMirror h1 {
+.prose-editor .ProseMirror h1,
+.rich-content h1 {
   font-size: 1.75rem;
   font-weight: 700;
   margin: 0.5rem 0;
 }
 
-.prose-editor .ProseMirror h2 {
+.prose-editor .ProseMirror h2,
+.rich-content h2 {
   font-size: 1.375rem;
   font-weight: 700;
   margin: 0.5rem 0;
 }
 
-.prose-editor .ProseMirror h3 {
+.prose-editor .ProseMirror h3,
+.rich-content h3 {
   font-size: 1.125rem;
   font-weight: 600;
   margin: 0.5rem 0;
 }
 
-.prose-editor .ProseMirror ul {
+.prose-editor .ProseMirror ul,
+.rich-content ul {
   list-style-type: disc;
   padding-left: 1.5rem;
   margin: 0.25rem 0;
 }
 
-.prose-editor .ProseMirror ol {
+.prose-editor .ProseMirror ol,
+.rich-content ol {
   list-style-type: decimal;
   padding-left: 1.5rem;
   margin: 0.25rem 0;
 }
 
-.prose-editor .ProseMirror blockquote {
+.prose-editor .ProseMirror blockquote,
+.rich-content blockquote {
   border-left: 3px solid #e2e2e2;
   padding-left: 1rem;
   color: #8a8a8a;
   margin: 0.5rem 0;
 }
 
-.prose-editor .ProseMirror code {
+.prose-editor .ProseMirror code,
+.rich-content code {
   background-color: #f2f2f2;
   border-radius: 4px;
   padding: 0.1em 0.3em;
@@ -228,7 +236,8 @@ html {
   font-size: 0.85em;
 }
 
-.prose-editor .ProseMirror pre {
+.prose-editor .ProseMirror pre,
+.rich-content pre {
   background-color: #f2f2f2;
   border-radius: 8px;
   padding: 0.75rem 1rem;
@@ -236,18 +245,21 @@ html {
   overflow-x: auto;
 }
 
-.prose-editor .ProseMirror pre code {
+.prose-editor .ProseMirror pre code,
+.rich-content pre code {
   background: none;
   padding: 0;
 }
 
-.prose-editor .ProseMirror hr {
+.prose-editor .ProseMirror hr,
+.rich-content hr {
   border: none;
   border-top: 2px solid #e2e2e2;
   margin: 0.75rem 0;
 }
 
-.prose-editor .ProseMirror table {
+.prose-editor .ProseMirror table,
+.rich-content table {
   border-collapse: collapse;
   width: 100%;
   table-layout: fixed;
@@ -255,14 +267,17 @@ html {
 }
 
 .prose-editor .ProseMirror th,
-.prose-editor .ProseMirror td {
+.prose-editor .ProseMirror td,
+.rich-content th,
+.rich-content td {
   border: 1px solid #e2e2e2;
   padding: 0.4rem 0.6rem;
   min-width: 2rem;
   overflow-wrap: break-word;
 }
 
-.prose-editor .ProseMirror th {
+.prose-editor .ProseMirror th,
+.rich-content th {
   background-color: #f2f2f2;
   font-weight: 600;
 }
@@ -282,12 +297,14 @@ html {
   cursor: col-resize;
 }
 
-.prose-editor .ProseMirror mark {
+.prose-editor .ProseMirror mark,
+.rich-content mark {
   border-radius: 2px;
   padding: 0 0.1em;
 }
 
-.prose-editor .ProseMirror img {
+.prose-editor .ProseMirror img,
+.rich-content img {
   max-width: 100%;
   height: auto;
   border-radius: 4px;

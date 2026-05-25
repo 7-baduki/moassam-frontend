@@ -99,7 +99,7 @@ const PRIVACY_SECTIONS: PrivacySection[] = [
   {
     title: '제12조 (개인정보 문의)',
     content: '개인정보 처리과 관련한 문의는 아래 연락처로 할 수 있습니다.',
-    subList: ['담당: 모아쌤 운영팀', '이메일: moassam@gmail.com'],
+    subList: ['담당: 모아쌤 운영팀', '이메일: moassam.official@gmail.com'],
   },
   {
     title: '제13조 (개인정보처리방침의 변경)',

@@ -54,9 +54,27 @@ const gamjaFlower = Gamja_Flower({
   variable: '--font-gamja-flower',
 });
 
+const SITE_URL = 'https://moassam.vercel.app';
+const SITE_NAME = '모아쌤';
+const SITE_DESCRIPTION = '유치원·어린이집 교사를 위한 AI 관찰일지 작성 및 활동자료 공유 커뮤니티';
+
 export const metadata: Metadata = {
-  title: '모아쌤',
-  description: '유치원·어린이집 교사를 위한 AI 관찰일지 작성 및 수업자료 공유 커뮤니티 플랫폼',
+  metadataBase: new URL(SITE_URL),
+  title: SITE_NAME,
+  description: SITE_DESCRIPTION,
+  openGraph: {
+    type: 'website',
+    url: SITE_URL,
+    siteName: SITE_NAME,
+    title: SITE_NAME,
+    description: SITE_DESCRIPTION,
+    locale: 'ko_KR',
+  },
+  twitter: {
+    card: 'summary_large_image',
+    title: SITE_NAME,
+    description: SITE_DESCRIPTION,
+  },
 };
 
 export const viewport: Viewport = {

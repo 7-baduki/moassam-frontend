@@ -61,7 +61,10 @@ const SITE_DESCRIPTION = '유치원·어린이집 교사를 위한 AI 관찰일�
 
 export const metadata: Metadata = {
   metadataBase: new URL(SITE_URL),
-  title: SITE_NAME,
+  title: {
+    default: SITE_NAME,
+    template: `%s | ${SITE_NAME}`,
+  },
   description: SITE_DESCRIPTION,
   openGraph: {
     type: 'website',

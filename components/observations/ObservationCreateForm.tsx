@@ -114,8 +114,7 @@ export default function ObservationCreateForm() {
       <div className="flex flex-col items-center">
         <div className="mt-15 mb-5 text-center md:mt-6 md:mb-12.5 xl:mt-0">
           <h1 className="text-base font-semibold text-black md:text-xl">
-            관찰일지를
-            <br className="md:hidden" />
+            관찰일지를 <br className="md:hidden" />
             완성해보세요!
           </h1>
           <p className="mt-5 text-sm font-medium text-black md:mt-0.5 md:text-sm">

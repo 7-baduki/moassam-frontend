@@ -1,4 +1,9 @@
+import type { Metadata } from 'next';
 import LegalHeader from '@/components/legal/LegalHeader';
+
+export const metadata: Metadata = {
+  title: '이용약관',
+};
 
 interface TermsSection {
   title: string;

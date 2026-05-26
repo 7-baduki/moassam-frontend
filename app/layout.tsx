@@ -8,6 +8,7 @@ import {
   Gamja_Flower,
 } from 'next/font/google';
 import { Toaster } from 'sonner';
+import { GoogleAnalytics } from '@next/third-parties/google';
 import './globals.css';
 import Providers from './providers';
 import Header from '@/components/common/header/Header';
@@ -112,6 +113,7 @@ export default function RootLayout({
         <Toaster position="top-right" offset={{ top: 69 }} />
         <LoginModal />
       </body>
+      {process.env.NEXT_PUBLIC_GA_ID && <GoogleAnalytics gaId={process.env.NEXT_PUBLIC_GA_ID} />}
     </html>
   );
 }

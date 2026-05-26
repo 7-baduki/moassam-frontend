@@ -1,5 +1,10 @@
+import type { Metadata } from 'next';
 import { notFound } from 'next/navigation';
 import ObservationDetailBoundary from '@/components/observations/ObservationDetailBoundary';
+
+export const metadata: Metadata = {
+  title: '관찰일지 상세',
+};
 
 interface ObservationDetailPageProps {
   params: Promise<{ id: string }>;

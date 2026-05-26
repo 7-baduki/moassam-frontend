@@ -1,5 +1,10 @@
+import type { Metadata } from 'next';
 import { XIcon } from '@/app/assets/icons';
 import LegalHeader from '@/components/legal/LegalHeader';
+
+export const metadata: Metadata = {
+  title: '개인정보처리방침',
+};
 
 interface PrivacySection {
   title: string;

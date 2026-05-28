@@ -70,12 +70,13 @@ export function ProfileEditModal({
             프로필 편집
           </h2>
 
-          <div className="mx-auto my-8 h-27.5 w-27.5 overflow-hidden rounded-full">
+          <div className="relative mx-auto my-8 h-27.5 w-27.5 overflow-hidden rounded-full">
             <Image
               src={profileImageUrl || DefaultAvatar}
               alt="프로필 아바타"
-              width={110}
-              height={110}
+              fill
+              sizes="110px"
+              className="object-contain"
             />
           </div>
 

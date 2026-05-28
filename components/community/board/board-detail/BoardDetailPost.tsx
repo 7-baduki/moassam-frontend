@@ -14,8 +14,7 @@ const HEAD_TAG_LABELS: Record<string, string> = {
   FREE: '자유',
   RESOURCE: '활동자료',
   PLAN: '계획안',
-  JOURNAL: '일지',
-  NOTICE: '안내문',
+  DOCUMENT_FORM: '문서/서식',
   WORRY: '고민',
   CHAT: '잡담',
 };
@@ -38,10 +37,9 @@ const POST_AGE_VARIANT: Record<PostAge, BadgeVariant> = {
 
 const RESOURCE_TYPE_VARIANT: Record<ResourceType, BadgeVariant> = {
   ACTIVITY: 'outline-yellow',
-  PLAN: 'outline-green',
-  JOURNAL: 'outline-pink',
-  NOTICE: 'outline-gray',
   ENVIRONMENT: 'outline-orange',
+  PLAN: 'outline-green',
+  DOCUMENT_FORM: 'outline-gray',
 };
 
 interface BoardDetailPostProps {

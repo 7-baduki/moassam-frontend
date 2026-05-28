@@ -15,10 +15,9 @@ export const AGE_OPTIONS: SelectOption[] = [
 
 export const MATERIAL_TYPE_OPTIONS: SelectOption[] = [
   { label: '활동자료', value: 'ACTIVITY' },
-  { label: '계획안', value: 'PLAN' },
-  { label: '일지', value: 'JOURNAL' },
-  { label: '안내문', value: 'NOTICE' },
   { label: '환경구성', value: 'ENVIRONMENT' },
+  { label: '계획안', value: 'PLAN' },
+  { label: '문서/서식', value: 'DOCUMENT_FORM' },
 ];
 
 export const TOPIC_OPTIONS: SelectOption[] = [

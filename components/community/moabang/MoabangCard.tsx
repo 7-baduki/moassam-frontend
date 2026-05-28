@@ -18,10 +18,9 @@ const POST_AGE_LABEL: Record<PostAge, string> = {
 
 const RESOURCE_TYPE_LABEL: Record<ResourceType, string> = {
   ACTIVITY: '활동자료',
-  PLAN: '계획안',
-  JOURNAL: '일지',
-  NOTICE: '안내문',
   ENVIRONMENT: '환경구성',
+  PLAN: '계획안',
+  DOCUMENT_FORM: '문서/서식',
 };
 
 interface MoabangCardProps {

@@ -5,6 +5,7 @@ import { useRouter } from 'next/navigation';
 import { ChevronDownIcon } from '@/app/assets/icons';
 import Tabs, { TabOption } from '@/components/common/tabs/Tabs';
 import { AsyncBoundary, LoadingSpinner, ErrorFallback } from '@/lib/async-boundary';
+import ScrollToTopButton from '@/components/common/scroll-top/ScrollToTopButton';
 import MoabangPostList from './MoabangPostList';
 import FreePostList from './FreePostList';
 
@@ -27,6 +28,9 @@ export default function PostsBoundary() {
         <h1 className="py-2 text-base font-semibold text-black md:text-[18px]">게시글</h1>
       </div>
       <h1 className="hidden text-lg font-semibold text-black xl:block xl:pt-[10.5px]">게시글</h1>
+      <div className="fixed right-9 bottom-9 z-300 xl:hidden">
+        <ScrollToTopButton showAfter={300} />
+      </div>
 
       <div className="mx-4 flex h-10 items-stretch rounded-lg bg-black-200 px-5 md:mx-9 xl:mx-0">
         <Tabs

@@ -29,16 +29,20 @@ export function ProfileEditBottomSheet({
   const [displayName, setDisplayName] = useState(nickname);
   const router = useRouter();
 
-  const { mutate: handleUpdateProfile, isPending } = useProfileMutation({
-    onSuccess: () => {
-      onClose();
-      router.refresh();
-      toast.success({ title: '저장 완료', description: '변경사항이 저장되었어요' });
-    },
-    onError: () => {
-      toast.error({ title: '저장 실패', description: '잠시 후 다시 시도해주세요' });
-    },
-  });
+  const { mutate: handleUpdateProfile, isPending } = useProfileMutation();
+
+  function handleSave() {
+    handleUpdateProfile(displayName, {
+      onSuccess: () => {
+        onClose();
+        router.refresh();
+        toast.success({ title: '저장 완료', description: '변경사항이 저장되었어요' });
+      },
+      onError: () => {
+        toast.error({ title: '저장 실패', description: '잠시 후 다시 시도해주세요' });
+      },
+    });
+  }
 
   return (
     <BottomSheet
@@ -94,7 +98,7 @@ export function ProfileEditBottomSheet({
               variant="primary"
               size="sm"
               disabled={!displayName || isPending}
-              onClick={() => handleUpdateProfile(displayName)}
+              onClick={handleSave}
             >
               저장
             </Button>

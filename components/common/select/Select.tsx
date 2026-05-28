@@ -13,7 +13,7 @@ const SIZE_STYLES: Record<SelectSize, string> = {
 
 const TRIGGER_STYLES: Record<SelectSize, string> = {
   sm: 'justify-end',
-  md: 'justify-between rounded-lg border border-black-300',
+  md: 'justify-between rounded-lg border border-black-300 bg-white',
 };
 
 const ICON_SIZE: Record<SelectSize, number> = {

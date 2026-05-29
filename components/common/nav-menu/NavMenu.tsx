@@ -61,7 +61,7 @@ function ObservationNavItem({
         <Link
           href={`/observations/${log.observationId}`}
           onClick={onClose}
-          className="flex-1 truncate px-6 py-3.5 text-xs font-medium text-black-700 hover:rounded-lg hover:bg-black-200 md:px-9"
+          className="flex-1 truncate px-4 py-3.5 text-xs font-medium text-black-700 hover:rounded-lg hover:bg-black-200 md:px-9"
         >
           {log.title}
         </Link>
@@ -70,7 +70,7 @@ function ObservationNavItem({
             onClose();
             setShowDeleteDialog(true);
           }}
-          className="absolute top-1/2 right-6 -translate-y-1/2 md:right-9"
+          className="absolute top-1/2 right-5.5 -translate-y-1/2 md:right-11"
         />
       </li>
       <Dialog
@@ -147,7 +147,7 @@ export default function NavMenu({ isOpen, onClose, onLogout }: NavMenuProps) {
               <div key={section.href}>
                 <button
                   onClick={() => toggleSection(section.href)}
-                  className="flex w-full items-center justify-between py-3.75 pr-6 pl-4 text-base font-semibold md:px-9"
+                  className="flex w-full items-center justify-between p-4 py-3.75 pr-5.5 text-base font-semibold md:pr-11 md:pl-9"
                 >
                   <span className="text-black">{section.label}</span>
                   <ChevronDownIcon
@@ -165,14 +165,14 @@ export default function NavMenu({ isOpen, onClose, onLogout }: NavMenuProps) {
                         <Link
                           href="/observations"
                           onClick={onClose}
-                          className="flex items-center gap-0.5 rounded-lg px-6 py-3.5 text-xs font-semibold text-black hover:bg-black-200 md:px-9"
+                          className="flex items-center gap-0.5 rounded-lg px-4 py-3.5 text-xs font-semibold text-black hover:bg-black-200 md:px-9"
                         >
                           <PlusIcon className="h-4 w-4 shrink-0" />새 관찰일지
                         </Link>
                         <Link
                           href="/mypage/observations"
                           onClick={onClose}
-                          className="mt-2 flex items-center gap-2 rounded-lg px-6 py-3.5 text-xs font-semibold text-black hover:bg-black-200 md:px-9"
+                          className="mt-2 flex items-center gap-2 rounded-lg px-4 py-3.5 text-xs font-semibold text-black hover:bg-black-200 md:px-9"
                         >
                           최근 관찰일지
                           {recentObservations && (
@@ -209,7 +209,7 @@ export default function NavMenu({ isOpen, onClose, onLogout }: NavMenuProps) {
                             <Link
                               href={child.href}
                               onClick={onClose}
-                              className="block rounded-lg px-6 py-3.5 text-xs font-semibold text-black hover:bg-black-200 md:px-9"
+                              className="block rounded-lg px-4 py-3.5 text-xs font-semibold text-black hover:bg-black-200 md:px-9"
                             >
                               {child.label}
                             </Link>

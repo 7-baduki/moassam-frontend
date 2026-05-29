@@ -12,10 +12,9 @@ export const POST_AGE_VARIANT: Record<PostAge, BadgeVariant> = {
 
 export const RESOURCE_TYPE_VARIANT: Record<ResourceType, BadgeVariant> = {
   ACTIVITY: 'outline-yellow',
-  JOURNAL: 'outline-pink',
-  PLAN: 'outline-green',
-  NOTICE: 'outline-gray',
   ENVIRONMENT: 'outline-orange',
+  PLAN: 'outline-green',
+  DOCUMENT_FORM: 'outline-gray',
 };
 
 export const HEAD_TAG_VARIANT: Record<HeadTag, BadgeVariant> = {

@@ -18,7 +18,7 @@ export default function Home() {
       <PainPointSection />
       <SolutionSection />
       <Footer />
-      <div className="fixed right-9 bottom-9 z-300 xl:hidden">
+      <div className="fixed right-9 bottom-9 z-300">
         <ScrollToTopButton showAfter={300} />
       </div>
     </div>

@@ -1,7 +1,7 @@
 'use client';
 
 import { useState, useTransition, useRef, type ReactNode } from 'react';
-import { BackArrowIcon } from '@/app/assets/icons';
+import { ChevronDownIcon } from '@/app/assets/icons';
 import { Input } from '@/components/common/input/Input';
 
 interface CommunitySearchOverlayProps {
@@ -53,7 +53,7 @@ export default function CommunitySearchOverlay({
           onClick={onClose}
           className="flex h-9 w-9 shrink-0 cursor-pointer items-center justify-center"
         >
-          <BackArrowIcon />
+          <ChevronDownIcon className="h-5 w-5 rotate-90 text-black" />
         </button>
         <div className="flex-1">
           <Input

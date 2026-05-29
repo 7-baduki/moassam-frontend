@@ -32,16 +32,6 @@ const SERVICE_CARDS = [
     lowerBg: '#FBC9CDE5',
   },
   {
-    label: '자유게시판',
-    description: '게시글 1개당\n생성횟수 1회 추가',
-    href: '/community/board',
-    characterSrc: ServiceBoardChar,
-    characterHoverSrc: ServiceBoardHoverChar,
-    mainColor: '#377A53',
-    upperBg: '#E9F6E6',
-    lowerBg: '#B7DDB1E5',
-  },
-  {
     label: '모아방',
     description: '자료공유 완료 시\n생성횟수 3회 추가',
     href: '/community/moabang',
@@ -50,6 +40,16 @@ const SERVICE_CARDS = [
     mainColor: '#A66B1F',
     upperBg: '#FFF9F0',
     lowerBg: '#FDEFD4E5',
+  },
+  {
+    label: '자유게시판',
+    description: '게시글 1개당\n생성횟수 1회 추가',
+    href: '/community/board',
+    characterSrc: ServiceBoardChar,
+    characterHoverSrc: ServiceBoardHoverChar,
+    mainColor: '#377A53',
+    upperBg: '#E9F6E6',
+    lowerBg: '#B7DDB1E5',
   },
 ];
 

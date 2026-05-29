@@ -30,16 +30,20 @@ export function ProfileEditModal({
   const [displayName, setDisplayName] = useState(nickname);
   const router = useRouter();
 
-  const { mutate: handleUpdateProfile, isPending } = useProfileMutation({
-    onSuccess: () => {
-      onClose();
-      router.refresh();
-      toast.success({ title: '저장 완료', description: '변경사항이 저장되었어요' });
-    },
-    onError: () => {
-      toast.error({ title: '저장 실패', description: '잠시 후 다시 시도해주세요' });
-    },
-  });
+  const { mutate: handleUpdateProfile, isPending } = useProfileMutation();
+
+  function handleSave() {
+    handleUpdateProfile(displayName, {
+      onSuccess: () => {
+        onClose();
+        router.refresh();
+        toast.success({ title: '저장 완료', description: '변경사항이 저장되었어요' });
+      },
+      onError: () => {
+        toast.error({ title: '저장 실패', description: '잠시 후 다시 시도해주세요' });
+      },
+    });
+  }
 
   useEffect(() => {
     if (!isOpen) return;
@@ -66,12 +70,13 @@ export function ProfileEditModal({
             프로필 편집
           </h2>
 
-          <div className="mx-auto my-8 h-27.5 w-27.5 overflow-hidden rounded-full">
+          <div className="relative mx-auto my-8 h-27.5 w-27.5 overflow-hidden rounded-full">
             <Image
               src={profileImageUrl || DefaultAvatar}
               alt="프로필 아바타"
-              width={110}
-              height={110}
+              fill
+              sizes="110px"
+              className="object-contain"
             />
           </div>
 
@@ -112,7 +117,7 @@ export function ProfileEditModal({
                 variant="primary"
                 size="sm"
                 disabled={!displayName || isPending}
-                onClick={() => handleUpdateProfile(displayName)}
+                onClick={handleSave}
               >
                 저장
               </Button>

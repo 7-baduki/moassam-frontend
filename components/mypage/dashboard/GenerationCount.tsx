@@ -27,12 +27,20 @@ export function GenerationCount({ balance, total, className }: GenerationCountPr
 
       <div className="rounded-[20px] bg-white px-12.5 pt-11.25 pb-12.5">
         <div className="relative pt-10">
-          <Tooltip
-            label={remainingCount > 0 ? `${remainingCount}번 더 만들 수 있어요!` : '0개 남았어요!'}
-            className="-top-1.5"
-            labelClassName="md:text-xs text-[10px]"
-            style={{ left: `${Math.min(Math.max(progress, 5), 95)}%` }}
-          />
+          {remainingCount === total || remainingCount === 0 ? (
+            <div className="pointer-events-none absolute -top-4 left-1/2 z-200 -translate-x-1/2">
+              <div className="rounded-[20px] bg-pink-100 px-3.75 py-1.5 text-xs font-medium whitespace-nowrap text-pink-500 md:text-xs">
+                {`${remainingCount}개 남았어요!`}
+              </div>
+            </div>
+          ) : (
+            <Tooltip
+              label={`${remainingCount}번 더 만들 수 있어요!`}
+              className="-top-1.5"
+              labelClassName="md:text-xs text-[10px]"
+              style={{ left: `${Math.min(Math.max(progress, 5), 95)}%` }}
+            />
+          )}
           <ProgressBar progress={progress} />
         </div>
       </div>

@@ -3,6 +3,7 @@
 import { useRouter } from 'next/navigation';
 import { ChevronDownIcon } from '@/app/assets/icons';
 import { AsyncBoundary, LoadingSpinner, ErrorFallback } from '@/lib/async-boundary';
+import ScrollToTopButton from '@/components/common/scroll-top/ScrollToTopButton';
 import CommentsSection from './CommentsSection';
 
 export default function CommentsBoundary() {
@@ -17,6 +18,9 @@ export default function CommentsBoundary() {
         <h1 className="py-2 text-base font-semibold text-black md:text-[18px]">댓글</h1>
       </div>
       <h1 className="hidden text-lg font-semibold text-black xl:block xl:pt-[10.5px]">댓글</h1>
+      <div className="fixed right-9 bottom-9 z-300 xl:hidden">
+        <ScrollToTopButton showAfter={300} />
+      </div>
       <AsyncBoundary
         pendingFallback={<LoadingSpinner className="pt-11.25" />}
         rejectedFallback={({ error, reset }) => (

@@ -3,6 +3,7 @@
 import { useRouter } from 'next/navigation';
 import { ChevronDownIcon } from '@/app/assets/icons';
 import { AsyncBoundary, LoadingSpinner, ErrorFallback } from '@/lib/async-boundary';
+import ScrollToTopButton from '@/components/common/scroll-top/ScrollToTopButton';
 import ObservationsSection from './ObservationsSection';
 
 export default function ObservationsBoundary() {
@@ -19,6 +20,9 @@ export default function ObservationsBoundary() {
       <h1 className="hidden text-lg font-semibold text-black xl:block xl:pt-[10.5px]">
         관찰일지 내역
       </h1>
+      <div className="fixed right-9 bottom-9 z-300 xl:hidden">
+        <ScrollToTopButton showAfter={300} />
+      </div>
       <AsyncBoundary
         pendingFallback={<LoadingSpinner className="pt-11.25" />}
         rejectedFallback={({ error, reset }) => (

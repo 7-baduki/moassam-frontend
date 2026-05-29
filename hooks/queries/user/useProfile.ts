@@ -1,10 +1,16 @@
-import { useMutation, UseMutationOptions } from '@tanstack/react-query';
+import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { updateProfile } from '@/api/user.api';
-import { User } from '@/types/user.type';
+import { communityKeys } from '@/hooks/queries/community/queryKeys';
 
-export function useProfileMutation(options?: UseMutationOptions<User, Error, string>) {
+export function useProfileMutation() {
+  const queryClient = useQueryClient();
+
   return useMutation({
-    ...options,
     mutationFn: updateProfile,
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: communityKeys.board('moabang') });
+      queryClient.invalidateQueries({ queryKey: communityKeys.board('board') });
+      queryClient.invalidateQueries({ queryKey: ['post', 'detail'] });
+    },
   });
 }

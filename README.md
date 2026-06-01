@@ -7,7 +7,6 @@
 
 <img width="70%" alt="모아쌤" src="https://github.com/user-attachments/assets/5d51b4b3-a1a5-42ae-8198-d451dbb42c4d" />
 
-
 - 프로젝트 기간: 2026.04 ~ 2026.05 (2개월)
 - 배포 주소: https://moassam.vercel.app
 
@@ -126,7 +125,7 @@
 
 ## 팀원 소개
 
-|                                                           이진희                                                           |                                                          김영수                                                          |
-| :------------------------------------------------------------------------------------------------------------------------: | :----------------------------------------------------------------------------------------------------------------------: |
-| <a href="https://github.com/jjinheeWorld"><img src="https://avatars.githubusercontent.com/jjinheeWorld" width="100" /></a> | <a href="https://github.com/youngsoon12"><img src="https://avatars.githubusercontent.com/youngsoon12" width="100" /></a> |
-|                                      [@jjinheeWorld](https://github.com/jjinheeWorld)                                      |                                      [@youngsoon12](https://github.com/youngsoon12)                                      |
+|                                                                 이진희                                                                  |                                                                김영수                                                                 |
+| :-------------------------------------------------------------------------------------------------------------------------------------: | :-----------------------------------------------------------------------------------------------------------------------------------: |
+| <a href="https://github.com/jjinheeWorld"><img src="https://avatars.githubusercontent.com/jjinheeWorld" alt="이진희" width="100" /></a> | <a href="https://github.com/youngsoon12"><img src="https://avatars.githubusercontent.com/youngsoon12" alt="김영수" width="100" /></a> |
+|                                            [@jjinheeWorld](https://github.com/jjinheeWorld)                                             |                                            [@youngsoon12](https://github.com/youngsoon12)                                             |

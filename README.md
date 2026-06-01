@@ -5,7 +5,7 @@
 
 <h4> 유치원, 어린이집 교사를 위한 AI 관찰일지 작성 및 활동자료 공유 커뮤니티 </h4>
 
-<img width="70%" alt="모아쌤" src="https://github.com/user-attachments/assets/5d51b4b3-a1a5-42ae-8198-d451dbb42c4d" />
+<img width="100%" alt="모아쌤" src="https://github.com/user-attachments/assets/5d51b4b3-a1a5-42ae-8198-d451dbb42c4d" />
 
 - 프로젝트 기간: 2026.04 ~ 2026.05 (2개월)
 - 배포 주소: https://moassam.vercel.app

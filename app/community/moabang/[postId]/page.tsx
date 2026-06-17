@@ -1,8 +1,8 @@
 import type { Metadata } from 'next';
-import { cookies } from 'next/headers';
 import { notFound } from 'next/navigation';
 import BoardDetailBoundary from '@/components/community/board/board-detail/BoardDetailBoundary';
 import { getPostTitle } from '@/api/community-server.api';
+import { getProfile } from '@/api/user-server.api';
 
 interface MoabangDetailPageProps {
   params: Promise<{
@@ -25,7 +25,7 @@ export default async function MoabangDetailPage({ params }: MoabangDetailPagePro
 
   if (!Number.isInteger(id) || id <= 0) notFound();
 
-  const initialAuth = (await cookies()).get('isLoggedIn')?.value === 'true';
+  const initialAuth = !!(await getProfile());
 
   return <BoardDetailBoundary postId={id} title="모아방" initialAuth={initialAuth} />;
 }

@@ -69,41 +69,27 @@ export async function deleteComment(postId: number, commentId: number): Promise<
   await apiClient.delete(`/api/v1/posts/${postId}/comments/${commentId}`);
 }
 
-async function fetchAccessToken(): Promise<string> {
-  try {
-    const res = await fetch('/api/auth/token');
-    if (res.ok) {
-      const { accessToken } = await res.json();
-      if (accessToken) return accessToken;
-    }
-  } catch {
-    // fall through to refresh
-  }
-  return refreshAccessToken();
-}
-
 async function uploadPostFormData<T>(
   method: 'post' | 'patch',
   path: string,
   formData: FormData,
 ): Promise<T> {
-  const send = (token: string) =>
+  const send = () =>
     axios.request<{ data: T }>({
       method,
       url: `${process.env.NEXT_PUBLIC_API_URL}${path}`,
       data: formData,
-      headers: { Authorization: `Bearer ${token}` },
+      withCredentials: true,
       timeout: 60_000,
     });
 
   try {
-    const token = await fetchAccessToken();
-    const { data } = await send(token);
+    const { data } = await send();
     return data.data;
   } catch (error) {
     if (axios.isAxiosError(error) && error.response?.status === 401) {
-      const token = await refreshAccessToken();
-      const { data } = await send(token);
+      await refreshAccessToken();
+      const { data } = await send();
       return data.data;
     }
     throw error;

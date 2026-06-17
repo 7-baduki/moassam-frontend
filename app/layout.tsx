@@ -55,7 +55,7 @@ const gamjaFlower = Gamja_Flower({
   variable: '--font-gamja-flower',
 });
 
-const SITE_URL = 'https://moassam.vercel.app';
+const SITE_URL = 'https://www.moassam.com';
 const SITE_NAME = '모아쌤';
 const SITE_DESCRIPTION = '유치원·어린이집 교사를 위한 AI 관찰일지 작성 및 활동자료 공유 커뮤니티';
 

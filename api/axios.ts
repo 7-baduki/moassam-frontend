@@ -66,9 +66,8 @@ apiClient.interceptors.response.use(
       await refreshAccessToken();
       return apiClient(originalRequest);
     } catch (refreshError) {
-      try {
-        await fetch('/api/auth/logout', { method: 'POST' });
-      } catch {}
+      // refresh 실패 = refreshToken 만료/무효로 백엔드 세션도 이미 끝난 상태이므로
+      // 로그아웃 API 호출 없이 로컬 상태만 정리한다
       useUserStore.getState().setUser(null);
       useLoginModalStore.getState().open('세션이 만료되었어요!', '다시 로그인해 주세요');
       if (axios.isAxiosError(refreshError)) refreshError.isHandled = true;

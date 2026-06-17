@@ -3,21 +3,22 @@ import { useLoginModalStore } from '@/stores/loginModalStore';
 import { useUserStore } from '@/stores/userStore';
 
 const apiClient = axios.create({
-  baseURL: '/api/proxy',
+  baseURL: process.env.NEXT_PUBLIC_API_URL,
   timeout: 10000,
+  withCredentials: true,
   headers: {
     'Content-Type': 'application/json',
   },
 });
 
 let isLoggingOut = false;
-let refreshPromise: Promise<string> | null = null;
+let refreshPromise: Promise<void> | null = null;
 
 export const setLoggingOut = (value: boolean) => {
   isLoggingOut = value;
 };
 
-export function refreshAccessToken(): Promise<string> {
+export function refreshAccessToken(): Promise<void> {
   if (!refreshPromise) {
     refreshPromise = (async () => {
       try {
@@ -27,19 +28,6 @@ export function refreshAccessToken(): Promise<string> {
           signal: AbortSignal.timeout(10000),
         });
         if (!res.ok) throw new Error('refresh failed');
-
-        const { data } = await res.json();
-        if (!data?.accessToken) throw new Error('refresh failed');
-
-        const setTokenRes = await fetch('/api/auth/set-token', {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({ accessToken: data.accessToken }),
-          signal: AbortSignal.timeout(10000),
-        });
-        if (!setTokenRes.ok) throw new Error('set-token failed');
-
-        return data.accessToken as string;
       } finally {
         refreshPromise = null;
       }
@@ -66,7 +54,7 @@ apiClient.interceptors.response.use(
       return Promise.reject(error);
     }
 
-    if (!document.cookie.split(';').some((c) => c.trim() === 'isLoggedIn=true')) {
+    if (!useUserStore.getState().user) {
       error.isHandled = true;
       useLoginModalStore.getState().open();
       return Promise.reject(error);
@@ -80,9 +68,7 @@ apiClient.interceptors.response.use(
     } catch (refreshError) {
       try {
         await fetch('/api/auth/logout', { method: 'POST' });
-      } catch {
-        // 로그아웃 요청이 실패해도 로컬 상태는 정리한다
-      }
+      } catch {}
       useUserStore.getState().setUser(null);
       useLoginModalStore.getState().open('세션이 만료되었어요!', '다시 로그인해 주세요');
       if (axios.isAxiosError(refreshError)) refreshError.isHandled = true;

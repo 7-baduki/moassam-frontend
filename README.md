@@ -7,7 +7,7 @@
 
 <img width="100%" alt="모아쌤" src="https://github.com/user-attachments/assets/5d51b4b3-a1a5-42ae-8198-d451dbb42c4d" />
 
-- 프로젝트 기간: 2026.04 ~ 2026.05 (2개월)
+- 프로젝트 기간: 2026.04 ~ 2026.06
 - 배포 주소: https://www.moassam.com
 
 ## 기술 스택

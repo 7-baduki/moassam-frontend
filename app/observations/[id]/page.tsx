@@ -1,4 +1,5 @@
 import type { Metadata } from 'next';
+import { Suspense } from 'react';
 import { notFound } from 'next/navigation';
 import ObservationDetailBoundary from '@/components/observations/ObservationDetailBoundary';
 
@@ -10,7 +11,15 @@ interface ObservationDetailPageProps {
   params: Promise<{ id: string }>;
 }
 
-export default async function ObservationDetailPage({ params }: ObservationDetailPageProps) {
+export default function ObservationDetailPage({ params }: ObservationDetailPageProps) {
+  return (
+    <Suspense fallback={null}>
+      <ObservationDetailPageContent params={params} />
+    </Suspense>
+  );
+}
+
+async function ObservationDetailPageContent({ params }: ObservationDetailPageProps) {
   const { id } = await params;
   const observationId = Number(id);
 

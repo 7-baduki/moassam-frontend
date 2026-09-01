@@ -1,4 +1,5 @@
 import type { Metadata } from 'next';
+import { Suspense } from 'react';
 import { notFound } from 'next/navigation';
 import BoardDetailBoundary from '@/components/community/board/board-detail/BoardDetailBoundary';
 import { getPostTitle } from '@/api/community-server.api';
@@ -19,7 +20,15 @@ export async function generateMetadata({ params }: MoabangDetailPageProps): Prom
   return { title: title ?? '모아방 게시글' };
 }
 
-export default async function MoabangDetailPage({ params }: MoabangDetailPageProps) {
+export default function MoabangDetailPage({ params }: MoabangDetailPageProps) {
+  return (
+    <Suspense fallback={null}>
+      <MoabangDetailPageContent params={params} />
+    </Suspense>
+  );
+}
+
+async function MoabangDetailPageContent({ params }: MoabangDetailPageProps) {
   const { postId } = await params;
   const id = Number(postId);
 

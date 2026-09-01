@@ -1,4 +1,5 @@
 import type { Metadata } from 'next';
+import { Suspense } from 'react';
 import { notFound } from 'next/navigation';
 import EditBoundary from '@/components/community/edit/EditBoundary';
 
@@ -10,7 +11,15 @@ interface EditPageProps {
   params: Promise<{ postId: string }>;
 }
 
-export default async function EditPage({ params }: EditPageProps) {
+export default function EditPage({ params }: EditPageProps) {
+  return (
+    <Suspense fallback={null}>
+      <EditPageContent params={params} />
+    </Suspense>
+  );
+}
+
+async function EditPageContent({ params }: EditPageProps) {
   const { postId } = await params;
   const id = Number(postId);
 

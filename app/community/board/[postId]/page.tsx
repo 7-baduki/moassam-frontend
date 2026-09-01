@@ -1,4 +1,5 @@
 import type { Metadata } from 'next';
+import { Suspense } from 'react';
 import { notFound } from 'next/navigation';
 import BoardDetailBoundary from '@/components/community/board/board-detail/BoardDetailBoundary';
 import { getPostTitle } from '@/api/community-server.api';
@@ -19,7 +20,15 @@ export async function generateMetadata({ params }: BoardDetailPageProps): Promis
   return { title: title ?? '자유게시판 게시글' };
 }
 
-export default async function BoardDetailPage({ params }: BoardDetailPageProps) {
+export default function BoardDetailPage({ params }: BoardDetailPageProps) {
+  return (
+    <Suspense fallback={null}>
+      <BoardDetailPageContent params={params} />
+    </Suspense>
+  );
+}
+
+async function BoardDetailPageContent({ params }: BoardDetailPageProps) {
   const { postId } = await params;
   const id = Number(postId);
 

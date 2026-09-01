@@ -12,7 +12,6 @@ import {
   ProviderNaverIcon,
 } from '@/app/assets/icons';
 import { DefaultAvatar } from '@/app/assets/images';
-import { useUser } from '@/lib/user-context';
 import { useLoginModalStore } from '@/stores/loginModalStore';
 import { useUserStore } from '@/stores/userStore';
 import { Button } from '@/components/common/button/Button';
@@ -100,8 +99,7 @@ function ObservationNavItem({
 
 export default function NavMenu({ isOpen, onClose, onLogout }: NavMenuProps) {
   const pathname = usePathname() ?? '';
-  const user = useUser();
-  const storeUser = useUserStore((state) => state.user);
+  const user = useUserStore((state) => state.user);
   const openLoginModal = useLoginModalStore((state) => state.open);
   const queryClient = useQueryClient();
 
@@ -127,7 +125,7 @@ export default function NavMenu({ isOpen, onClose, onLogout }: NavMenuProps) {
     },
   });
 
-  const { data: recentObservations } = useObservationRecentQuery(!!user && !!storeUser);
+  const { data: recentObservations } = useObservationRecentQuery(!!user);
 
   return (
     <div

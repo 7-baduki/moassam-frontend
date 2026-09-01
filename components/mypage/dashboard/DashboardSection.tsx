@@ -8,14 +8,14 @@ import { ProfileEditModal } from '@/components/mypage/dashboard/ProfileEditModal
 import { ProfileEditBottomSheet } from '@/components/mypage/dashboard/ProfileEditBottomSheet';
 import { WithdrawModal } from '@/components/mypage/dashboard/WithdrawModal';
 import { WithdrawBottomSheet } from '@/components/mypage/dashboard/WithdrawBottomSheet';
-import { useUser } from '@/lib/user-context';
+import { useUserStore } from '@/stores/userStore';
 import { useActivitySummaryQuery } from '@/hooks/queries/user';
 import { useCreditsQuery } from '@/hooks/queries/user';
 import { useIsMobile } from '@/hooks/useIsMobile';
 import MypageMenu from './MypageMenu';
 
 export default function DashboardSection() {
-  const user = useUser();
+  const user = useUserStore((state) => state.user);
   const { data: activitySummary } = useActivitySummaryQuery();
   const { data: credits } = useCreditsQuery();
 

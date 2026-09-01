@@ -1,5 +1,6 @@
 import type { Metadata, Viewport } from 'next';
 import localFont from 'next/font/local';
+import { Suspense } from 'react';
 import {
   Noto_Sans_KR,
   Noto_Serif_KR,
@@ -14,9 +15,8 @@ import Providers from './providers';
 import Header from '@/components/common/header/Header';
 import Sidebar from '@/components/common/sidebar/Sidebar';
 import { LoginModal } from '@/components/common/login-modal/LoginModal';
-import { UserProvider } from '@/lib/user-context';
+import UserSlot from '@/components/common/user-slot/UserSlot';
 import { ScrollRoot } from '@/lib/scroll-root';
-import { getProfile } from '@/api/user-server.api';
 
 const pretendard = localFont({
   src: './fonts/PretendardVariable.woff2',
@@ -90,8 +90,6 @@ export default function RootLayout({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
-  const userPromise = getProfile();
-
   const fontVariables = [
     pretendard.variable,
     notoSansKR.variable,
@@ -105,13 +103,14 @@ export default function RootLayout({
     <html lang="ko" className={`${fontVariables} h-full antialiased`}>
       <body className={`${pretendard.className} flex h-dvh flex-col overflow-hidden`}>
         <Providers>
-          <UserProvider userPromise={userPromise}>
-            <Header />
-            <div className="flex flex-1 overflow-hidden">
-              <Sidebar />
-              <ScrollRoot className="flex-1 overflow-y-auto bg-black-100">{children}</ScrollRoot>
-            </div>
-          </UserProvider>
+          <Suspense fallback={null}>
+            <UserSlot />
+          </Suspense>
+          <Header />
+          <div className="flex flex-1 overflow-hidden">
+            <Sidebar />
+            <ScrollRoot className="flex-1 overflow-y-auto bg-black-100">{children}</ScrollRoot>
+          </div>
         </Providers>
         <Toaster position="top-right" offset={{ top: 69 }} />
         <LoginModal />

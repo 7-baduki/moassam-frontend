@@ -6,7 +6,7 @@ import { motion } from 'framer-motion';
 import Badge from '@/components/common/badge/Badge';
 import HeroImage from '@/app/assets/images/home/hero/hero-section.png';
 import HeroImageMd from '@/app/assets/images/home/hero/hero-section-md.png';
-import { useUser } from '@/lib/user-context';
+import { useUserStore } from '@/stores/userStore';
 import { useCreditsQuery } from '@/hooks/queries/user';
 import { ChevronRightIcon } from '@/app/assets/icons';
 import { AsyncBoundary } from '@/lib/async-boundary';
@@ -113,7 +113,7 @@ function LoggedOutHero() {
 }
 
 export default function HeroSection() {
-  const user = useUser();
+  const user = useUserStore((state) => state.user);
 
   return (
     <section className="flex flex-col items-center bg-black-100" aria-label="히어로 섹션">

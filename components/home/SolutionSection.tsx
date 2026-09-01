@@ -11,7 +11,7 @@ import {
   SolutionProcess,
   SolutionProcessMd,
 } from '@/app/assets/images';
-import { useUser } from '@/lib/user-context';
+import { useUserStore } from '@/stores/userStore';
 import { useScrollRoot } from '@/lib/scroll-root';
 import { ChevronRightIcon } from '@/app/assets/icons';
 import { useLoginModalStore } from '@/stores/loginModalStore';
@@ -32,7 +32,7 @@ function createFadeUp(root: ReturnType<typeof useScrollRoot>, delay = 0) {
 }
 
 export default function SolutionSection() {
-  const user = useUser();
+  const user = useUserStore((state) => state.user);
   const isLoggedIn = !!user;
   const root = useScrollRoot();
   const openLoginModal = useLoginModalStore((state) => state.open);

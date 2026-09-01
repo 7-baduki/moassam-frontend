@@ -11,13 +11,13 @@ import { useLoginModalStore } from '@/stores/loginModalStore';
 import { ProfilePopover } from '@/components/common/profile-popover/ProfilePopover';
 import NAV_ITEMS from '@/constants/common/nav-items';
 import { useLogoutMutation } from '@/hooks/queries/auth/useAuth';
-import { useUser } from '@/lib/user-context';
+import { useUserStore } from '@/stores/userStore';
 import NavMenu from '@/components/common/nav-menu/NavMenu';
 import { toast } from '@/utils/toast';
 
 export default function Header() {
   const openLoginModal = useLoginModalStore((state) => state.open);
-  const user = useUser();
+  const user = useUserStore((state) => state.user);
   const pathname = usePathname() ?? '';
   const router = useRouter();
   const [isPopoverOpen, setIsPopoverOpen] = useState(false);

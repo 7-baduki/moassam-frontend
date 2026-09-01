@@ -1,6 +1,8 @@
 import type { Metadata } from 'next';
 import LegalHeader from '@/components/legal/LegalHeader';
 
+export const dynamic = 'force-static';
+
 export const metadata: Metadata = {
   title: '이용약관',
 };

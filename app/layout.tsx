@@ -108,7 +108,9 @@ export default function RootLayout({
           </Suspense>
           <Header />
           <div className="flex flex-1 overflow-hidden">
-            <Sidebar />
+            <Suspense fallback={null}>
+              <Sidebar />
+            </Suspense>
             <ScrollRoot className="flex-1 overflow-y-auto bg-black-100">{children}</ScrollRoot>
           </div>
         </Providers>

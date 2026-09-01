@@ -1,24 +1,22 @@
 'use client';
 
-import { useState, useEffect, useRef } from 'react';
+import { useState, useEffect, useRef, Suspense } from 'react';
 import Link from 'next/link';
 import Image from 'next/image';
-import { usePathname, useRouter } from 'next/navigation';
+import { useRouter } from 'next/navigation';
 import { Button } from '@/components/common/button/Button';
 import { MainLogoIcon, XIcon, HamburgerIcon } from '@/app/assets/icons';
 import { DefaultAvatar } from '@/app/assets/images';
 import { useLoginModalStore } from '@/stores/loginModalStore';
 import { ProfilePopover } from '@/components/common/profile-popover/ProfilePopover';
-import NAV_ITEMS from '@/constants/common/nav-items';
 import { useLogoutMutation } from '@/hooks/queries/auth/useAuth';
 import { useUserStore } from '@/stores/userStore';
-import NavMenu from '@/components/common/nav-menu/NavMenu';
 import { toast } from '@/utils/toast';
+import { HeaderNavLinks, HeaderNavMenu } from './HeaderNav';
 
 export default function Header() {
   const openLoginModal = useLoginModalStore((state) => state.open);
   const user = useUserStore((state) => state.user);
-  const pathname = usePathname() ?? '';
   const router = useRouter();
   const [isPopoverOpen, setIsPopoverOpen] = useState(false);
   const [isNavMenuOpen, setIsNavMenuOpen] = useState(false);
@@ -60,24 +58,9 @@ export default function Header() {
         <Link href="/" aria-label="모아쌤 홈으로 이동" onClick={() => setIsNavMenuOpen(false)}>
           <MainLogoIcon className="h-7 w-7 xl:h-10 xl:w-10" aria-hidden="true" />
         </Link>
-        <nav
-          aria-label="주요 메뉴"
-          className="hidden items-center gap-8.5 text-base leading-[140%] font-medium tracking-[-0.02em] xl:flex"
-        >
-          {NAV_ITEMS.map(({ href, label }) => (
-            <Link
-              key={href}
-              href={href}
-              className={
-                pathname === href || pathname.startsWith(href + '/')
-                  ? 'font-semibold text-pink-500'
-                  : ''
-              }
-            >
-              {label}
-            </Link>
-          ))}
-        </nav>
+        <Suspense fallback={null}>
+          <HeaderNavLinks />
+        </Suspense>
       </div>
       <div className="relative flex items-center gap-5">
         <button
@@ -125,12 +108,13 @@ export default function Header() {
           )}
         </div>
       </div>
-      <NavMenu
-        key={pathname}
-        isOpen={isNavMenuOpen}
-        onClose={() => setIsNavMenuOpen(false)}
-        onLogout={handleLogout}
-      />
+      <Suspense fallback={null}>
+        <HeaderNavMenu
+          isOpen={isNavMenuOpen}
+          onClose={() => setIsNavMenuOpen(false)}
+          onLogout={handleLogout}
+        />
+      </Suspense>
     </header>
   );
 }

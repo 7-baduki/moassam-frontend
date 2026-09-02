@@ -1,5 +1,5 @@
  <h1>
-   <img src="./app/assets/icons/MainLogoIcon.svg" alt="모아쌤 로고" width="32" align="left" />
+   <img src="./src/app/assets/icons/MainLogoIcon.svg" alt="모아쌤 로고" width="32" align="left" />
    &nbsp;모아쌤
  </h1>
 
